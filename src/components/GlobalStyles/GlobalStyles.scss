@@ -1,0 +1,62 @@
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;1,200;1,500&display=swap');
+
+:root {
+    --primary:#fe2c55;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    font-size:62.5%;
+}
+body {
+    height:2000px;
+    font-family: 'Montserrat', sans-serif;
+    font-size:1.6rem;
+    line-height: 1.5;
+    text-rendering: optimizeSpeed;
+    background-color:#fff;
+}
+.mainPage{
+    width:100%;
+    height:auto;
+}
+.content{
+    width:100%;
+    height:100%;
+}
+.slide-container{
+    width:100%;
+    height:500px;
+}
+.react-slideshow-container .default-nav{
+    margin:0 2%;
+    background-color: transparent;
+}
+.react-slideshow-container .default-nav:hover{
+    background-color: rgb(225, 161, 114);
+    animation:button ease 1s;
+}
+@keyframes button{
+    0%{background-color: rgb(225, 211, 200);}
+    100%{background-color: rgb(225, 161, 114);}
+}
+.each-slide {
+    background-repeat: no-repeat;
+    width:100%;
+    height:500px;
+}
+.each-slide div{
+    width:100%;
+    height:500px;
+    margin-top:2%;
+}
+ .each-slide div  img{
+    width:90%;
+    height:500px;
+    margin-left:5%;
+}
