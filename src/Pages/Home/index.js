@@ -1,16 +1,25 @@
 import classNames from "classnames/bind";
-import style from './Home.module.scss';
-import Slideshow from './SlideShow';
-import Product from './Product-demo'
+import style from "./Home.module.scss";
+import Slideshow from "./SlideShow";
+import Product from "./Product-demo";
+import AccDemo from "./Accessory-demo";
 
-const cx = classNames.bind(style)
+const cx = classNames.bind(style);
 
 function Home() {
-    return <div className={cx('home')}>
-        <Slideshow></Slideshow>
-        <Product></Product>
-        <button className={cx('more')}><a href="/product">Xem thêm...</a></button>
-    </div>;
+  return (
+    <div className={cx("home")}>
+      <Slideshow />
+      <Product />
+      <button className={cx("more")}>
+        <a href="/product">More...</a>
+      </button>
+      <AccDemo />
+      <button className={cx("more")}>
+        <a href="/accessory">More...</a>
+      </button>
+    </div>
+  );
 }
 
 export default Home;

@@ -1,24 +1,34 @@
 .header{
-    width:100%;
+    width:90%;
     height:70px;
     margin:0;
-    background-color:#fff;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     position:relative;
+    z-index: 11111111111111111111;
+    margin-left:5%;
+    margin-top:1%;
     .nav{
         width: 40%;
         height:70px;
         margin-left:20%;
-        background-color: #fff;
+        background: transparent;
+        
     }
     ul{
-        margin-left:-10%;
+        margin-left:-20%;
         margin-top:0;
+        height:70px;
     }
     ul li {
         height:70px;
         display: inline-block;
         margin-left:10%;
-        margin-top:1%;
+        margin-top:0.5%;
     }
     a{
         text-decoration:none;
@@ -40,8 +50,9 @@
     }
 }
 .logo{
+    display:none;
     position: absolute;
-    margin-top: -4.5%;
+    margin-top: -5%;
 }
 .logo img{
     width:130%;
@@ -54,9 +65,163 @@
     height:50%;
     position:absolute;
     margin-left:62%;
-    margin-top:-3.4%;
+    margin-top:-3.8%;
     background-color: rgb(209, 208, 207);
     color:#000;
     font-size:18px;
     outline:0;
+}
+.icon{
+    width: 10%;
+    margin-top: -4%;
+    position: absolute;
+    margin-left: 85%;
+    .detail{
+        width:100%;
+        .cart_Shopping{
+            width: 30%;
+            height: 53px;
+            margin-left: 10%;
+            border-style: none;
+            background-color: transparent;
+            svg{
+                height:60%; 
+                path{
+                    fill:rgb(209, 208, 207);
+                }  
+            }
+            .show{
+                width: 16px;
+                height: 18px;
+                background-color: red;
+                border-radius: 45%;
+                position: absolute;
+                margin-left: 28%;
+                margin-top: -25%;
+                color: #fff;
+                text-align: center;
+                line-height: initial;
+            }
+            .cart_content{
+                display: block;
+                width: 350px;
+                min-height: 300px;
+                background: rgba(255, 255, 255, 0.8);
+                box-shadow: 2px 2px 2px 2px grey;
+                border-radius: 10px;
+                /* margin-left: -380%; */
+                margin-top: 40%;
+                z-index: 11111111111;
+                padding-bottom: 25%;
+                float: right;
+                margin-right: -130%;
+                .cover{
+                    min-height:200px;
+                    /* item in cart */
+                    .cart_detail{
+                        width: 100%;
+                        display: inline-flex;
+                        height: 50px;
+                        margin-top:5%;
+                        img{
+                            width:50px;
+                            height:50px;
+                            margin-left:10%;
+                            position:absolute;
+                        }
+                        .information{
+                            margin-left:45%;
+                            position: absolute;
+                            h4{
+                                margin-top:5%;
+                                text-align:left;
+                            }
+                        }
+                        .button{
+                            position: absolute;
+                            margin-top: 2%;
+                            margin-left: 150%;
+                            display: inline-flex;
+                             button{
+                                 margin:-5px 20px;
+                                 font-size: 30px; 
+                             }
+                             div{
+                                position: absolute;
+                                margin-top: 5px;
+                                margin-left: 40%;
+                                font-size: 20px;
+                             }
+                         }
+                    }
+                }
+                /* button---payment */
+                .payment{
+                    position:relative;
+                    width:30%;
+                    height:30px;
+                    margin-top: 15%;
+                    margin-left: 63%;
+                    border-radius:10px;
+                    background-color: antiquewhite;
+                    box-shadow: 2px 2px 2px 2px grey;                         
+                        button{
+                            width:100%;
+                            height:30px;
+                            border-style:none;
+                            border-radius:10px;
+                            background-color: antiquewhite;
+                            box-shadow: 2px 2px 2px 2px grey;                         
+                            a{
+                                font-size:20px;
+                                line-height: 30px;
+                            }
+                        }
+                }
+                .removeItems{
+                    position: absolute;
+                    width: 90%;
+                    height: 30px;
+                    margin-top: -22%;
+                    margin-left: 13%;
+
+                    button{
+                        width:100%;
+                        height:30px;
+                        border-style:none;
+                        border-radius:10px;
+                        background-color: antiquewhite;
+                        box-shadow: 2px 2px 2px 2px grey;  
+                        a{
+                            font-size:20px;
+                            line-height: 30px;
+                        }                       
+                        
+                    }
+                }
+                
+            }
+        }
+        .cart_Shopping:hover .cart_content{
+            display:block;
+        }
+        
+        //==========  Icon user ==========
+        
+        .user{
+            width: 30%;
+            height: 40px;
+            margin-left: 60%;
+            margin-top: -39%;
+            border-style: none;
+            background-color: transparent;
+            position: absolute;
+            svg{
+                height:80%; 
+                path{
+                    fill:rgb(209, 208, 207);
+                }  
+            }
+        }
+    }
 }

@@ -14,12 +14,14 @@ html {
     font-size:62.5%;
 }
 body {
-    height:2000px;
+    
     font-family: 'Montserrat', sans-serif;
     font-size:1.6rem;
     line-height: 1.5;
     text-rendering: optimizeSpeed;
-    background-color:#fff;
+    background: rgb(32,32,32);
+    background: linear-gradient(72deg, rgba(32,32,32,0.9699230033810399) 0%, 
+                rgba(51,51,60,1) 15%, rgba(76,58,103,1) 45%, rgba(98,35,61,1) 81%);
 }
 .mainPage{
     width:100%;

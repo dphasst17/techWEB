@@ -1,0 +1,488 @@
+{
+    "product": {
+        "MSI":[
+                {
+                    "id":"1",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_1642749989ec287c623da4e370e98a225c7e137c42.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI GS66 Stealth",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"2",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_1650005024261a1da4b5a02c3a5d2e53f259c2fab5.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI Stealth GS77 - 12U",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"3",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_16403263621d06828860ebf54360a2ad7bdcf38a17.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI Stealth GS66 - 12U",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"4",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_164274948600bd9829a1c621e28437bdd2973ec77c.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI Stealth 15M",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"5",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_16480190044810e4802b5bfaf2120e088073690ec5.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI GS66 Stealth",
+                    "price":"150 USD"
+                }
+            
+                {
+                    "id":"6",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_1642742602095c73b6cf1564a1b5f531748436355b.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI GE76 Raider",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"7",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_1642742602095c73b6cf1564a1b5f531748436355b.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI Raider GE77 HX - 12U",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"8",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_1642743006001bf035da8f3e4e7579985458bdc810.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI Raider GE76 - 12U",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"9",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_165206346972b3177230787d73a75770296820b96a.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI Raider GE67 HX - 12U",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"10",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_1620192394340eea6a423fe2e48c05e10a57a94f52.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI GE66 Raider",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"11",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_16424977883a5c4310537992645ce5c59e3b0aafb9.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI Raider GE66 - 12U",
+                    "price":"150 USD"
+                }
+                
+                {
+                    "id":"12",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_1640065634262398969ec2a65948b5ab4dd5cf6b28.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI Crosshair 17 B12UEZ",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"13",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_161959584961f9de5337a52831afce05f8b6ffe62c.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI Pulse GL76 11UEK",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"14",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_1619055752f1ba2af07049d05f63c229bff87a0ff0.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI Pulse GL66 11UDK",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"15",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_1639452965f661f83d672ea90328424a6f9e5ceb0d.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI Crosshair 15 B12UEZ",
+                    "price":"150 USD"
+                }
+            
+                {
+                    "id":"16",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_164249772959ec3a8f36073c7fb2714e22bcf27c51.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI GF65 Thin",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"17",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_16190861968258ba21f10ef2500b64c8d57c0d1b1b.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI Katana GF76",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"18",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_1642732042c897f32506d2e431e70668e2c03f8033.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI Katana GF66",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"19",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_16429908194d117a3ebc8e27cfc1e912db7caf51b2.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI Katana GF66 - 12U",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"20",
+                    "image":"https://asset.msi.com/resize/image/global/product/product_16427329159b692f01274dbe18692e738b26c760a2.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+                    "title":"MSI GF63 Thin",
+                    "price":"150 USD"
+                }
+            
+        ],
+        "Acer":{},
+        "HP":{
+            "office":[
+                {
+                    "id":"1",
+                    "image":"",
+                    "title":"HP ",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"2",
+                    "image":"",
+                    "title":"HP ",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"3",
+                    "image":"",
+                    "title":"HP ",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"4",
+                    "image":"",
+                    "title":"HP ",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"5",
+                    "image":"",
+                    "title":"HP ",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"6",
+                    "image":"",
+                    "title":"HP ",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"7",
+                    "image":"",
+                    "title":"HP ",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"8",
+                    "image":"",
+                    "title":"HP ",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"9",
+                    "image":"",
+                    "title":"HP ",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"10",
+                    "image":"",
+                    "title":"HP ",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"11",
+                    "image":"",
+                    "title":"HP ",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"12",
+                    "image":"",
+                    "title":"HP ",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"13",
+                    "image":"",
+                    "title":"HP ",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"14",
+                    "image":"",
+                    "title":"HP ",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"15",
+                    "image":"",
+                    "title":"HP ",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"16",
+                    "image":"",
+                    "title":"HP ",
+                    "price":"150 USD"
+                }
+                
+            ],
+            "gaming":[
+                {
+                    "id":"1",
+                    "image":"https://www.hp.com/content/dam/sites/worldwide/personal-computers/consumer/gaming/gaming-gateway/Omen%2015%20intel%20shadow%20black.jpg",
+                    "title":"HP OMEN 15",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"2",
+                    "image":"https://www.hp.com/content/dam/sites/worldwide/personal-computers/consumer/gaming/gaming-gateway/Omen%2015%20intel%20shadow%20black.jpg",
+                    "title":"HP OMEN 16",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"3",
+                    "image":"https://www.hp.com/content/dam/sites/worldwide/personal-computers/consumer/gaming/gaming-gateway/Victus%2016%20intel%20and%20AMD%20shadow%20black.jpg",
+                    "title":"HP Victus 16(Intel)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"4",
+                    "image":"https://www.hp.com/content/dam/sites/worldwide/personal-computers/consumer/gaming/gaming-gateway/Victus%2016%20intel%20and%20AMD%20shadow%20black.jpg",
+                    "title":"HP Victus 16 (AMD)",
+                    "price":"150 USD"
+                }
+            ]
+        },
+        "Gigabyte":{
+            "AORUS":[
+                {
+                    "id":"1",
+                    "image":"",
+                    "title":"Gigabyte AORUS 17X (Intel 12th Gen)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"2",
+                    "image":"",
+                    "title":"Gigabyte AORUS 17 (Intel 12th Gen)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"3",
+                    "image":"",
+                    "title":"Gigabyte AORUS 15 (Intel 12th Gen)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"4",
+                    "image":"",
+                    "title":"Gigabyte AORUS 5 (Intel 12th Gen)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"5",
+                    "image":"",
+                    "title":"Gigabyte AORUS 15P (Intel 11th Gen)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"6",
+                    "image":"",
+                    "title":"Gigabyte AORUS 17G (Intel 11th Gen)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"7",
+                    "image":"",
+                    "title":"Gigabyte AORUS 17X (Intel 11th Gen)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"8",
+                    "image":"",
+                    "title":"Gigabyte AORUS 15G (RTX 30 Series)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"9",
+                    "image":"",
+                    "title":"Gigabyte AORUS 15P (RTX 30 Series)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"10",
+                    "image":"",
+                    "title":"Gigabyte AORUS 17G (RTX 30 Series)",
+                    "price":"150 USD"
+                }
+            ],
+            "AERO series":[
+                {
+                    "id":"1",
+                    "image":"",
+                    "title":"Gigabyte AERO 17 (Intel 12th Gen)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"2",
+                    "image":"",
+                    "title":"Gigabyte AERO 16 (Intel 12th Gen)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"3",
+                    "image":"",
+                    "title":"Gigabyte AERO 5 (Intel 12th Gen)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"4",
+                    "image":"",
+                    "title":"Gigabyte AERO 15 OLED (Intel 11th Gen)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"5",
+                    "image":"",
+                    "title":"Gigabyte AERO 17 HDR (Intel 11th Gen)",
+                    "price":"150 USD"
+                }
+            ],
+            "Gigabyte Gaming":[
+                {
+                    "id":"1",
+                    "image":"",
+                    "title":"Gigabyte Gaming G5(Intel 11th Gen)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"2",
+                    "image":"",
+                    "title":"Gigabyte Gaming G7(Intel 11th Gen)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"3",
+                    "image":"",
+                    "title":"Gigabyte Gaming A5(AMD 5000 Series)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"4",
+                    "image":"",
+                    "title":"Gigabyte Gaming A7(AMD 5000 Series)",
+                    "price":"150 USD"
+                },
+                {
+                    "id":"5",
+                    "image":"",
+                    "title":"Gigabyte Gaming G5 (RTX 30 Series)",
+                    "price":"150 USD"
+                }
+            ]
+        },
+        "Dell":{},
+        "Lenovo":{},
+        "Surface":{}
+    },     
+
+    "accessory": [
+        {
+            "id":"1",
+            "image":"https://asset.msi.com/resize/image/global/product/product_16655513611ffa656eb768f00d5ad33cd6551878f8.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+            "title":"GeForce RTX™ 4090 SUPRIM 24G",
+            "price":"150 USD"
+        },
+        {
+            "id":"2",
+            "image":"https://asset.msi.com/resize/image/global/product/product_1665553387a6171eb9097192911b9be889951d21ce.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+            "title":"GeForce RTX™ 4090 SUPRIM LIQUID 24G",
+            "price":"150 USD"
+        },
+        {
+            "id":"3",
+            "image":"https://asset.msi.com/resize/image/global/product/product_16655531780ae76e91e577ad9719f1f135824e1a15.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+            "title":"GeForce RTX™ 4090 GAMING X TRIO 16G",
+            "price":"150 USD"
+        },
+        {
+            "id":"4",
+            "image":"https://asset.msi.com/resize/image/global/product/product_1652173897b5d155b02b649f65e577704a333efd90.png62405b38c58fe0f07fcef2367d8a9ba1/400.png",
+            "title":"Radeon™ RX 6950 XT GAMING X TRIO 12G",
+            "price":"150 USD"
+        },
+        {
+            "id":"5",
+            "image":"https://dlcdnwebimgs.asus.com/gain/43a59809-d806-4532-9539-a1abf92d8387/w185/fwebp",
+            "title":"TUF Gaming VG30VQL1A",
+            "price":"150 USD"
+        },
+        {
+            "id":"6",
+            "image":"https://dlcdnwebimgs.asus.com/gain/2492f7b8-9bc2-4991-8249-a9ce96315bd9/w185/fwebp",
+            "title":"ProArt Display PA328CGV",
+            "price":"150 USD"
+        },
+        {
+            "id":"7",
+            "image":"https://dlcdnwebimgs.asus.com/gain/5DFCB652-674B-48E9-9515-605AF8CF79BF/w185/fwebp",
+            "title":"ROG Strix XG309CM",
+            "price":"150 USD"
+        },
+        {
+            "id":"8",
+            "image":"https://dlcdnwebimgs.asus.com/gain/A00C8F15-E127-4AB4-A5F3-B22FF0CB6BC9/w185/fwebp",
+            "title":"ROG Swift PG32UQX ",
+            "price":"150 USD"
+        },
+        {
+            "id":"9",
+            "image":"https://resource.logitech.com/w_386,ar_1.0,c_limit,f_auto,q_auto,dpr_2.0/d_transparent.gif/content/dam/logitech/en/products/mice/m720/gallery/m720-gallery-1a.png?v=1",
+            "title":"Logitech M720 Triathlon",
+            "price":"150 USD"
+        },
+        {
+            "id":"10",
+            "image":"https://resource.logitech.com/w_386,ar_1.0,c_limit,f_auto,q_auto,dpr_2.0/d_transparent.gif/content/dam/logitech/en/products/mice/ergo-m575/gallery/ergo-m575-gallery-graphite-1-new.png?v=1",
+            "title":"Logitech ERGO M575",
+            "price":"150 USD"
+        },
+        {
+            "id":"11",
+            "image":"https://resource.logitech.com/w_386,ar_1.0,c_limit,f_auto,q_auto,dpr_2.0/d_transparent.gif/content/dam/logitech/en/products/mice/mx-master-3s/gallery/mx-master-3s-mouse-top-view-graphite.png?v=1",
+            "title":"Logitech MX MASTER 3S",
+            "price":"150 USD"
+        },
+        {
+            "id":"12",
+            "image":"https://resource.logitech.com/w_386,ar_1.0,c_limit,f_auto,q_auto,dpr_2.0/d_transparent.gif/content/dam/logitech/en/products/mice/mx-anywhere-3/gallery/mx-anywhere-3-product-gallery-graphite-top.png?v=1",
+            "title":"Logitech MX Anywhere 3",
+            "price":"150 USD"
+        },
+        {
+            "id":"13",
+            "image":"https://product.hstatic.net/1000026716/product/gearvn-ban-phim-co-keychron-k1v4-led-white-tenkeyless_ed1ba64f574845c487c409336f7497d3_large.png",
+            "title":"Bàn phím cơ Keychron K1v4 LED White - Tenkeyless",
+            "price":"150 USD"
+        },
+        {
+            "id":"14",
+            "image":"https://product.hstatic.net/1000026716/product/k3_rgb1_e1cc1e7056fb4113b928b00a412e6713_large.jpg",
+            "title":"Bàn phím cơ Keychron K3 LED đơn Hot Swap - Case Nhôm",
+            "price":"150 USD"
+        },
+        {
+            "id":"15",
+            "image":"https://product.hstatic.net/1000026716/product/k4v2_nhom_e10f9cb151494457895be36165ba0306_large.png",
+            "title":"Bàn phím cơ Keychron K4 RGB Hot Swap - Case Nhôm",
+            "price":"150 USD"
+        },
+        {
+            "id":"16",
+            "image":"https://product.hstatic.net/1000026716/product/thumbphim-recovered_95486b59540245ab8bee69d8b50f5425_large.png",
+            "title":"Bàn phím Keychron K8 Pro Keycap Đen Khung Nhôm",
+            "price":"150 USD"
+        }
+    ]
+}
