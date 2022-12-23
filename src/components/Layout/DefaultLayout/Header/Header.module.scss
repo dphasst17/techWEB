@@ -37,7 +37,7 @@
         line-height: 60px;
     }
     a:hover{
-        color:tan;
+        color: #fff;
     }
     .text{
         width:100%;
@@ -97,14 +97,14 @@
                 border-radius: 45%;
                 position: absolute;
                 margin-left: 28%;
-                margin-top: -25%;
+                margin-top: -30%;
                 color: #fff;
                 text-align: center;
                 line-height: initial;
             }
             .cart_content{
-                display: block;
-                width: 350px;
+                display: none;
+                width: 1200%;
                 min-height: 300px;
                 background: rgba(255, 255, 255, 0.8);
                 box-shadow: 2px 2px 2px 2px grey;
@@ -127,10 +127,11 @@
                             width:50px;
                             height:50px;
                             margin-left:10%;
+                            margin-top:10%;
                             position:absolute;
                         }
                         .information{
-                            margin-left:45%;
+                            margin-left:60%;
                             position: absolute;
                             h4{
                                 margin-top:5%;
@@ -139,20 +140,52 @@
                         }
                         .button{
                             position: absolute;
-                            margin-top: 2%;
-                            margin-left: 150%;
+                            margin-top: 10%;
+                            margin-left: 225%;
                             display: inline-flex;
-                             button{
-                                 margin:-5px 20px;
-                                 font-size: 30px; 
+                             .reduce{
+                                position: relative;
+                                border-style: none;
+                                background-color:transparent;
+                                margin:-5px 20px;
+                                font-size: 30px; 
                              }
-                             div{
-                                position: absolute;
-                                margin-top: 5px;
-                                margin-left: 40%;
+                             .increment{
+                                position: relative;
+                                margin:-5px 10%;
+                                font-size: 30px;
+                                background-color:transparent;
+                                border-style: none; 
+                             }
+                             .Count{
+                                width: 25%;
+                                position: relative;                               
+                                margin-left: -15%;
+                                margin-top:2%;
                                 font-size: 20px;
+                                padding:0 30px 0 30px;
+                                .showCount{
+                                    position: relative;
+                                    width: 10%;
+                                }
                              }
-                         }
+                        }
+                        .trash{
+                            width:30%;
+                            position: absolute;
+                            margin-left:320%;
+                            margin-top:15%;
+                            button{
+                                border-style:none;
+                                background-color: transparent;
+                                svg{
+                                    width:50%;
+                                    path{
+                                        fill:#000;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
                 /* button---payment */
@@ -161,39 +194,36 @@
                     width:30%;
                     height:30px;
                     margin-top: 15%;
-                    margin-left: 63%;
-                    border-radius:10px;
-                    background-color: antiquewhite;
-                    box-shadow: 2px 2px 2px 2px grey;                         
+                    margin-left: 75%;
+                                            
                         button{
-                            width:100%;
+                            width:70%;
                             height:30px;
                             border-style:none;
                             border-radius:10px;
                             background-color: antiquewhite;
                             box-shadow: 2px 2px 2px 2px grey;                         
                             a{
-                                font-size:20px;
+                                font-size:15px;
                                 line-height: 30px;
                             }
                         }
                 }
                 .removeItems{
-                    position: absolute;
-                    width: 90%;
+                    float:right;
+                    width: 30%;
                     height: 30px;
-                    margin-top: -22%;
-                    margin-left: 13%;
-
+                    margin-top: -6%;
+                    margin-right: 20%;
                     button{
-                        width:100%;
+                        width:70%;
                         height:30px;
                         border-style:none;
                         border-radius:10px;
                         background-color: antiquewhite;
                         box-shadow: 2px 2px 2px 2px grey;  
                         a{
-                            font-size:20px;
+                            font-size:15px;
                             line-height: 30px;
                         }                       
                         
@@ -221,6 +251,30 @@
                 path{
                     fill:rgb(209, 208, 207);
                 }  
+            }
+        }
+        .detail{
+            position: absolute;
+            width:150%;
+            height:300px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 2px 2px 2px 2px grey;
+            border-radius: 10px;
+            .box{
+                width:100%;
+                .user_information, .list_order{
+                    height:30px;
+                }
+                a{
+                    font-size: 17px;
+                    text-align: left;
+                    margin-left:5%;
+                    color:#000;
+                    font-weight: 600;
+                }
+                a:hover{
+                    font-size: 19px;
+                }
             }
         }
     }

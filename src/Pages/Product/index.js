@@ -17,42 +17,54 @@ function Product() {
         <div className={cx("content")}>
           <div className={cx("filter")}>
             <p>Filter</p>
-            <div className={cx("container")}>
+            <div className={cx("box_filter")}>
               <h3>About Brand</h3>
               {keyword.map((keyword, index) => (
-                <div className={cx("content")} key={index}>
-                  <label htmlFor="keyword" className={cx("detail")}>
-                    <input type="checkbox" name="keyword" />
-                    <label htmlFor="keyword">{keyword.keyword}</label>
-                  </label>
+                <div className={cx("box_filter_detail")} key={index}>
+                  <div className={cx("detail")}>
+                    <input
+                      type="checkbox"
+                      name="keyword"
+                      id={cx("keyword-brand") + `${keyword.id}`}
+                    />
+                    <label htmlFor={cx("keyword-brand") + `${keyword.id}`}>
+                      {keyword.keyword}
+                    </label>
+                  </div>
                 </div>
               ))}
               <h3>About Price</h3>
               {price.map((price, index) => (
-                <div className={cx("content")} key={index}>
-                  
+                <div className={cx("box_filter_detail")} key={index}>
                   <div htmlFor="keyword" className={cx("detail")}>
-                    <input type="checkbox" name="keyword" id={cx("keyword") + `${price.id}`}></input>
-                    <label htmlFor={cx("keyword") + `${price.id}`}>{price.price}</label>
+                    <input
+                      type="checkbox"
+                      name="keyword"
+                      id={cx("keyword-price") + `${price.id}`}
+                    ></input>
+                    <label htmlFor={cx("keyword-price") + `${price.id}`}>
+                      {price.price}
+                    </label>
                   </div>
-                  
                 </div>
               ))}
             </div>
           </div>
 
-
-                  
-          <div className={cx("content_container")}> 
+          <div className={cx("content_container")}>
             <div className={cx("show")}>
               {product.map((product, index) => (
                 <div className={cx("product-detail")} key={index}>
                   <div className={cx("detail-box")}>
                     <img src={product.image} alt="" />
                     <h4>{product.title}</h4>
-                    <p>{product.price}</p>
+                    <p>{product.price} USD</p>
                     <CartContext.Consumer>
-                      {({addToCart}) => <button onClick={() =>addToCart(product)}>Add to cart</button>} 
+                      {({ addToCart }) => (
+                        <button onClick={() => addToCart(product)}>
+                          Add to cart
+                        </button>
+                      )}
                     </CartContext.Consumer>
                   </div>
                 </div>

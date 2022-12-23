@@ -4,6 +4,7 @@ import Accessory from '~/Pages/Accessory';
 import User from '~/Pages/User';
 import Login from '~/Pages/Login';
 import CartDetail from '~/Pages/CartDetail';
+import News from '~/Pages/News';
 
 	//PublicRoutes
 	const publicRoutes = [
@@ -12,7 +13,8 @@ import CartDetail from '~/Pages/CartDetail';
 			{path: '/product', component:Product}, 			
     		{path: '/cartdetail', component:CartDetail},
 			{path: '/user', component:User},
-			{path: '/login', component:Login},	
+			{path: '/login', component:Login},
+			{path: '/news', component:News},	
 
 	]
 	

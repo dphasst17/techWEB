@@ -11,12 +11,13 @@ function Home() {
     <div className={cx("home")}>
       <Slideshow />
       <Product />
+
       <button className={cx("more")}>
-        <a href="/product">More...</a>
+        <a href="/product">Load more...</a>
       </button>
       <AccDemo />
       <button className={cx("more")}>
-        <a href="/accessory">More...</a>
+        <a href="/accessory">Load more...</a>
       </button>
     </div>
   );

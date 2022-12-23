@@ -1,7 +1,44 @@
+import classNames from "classnames/bind";
+import { CartContext } from "~/Contexts/Cart";
+import style from "./CartDetail.module.scss";
+
+const cx = classNames.bind(style);
+
 function CartDetail() {
-    return ( 
-        <h2>Cart detail</h2>
-     );
+  return (
+    <div className={cx("cart_detail")}>
+      <div className={cx("container")}>
+        <h1>Payments Order</h1>
+        <div className={cx("box")}>
+          <CartContext.Consumer>
+            {({ cartItems }) => (
+              <div className={cx("detail")}>
+                {cartItems.map((cartItems, index) => (
+                  <div className={cx("listItems")} key={index}>
+                    <div className={cx("show")}>
+                      <img src={cartItems.image} alt="" />
+                      <div className={cx("product_detail")}>
+                        <h4>Name product: {cartItems.title}</h4>
+                        <hr></hr>
+                        <h4>Price product: {cartItems.price} USD</h4>
+                      </div>
+                      <div className={cx("countItems")}>
+                        Count: {cartItems.count}
+                      </div>
+                      <div className={cx("payment_money")}>
+                        Total: {cartItems.total} USD
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CartContext.Consumer>
+        </div>
+        <button>Payments product</button>
+      </div>
+    </div>
+  );
 }
 
 export default CartDetail;

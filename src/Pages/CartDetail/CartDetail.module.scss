@@ -1,0 +1,74 @@
+.cart_detail{
+    width:100%;
+    min-height:300px;
+    .container{
+        width:100%;
+        h1{
+            text-align:center;
+            margin-top:2%;
+            color:#fff;
+        }
+        .box{
+            width:80%;
+            margin:2% auto;
+            min-height:400px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
+            .detail{
+                width:90%;
+                margin:0 auto;
+                padding:2% 0;
+                .listItems{
+                    
+                    .show{
+                        width:100%;
+                        display:inline-block;
+                        color:#fff;
+                        padding-bottom:5%;
+                        img{
+                            width:200px;
+                            height:150px;
+                        }
+                        .product_detail{
+                            width: 30%;
+                            height:auto;
+                            position: absolute;
+                            margin-left: 15%;
+                            margin-top: -10%;
+                            h4{
+                                margin-top:2%;
+                                font-size: 20px;
+                            }
+                        }
+                        .countItems{
+                            position: absolute;
+                            margin-left:50%;
+                            margin-top:-9.5%;
+                            font-size: 20px;
+                            font-weight: 600;
+                        }
+                        .payment_money{
+                            position:absolute;
+                            font-size: 19px;
+                            font-weight: 600;
+                            margin-left:50%;
+                            margin-top:-7%;
+                        }
+                    }
+                }
+            }
+        }
+        button{
+            float:right;
+            margin-top:2%;
+            margin-right:10%;
+            width:15%;
+            height:30px;
+            border-radius:15px;
+            border-style:none;
+            outline:0;
+            font-size:19px;
+        }
+    }
+}
