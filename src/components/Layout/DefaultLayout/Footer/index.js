@@ -6,7 +6,7 @@ const cx = classNames.bind(style);
 function Footer() {
     return ( 
         <div className={cx("footer")}>
-            
+            This is Footer
         </div>
      );
 }
