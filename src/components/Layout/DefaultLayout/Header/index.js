@@ -34,6 +34,7 @@ function Header() {
       navigate("/login")
     }
   }
+  /* Button check out */
   /* Check Login */
   let handleCheckout = () => {
     if(checkLogin === true){
