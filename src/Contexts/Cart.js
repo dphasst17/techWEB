@@ -92,7 +92,7 @@ export class CartProvider extends Component {
       }
 
     } 
-    /* If the list cart does not exists , add new items*/
+    /* If the list cart does not exists , add new item*/
     else {
       this.setState({
         cartItems: this.state.cartItems.concat(product),
