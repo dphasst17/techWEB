@@ -8,6 +8,7 @@ const cx = classNames.bind(style);
 function checkOut() {
   let checkLogin = JSON.parse(localStorage.getItem("isLogin") || "[]")
   let navigate = useNavigate;
+  /* Check login  */
   let handleCheckOut = () => {
     if(checkLogin === true){
       alert("Check out Success")
