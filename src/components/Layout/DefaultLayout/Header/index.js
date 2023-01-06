@@ -108,7 +108,7 @@ function Header() {
                               )}
                             </CartContext.Consumer>
                             <span className={cx("Count")}>
-                              {cartItems.count}
+                              {cartItems.quantity}
                             </span>
                             <CartContext.Consumer>
                               {({ incrementItems }) => (
