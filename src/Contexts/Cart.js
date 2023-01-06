@@ -49,6 +49,7 @@ export class CartProvider extends Component {
             quantity: items.quantity ,
             total: items.price * items.quantity
           }))));
+          /* rerender items */
           this.setState({
             cartItems: JSON.parse(localStorage.getItem("listCart")),
           });
