@@ -40,6 +40,7 @@ export class CartProvider extends Component {
           }else{
             return {...items}
           }});
+          /* set items in local */
           localStorage.setItem("listCart",JSON.stringify(checkID.map(items => ({
             id: items.id,
             image: items.image,

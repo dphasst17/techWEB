@@ -25,6 +25,7 @@ function Header() {
   }else{
     return check = 'Log in'
   }}
+  /* check Login */
   let handleButtonLog = () =>{
     if(checkLogin === true){
       localStorage.setItem("isLogin",false);
@@ -33,6 +34,7 @@ function Header() {
       navigate("/login")
     }
   }
+  /* Check Login */
   let handleCheckout = () => {
     if(checkLogin === true){
       navigate("/checkout")
