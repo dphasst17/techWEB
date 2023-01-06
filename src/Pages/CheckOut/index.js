@@ -1,11 +1,20 @@
 import classNames from "classnames/bind";
 import { CartContext } from "~/Contexts/Cart";
 import style from "./CheckOut.module.scss";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(style);
 
 function checkOut() {
-
+  let checkLogin = JSON.parse(localStorage.getItem("isLogin") || "[]")
+  let navigate = useNavigate;
+  let handleCheckOut = () => {
+    if(checkLogin === true){
+      alert("Check out Success")
+    }else{
+      navigate("/login")
+    }
+  }
   return (
     <div className={cx("cart_detail")}>
       <div className={cx("container")}>
@@ -25,7 +34,7 @@ function checkOut() {
                         <h4>Price product: {cartItems.price} USD</h4>
                       </div>
                       <div className={cx("countItems")}>
-                        Count: {cartItems.count}
+                        Quantity: {cartItems.quantity}
                       </div>
                       <div className={cx("payment_money")}>
                         Total: {cartItems.total} USD
@@ -38,7 +47,7 @@ function checkOut() {
             )}
           </CartContext.Consumer>
         </div>
-        <button>Payments product</button>
+        <button onClick={handleCheckOut}>Payments product</button>
       </div>
     </div>
   );

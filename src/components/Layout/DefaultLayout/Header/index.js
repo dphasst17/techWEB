@@ -33,6 +33,13 @@ function Header() {
       navigate("/login")
     }
   }
+  let handleCheckout = () => {
+    if(checkLogin === true){
+      navigate("/checkout")
+    }else{
+      navigate("/login")
+    }
+  }
   return (
     <div className={cx("header")}>
       {/* NAV */}
@@ -107,7 +114,7 @@ function Header() {
                                 </button>
                               )}
                             </CartContext.Consumer>
-                            <span className={cx("Count")}>
+                            <span className={cx("quantity")}>
                               {cartItems.quantity}
                             </span>
                             <CartContext.Consumer>
@@ -135,10 +142,10 @@ function Header() {
                       </div>
                     ))}
                   </div>
-                  {/* button --- payment */}
+                  {/* button --- checkOut */}
                   <div className={cx("payment")}>
-                    <button>
-                      <a href="/checkout">Check out</a>
+                    <button onClick={handleCheckout}>
+                      Check out
                     </button>
                   </div>
                   {/* button remove all items */}
@@ -146,7 +153,7 @@ function Header() {
                     {({ removedAllItems }) => (
                       <div className={cx("removeItems")}>
                         <button onClick={() => removedAllItems()}>
-                          <a href="#remove">Remove All</a>
+                          Remove All
                         </button>
                       </div>
                     )}

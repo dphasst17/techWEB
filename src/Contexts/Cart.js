@@ -18,8 +18,7 @@ export class CartProvider extends Component {
 
   addToCart(product) {
     let listCart = JSON.parse(localStorage.getItem("listCart") || "[]");
-    let list = this.state.cartItems;
-    let y = list.map(items => items.id) /* get id form list cart */
+    let y = listCart.map(items => items.id) /* get id form list cart */
     let x = y.includes(product.id)  /* check product id in listCart return true if exist and return false if not exist*/
     //add item to cart and save in localStorage
     /* Check if the list cart exists or not */

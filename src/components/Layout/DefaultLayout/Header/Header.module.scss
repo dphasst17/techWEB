@@ -185,17 +185,14 @@
                                 background-color:transparent;
                                 border-style: none; 
                              }
-                             .Count{
+                             .quantity{
                                 width: 25%;
                                 position: relative;                               
                                 margin-left: -15%;
                                 margin-top:2%;
                                 font-size: 20px;
                                 padding:0 30px 0 30px;
-                                .showCount{
-                                    position: relative;
-                                    width: 10%;
-                                }
+                                
                              }
                         }
                         .trash{
@@ -239,11 +236,10 @@
                         }
                 }
                 .removeItems{
-                    float:right;
                     width: 30%;
                     height: 30px;
-                    margin-top: -5.7%;
-                    margin-right: 20%;
+                    margin-top: -5.8%;
+                    margin-left: 50%;
                     button{
                         width:70%;
                         height:30px;
