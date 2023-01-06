@@ -18,13 +18,84 @@ export class CartProvider extends Component {
 
   addToCart(product) {
     let listCart = JSON.parse(localStorage.getItem("listCart") || "[]");
+    let list = this.state.cartItems;
+    let y = list.map(items => items.id)
+    let x = y.includes(product.id)
 
+    console.log(x)
+    console.log(list);
+    if(x === true ){console.log("x ton tai")}else{console.log("x khong ton tai")}
     //add item to cart and save in localStorage
-    this.setState({
-      cartItems: this.state.cartItems.concat(product),
-    });
+    /* test check id  */
     if (listCart) {
-      listCart.push(product)
+      if (listCart.length !== 0) {
+        if(x === true){
+          let checkID = listCart.map(items => {if(product.id === items.id){
+            return {
+              id: items.id,
+                image: items.image,
+                title: items.title,
+                price: items.price,
+                count: items.count + 1,
+                total: items.price * items.count
+            }
+          }else{
+            return {...items}
+          }});
+          localStorage.setItem("listCart",JSON.stringify(checkID.map(items => ({
+            id: items.id,
+            image: items.image,
+            title: items.title,
+            price: items.price,
+            count: items.count ,
+            total: items.price * items.count
+          }))));
+          this.setState({
+            cartItems: JSON.parse(localStorage.getItem("listCart")),
+          });
+        }else{
+          this.setState({
+            cartItems: this.state.cartItems.concat(product),
+          });
+          listCart.push(product);
+          localStorage.setItem(
+            "listCart",
+            JSON.stringify(
+              listCart.map((items) => ({
+                id: items.id,
+                image: items.image,
+                title: items.title,
+                price: items.price,
+                count: items.count,
+                total: items.price * items.count,
+              }))
+            )
+          );
+        }
+      } else {
+        this.setState({
+          cartItems: this.state.cartItems.concat(product),
+        });
+        localStorage.setItem(
+          "listCart",
+          JSON.stringify([
+            {
+              id: product.id,
+              image: product.image,
+              title: product.title,
+              price: product.price,
+              count: product.count,
+              total: product.price * product.count,
+            },
+          ])
+        );
+      }
+
+      /* check */
+      /* this.setState({
+        cartItems: this.state.cartItems.concat(product),
+      });
+      listCart.push(product);
       localStorage.setItem(
         "listCart",
         JSON.stringify(
@@ -37,11 +108,25 @@ export class CartProvider extends Component {
             total: items.price * items.count,
           }))
         )
-      );
-      
+      ); */
+      /* check 2 */
     } else {
-      listCart.unshift(product);
-      localStorage.setItem("listCart", JSON.stringify(listCart));
+      this.setState({
+        cartItems: this.state.cartItems.concat(product),
+      });
+      localStorage.setItem(
+        "listCart",
+        JSON.stringify([
+          {
+            id: product.id,
+            image: product.image,
+            title: product.title,
+            price: product.price,
+            count: product.count,
+            total: product.price * product.count,
+          },
+        ])
+      );
     }
   }
   /* Remove all */
@@ -55,7 +140,7 @@ export class CartProvider extends Component {
     let currentItems = this.state.cartItems;
     currentItems = currentItems.filter((items) => items.id !== product.id);
     localStorage.setItem("listCart", JSON.stringify(currentItems));
-    console.log(currentItems);
+
     this.setState({
       cartItems: JSON.parse(localStorage.getItem("listCart")),
     });
@@ -74,11 +159,7 @@ export class CartProvider extends Component {
         };
       } else {
         return {
-          id: items.id,
-          image: items.image,
-          title: items.title,
-          price: items.price,
-          count: items.count,
+          ...items,
         };
       }
     });
@@ -95,7 +176,6 @@ export class CartProvider extends Component {
         }))
       )
     );
-
     this.setState({
       cartItems: JSON.parse(localStorage.getItem("listCart")),
     });
@@ -105,7 +185,6 @@ export class CartProvider extends Component {
     let decrement = this.state.cartItems;
     decrement = decrement.map((items) => {
       if (items.id === product.id && items.count > 1) {
-        
         return {
           id: items.id,
           image: items.image,
@@ -115,27 +194,23 @@ export class CartProvider extends Component {
         };
       } else {
         return {
+          ...items,
+        };
+      }
+    });
+    localStorage.setItem(
+      "listCart",
+      JSON.stringify(
+        decrement.map((items) => ({
           id: items.id,
           image: items.image,
           title: items.title,
           price: items.price,
           count: items.count,
-        };
-      }
-    });
-    localStorage.setItem(
-          "listCart",
-          JSON.stringify(
-            decrement.map((items) => ({
-              id: items.id,
-              image: items.image,
-              title: items.title,
-              price: items.price,
-              count: items.count,
-              total: items.price * items.count,
-            }))
-          )
-        );
+          total: items.price * items.count,
+        }))
+      )
+    );
 
     this.setState({
       cartItems: JSON.parse(localStorage.getItem("listCart")),

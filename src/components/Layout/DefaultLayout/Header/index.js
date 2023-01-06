@@ -6,46 +6,61 @@ import {
   faCartShopping,
   faCircleUser,
   faList,
+  faMagnifyingGlass,
   faTrashCan,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { CartContext } from "~/Contexts/Cart";
-
+import { useNavigate } from "react-router-dom";
+const show = () => {
+  alert("check search");
+};
 const cx = classNames.bind(styles);
 function Header() {
   const [isShow, setIsShow] = useState(false);
+  let navigate = useNavigate();
+  let checkLogin = JSON.parse(localStorage.getItem("isLogin") || "[]")
+  let check = () => {if(checkLogin === true){
+    return check = 'Log out'
+  }else{
+    return check = 'Log in'
+  }}
+  let handleButtonLog = () =>{
+    if(checkLogin === true){
+      localStorage.setItem("isLogin",false);
+      navigate("/login")
+    }else{
+      navigate("/login")
+    }
+  }
   return (
     <div className={cx("header")}>
       {/* NAV */}
       <div className={cx("nav")}>
         <ul>
           <li>
-            <div className={cx("nav_text")}>
-              <a href="/">
-                <div className={cx("text")}>Home</div>
-              </a>
-            </div>
+            <a href="/">
+              <div className={cx("nav_text")}>
+                Home
+                <div className={cx("hover_nav")}></div>
+              </div>
+            </a>
           </li>
           <li>
-            <div className={cx("nav_text")}>
-              <a href="/product">
-                <div className={cx("text")}>Product</div>
-              </a>
-            </div>
+            <a href="/product">
+              <div className={cx("nav_text")}>
+                Product
+                <div className={cx("hover_nav")}></div>
+              </div>
+            </a>
           </li>
           <li>
-            <div className={cx("nav_text")}>
-              <a href="/accessory">
-                <div className={cx("text")}>Accessory</div>
-              </a>
-            </div>
-          </li>
-          <li>
-            <div className={cx("nav_text")}>
-              <a href="/news">
-                <div className={cx("text")}>News</div>
-              </a>
-            </div>
+            <a href="/accessory">
+              <div className={cx("nav_text")}>
+                Accessory
+                <div className={cx("hover_nav")}></div>
+              </div>
+            </a>
           </li>
         </ul>
       </div>
@@ -56,7 +71,10 @@ function Header() {
       </div>
       {/* Search input */}
       <div className={cx("search")}>
-        <input placeholder="    Search......" spellCheck="false" />
+        <input placeholder="Search......" spellCheck="false" />
+        <button onClick={show} className={cx("iconSearch")}>
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
+        </button>
       </div>
       {/* Icon */}
       <div className={cx("icon")}>
@@ -120,7 +138,7 @@ function Header() {
                   {/* button --- payment */}
                   <div className={cx("payment")}>
                     <button>
-                      <a href="/cartdetail">Payment</a>
+                      <a href="/checkout">Check out</a>
                     </button>
                   </div>
                   {/* button remove all items */}
@@ -145,15 +163,23 @@ function Header() {
           {isShow && (
             <div className={cx("detail")}>
               <div className={cx("box")}>
+                {/* User information */}
                 <div className={cx("user_information")}>
                   <a href="/user">
                     <FontAwesomeIcon icon={faUser} /> User information
                   </a>
                   <br></br>
                 </div>
+                {/* List order */}
                 <div className={cx("list_order")}>
-                  <a href="/cartdetail">
+                  <a href="/checkout">
                     <FontAwesomeIcon icon={faList} /> List order
+                  </a>
+                </div>
+                {/* button Login/Logout */}
+                <div className={cx("buttonLog")}>
+                  <a href="/login">
+                    <input type="button" value={check()} onClick={handleButtonLog}/>
                   </a>
                 </div>
               </div>

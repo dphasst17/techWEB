@@ -1,18 +1,20 @@
 import classNames from "classnames/bind";
 import { CartContext } from "~/Contexts/Cart";
-import style from "./CartDetail.module.scss";
+import style from "./CheckOut.module.scss";
 
 const cx = classNames.bind(style);
 
-function CartDetail() {
+function checkOut() {
+
   return (
     <div className={cx("cart_detail")}>
       <div className={cx("container")}>
-        <h1>Payments Order</h1>
+        <h1>Check Out</h1>
         <div className={cx("box")}>
           <CartContext.Consumer>
             {({ cartItems }) => (
               <div className={cx("detail")}>
+                <h2>You have {cartItems.length} orders</h2>
                 {cartItems.map((cartItems, index) => (
                   <div className={cx("listItems")} key={index}>
                     <div className={cx("show")}>
@@ -31,6 +33,7 @@ function CartDetail() {
                     </div>
                   </div>
                 ))}
+                
               </div>
             )}
           </CartContext.Consumer>
@@ -41,4 +44,4 @@ function CartDetail() {
   );
 }
 
-export default CartDetail;
+export default checkOut;

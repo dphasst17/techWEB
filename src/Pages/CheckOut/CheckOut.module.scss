@@ -6,7 +6,7 @@
         h1{
             text-align:center;
             margin-top:2%;
-            color:#fff;
+            color:#000;
         }
         .box{
             width:80%;
@@ -19,12 +19,18 @@
                 width:90%;
                 margin:0 auto;
                 padding:2% 0;
+                h2{
+                    text-align:center;
+                    margin-top:0%;
+                    color:#000;
+                    padding-bottom:2%;
+                }
                 .listItems{
                     
                     .show{
                         width:100%;
                         display:inline-block;
-                        color:#fff;
+                        color:#000;
                         padding-bottom:5%;
                         img{
                             width:200px;

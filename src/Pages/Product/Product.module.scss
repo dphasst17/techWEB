@@ -1,144 +1,144 @@
-.product{
-    width:100%;
-    height:1000px;
-    position:relative;
-    margin-top:2%;
+.product {
+    width: 100%;
+    height: 1000px;
+    position: relative;
+    margin-top: 2%;
     text-decoration: none;
-    .container{
-        width:100%;
-        height:auto;
-        .content{
-            width:98%;
-            height:auto;
-            display:inline-block;
-            .filter{
-                width:25%;
-                height:auto;
+    .container {
+        width: 100%;
+        height: auto;
+        .content {
+            width: 98%;
+            height: auto;
+            display: inline-block;
+            .filter {
+                width: 25%;
+                height: auto;
                 position: absolute;
-                margin-left:2%;
+                margin-left: 2%;
                 background: rgba(255, 255, 255, 0.05);
                 border-radius: 16px;
                 box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
-                color:#000;
-                p{
-                    text-align:center;
-                    color:#fff;
-                    font-size:30px;
-                    margin-top:2%;
+                color: #000;
+                p {
+                    text-align: center;
+                    color: #fff;
+                    font-size: 30px;
+                    margin-top: 2%;
                 }
-                .box_filter{
-                    width:100%;
-                    height:40%;
-                    margin-top:-5%;
+                .box_filter {
+                    width: 100%;
+                    height: 40%;
+                    margin-top: -5%;
                     padding-bottom: 5%;
-                    h3{
+                    h3 {
                         margin-left: 5%;
                         margin-top: 5%;
-                        font-size:20px;
+                        font-size: 20px;
                     }
-                    .box_filter_detail{
-                        width:80%;
-                        margin-left:10%;
-                        margin-top:5%;
-                        font-size:20px;
-                        input[type="checkbox"]{
-                            accent-color: tan;
+                    .box_filter_detail {
+                        width: 80%;
+                        margin-left: 10%;
+                        margin-top: 5%;
+                        font-size: 20px;
+                        input[type="checkbox"] {
+                            accent-color: #373635;
+                            border-radius: 50%;
                         }
-                        label{
-                            margin-left:10%;
+                        label {
+                            margin-left: 7%;
                         }
                     }
                 }
             }
-            .content_container{
-                width:70%;
-                height:1000px;
+            .content_container {
+                width: 70%;
+                height: 1000px;
                 background: rgba(255, 255, 255, 0.05);
                 border-radius: 16px;
                 box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
                 float: right;
-                .show{
-                    width:100%;
-                    .product-detail{
+                .show {
+                    width: 100%;
+                    .product-detail {
                         width: 30%;
                         height: 300px;
                         display: inline-block;
                         margin-left: 2.3%;
-                        margin-top:2.5%;
-                        .detail-box{
-                            height:300px;
-                            background-color:transparent;
-                            img{                  
+                        margin-top: 2.5%;
+                        .detail-box {
+                            height: 300px;
+                            background-color: transparent;
+                            img {
                                 width: 250px;
                                 height: 150px;
                                 margin-left: 10%;
                                 margin-top: 1%;
                             }
-                            button{
-                                width:40%;
-                                height:35px;
-                                font-size:16px;
-                                border:none;
-                                border-radius:10px;
-                                background-color:#BBBBBB;
-                                float:right;
-                                margin-right:5%;
-                                margin-top:-10%;
-                                box-shadow:2px 2px #444444;
+                            button {
+                                width: 40%;
+                                height: 35px;
+                                font-size: 16px;
+                                border: none;
+                                border-radius: 10px;
+                                background-color: #bbbbbb;
+                                float: right;
+                                margin-right: 5%;
+                                margin-top: -10%;
+                                box-shadow: 2px 2px #444444;
                             }
-                            h4{
-                                text-align:center;
+                            h4 {
+                                text-align: center;
                             }
-                            p{
+                            p {
                                 font-size: 25px;
-                                margin-left:5%;
-                                margin-top:15%;
-                                
+                                margin-left: 5%;
+                                margin-top: 15%;
                             }
                         }
-                        .detail-box:hover{
+                        .detail-box:hover {
                             background: rgba(255, 255, 255, 0.15);
-                            border-radius:15px;
-                            transform: scale(1.1,1.1);
-                            animation:scale .5s ease normal;
+                            border-radius: 15px;
+                            transform: scale(1.1, 1.1);
+                            animation: scale 0.5s ease normal;
                         }
-                        @keyframes scale{
-                            0%{
-                                transform: scale(1,1);
+                        @keyframes scale {
+                            0% {
+                                transform: scale(1, 1);
                             }
-                            100%{
-                                transform: scale(1.1,1.1);
+                            100% {
+                                transform: scale(1.1, 1.1);
                             }
                         }
                     }
                 }
             }
-            
-            .button{
-                width:80%;
-                height:70px;
-                float:right;
-                margin-top:2%;
+
+            .button {
+                width: 80%;
+                height: 70px;
+                float: right;
+                margin-top: 2%;
                 .next,
-                .prev{
-                    width:6%;
-                    height:30px;
-                    margin-left:33.5%;
-                    border-radius:10px;
-                    border-style:none; 
+                .prev {
+                    width: 6%;
+                    height: 30px;
+                    margin-left: 33.5%;
+                    border-radius: 10px;
+                    border-style: none;
                     box-shadow: 3px 2px 3px 2px grey;
                 }
-                .number{
-                    margin-left:47%;
-                    margin-top:-2.6%;
+                .number {
+                    margin-left: 47%;
+                    margin-top: -2.6%;
                 }
-                .number button{
-                    width:5%;
-                    height:30px;
-                    margin-left:2%;
-                    border-radius:10px;
-                    box-shadow:2px 2px 2px 2px grey;
-                    border-style:none;
+                .number button {
+                    width: 5%;
+                    height: 30px;
+                    margin-left: 2%;
+                    border-radius: 10px;
+                    box-shadow: 2px 2px 2px 2px grey;
+                    border-style: none;
                 }
             }
         }
