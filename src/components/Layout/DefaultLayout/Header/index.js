@@ -19,30 +19,32 @@ const cx = classNames.bind(styles);
 function Header() {
   const [isShow, setIsShow] = useState(false);
   let navigate = useNavigate();
-  let checkLogin = JSON.parse(localStorage.getItem("isLogin") || "[]")
-  let check = () => {if(checkLogin === true){
-    return check = 'Log out'
-  }else{
-    return check = 'Log in'
-  }}
-  /* check Login */
-  let handleButtonLog = () =>{
-    if(checkLogin === true){
-      localStorage.setItem("isLogin",false);
-      navigate("/login")
-    }else{
-      navigate("/login")
+  let checkLogin = JSON.parse(localStorage.getItem("isLogin") || "[]");
+  let check = () => {
+    if (checkLogin === true) {
+      return (check = "Log out");
+    } else {
+      return (check = "Log in");
     }
-  }
+  };
+  /* check Login */
+  let handleButtonLog = () => {
+    if (checkLogin === true) {
+      localStorage.setItem("isLogin", false);
+      navigate("/login");
+    } else {
+      navigate("/login");
+    }
+  };
   /* Button check out */
   /* Check Login */
   let handleCheckout = () => {
-    if(checkLogin === true){
-      navigate("/checkout")
-    }else{
-      navigate("/login")
+    if (checkLogin === true) {
+      navigate("/checkout");
+    } else {
+      navigate("/login");
     }
-  }
+  };
   return (
     <div className={cx("header")}>
       {/* NAV */}
@@ -147,9 +149,7 @@ function Header() {
                   </div>
                   {/* button --- checkOut */}
                   <div className={cx("payment")}>
-                    <button onClick={handleCheckout}>
-                      Check out
-                    </button>
+                    <button onClick={handleCheckout}>Check out</button>
                   </div>
                   {/* button remove all items */}
                   <CartContext.Consumer>
@@ -189,7 +189,11 @@ function Header() {
                 {/* button Login/Logout */}
                 <div className={cx("buttonLog")}>
                   <a href="/login">
-                    <input type="button" value={check()} onClick={handleButtonLog}/>
+                    <input
+                      type="button"
+                      value={check()}
+                      onClick={handleButtonLog}
+                    />
                   </a>
                 </div>
               </div>

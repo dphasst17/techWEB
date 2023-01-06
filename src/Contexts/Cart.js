@@ -18,44 +18,52 @@ export class CartProvider extends Component {
 
   addToCart(product) {
     let listCart = JSON.parse(localStorage.getItem("listCart") || "[]");
-    let y = listCart.map(items => items.id) /* get id form list cart */
-    let x = y.includes(product.id)  /* check product id in listCart return true if exist and return false if not exist*/
+    let y = listCart.map((items) => items.id); /* get id form list cart */
+    let x = y.includes(
+      product.id
+    ); /* check product id in listCart return true if exist and return false if not exist*/
     //add item to cart and save in localStorage
     /* Check if the list cart exists or not */
     /* If the list cart exists */
     if (listCart) {
       if (listCart.length !== 0) {
         /* if product exists in list cart */
-        if(x === true){
+        if (x === true) {
           /* Check id , if product.id === items .id  */
-          let checkID = listCart.map(items => {if(product.id === items.id){
-            return {
-              id: items.id,
+          let checkID = listCart.map((items) => {
+            if (product.id === items.id) {
+              return {
+                id: items.id,
                 image: items.image,
                 title: items.title,
                 price: items.price,
                 quantity: items.quantity + 1,
-                total: items.price * items.quantity
+                total: items.price * items.quantity,
+              };
+            } else {
+              return { ...items };
             }
-          }else{
-            return {...items}
-          }});
+          });
           /* set items in local */
-          localStorage.setItem("listCart",JSON.stringify(checkID.map(items => ({
-            id: items.id,
-            image: items.image,
-            title: items.title,
-            price: items.price,
-            quantity: items.quantity ,
-            total: items.price * items.quantity
-          }))));
+          localStorage.setItem(
+            "listCart",
+            JSON.stringify(
+              checkID.map((items) => ({
+                id: items.id,
+                image: items.image,
+                title: items.title,
+                price: items.price,
+                quantity: items.quantity,
+                total: items.price * items.quantity,
+              }))
+            )
+          );
           /* rerender items */
           this.setState({
             cartItems: JSON.parse(localStorage.getItem("listCart")),
           });
-        }
+        } else {
         /* If product doesn't exists in list cart */
-        else{
           this.setState({
             cartItems: this.state.cartItems.concat(product),
           });
@@ -92,10 +100,8 @@ export class CartProvider extends Component {
           ])
         );
       }
-
-    } 
+    } else {
     /* If the list cart does not exists , add new item*/
-    else {
       this.setState({
         cartItems: this.state.cartItems.concat(product),
       });
