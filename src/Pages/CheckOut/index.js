@@ -25,7 +25,7 @@ function checkOut() {
                         <h4>Price product: {cartItems.price} USD</h4>
                       </div>
                       <div className={cx("countItems")}>
-                        Quantity: {cartItems.quantity}
+                        Count: {cartItems.count}
                       </div>
                       <div className={cx("payment_money")}>
                         Total: {cartItems.total} USD
