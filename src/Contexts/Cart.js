@@ -19,25 +19,24 @@ export class CartProvider extends Component {
   addToCart(product) {
     let listCart = JSON.parse(localStorage.getItem("listCart") || "[]");
     let list = this.state.cartItems;
-    let y = list.map(items => items.id)
-    let x = y.includes(product.id)
-
-    console.log(x)
-    console.log(list);
-    if(x === true ){console.log("x ton tai")}else{console.log("x khong ton tai")}
+    let y = list.map(items => items.id) /* get id form list cart */
+    let x = y.includes(product.id)  /* check product id in listCart return true if exist and return false if not exist*/
     //add item to cart and save in localStorage
-    /* test check id  */
+    /* Check if the list cart exists or not */
+    /* If the list cart exists */
     if (listCart) {
       if (listCart.length !== 0) {
+        /* if product exists in list cart */
         if(x === true){
+          /* Check id , if product.id === items .id  */
           let checkID = listCart.map(items => {if(product.id === items.id){
             return {
               id: items.id,
                 image: items.image,
                 title: items.title,
                 price: items.price,
-                count: items.count + 1,
-                total: items.price * items.count
+                quantity: items.quantity + 1,
+                total: items.price * items.quantity
             }
           }else{
             return {...items}
@@ -47,13 +46,15 @@ export class CartProvider extends Component {
             image: items.image,
             title: items.title,
             price: items.price,
-            count: items.count ,
-            total: items.price * items.count
+            quantity: items.quantity ,
+            total: items.price * items.quantity
           }))));
           this.setState({
             cartItems: JSON.parse(localStorage.getItem("listCart")),
           });
-        }else{
+        }
+        /* If product doesn't exists in list cart */
+        else{
           this.setState({
             cartItems: this.state.cartItems.concat(product),
           });
@@ -66,8 +67,8 @@ export class CartProvider extends Component {
                 image: items.image,
                 title: items.title,
                 price: items.price,
-                count: items.count,
-                total: items.price * items.count,
+                quantity: items.quantity,
+                total: items.price * items.quantity,
               }))
             )
           );
@@ -84,33 +85,16 @@ export class CartProvider extends Component {
               image: product.image,
               title: product.title,
               price: product.price,
-              count: product.count,
-              total: product.price * product.count,
+              quantity: product.quantity,
+              total: product.price * product.quantity,
             },
           ])
         );
       }
 
-      /* check */
-      /* this.setState({
-        cartItems: this.state.cartItems.concat(product),
-      });
-      listCart.push(product);
-      localStorage.setItem(
-        "listCart",
-        JSON.stringify(
-          listCart.map((items) => ({
-            id: items.id,
-            image: items.image,
-            title: items.title,
-            price: items.price,
-            count: items.count,
-            total: items.price * items.count,
-          }))
-        )
-      ); */
-      /* check 2 */
-    } else {
+    } 
+    /* If the list cart does not exists */
+    else {
       this.setState({
         cartItems: this.state.cartItems.concat(product),
       });
@@ -122,8 +106,8 @@ export class CartProvider extends Component {
             image: product.image,
             title: product.title,
             price: product.price,
-            count: product.count,
-            total: product.price * product.count,
+            quantity: product.quantity,
+            total: product.price * product.quantity,
           },
         ])
       );
@@ -155,7 +139,7 @@ export class CartProvider extends Component {
           image: items.image,
           title: items.title,
           price: items.price,
-          count: items.count + 1,
+          quantity: items.quantity + 1,
         };
       } else {
         return {
@@ -171,8 +155,8 @@ export class CartProvider extends Component {
           image: items.image,
           title: items.title,
           price: items.price,
-          count: items.count,
-          total: items.price * items.count,
+          quantity: items.quantity,
+          total: items.price * items.quantity,
         }))
       )
     );
@@ -184,13 +168,13 @@ export class CartProvider extends Component {
   decrementItems(product) {
     let decrement = this.state.cartItems;
     decrement = decrement.map((items) => {
-      if (items.id === product.id && items.count > 1) {
+      if (items.id === product.id && items.quantity > 1) {
         return {
           id: items.id,
           image: items.image,
           title: items.title,
           price: items.price,
-          count: items.count - 1,
+          quantity: items.quantity - 1,
         };
       } else {
         return {
@@ -206,8 +190,8 @@ export class CartProvider extends Component {
           image: items.image,
           title: items.title,
           price: items.price,
-          count: items.count,
-          total: items.price * items.count,
+          quantity: items.quantity,
+          total: items.price * items.quantity,
         }))
       )
     );
