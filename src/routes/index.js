@@ -5,6 +5,7 @@ import User from "~/Pages/User";
 import Login from "~/Pages/Login";
 import SignUp from "~/Pages/SignUp";
 import CheckOut from "~/Pages/CheckOut";
+import SearchResult from "~/Pages/SearchResult/SearchResult";
 
 //PublicRoutes
 const publicRoutes = [
@@ -12,6 +13,7 @@ const publicRoutes = [
   { path: "/accessory", component: Accessory },
   { path: "/product", component: Product },
   { path: "/checkout", component: CheckOut },
+  { path: "/searchResult", component: SearchResult },
   { path: "/user", component: User },
   { path: "/login", component: Login },
   { path: "/signup", component: SignUp },

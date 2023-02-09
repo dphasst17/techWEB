@@ -17,6 +17,7 @@
             box-shadow: 2px 2px 2px 2px rgb(162, 160, 160);
             .detail{
                 width:90%;
+                min-height: 350px;
                 margin:0 auto;
                 padding:2% 0;
                 h2{
@@ -26,8 +27,9 @@
                     padding-bottom:2%;
                 }
                 .listItems{
-                    
-                    .show{
+                    display:block;
+                    width:100%;
+                    .item{
                         width:100%;
                         display:inline-block;
                         color:#000;
@@ -64,19 +66,34 @@
                     }
                 }
             }
+            
         }
         button{
             position: absolute;
-            margin-top:2%;
-            margin-left:75%;
-            width:15%;
-            height:30px;
-            border-style:none;
-            border-radius:10px;
+            /* margin-top: 0%; */
+            margin-left: 76.2%;
+            width: 12%;
+            height: 30px;
+            border-style: none;
+            border-radius: 10px;
             background-color: rgb(255, 255, 255);
-            box-shadow: 2px 2px 2px 2px rgb(162, 160, 160);  
-            outline:0;
-            font-size:19px;
+            box-shadow: 2px 2px 2px 2px rgb(162 160 160);
+            outline: 0;
+            font-size: 19px;
+        }
+        .total{
+            position: absolute;
+            width: 22%;
+            margin-left: 50%;
+            border-radius: 10px;
+            background-color: rgb(255, 255, 255);
+            box-shadow: 2px 2px 2px 2px rgb(162 160 160);
+            p{
+                height: 30px;
+                font-size:21px;
+                font-weight:500;
+                text-align:center;
+            }
         }
     }
 }

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 export const CartContext = React.createContext();
-
 export class CartProvider extends Component {
   constructor(props) {
     super(props);
@@ -15,9 +14,9 @@ export class CartProvider extends Component {
     this.incrementItems = this.incrementItems.bind(this);
     this.decrementItems = this.decrementItems.bind(this);
   }
-
+  
   addToCart(product) {
-    let listCart = JSON.parse(localStorage.getItem("listCart") || "[]");
+    const listCart = JSON.parse(localStorage.getItem("listCart") || "[]");
     let y = listCart.map((items) => items.id); /* get id form list cart */
     let x = y.includes(
       product.id
@@ -34,7 +33,7 @@ export class CartProvider extends Component {
             if (product.id === items.id) {
               return {
                 id: items.id,
-                image: items.image,
+                url: items.url,
                 title: items.title,
                 price: items.price,
                 quantity: items.quantity + 1,
@@ -50,7 +49,7 @@ export class CartProvider extends Component {
             JSON.stringify(
               checkID.map((items) => ({
                 id: items.id,
-                image: items.image,
+                url: items.url,
                 title: items.title,
                 price: items.price,
                 quantity: items.quantity,
@@ -73,7 +72,7 @@ export class CartProvider extends Component {
             JSON.stringify(
               listCart.map((items) => ({
                 id: items.id,
-                image: items.image,
+                url: items.url,
                 title: items.title,
                 price: items.price,
                 quantity: items.quantity,
@@ -83,15 +82,14 @@ export class CartProvider extends Component {
           );
         }
       } else {
-        this.setState({
-          cartItems: this.state.cartItems.concat(product),
-        });
+        
+        listCart.push(product)
         localStorage.setItem(
           "listCart",
           JSON.stringify([
             {
               id: product.id,
-              image: product.image,
+              url: product.url,
               title: product.title,
               price: product.price,
               quantity: product.quantity,
@@ -99,18 +97,19 @@ export class CartProvider extends Component {
             },
           ])
         );
+        this.setState({
+          cartItems: JSON.parse(localStorage.getItem("listCart")),
+        });
       }
     } else {
     /* If the list cart does not exists , add new item*/
-      this.setState({
-        cartItems: this.state.cartItems.concat(product),
-      });
+      
       localStorage.setItem(
         "listCart",
         JSON.stringify([
           {
             id: product.id,
-            image: product.image,
+            url: product.url,
             title: product.title,
             price: product.price,
             quantity: product.quantity,
@@ -118,6 +117,9 @@ export class CartProvider extends Component {
           },
         ])
       );
+      this.setState({
+        cartItems: JSON.parse(localStorage.getItem("listCart")),
+      });
     }
   }
   /* Remove all */
@@ -143,7 +145,7 @@ export class CartProvider extends Component {
       if (items.id === product.id) {
         return {
           id: items.id,
-          image: items.image,
+          url: items.url,
           title: items.title,
           price: items.price,
           quantity: items.quantity + 1,
@@ -159,7 +161,7 @@ export class CartProvider extends Component {
       JSON.stringify(
         increment.map((items) => ({
           id: items.id,
-          image: items.image,
+          url: items.url,
           title: items.title,
           price: items.price,
           quantity: items.quantity,
@@ -178,7 +180,7 @@ export class CartProvider extends Component {
       if (items.id === product.id && items.quantity > 1) {
         return {
           id: items.id,
-          image: items.image,
+          url: items.url,
           title: items.title,
           price: items.price,
           quantity: items.quantity - 1,
@@ -194,7 +196,7 @@ export class CartProvider extends Component {
       JSON.stringify(
         decrement.map((items) => ({
           id: items.id,
-          image: items.image,
+          url: items.url,
           title: items.title,
           price: items.price,
           quantity: items.quantity,
@@ -207,6 +209,9 @@ export class CartProvider extends Component {
       cartItems: JSON.parse(localStorage.getItem("listCart")),
     });
   }
+  
+
+  
   render() {
     return (
       <CartContext.Provider

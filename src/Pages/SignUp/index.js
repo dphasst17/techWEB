@@ -17,6 +17,7 @@ function SignUp() {
   const [pass, setPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
   let navigate = useNavigate();
+
   const handleEmailChange = (email) => {
     setEmail(email.target.value);
   };
@@ -27,14 +28,14 @@ function SignUp() {
     setConfirmPass(confirmPass.target.value);
   };
   let handleClick = () => {
-    if (confirmPass === pass) {
+    if (confirmPass === pass ) {
       localStorage.setItem(
         "login",
         JSON.stringify([
           {
             email: email,
             pass: pass,
-            user: [{ name: "", phone: "", address: "" }],
+            user: [{ name: "phat", phone: "111111", address: "dddddd test" }],
           },
         ])
       );

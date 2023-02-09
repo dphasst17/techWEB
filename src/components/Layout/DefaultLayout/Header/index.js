@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCartShopping,
@@ -9,16 +9,19 @@ import {
   faMagnifyingGlass,
   faTrashCan,
   faUser,
+  faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { CartContext } from "~/Contexts/Cart";
 import { useNavigate } from "react-router-dom";
-const show = () => {
-  alert("check search");
-};
+import { ApiContext } from "~/ContextApi/ContextApi";
+import SearchResults from "./Search";
+
 const cx = classNames.bind(styles);
 function Header() {
-  const [isShow, setIsShow] = useState(false);
+  const [isShow, setIsShow] = useState(false)
+  let {valueSearch, handelValueSearch, showResult,handleSetIsShowResult, handleSetHideResult} = useContext(ApiContext)
   let navigate = useNavigate();
+
   let checkLogin = JSON.parse(localStorage.getItem("isLogin") || "[]");
   let check = () => {
     if (checkLogin === true) {
@@ -45,6 +48,13 @@ function Header() {
       navigate("/login");
     }
   };
+  let handleSetShow = () => {
+    setIsShow(!isShow)
+  }
+  let show = () => {
+    navigate("/searchResult");
+  };
+  
   return (
     <div className={cx("header")}>
       {/* NAV */}
@@ -83,10 +93,14 @@ function Header() {
       </div>
       {/* Search input */}
       <div className={cx("search")}>
-        <input placeholder="Search......" spellCheck="false" />
+        <input placeholder="Search......" spellCheck="false" value={valueSearch} onChange={handelValueSearch} onClick={handleSetIsShowResult}/>
         <button onClick={show} className={cx("iconSearch")}>
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>
+        {showResult &&<div className={cx("searchResult")}>
+            <div className={cx("title")}><p>Search result</p><span onClick={handleSetHideResult}><FontAwesomeIcon icon={faX}/></span></div>
+            <div className={cx("result")}><SearchResults/></div>
+          </div>}
       </div>
       {/* Icon */}
       <div className={cx("icon")}>
@@ -103,7 +117,7 @@ function Header() {
                     {cartItems.map((cartItems, index) => (
                       <div className={cx("cart_detail")} key={index}>
                         <div className={cx("item") + `${cartItems.id}`}>
-                          <img src={cartItems.image} alt="IMG-product" />
+                          <img src={cartItems.url} alt="IMG-product" />
                           <div className={cx("information")}>
                             <h4>{cartItems.title}</h4>
                             <h4>{cartItems.price}</h4>
@@ -148,7 +162,7 @@ function Header() {
                     ))}
                   </div>
                   {/* button --- checkOut */}
-                  <div className={cx("payment")}>
+                  <div className={cx("checkout")}>
                     <button onClick={handleCheckout}>Check out</button>
                   </div>
                   {/* button remove all items */}
@@ -167,11 +181,13 @@ function Header() {
           </CartContext.Consumer>
 
           {/* User*/}
-          <div className={cx("user")} onClick={() => setIsShow(!isShow)}>
+          <div className={cx("user")} onClick={handleSetShow}>
             <FontAwesomeIcon icon={faCircleUser} />
           </div>
-          {isShow && (
-            <div className={cx("detail")}>
+          
+        </div>
+        {isShow && (
+            <div className={cx("showItems")}>
               <div className={cx("box")}>
                 {/* User information */}
                 <div className={cx("user_information")}>
@@ -199,7 +215,6 @@ function Header() {
               </div>
             </div>
           )}
-        </div>
       </div>
     </div>
   );

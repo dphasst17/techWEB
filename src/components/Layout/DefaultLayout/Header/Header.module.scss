@@ -1,6 +1,6 @@
 .header{
     width:90%;
-    height:70px;
+    height:10%;
     margin:0;
     background: transparent;
     position:relative;
@@ -60,7 +60,6 @@
     height:70px;
 }
 .search{
-    display:inline-flex;
     width:22%;
     height:50%;
     position:absolute;
@@ -86,14 +85,74 @@
         height: 80%;
         background-color: rgb(70, 117, 200);
         margin-top: 1%;
-        margin-right: 1%;
+        margin-left: -8%;
         border-radius: 10px;
         border-style: none;
+        position: absolute;
         svg{
             height:80%;
             margin-top:4%;
             path{
                 fill:rgb(41, 41, 41);
+            }
+        }
+    }
+    .searchResult{
+        width: 100%;
+        min-height: 70px;
+        height: auto;
+        background-color: rgb(255, 255, 255);
+        /* position: absolute; */
+        margin: 2% auto;
+        border-radius: 10px;
+        padding: 2.5%;
+        box-shadow: 2px 2px 2px 2px grey;
+        .title{
+            height:20px;
+            display: flex;
+            p{
+                width:93%;
+                font-size: 15px;
+                color:#393939;
+                font-weight: 700;
+            }
+            span{
+                width:6%;
+                height:15px;
+                svg{
+                    width:100%;
+                    height:15px;
+                    path{
+                        fill: #393939;
+                    }
+                }
+            }
+        }
+        .result{
+            width:100%;
+            height:auto;
+            .itemsResults{
+                width:100%;
+                .detail{
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    /* flex-direction: row; */
+                    /* align-items: center; */
+                    margin: 6% 0;
+                    img{
+                        width:16%;
+                        height:40px;
+                        margin:0 auto;
+                    }
+                    .resultTitle{
+                        width:70%;
+                        h3{
+                            font-size: 8px;
+                            margin:0 auto;
+                        }
+                    }
+                }
             }
         }
     }
@@ -105,6 +164,9 @@
     margin-left: 85%;
     .detail{
         width:100%;
+        display:flex;
+        align-items: center;
+        justify-content: space-between;
         .cart_Shopping{
             width: 30%;
             height: 50px;
@@ -214,7 +276,7 @@
                     }
                 }
                 /* button---payment */
-                .payment{
+                .checkout{
                     position:relative;
                     width:30%;
                     height:30px;
@@ -269,7 +331,7 @@
             width: 30%;
             height: 50px;
             margin-left: 60%;
-            margin-top: -40%;
+            margin-top: -5%;
             border-style: none;
             background-color: transparent;
             position: absolute;
@@ -281,50 +343,51 @@
                 }  
             }
         }
-        .detail{
-            position: absolute;
-            width:150%;
-            height:300px;
-            background-color: rgb(255, 255, 255);
-            box-shadow: 2px 2px 2px 2px rgb(90, 89, 89);
-            border-radius: 10px;
-            margin-top:-1%;
-            z-index: 11111111111111111111111111;
-            .box{
-                width:100%;
-                .user_information, .list_order{
-                    height:30px;
-                    a{
-                        font-size: 17px;
-                        text-align: left;
-                        margin-left:5%;
-                        color:#000;
+        
+    }
+    .showItems{
+        position: absolute;
+        width:150%;
+        height:300px;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 2px 2px 2px 2px rgb(90, 89, 89);
+        border-radius: 10px;
+        margin-top:-1%;
+        z-index: 11111111111111111111111111;
+        .box{
+            width:100%;
+            .user_information, .list_order{
+                height:30px;
+                a{
+                    font-size: 17px;
+                    text-align: left;
+                    margin-left:5%;
+                    color:#000;
+                    font-weight: 600;
+                }
+                a:hover{
+                    font-size: 19px;
+                }
+            }
+            .buttonLog{
+                position: absolute;
+                width:35%;
+                height:30px;
+                margin-top: 85%;
+                margin-left: 33%;
+                a{  
+                    input{
+                        width:100%;
+                        height:30px;
+                        background-color: rgb(255, 255, 255);
+                        box-shadow: 2px 2px 2px 2px rgb(162, 160, 160);  
+                        border-radius:10px;
+                        outline: none;
+                        border-style:none;
                         font-weight: 600;
                     }
-                    a:hover{
-                        font-size: 19px;
-                    }
                 }
-                .buttonLog{
-                    position: absolute;
-                    width:35%;
-                    height:30px;
-                    margin-top: 85%;
-                    margin-left: 33%;
-                    a{  
-                        input{
-                            width:100%;
-                            height:30px;
-                            background-color: rgb(255, 255, 255);
-                            box-shadow: 2px 2px 2px 2px rgb(162, 160, 160);  
-                            border-radius:10px;
-                            outline: none;
-                            border-style:none;
-                            font-weight: 600;
-                        }
-                    }
-                    
-                }
+                
             }
         }
     }

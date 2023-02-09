@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-lone-blocks */
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
@@ -14,21 +14,26 @@ import {
   faRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { ApiContext } from "~/ContextApi/ContextApi";
 
 const cx = classNames.bind(style);
 
-function Login() {
+const Login = () => {
+  const {Users}=useContext(ApiContext)
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  let navigate = useNavigate();
+  const [type,setType] = useState("password")
+  const navigate = useNavigate();
 
-  let handleEmailChange = (email) => {
+  const dataUsers = Users.map(user => ({"emailCheck":user.email,"passCheck":user.password,"usernameCheck":user.username}))
+  console.log(dataUsers)
+  const handleEmailChange = (email) => {
     setEmail(email.target.value);
   };
-  let handlePassChange = (pass) => {
+  const handlePassChange = (pass) => {
     setPass(pass.target.value);
   };
-  let handleClick = () => {
+  const handleClick = () => {
     let checkLogin = JSON.parse(localStorage.getItem("login") || "[]");
     checkLogin.map((check) => {
       if (check.email === email && check.pass === pass) {
@@ -40,6 +45,7 @@ function Login() {
       return null;
     });
   };
+ 
   return (
     <div className={cx("login_container")}>
       <div className={cx("form")}>
@@ -63,14 +69,14 @@ function Login() {
             </div>
             <div className={cx("input")}>
               <input
-                type="password"
+                type={type}
                 autoComplete="Password"
                 placeholder="Enter your Password"
                 onChange={handlePassChange}
                 value={pass}
               />
               <div className={cx("eyeSlash")}>
-                <FontAwesomeIcon icon={faEyeSlash} />
+                <FontAwesomeIcon icon={faEyeSlash} onClick={() =>{if(type === "password"){setType("text")}else{setType("password")}}}/>
               </div>
             </div>
             <div className={cx("forgotPass")}>
