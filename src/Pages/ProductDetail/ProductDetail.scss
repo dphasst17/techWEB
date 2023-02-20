@@ -1,0 +1,230 @@
+.detailPage{
+    width:100%;
+    min-height:370px;
+    height:auto;
+    margin:2% auto;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .items{
+        width:100%;
+        min-height:350px;
+        height:auto;
+        margin-bottom:4%;
+        .itemsChild{
+            width:100%;
+            height:auto;
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+            .image{
+                width:40%;
+                display: flex;
+                justify-content: center;
+                img{
+                    width:80%;
+                    height:100%;
+                    object-fit: contain;
+                }
+            }
+            .itemsContent{
+                width:50%;
+                .title,.price{
+                    h1{
+                        color: #960202;
+                    }
+                }
+                .title{
+                    h1{
+                        text-align: center;
+                    }
+                }
+                .infoProduct{
+                    width:100%;
+                    height:auto;
+                }
+                .button{
+                    width:100%;
+                    height:20%;
+                    display: flex;
+                    justify-content: space-around;
+                    flex-wrap: wrap;
+                    align-content:center;
+                    button{
+                        width: 30%;
+                        height:2em;
+                        border:none;
+                        border-radius:10px;
+                        outline:none;
+                        background-color: rgb(70, 117, 200);
+                        color:#fff;
+                        font-size: 18px;
+                        padding:1%;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+    .relatedProducts{
+        width: 100%;
+        min-height: 200px;
+        height: auto;
+        h1{
+            text-align:center;
+            margin:0 0 4% 0;
+        }
+        .relatedChild{
+            width:100%;
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            flex-direction: row;
+            align-content: space-around;
+            .relatedDetail{
+                width:200px;
+                min-height:200px;
+                border-radius: 10px;
+                box-shadow: 2px 2px 2px 2px rgb(150, 148, 148);
+                .imgRelated{
+                    width:100%;
+                    height:45%;
+                    display: flex;
+                    justify-content: center;
+                    img{
+                        width:50%;
+                        object-fit: contain;
+                    }
+                }
+                .titleRelated,.priceRelated{
+                    width:100%;
+                    height:15%;
+                    text-align: center;
+                    h4{
+                        font-size: 15px;
+                        color:#960202;
+                    }
+                }
+                .priceRelated{
+                    height:10%;
+                    text-align: left;
+                    h4{
+                        margin-left:4%;
+                    }
+                }
+                .button{
+                    width:100%;
+                    height:20%;
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-content: center;
+                    justify-content: center;
+                    button{
+                        width: 25%;
+                        height:50%;
+                        margin-right:4%;
+                        border:none;
+                        border-radius:5px;
+                        background-color: rgb(70, 117, 200);
+                        svg{
+                            path{
+                                fill:#fff;
+                            }
+                        }
+                    }
+                    button:hover{
+                        background-color: rgb(2, 93, 251);
+                    }
+                    button:nth-child(3):hover{
+                        svg{
+                            path{
+                                fill:#b50404
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+@media (max-width:900px) and (min-width:400px){
+    .detailPage{
+        .items{
+            .itemsChild{
+                flex-direction: column;
+                .image{
+                    width:100%;
+                }
+                .itemsContent{
+                    width: 90%;
+                    margin:2% auto;
+                    .button{
+                        justify-content: flex-start;
+                        button{
+                            width:auto;
+                            margin-right:2%;
+                            padding: 0 2%;
+                        }
+                    }
+                }
+            }
+        }
+        .relatedProducts{
+            .relatedChild{
+                min-height: 450px;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                flex-direction: row;
+                align-content: space-around;
+                padding: 0 5%;
+             .relatedDetail{
+                width:170px;
+                height:200px;
+                margin-bottom:5%;
+                .titleRelated{
+                    height:45px;
+                }
+             }
+            }
+        }
+    }
+}
+@media (max-width:399.99px){
+    .detailPage{
+        .items{
+            .itemsChild{
+                flex-direction: column;
+                .image{
+                    width:100%;
+                }
+                .itemsContent{
+                    width: 90%;
+                    margin:2% auto;
+                    .button{
+                        justify-content: flex-start;
+                        button{
+                            width:auto;
+                            margin-right:2%;
+                            padding: 0 2%;
+                        }
+                    }
+                }
+            }
+        }
+        .relatedProducts{
+            .relatedChild{
+                justify-content: space-between;
+                padding:0 4%;
+             .relatedDetail{
+                width:160px;
+                height:200px;
+                margin-bottom:5%;
+                .titleRelated{
+                    height:45px;
+                }
+             }
+            }
+        }
+    }
+}

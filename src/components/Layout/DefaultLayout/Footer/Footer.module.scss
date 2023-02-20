@@ -1,7 +1,17 @@
 .footer{
     position:relative;
     width:100%;
-    height:30rem;
+    height:10rem;
     background-color:black;
-    margin-top:12%;
+/*     margin-top:12%; */
+}
+/* @media(max-width:1309px) and (min-width:1125px){
+    .footer{
+        margin-top:13%;
+    }
+} */
+@media (max-width:1309px){
+    .footer{
+        display:none;
+    }
 }

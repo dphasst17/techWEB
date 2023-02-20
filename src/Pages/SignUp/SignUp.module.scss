@@ -1,11 +1,15 @@
 
 .login_container{
-    width:50%;
+    width:100%;
+    min-height:500px;
     height:auto;
-    margin:10px;
+    display:flex;
+    justify-content: center;
     .form{
-        height:auto;
-        transform: translate(50%, 10%);
+        width:50%;
+        min-height: 350px;
+        height:600px;
+        margin-top:4%;
         .backHome{
             position:absolute;
             width:40%;
@@ -23,105 +27,161 @@
             }
         }
         form{
-            background: rgba(255, 255, 255, 0.08);
+            width:100%;
+            background: rgb(66 66 66 / 33%);
             border-radius: 16px;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(4.2px);
             -webkit-backdrop-filter: blur(4.2px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding:3em;
             height:500px;
             text-align:center;
             position: relative;
             transition: all 0.2s ease-in-out;
-            h2{
-                position: absolute;
-                margin-top:-4%;
-                margin-left:53%;
-            }
+            display:flex;
             img{
-                position:absolute;
-                width:300px;
+                width:40%;
                 height:500px;
                 border-radius:16px;
-                margin-top:-6.4%;
-                margin-left:-50%;
                 opacity:0.8;
                 object-fit: contain;
                 object-position: 0% 0;
-                
             }
-            .detail{
-                width:70%;
-                height:80%;
-                float:right;
-                margin-top:-1%;
-                .input{
-                    width:80%;
-                    height:15%;
-                    margin-left:20%;
-                    background-color: #fff;
-                    border-radius: 5px;
-                    input{
-                        display: block;
-                        width: 100%;
-                        height: 100%;
-                        margin-top: 5%;
-                        outline: 0;
-                        border-style: none;
-                        font-size: 15px;
-                        padding: 0 10px;
-                        background-color: transparent !important;
-                    }
+            .itemsForm{
+                width:60%;
+                height:100%;
+                display:flex;
+                flex-direction: column;
+                h2{
+                    width:100%;
+                    height: 15%;
+                    display: flex;
+                    padding: auto;
+                    align-content: center;
+                    justify-content: center;
+                    flex-wrap: wrap;
                 }
-                
-                button{
-                    position: absolute;
-                    width:49%;
-                    height:10%;
-                    font-size: large;
-                    font-style:inherit;
-                    font-weight: 600;
-                    border-style:none;
-                    border-radius:10px;
-                    margin-top:5%;
-                    margin-left:-18%;
-                    background-color: rgb(70, 117, 200);
-                }
-                a{
-                    font-size:17px;
-                    position: absolute;
-                    margin-top: 14%;
-                    margin-left:5%;
-                    color: #000;
-                    text-decoration: none;
-                }
-                a:hover{
-                    font-weight: 600;
-                }
-            }
-            .loginIcon{
-                width: 50%;
-                margin-left: 23%;
-                margin-top: 48%;
-                position: absolute;
-                .Icon{
-                    height:25px;
-                    margin-left:15%;
-                    svg{
-                        height:40px;
-                    }
-                    .facebook{ 
-                        path{
-                            fill:#00246b;
+                .detail{
+                    width:100%;
+                    height:60%;
+                    display: flex;
+                    flex-direction: column;
+                    flex-wrap: wrap;
+                    align-content: center;
+                    justify-content: space-around;
+                    margin-bottom:6%;
+                    .input{
+                        width:80%;
+                        height:15%;
+                        background: rgba(174, 174, 174, 0);
+                        border-bottom-style: solid;
+                        input{
+                            width: 100%;
+                            height: 100%;
+                            background: transparent;
+                            border-style: none;
+                            outline: 0;
+                            font-size: 20px;
+                            padding: 0 20px;
+                            
                         }
-
                     }
                     
+                    button{
+                        width:80%;
+                        height:12%;
+                        font-size: large;
+                        font-style:inherit;
+                        font-weight: 600;
+                        border-style:none;
+                        border-radius:10px;
+                        background-color: rgb(70, 117, 200);
+                        margin-top:2%;
+                    }
+                    .toLogin{
+                        text-align: right;
+                        a{
+                            color: #000;
+                            text-decoration: none;
+                            font-weight: 600;
+                            font-size: 16px;
+                            
+                        }
+                        a:hover{
+                           color:#c30202;
+                        }
+                    }
+                    
+                }
+                .loginIcon{
+                    width: 100%;
+                    height: 10%;;
+                    /* margin-top: 48%; */
+                    /* position: absolute; */
+                    display: flex;
+                    justify-content: space-evenly;
+                    .Icon{
+                        height:25px;
+                        svg{
+                            height:40px;
+                        }
+                        .facebook{ 
+                            path{
+                                fill:#00246b;
+                            }
+    
+                        }
+                        
+                    }
+                    .Icon:nth-child(2){
+                        svg{
+                            width:50px;
+                        }
+                    }
+                    .Icon:nth-child(3){
+                        svg{
+                            width:39px;
+                            height:39px;
+                            background-color: rgb(12, 12, 12);
+                            border-radius:50%;
+                            path{
+                                fill:#fff;
+                            }
+                        }
+                    }
                 }
             }
         }
         
     }
 }
-
+@media (max-width:1500px){
+    .login_container{
+        .form{
+            width:80%;
+            form{
+                h2{
+                    width:100%;
+                    text-align: center;
+                    margin-left:-8%;
+                }
+                img{
+                    display:none;
+                }
+                .itemsForm{
+                    width:100%;
+                    h2{
+                        margin:0 1%;
+                    }
+                    .detail{
+                        .input{
+                            input{
+                                font-size:15px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

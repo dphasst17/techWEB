@@ -3,7 +3,6 @@
 
 :root {
     --primary:#fe2c55;
-    
 }
 
 *{
@@ -31,19 +30,20 @@ body {
         height:100%;
         .wrapper{
             width:100%;
-            height:100%;
+            height:auto;
         }
     }
 }
 
 ::-webkit-scrollbar{
-    width:10px;
+    width:5px;
+    
 }
 ::-webkit-scrollbar-track{
     background-color:transparent;
 }
 ::-webkit-scrollbar-thumb{
-    background-image: linear-gradient(to top, #f9f6f6	,#fae6e6,#ffa0a0,#fe7575);
+    background-color: rgba(94, 93, 93, 0.889);
     border-radius: 10px;
 }
 
@@ -53,36 +53,94 @@ body {
 }
 .content{
     width:100%;
-    height:100%;
+    height:auto;
 }
 .slide-container{
     width:100%;
-    height:500px;
-}
-.react-slideshow-container .default-nav{
-    margin:0 2%;
-    background-color: transparent;
-}
-.react-slideshow-container .default-nav:hover{
-    background-color: rgb(225, 161, 114);
-    animation:button ease 1s;
-}
-@keyframes button{
-    0%{background-color: rgb(225, 211, 200);}
-    100%{background-color: rgb(225, 161, 114);}
-}
-.each-slide {
-    background-repeat: no-repeat;
-    width:100%;
-    height:500px;
-}
-.each-slide div{
-    width:100%;
-    height:500px;
+    height:34em;
     margin-top:2%;
+    .react-slideshow-container{
+        height:34em;
+        display: flex;
+        align-items: center;
+        position: relative;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-content: space-between;
+        .default-nav{
+            margin:0 1%;
+            background-color: transparent; 
+        }
+        .default-nav:hover{
+            background-color:  rgb(70, 117, 200);
+            animation:button ease 1s;
+        }
+        .slide {
+            background-repeat: no-repeat;
+            width:100%;
+            img{
+                width:90%;
+                height:33em;
+                margin-left:5%;
+            }
+        }
+    }
+    @keyframes button{
+        0%{background-color: rgb(91, 112, 128);}
+        100%{background-color:  rgb(70, 117, 200)}
+    }
+
 }
- .each-slide div  img{
-    width:90%;
-    height:500px;
-    margin-left:5%;
+@media (max-width:800px) and (min-width:600px){
+    .slide-container{
+        height:25em;
+        .react-slideshow-container{
+            height:25em;
+            .slide {
+                img{
+                    width:90%;
+                    height:24em;
+                    margin-left:5%;
+                }
+            }
+        }
+    }
+}
+@media (max-width:599.99px) and (min-width:300px){
+    .slide-container{
+        height:19em;
+        .react-slideshow-container{
+            height:19em;
+            .default-nav{
+                display: none;
+            }
+            .slide {
+                img{
+                    width:90%;
+                    height:18em;
+                    margin-left:5%;
+                }
+            }
+        }
+    }
+}
+@media (max-width:299.99px){
+
+    .slide-container{
+        height:11em;
+        .react-slideshow-container{
+            height:11em;
+            .default-nav{
+                display: none;
+            }
+            .slide {
+                img{
+                    width:90%;
+                    height:10em;
+                    margin-left:5%;
+                }
+            }
+        }
+    }
 }

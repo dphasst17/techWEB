@@ -9,7 +9,6 @@ import { ApiProvider } from "./ContextApi/ContextApi";
 
 function App() {
 
-
   return (
     <CartProvider>
       <ApiProvider>

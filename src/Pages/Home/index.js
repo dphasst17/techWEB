@@ -3,6 +3,7 @@ import style from "./Home.module.scss";
 import Slideshow from "./SlideShow";
 import Product from "./Product-demo";
 import AccDemo from "./Accessory-demo";
+import ListItems from "./List/List";
 
 const cx = classNames.bind(style);
 
@@ -10,15 +11,10 @@ function Home() {
   return (
     <div className={cx("home")}>
       <Slideshow />
+      <ListItems />
       <Product />
-
-      <button className={cx("more")}>
-        <a href="/product">Load more...</a>
-      </button>
       <AccDemo />
-      <button className={cx("more")}>
-        <a href="/accessory">Load more...</a>
-      </button>
+      
     </div>
   );
 }

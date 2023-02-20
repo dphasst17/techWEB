@@ -12,6 +12,7 @@ export const ApiProvider = ({ children }) => {
   const [Users, setUsers] = useState([]);
   const [valueSearch, setValueSearch] = useState("");
   const [showResult, setIsShowResult] = useState(false);
+  const [isToggleNav, setIsToggleNav] = useState(false);
   /* let [input] = useState([]); */
   useEffect(() => {
     fetch(urlProduct + "tqwu5d31kjdih2o")
@@ -59,6 +60,8 @@ export const ApiProvider = ({ children }) => {
         Users,
         valueSearch,
         showResult,
+        isToggleNav,
+        setIsToggleNav,
         /* input, */
         handelValueSearch,
         handleSetIsShowResult,

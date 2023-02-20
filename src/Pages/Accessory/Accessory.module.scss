@@ -45,20 +45,54 @@
             }
         }
     }
+    .filterMob{
+        display: none;
+        width:90%;
+        flex-direction: column;
+        margin:2% auto;
+        .aboutBrandMob,.aboutTypeMob{
+            display:flex;
+            flex-direction: column;
+            h2{
+                text-align: center;
+            }
+            .itemsBrand,.itemsPrice{
+                display: flex;
+                justify-content: flex-start;
+                flex-direction: row;
+                flex-wrap: wrap;
+                input[type="checkbox"]{
+                    display: none;
+                }
+                .brandDetail,.priceDetail{
+                    width:auto;
+                    background-color: rgb(70, 117, 200);
+                    color:#fff;
+                    padding:1%;
+                    border-radius:10px;
+                    margin:1%;
+                    .infType{
+                        font-size: 18px;
+                    }
+                }
+                .brandDetail:hover,.priceDetail:hover{
+                    background-color: #0534f4;
+                }
+            }
+        }
+    }
     .items_container {
         width: 70%;
         min-height: 500px;
         max-height: 1030px;
         background: rgba(255, 255, 255, 0.05);
-        border-radius: 16px;
+        border-radius: 16px 0px 0px 16px;
         box-shadow: 0 4px 30px rgb(0 0 0 / 75%);
         overflow: scroll;
-
         .show {
             width: 100%;
             display: flex;
             flex-wrap: wrap;
-            justify-content: flex-start;
             align-content: flex-start;
             padding-bottom:4%;
             .product-detail {
@@ -67,11 +101,10 @@
                 margin-left:4%;
                 margin-top: 3%;
                 border-radius:15px;
-                
                 .detail-box {
                     width: 100%;
                     min-width: 150px;
-                    height: 16em;
+                    height: 14em;
                     background-color: transparent;
                     display: flex;
                     border: solid 0.5px grey;
@@ -103,6 +136,16 @@
                             margin-right: 5%;
                             box-shadow: 2px 2px #444444;
                         }
+                        button:nth-child(2){
+                            a{
+                                text-decoration: none;
+                                svg{
+                                    path{
+                                        fill:#000
+                                    }
+                                }
+                            }
+                        }
                         button:hover {
                             transform: scale(1.1, 1.1);
                             animation: scale 0.5s ease;
@@ -127,6 +170,7 @@
                         height: 27%;
                         margin-top: 0%;
                         h4 {
+                            font-size: 15px;
                             text-align: center;
                             color: rgb(188, 12, 12);
                         }
@@ -151,6 +195,41 @@
                     }
                     100% {
                         transform: scale(1.1, 1.1);
+                    }
+                }
+            }
+        }
+    }
+}
+@media(max-width:1000px){
+    .accessory{
+        display: flex;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-content: space-around;
+        .filter{
+            display:none;
+        }
+        .filterMob{
+            display: flex;
+        }
+        .items_container{
+            width:90%;
+            box-shadow: 1px 1px 1px 1px  grey;
+            overflow-x: hidden;
+            .show{
+                justify-content: space-around;
+                .product-detail{
+                    min-width: 150px;
+                    margin-left:1%;
+                    .detail-box{
+                        height:13em;
+                        .title{
+                            h4{
+                                font-size: 10px;
+                            }
+                        }
                     }
                 }
             }

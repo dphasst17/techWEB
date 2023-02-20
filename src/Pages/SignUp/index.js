@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
-  faGithub,
-  faGoogle,
+  faGithub
 } from "@fortawesome/free-brands-svg-icons";
 import classNames from "classnames/bind";
 import style from "./SignUp.module.scss";
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+
 
 const cx = classNames.bind(style);
 
@@ -28,19 +29,21 @@ function SignUp() {
     setConfirmPass(confirmPass.target.value);
   };
   let handleClick = () => {
-    if (confirmPass === pass ) {
+    if (confirmPass === pass) {
       localStorage.setItem(
         "login",
         JSON.stringify([
           {
             email: email,
             pass: pass,
-            user: [{ name: "phat", phone: "111111", address: "dddddd test" }],
+            user: [{ fullName: "", phone: "", address: "" }],
+            listOrder: [],
+            purchaseOrder: [],
+            ID: "1",
           },
         ])
       );
-      navigate(-2);
-      alert("Sign Up success");
+      navigate("/login");
       localStorage.setItem("isLogin", true);
     } else {
       alert("Sign in false \nPlease check again!");
@@ -55,61 +58,63 @@ function SignUp() {
           </a>
         </div>
         <form>
-          <h2>Sign up Form</h2>
           <img src="https://wallpaperaccess.com/full/1682077.png" alt="" />
-          <div className={cx("detail")}>
-            <div className={cx("input")}>
-              <input
-                type="email"
-                autoComplete="Email"
-                placeholder="Enter your email"
-                id="email"
-                value={email}
-                onChange={handleEmailChange}
-              />
+          <div className={cx("itemsForm")}>
+            <h2>Sign up Form</h2>
+            <div className={cx("detail")}>
+              <div className={cx("input")}>
+                <input
+                  type="email"
+                  autoComplete="Email"
+                  placeholder="Enter your email"
+                  id="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                />
+              </div>
+              <div className={cx("input")}>
+                <input
+                  type="password"
+                  autoComplete="Password"
+                  placeholder="Enter your password"
+                  id={cx("pass")}
+                  value={pass}
+                  onChange={handlePassChange}
+                />
+              </div>
+              <div className={cx("input")}>
+                <input
+                  type="password"
+                  autoComplete="Confirm Password"
+                  placeholder="Confirm your password"
+                  id={cx("confirmPass")}
+                  value={confirmPass}
+                  onChange={handleConfirmChange}
+                />
+              </div>
+              <button type="button" onClick={handleClick}>
+                Sign Up
+              </button>
+              <div className={cx("toLogin")}><a href="/login">You have an account ?</a></div>
             </div>
-            <div className={cx("input")}>
-              <input
-                type="password"
-                autoComplete="Password"
-                placeholder="Enter your password"
-                id={cx("pass")}
-                value={pass}
-                onChange={handlePassChange}
-              />
-            </div>
-            <div className={cx("input")}>
-              <input
-                type="password"
-                autoComplete="Confirm Password"
-                placeholder="Confirm your password"
-                id={cx("confirmPass")}
-                value={confirmPass}
-                onChange={handleConfirmChange}
-              />
-            </div>
-            <button type="button" onClick={handleClick}>
-              Sign Up
-            </button>
-            <a href="/login">You have an account ?</a>
+            <span className={cx("loginIcon")}>
+              <span className={cx("Icon")}>
+                <span className={cx("facebook")}>
+                  <FontAwesomeIcon icon={faFacebook} />
+                </span>
+              </span>
+              <span className={cx("Icon")}>
+                <span className={cx("google")}>
+                  <FcGoogle />
+                </span>
+              </span>
+              <span className={cx("Icon")}>
+                <span className={cx("git")}>
+                  <FontAwesomeIcon icon={faGithub} />
+                </span>
+              </span>
+            </span>
           </div>
-          <span className={cx("loginIcon")}>
-            <span className={cx("Icon")}>
-              <span className={cx("facebook")}>
-                <FontAwesomeIcon icon={faFacebook} />
-              </span>
-            </span>
-            <span className={cx("Icon")}>
-              <span className={cx("google")}>
-                <FontAwesomeIcon icon={faGoogle} />
-              </span>
-            </span>
-            <span className={cx("Icon")}>
-              <span className={cx("git")}>
-                <FontAwesomeIcon icon={faGithub} />
-              </span>
-            </span>
-          </span>
         </form>
       </div>
     </div>

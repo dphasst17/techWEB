@@ -57,6 +57,7 @@ export class CartProvider extends Component {
               }))
             )
           );
+          
           /* rerender items */
           this.setState({
             cartItems: JSON.parse(localStorage.getItem("listCart")),
