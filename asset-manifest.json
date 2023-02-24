@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/techReactJSApp/static/css/main.876c7b92.css",
+    "main.js": "/techReactJSApp/static/js/main.f09a2e2b.js",
+    "static/media/logo01-removebg-preview.png": "/techReactJSApp/static/media/logo01-removebg-preview.aed66ad969c8d2afd32e.png",
+    "index.html": "/techReactJSApp/index.html",
+    "main.876c7b92.css.map": "/techReactJSApp/static/css/main.876c7b92.css.map",
+    "main.f09a2e2b.js.map": "/techReactJSApp/static/js/main.f09a2e2b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.876c7b92.css",
+    "static/js/main.f09a2e2b.js"
+  ]
+}
