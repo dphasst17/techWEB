@@ -14,11 +14,16 @@ import { FcGoogle } from "react-icons/fc";
 const cx = classNames.bind(style);
 
 function SignUp() {
+  const [username, setUsername] = useState("")
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
   let navigate = useNavigate();
 
+
+  const handleUserNameChange = (username) => {
+    setUsername(username.target.value);
+  };
   const handleEmailChange = (email) => {
     setEmail(email.target.value);
   };
@@ -62,6 +67,16 @@ function SignUp() {
           <div className={cx("itemsForm")}>
             <h2>Sign up Form</h2>
             <div className={cx("detail")}>
+            <div className={cx("input")}>
+                <input
+                  type="text"
+                  
+                  placeholder="Enter your username"
+                  id="username"
+                  value={username}
+                  onChange={handleUserNameChange}
+                />
+              </div>
               <div className={cx("input")}>
                 <input
                   type="email"

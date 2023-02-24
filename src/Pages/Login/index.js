@@ -70,7 +70,7 @@ const Login = () => {
                 <input
                   type="email"
                   autoComplete="Email"
-                  placeholder="Enter your email"
+                  placeholder="Enter your email or username"
                   onChange={handleEmailChange}
                   value={email}
                 />

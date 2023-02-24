@@ -13,6 +13,7 @@ export const ApiProvider = ({ children }) => {
   const [valueSearch, setValueSearch] = useState("");
   const [showResult, setIsShowResult] = useState(false);
   const [isToggleNav, setIsToggleNav] = useState(false);
+
   /* let [input] = useState([]); */
   useEffect(() => {
     fetch(urlProduct + "tqwu5d31kjdih2o")
@@ -35,7 +36,13 @@ export const ApiProvider = ({ children }) => {
         setUsers(dataUsers);
       })
       .catch((err) => console.error(err));
-  }, []);
+
+   /*  fetch(urlUsers + `/` + userID ) 
+      .then(req => req.json())
+      .then(res => sessionStorage.setItem("list",JSON.stringify(res.purchaseOrder)))
+      .catch((err) => console.log(err)) */
+      
+  },[]);
 
 
 
@@ -55,6 +62,7 @@ export const ApiProvider = ({ children }) => {
   return (
     <ApiContext.Provider
       value={{
+        urlUsers,
         DataProduct,
         Access,
         Users,

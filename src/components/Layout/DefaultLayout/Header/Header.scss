@@ -1,5 +1,6 @@
 .header {
     display: flex;
+    justify-content: space-around;
     width: 90%;
     height: 10%;
     margin: 0;
@@ -11,7 +12,6 @@
     nav{
         width: 30%;
         height: 70px;
-        margin-left: 5%;
         background: transparent;
         display: flex;
          /* a{
@@ -70,62 +70,56 @@
         }
     }
     .logo {
-        display: none;
-        position: absolute;
-        margin-top: -5%;
-    }
-    .logo img {
-        width: 130%;
-        height: 70px;
+        width:200px;
+        height:70px;
+        z-index:111111111111111;
+        margin-left:2%;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
     }
     .search {
-        width: 22%;
-        height: 50%;
-        position: absolute;
-        margin-left: 62%;
-        margin-top: 1.2%;
-        background-color: rgb(247, 247, 247);
-        border-style: solid;
-        border-width: 0.5px;
-        border-radius: 10px;
-        font-size: 18px;
-        input {
-            width: 80%;
-            height: 100%;
-            color: #000;
-            font-size: 18px;
-            outline: 0;
+        width:25%;
+        height: 30px;
+        display: flex;
+        margin-top:1.5%;
+        margin-left:4%;
+        border-radius:10px;
+        border:solid 1px;
+        background-color: transparent;
+        padding-left:2%;
+        input{
+            width:68%;
+            height:90%;
+            border:none;
+            outline:none;
             background-color: transparent;
-            border-style: none;
-            margin-left: 5%;
         }
-        .iconSearch {
-            width: 22%;
-            height: 80%;
-            background-color: rgb(70, 117, 200);
-            margin-top: 1%;
-            margin-left: -8%;
-            border-radius: 10px;
-            border-style: none;
-            position: absolute;
-            cursor: pointer;
-            svg {
-                height: 80%;
-                margin-top: 4%;
-                path {
-                    fill: rgb(41, 41, 41);
+        .iconSearch{
+            width:30%;
+            height:80%;
+            margin:auto;
+            border:none;
+            outline:none;
+            border-radius:10px;
+            background-color:  rgb(70, 117, 200);
+            svg{
+                path{
+                    fill:#fff;
                 }
             }
         }
         .searchResult {
-            width: 100%;
+            width: 25%;
             min-height: 70px;
             height: auto;
             background-color: rgb(255, 255, 255);
-            /* position: absolute; */
-            margin: 2% auto;
+            position: absolute;
+            margin: 3% -2%;
             border-radius: 10px;
-            padding: 2.5%;
+            padding: 1%;
             box-shadow: 2px 2px 2px 2px grey;
             .title {
                 height: 20px;
@@ -196,8 +190,6 @@
     .icon {
         width: 10%;
         margin-top: 1.1%;
-        position: absolute;
-        margin-left: 85%;
         .detail {
             width: 100%;
             display: flex;
@@ -210,6 +202,8 @@
                 border-style: none;
                 background-color: transparent;
                 cursor: pointer;
+                display: flex;
+                flex-direction: column;
                 svg {
                     height: 55%;
                     margin-top: 15%;
@@ -218,95 +212,95 @@
                     }
                 }
                 .show {
-                    width:auto;
-                    height: 20px;
+                    position: absolute;
+                    /* width: 1px; */
+                    /* height: 20px; */
                     background-color: rgb(195, 9, 9);
                     border-radius: 45%;
-                    position: absolute;
-                    margin-left: 25%;
-                    margin-top: -30%;
+                    margin-left: 3%;
+                    /* margin-top: 2%; */
                     color: #fff;
                     text-align: center;
-                    line-height: initial;
-                    padding:0 2%;
+                    /* line-height: initial; */
+                    padding: 0 5px;
                 }
                 .cart_content {
                     display: none;
-                    width: 1200%;
+                    width: 34%;
                     min-height: 300px;
-                    background: rgba(255, 255, 255, 1);
+                    background: rgb(255, 255, 255);
                     box-shadow: 2px 2px 2px 2px grey;
                     border-radius: 10px;
-                    margin-top: 29%;
+                    margin-top: 3%;
+                    margin-left: -30%;
                     z-index: 11111111111;
-                    padding-bottom: 25%;
-                    float: right;
-                    margin-right: -130%;
+                    padding-bottom: 2%;
+                    position: absolute;
                     .cover {
                         min-height: 200px;
                         /* item in cart */
                         .cart_detail {
                             width: 100%;
-                            display: inline-flex;
                             height: 50px;
                             margin-top: 5%;
-                            img {
-                                width: 50px;
-                                height: 50px;
-                                margin-left: 10%;
-                                margin-top: 10%;
-                                position: absolute;
-                                object-fit: contain;
-                            }
-                            .information {
-                                width: 150%;
-                                margin-left: 60%;
-                                position: absolute;
-                                h4 {
-                                    margin-top: 5%;
-                                    text-align: left;
+                            display: flex;
+                            flex-wrap: wrap;
+                            align-content: center;
+                            .item{
+                                width:100%;
+                                display:flex;
+                                .img{
+                                    display:flex;
+                                        justify-content: center;
+                                        width: 25%;
+                                        height: 69px;
+                                    img {
+                                        width:50%;
+                                        height:100%;
+                                        object-fit: contain;
+                                    }
                                 }
-                            }
-                            .button {
-                                position: absolute;
-                                margin-top: 10%;
-                                margin-left: 225%;
-                                display: inline-flex;
-                                .reduce {
-                                    position: relative;
-                                    border-style: none;
-                                    background-color: transparent;
-                                    margin: -5px 20px;
-                                    font-size: 30px;
+                                .information {
+                                    width: 50%;
+                                    h4 {
+                                        margin-top: 5%;
+                                        text-align: left;
+                                    }
                                 }
-                                .increment {
-                                    position: relative;
-                                    margin: -5px 10%;
-                                    font-size: 30px;
-                                    background-color: transparent;
-                                    border-style: none;
-                                }
-                                .quantity {
-                                    width: 25%;
-                                    position: relative;
-                                    margin-left: -15%;
-                                    margin-top: 2%;
-                                    font-size: 20px;
-                                    padding: 0 30px 0 30px;
-                                }
-                            }
-                            .trash {
-                                width: 25%;
-                                position: absolute;
-                                margin-left: 320%;
-                                margin-top: 12%;
-                                button {
-                                    border-style: none;
-                                    background-color: transparent;
-                                    svg {
+                                .button {
+                                    width:25%;
+                                    display: flex;
+                                    justify-content: space-between;
+                                    .reduce, .increment {
+                                        border-style: none;
+                                        background-color: transparent;
+                                        font-size: 30px;
+                                        display: flex;
+                                        flex-wrap: wrap;
+                                        align-content: center;
+                                        justify-content: center;
+                                    }
+                                    .quantity {
                                         width: 50%;
-                                        path {
-                                            fill: #000;
+                                        font-size: 20px;
+                                        display: flex;
+                                        justify-content: center;
+                                        flex-wrap: wrap;
+                                        align-content: center;
+                                    }
+                                }
+                                .trash {
+                                    width: 25%;
+                                    display: flex;
+                                    justify-content: center;
+                                    button {
+                                        border-style: none;
+                                        background-color: transparent;
+                                        svg {
+                                            height:20px;
+                                            path {
+                                                fill: #000;
+                                            }
                                         }
                                     }
                                 }
@@ -315,18 +309,22 @@
                     }
                     /* button---payment */
                     .checkout {
-                        position: relative;
-                        width: 30%;
-                        height: 30px;
-                        margin-top: 10%;
-                        margin-left: 75%;
+                        width: 100%;
+                        height: 40px;
+                        margin-top: 6%;
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-content: center;
+                        justify-content: flex-end;
+                        padding-right: 2%;
                         button {
-                            width: 70%;
+                            width: 30%;
                             height: 30px;
                             border-style: none;
                             border-radius: 10px;
                             background-color: rgb(255, 255, 255);
                             box-shadow: 2px 2px 2px 2px rgb(162, 160, 160);
+                            cursor: pointer;
                             a {
                                 color: #000;
                                 font-size: 15px;
@@ -366,11 +364,9 @@
             .user {
                 width: 30%;
                 height: 50px;
-                margin-left: 60%;
                 margin-top: -5%;
                 border-style: none;
                 background-color: transparent;
-                position: absolute;
                 cursor: pointer;
                 svg {
                     height: 55%;
@@ -382,12 +378,12 @@
             }
         }
         .showItems {
-            width: 150%;
+            width: 15%;
             height: auto;
             background-color: rgb(255, 255, 255);
-            box-shadow: 2px 2px 2px 2px rgb(90, 89, 89);
+            box-shadow: 2px 2px 2px 2px rgb(90 89 89);
             border-radius: 10px;
-            margin-top: -1%;
+            /* margin-top: -1%; */
             z-index: -1;
             position: absolute;
             .box {
@@ -662,6 +658,7 @@
 @media (min-width: 1124px) and (max-width: 1290px) {
     .header {
         display: flex;
+        justify-content: space-around;
         nav {
             width: 40%;
             .navItems{
@@ -696,7 +693,7 @@
                     }
                 }
                 .user {
-                    margin-left: 60%;
+                    
                     svg{
                         height:45%;
                     }

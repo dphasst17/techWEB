@@ -16,9 +16,11 @@
     "@types/react-slick": "^0.23.10",
     "axios": "^1.2.5",
     "classnames": "^2.3.2",
+    "gh-pages": "^5.0.0",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-error-boundary": "^3.1.4",
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
@@ -34,7 +36,9 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
-    "server": "json-server --watch db.json --port 8000"
+    "server": "json-server --watch db.json --port 8000",
+    "predeploy":"npm run build",
+    "deploy":"gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -60,5 +64,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "react-app-rewired": "^2.2.1",
     "sass": "^1.55.0"
-  }
+  },
+  "homepage":"http://dphasst17.github.io/techReactJSApp/"
 }

@@ -14,6 +14,7 @@ import {
   faUser,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
+import logo01 from "~/components/Layout/DefaultLayout/Header/img/logo01-removebg-preview.png";
 import { CartContext } from "~/Contexts/Cart";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ApiContext } from "~/ContextApi/ContextApi";
@@ -90,18 +91,6 @@ function Header() {
   let show = () => {
     navigate("/searchResult");
   };
-  /* let navTab = document.querySelectorAll(".header");
-  navTab.forEach(items =>{
-    items.addEventListener('click',function(event){
-        if(event.target.classList.contains('navItems')){
-            let lastActive = items.querySelector('div.active');
-            let newActive = event.target;
-
-            lastActive.classList.remove('active');
-            newActive.classList.add('active');
-        }
-    })
-}) */
   return (
     <>
       <div className="header">
@@ -120,9 +109,7 @@ function Header() {
         </nav>
 
         <div className="logo">
-          <a href="/">
-            <img src="" alt=""></img>
-          </a>
+          <img src={logo01} alt=""/>
         </div>
         {/* Search input */}
         <div className="search">
@@ -164,18 +151,17 @@ function Header() {
             <CartContext.Consumer>
               {({ cartItems }) => (
                 <div className="cart_Shopping">
+                  <div className="show">{/* {(cartItems?.length > 0)? cartItems.length : 0} */}{cartItems.length}</div>
                   <FontAwesomeIcon icon={faCartShopping} />
-                  <div className="show">{cartItems.length}</div>
-
                   <div className="cart_content">
                     <div className="cover">
                       {cartItems.map((cartItems, index) => (
                         <div className="cart_detail" key={index}>
                           <div className="item">
-                            <img src={cartItems.url} alt="IMG-product" />
+                            <div className="img"><img src={cartItems.url} alt="IMG-product" /></div>
                             <div className="information">
-                              <h4>{cartItems.title}</h4>
-                              <h4>{cartItems.price}</h4>
+                              <h4>{cartItems.title.length > 20 ? cartItems.title.slice(0,20)+`...`: cartItems.title}{/*  {cartItems.title} */}</h4>
+                              <h4>{cartItems.price} USD</h4>
                             </div>
                             <div className="button">
                               <CartContext.Consumer>

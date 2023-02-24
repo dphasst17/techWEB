@@ -2,7 +2,60 @@
     position:relative;
     width:100%;
     height:10rem;
-    background-color:black;
+    background-color:rgb(211, 209, 209);
+    display:flex;
+    .items{
+        width:50%;
+        height:100%;
+        display:flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-content: center;
+        justify-content: center;
+        h3{
+            text-align: center;
+        }
+        .iconFooter{
+            width:100%;
+            height:70%;
+            display:flex;
+            justify-content: center;
+            .detail{
+                display:flex;
+                flex-wrap: wrap;
+                align-content:center;
+                justify-content: center;
+                width:20%;
+                svg{
+                    width:40%;
+                    height:40%;
+                }
+            }
+            .detail:nth-child(1){
+                color:#1e1194;
+                svg{
+                    path{
+                        fill:#1e1194
+                    }
+                }
+            }
+            
+        }
+    }
+    .items:nth-child(2){
+        .service{
+            width:100%;
+            height:50%;
+            display:flex;
+            .serviceDetail{
+                width:48%;
+            }
+        }
+        .service:nth-child(2){
+            flex-wrap: wrap;
+            align-content:flex-end;
+        }
+    }
 /*     margin-top:12%; */
 }
 /* @media(max-width:1309px) and (min-width:1125px){

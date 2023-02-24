@@ -45,7 +45,7 @@ function User() {
                     </div>
                     <div className={cx("infProduct")}>
                       <div className={cx("items-child")}>
-                        <h4>Title: {items.title}</h4>
+                        <h4>Title: {items.title.length > 20 ? items.title.slice(0,20)+`...` : items.title}</h4>
                         <h4>Quantity: {items.quantity}</h4>
                       </div>
                       <div className={cx("items-child")}>

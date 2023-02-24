@@ -219,7 +219,9 @@
             width:95%;
             margin: 2% auto;
             .show{
+                justify-content: space-around;
                 .product-detail{
+                    margin-left:0%;
                     min-width:150px;
                 }
             }

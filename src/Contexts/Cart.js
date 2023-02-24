@@ -1,143 +1,141 @@
 import React, { Component } from "react";
+/* import {withErrorBoundary} from "react-error-boundary" */
 
+const urlBase =
+  "https://63d4daaa0e7ae91a00a3604b.mockapi.io/tx3en1cj8ha/uw13fsu8eg4yhr";
+const useID = JSON.parse(localStorage.getItem("identificationID") || "[]");
 export const CartContext = React.createContext();
 export class CartProvider extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      cartItems: JSON.parse(localStorage.getItem("listCart") || "[]"),
-    };
+    this.state = { cartItems: [] };
+    /*Get API listCart  */
+    fetch(urlBase + `/` + useID)
+      .then((res) => res.json())
+      .then((json) =>
+        this.setState({
+          cartItems: json.listCart,
+        })
+      )
+      .catch((err) => console.log(err));
 
     this.addToCart = this.addToCart.bind(this);
-    this.removedAllItems = this.removedAllItems.bind(this);
     this.deleteItems = this.deleteItems.bind(this);
     this.incrementItems = this.incrementItems.bind(this);
     this.decrementItems = this.decrementItems.bind(this);
+    this.setState = this.setState.bind(this)
   }
-  
   addToCart(product) {
-    const listCart = JSON.parse(localStorage.getItem("listCart") || "[]");
-    let y = listCart.map((items) => items.id); /* get id form list cart */
-    let x = y.includes(
-      product.id
-    ); /* check product id in listCart return true if exist and return false if not exist*/
-    //add item to cart and save in localStorage
-    /* Check if the list cart exists or not */
-    /* If the list cart exists */
-    if (listCart) {
-      if (listCart.length !== 0) {
-        /* if product exists in list cart */
-        if (x === true) {
-          /* Check id , if product.id === items .id  */
-          let checkID = listCart.map((items) => {
-            if (product.id === items.id) {
-              return {
-                id: items.id,
-                url: items.url,
-                title: items.title,
-                price: items.price,
-                quantity: items.quantity + 1,
-                total: items.price * items.quantity,
-              };
-            } else {
-              return { ...items };
-            }
-          });
-          /* set items in local */
-          localStorage.setItem(
-            "listCart",
-            JSON.stringify(
-              checkID.map((items) => ({
-                id: items.id,
-                url: items.url,
-                title: items.title,
-                price: items.price,
-                quantity: items.quantity,
-                total: items.price * items.quantity,
-              }))
-            )
-          );
+    let listCart = this.state.cartItems;
+      let y = listCart.map(items => items.id)
+      let x = y.includes(product.id)
+      if(listCart){
+        if (listCart.length !== 0) {
+          /* if product exists in list cart */
+          if (x === true) {
+            /* Check id , if product.id === items .id  */
+            let checkID = listCart.map((items) => {
+              if (product.id === items.id) {
+                return {
+                  id: items.id,
+                  url: items.url,
+                  title: items.title,
+                  price: items.price,
+                  quantity: items.quantity + 1,
+                  total: items.price * (items.quantity + 1),
+                  detail: items.detail,
+                };
+              } else {
+                return { ...items };
+              }
+            });
+            this.setState({cartItems:checkID})
+            const option = {
+              method: "PUT",
+              headers: {
+                "Content-type": "application/json; charset=UTF-8",
+              },
+              body: JSON.stringify({
+                listCart: checkID,
+              }),
+            };
+            fetch(urlBase + "/" + useID, option)
+              .then((response) => response.json())
+              /* .then((json) =>
+                this.setState({
+                  cartItems: json.listCart,
+                })
+              ); */
+          } else {
+            /* If product doesn't exists in list cart */
+            this.setState({
+              cartItems: this.state.cartItems.concat(product),
+            });
+            listCart.push(product);
+            /* Put Data----------------*/
+            const option = {
+              method: "PUT",
+              headers: {
+                "Content-type": "application/json; charset=UTF-8",
+              },
+              body: JSON.stringify({
+                listCart: listCart,
+              }),
+            };
+            fetch(urlBase + "/" + useID, option)
+              .then((response) => response.json())
+              /* .then((json) =>
+                this.setState({
+                  cartItems: json.listCart,
+                })
+              ); */
+            /* ====================== */
+          }
           
-          /* rerender items */
-          this.setState({
-            cartItems: JSON.parse(localStorage.getItem("listCart")),
-          });
         } else {
-        /* If product doesn't exists in list cart */
           this.setState({
             cartItems: this.state.cartItems.concat(product),
           });
           listCart.push(product);
-          localStorage.setItem(
-            "listCart",
-            JSON.stringify(
-              listCart.map((items) => ({
-                id: items.id,
-                url: items.url,
-                title: items.title,
-                price: items.price,
-                quantity: items.quantity,
-                total: items.price * items.quantity,
-              }))
-            )
-          );
-        }
-      } else {
-        
-        listCart.push(product)
-        localStorage.setItem(
-          "listCart",
-          JSON.stringify([
-            {
-              id: product.id,
-              url: product.url,
-              title: product.title,
-              price: product.price,
-              quantity: product.quantity,
-              total: product.price * product.quantity,
+          const option = {
+            method: "PUT",
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
             },
-          ])
-        );
-        this.setState({
-          cartItems: JSON.parse(localStorage.getItem("listCart")),
-        });
+            body: JSON.stringify({
+              listCart: [product],
+            }),
+          };
+          fetch(urlBase + "/" + useID, option)
+            .then((response) => response.json())
+            /* .then((json) =>
+              this.setState({
+                cartItems: json.listCart,
+              })
+            ); */
+        }
       }
-    } else {
-    /* If the list cart does not exists , add new item*/
-      
-      localStorage.setItem(
-        "listCart",
-        JSON.stringify([
-          {
-            id: product.id,
-            url: product.url,
-            title: product.title,
-            price: product.price,
-            quantity: product.quantity,
-            total: product.price * product.quantity,
-          },
-        ])
-      );
-      this.setState({
-        cartItems: JSON.parse(localStorage.getItem("listCart")),
-      });
-    }
-  }
-  /* Remove all */
-  removedAllItems() {
-    this.setState({
-      cartItems: JSON.parse(localStorage.removeItem("listCart") || "[]"),
-    });
   }
   /* Delete an item */
   deleteItems(product) {
     let currentItems = this.state.cartItems;
     currentItems = currentItems.filter((items) => items.id !== product.id);
-    localStorage.setItem("listCart", JSON.stringify(currentItems));
-
-    this.setState({
-      cartItems: JSON.parse(localStorage.getItem("listCart")),
-    });
+    this.setState({cartItems:currentItems})
+    const option = {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify({
+        listCart: currentItems,
+      }),
+    };
+    fetch(urlBase + "/" + useID, option)
+      .then((response) => response.json())
+      /* .then((json) => this.setState({
+        cartItems: json.listCart,
+      })); */
+    
   }
   /* Increment an items in localStorage */
   incrementItems(product) {
@@ -150,6 +148,7 @@ export class CartProvider extends Component {
           title: items.title,
           price: items.price,
           quantity: items.quantity + 1,
+          total: items.price * (items.quantity + 1),
         };
       } else {
         return {
@@ -157,22 +156,23 @@ export class CartProvider extends Component {
         };
       }
     });
-    localStorage.setItem(
-      "listCart",
-      JSON.stringify(
-        increment.map((items) => ({
-          id: items.id,
-          url: items.url,
-          title: items.title,
-          price: items.price,
-          quantity: items.quantity,
-          total: items.price * items.quantity,
-        }))
-      )
-    );
-    this.setState({
-      cartItems: JSON.parse(localStorage.getItem("listCart")),
-    });
+    this.setState({cartItems:increment})
+    const option = {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify({
+        listCart: increment,
+      }),
+    };
+    fetch(urlBase + "/" + useID, option)
+      .then((response) => response.json())
+      /* .then((json) =>
+        this.setState({
+          cartItems: json.listCart,
+        })
+      ); */
   }
   /* Decrement an item in localStorage */
   decrementItems(product) {
@@ -185,6 +185,7 @@ export class CartProvider extends Component {
           title: items.title,
           price: items.price,
           quantity: items.quantity - 1,
+          total: items.price * (items.quantity - 1),
         };
       } else {
         return {
@@ -192,41 +193,52 @@ export class CartProvider extends Component {
         };
       }
     });
-    localStorage.setItem(
-      "listCart",
-      JSON.stringify(
-        decrement.map((items) => ({
-          id: items.id,
-          url: items.url,
-          title: items.title,
-          price: items.price,
-          quantity: items.quantity,
-          total: items.price * items.quantity,
-        }))
-      )
-    );
-
-    this.setState({
-      cartItems: JSON.parse(localStorage.getItem("listCart")),
-    });
+    this.setState({cartItems:decrement})
+    const option = {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify({
+        listCart: decrement,
+      }),
+    };
+    fetch(urlBase + "/" + useID, option)
+      .then((response) => response.json())
+      /* .then((json) =>
+        this.setState({
+          cartItems: json.listCart,
+        })
+      ); */
   }
-  
-
-  
+  checkOut(){
+    const option = {
+      method: "PUT",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify({
+        purchaseOrder:this.state.cartItems,
+        listCart: [],
+      }),
+    };
+    fetch(urlBase + "/" + useID, option)
+      .then((response) => response.json())
+  }
   render() {
     return (
       <CartContext.Provider
         value={{
           cartItems: this.state.cartItems,
           addToCart: this.addToCart,
-          removedAllItems: this.removedAllItems,
           deleteItems: this.deleteItems,
           incrementItems: this.incrementItems,
           decrementItems: this.decrementItems,
+          setState:this.setState
         }}
       >
         {this.props.children}
       </CartContext.Provider>
     );
   }
-}
+} /* export default withErrorBoundary(this.state.cartItems) */
