@@ -17,7 +17,7 @@
     }
     .checkItems, .back{
         width:100%;
-        height:3em;
+        height:auto;
         display:flex;
         justify-content: center;
         a{
@@ -35,5 +35,8 @@
         a:hover{
             color:rgb(70, 117, 200);
         }
+    }
+    .back{
+        margin-top:2%;
     }
 }
