@@ -71,6 +71,7 @@ function Header() {
     );
     if (checkLogin === true) {
       localStorage.setItem("isLogin", false);
+      localStorage.removeItem("identificationID")
       navigate("/login");
     } else {
       navigate("/login");

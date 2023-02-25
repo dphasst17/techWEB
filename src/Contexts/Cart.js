@@ -26,15 +26,12 @@ export class CartProvider extends Component {
     this.setState = this.setState.bind(this)
   }
   addToCart(product) {
-    
     let checkLogin = JSON.parse(localStorage.getItem("isLogin"));
-    let listCart = this.state.cartItems;
-      let y = listCart.map(items => items.id)
-      let x = y.includes(product.id);
-      if(!checkLogin){
-        window.location.pathname="/login"
-      }else{
+      if(checkLogin){
         if(checkLogin === true){
+          let listCart = this.state.cartItems;
+          let y = listCart.map(items => items.id)
+          let x = y.includes(product.id);
           if(listCart){
             if (listCart.length !== 0) {
               /* if product exists in list cart */
@@ -124,6 +121,8 @@ export class CartProvider extends Component {
         }else{
           window.location.pathname = "/login"
         }
+      }else{
+        window.location.pathname = "/login"
       }
   }
   /* Delete an item */

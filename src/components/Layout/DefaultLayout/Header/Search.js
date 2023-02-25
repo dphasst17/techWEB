@@ -1,5 +1,6 @@
 import classNames from "classnames/bind";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import style from "~/components/Layout/DefaultLayout/Header/Header.scss";
 
@@ -7,6 +8,7 @@ const cx = classNames.bind(style);
 
 function SearchResults() {
   const { valueSearch, DataProduct, Access } = useContext(ApiContext);
+  const navigate = useNavigate()
   const dataProduct = DataProduct.filter(
     (data) =>
       data.title.toUpperCase().includes(valueSearch.toUpperCase())||
@@ -21,7 +23,7 @@ function SearchResults() {
   return (
     <div className={cx("itemsResults")}>
       {data.slice(0,8).map((items, index) => (
-        <div className={cx("detail")} key={index}>
+        <div className={cx("detail")} key={index} onClick={() => {navigate("/detail/"+ items.id)}}>
           <img src={items.url} alt="" />
           <div className={cx("resultTitle")}>
             <h3>Title: {(items.title.length >= 33) ? items.title.slice(0,33) + `...` : items.title }</h3>

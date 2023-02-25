@@ -9,12 +9,14 @@ import {
   faHeart,
   faTableList,
 } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(style);
 
 function SearchResult() {
   const { valueSearch, DataProduct, Access } = useContext(ApiContext);
   const [value, setValue] = useState([]);
+  const navigate = useNavigate()
   const dataProduct = DataProduct.filter((data) =>
     valueSearch.length > 0
       ? data.title.toUpperCase().includes(valueSearch.toUpperCase()) ||
@@ -185,7 +187,7 @@ function SearchResult() {
                       </button>
                     )}
                   </CartContext.Consumer>
-                  <button>
+                  <button onClick={() => {navigate("/detail/"+ product.id)}}>
                     <FontAwesomeIcon icon={faTableList} />
                   </button>
                   <button>
