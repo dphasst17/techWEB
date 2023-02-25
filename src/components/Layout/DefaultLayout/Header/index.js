@@ -151,11 +151,11 @@ function Header() {
             <CartContext.Consumer>
               {({ cartItems }) => (
                 <div className="cart_Shopping">
-                  <div className="show">{/* {(cartItems?.length > 0)? cartItems.length : 0} */}{cartItems.length}</div>
+                  <div className="show">{(cartItems?.length > 0)? cartItems.length : 0}{/* {cartItems?.length} */}</div>
                   <FontAwesomeIcon icon={faCartShopping} />
                   <div className="cart_content">
                     <div className="cover">
-                      {cartItems.map((cartItems, index) => (
+                      {cartItems?.map((cartItems, index) => (
                         <div className="cart_detail" key={index}>
                           <div className="item">
                             <div className="img"><img src={cartItems.url} alt="IMG-product" /></div>
@@ -260,7 +260,7 @@ function Header() {
               <Link to="/checkout">
                 <div className="cartMob">
                   <FontAwesomeIcon icon={faCartShopping} />
-                  <CartContext.Consumer>{({cartItems}) => <div className="totalItems">{cartItems.length}</div>}</CartContext.Consumer>
+                  <CartContext.Consumer>{({cartItems}) => <div className="totalItems">{(cartItems?.length > 0)? cartItems.length : 0}</div>}</CartContext.Consumer>
                 </div>
               </Link>
             </div>

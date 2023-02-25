@@ -22,35 +22,30 @@ const Login = () => {
   const [type, setType] = useState("password");
   const navigate = useNavigate();
 
- /*  const checkUser2 = dataUsers.map(user2 => {if(user2.password === "17052003zedzed"){return true}else{return false}}) */
   const handleEmailChange = (email) => {
     setEmail(email.target.value);
   };
   const handlePassChange = (pass) => {
     setPass(pass.target.value);
   };
-  /* const checkUser =Users.filter((check) => check.email==="dfast17@gmail.com" && check.pass === "17052003zedzed"
-  ); */
+
   const name = JSON.parse(sessionStorage.getItem("pathName"));
   const handleClick = () => {
     /* let checkLogin = JSON.parse(localStorage.getItem("login") || "[]"); */
     const dataUsers = Users.filter(user => (user.email=== email || user.usename === email) &&user.password === pass)
     if(dataUsers.length !== 0){
-      navigate(name);
-      localStorage.setItem("isLogin", true);
-      localStorage.setItem("identificationID",JSON.stringify(dataUsers.map(items => items.id)))
+      if(name){
+        navigate(name);
+        localStorage.setItem("isLogin", true);
+        localStorage.setItem("identificationID",JSON.stringify(dataUsers.map(items => items.id)))
+      }else{
+        navigate("/");
+        localStorage.setItem("isLogin", true);
+        localStorage.setItem("identificationID",JSON.stringify(dataUsers.map(items => items.id)))
+      }
     }else{
       alert("Login false \nPlease check again");
     }
-    /* Users.map((check) => {
-      if (check.email=== email && check.password === pass) {
-        navigate(name);
-        localStorage.setItem("isLogin", true);
-      } else {
-        alert("Login false \nPlease check again");
-      }
-      return null;
-    }); */
   };
 
   return (

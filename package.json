@@ -2,6 +2,7 @@
   "name": "tech",
   "version": "0.1.0",
   "private": true,
+  "homepage":".",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-brands-svg-icons": "^6.2.1",
@@ -16,6 +17,7 @@
     "@types/react-slick": "^0.23.10",
     "axios": "^1.2.5",
     "classnames": "^2.3.2",
+    "firebase": "^9.17.1",
     "gh-pages": "^5.0.0",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
@@ -36,9 +38,7 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
-    "server": "json-server --watch db.json --port 8000",
-    "predeploy":"npm run build",
-    "deploy":"gh-pages -d build"
+    "server": "json-server --watch db.json --port 8000"
   },
   "eslintConfig": {
     "extends": [
@@ -63,7 +63,6 @@
     "customize-cra": "^1.0.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "react-app-rewired": "^2.2.1",
-    "sass": "^1.55.0"
-  },
-  "homepage":"http://dphasst17.github.io/techReactJSApp/"
+    "sass": "^1.58.3"
+  }
 }

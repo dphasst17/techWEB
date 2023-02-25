@@ -6,7 +6,27 @@ import { Fragment } from "react";
 import { CartProvider } from "./Contexts/Cart";
 import { ApiProvider } from "./ContextApi/ContextApi";
 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCXRWsJ6358VWxdjWYcgLRAZRU1VQZx03w",
+  authDomain: "tech-store-ca5b0.firebaseapp.com",
+  projectId: "tech-store-ca5b0",
+  storageBucket: "tech-store-ca5b0.appspot.com",
+  messagingSenderId: "550589024496",
+  appId: "1:550589024496:web:e515b287be77558f601a35",
+  measurementId: "G-9ZSS1QP8WM"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 function App() {
 

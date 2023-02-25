@@ -2,13 +2,15 @@ import classNames from "classnames/bind";
 import style from "./User.module.scss";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(style);
 function User() {
   const { Users } = useContext(ApiContext);
+  const navigate = useNavigate()
   let userID = JSON.parse(localStorage.getItem("identificationID") || "[]");
   let dataUser = Users.filter((items) => userID.includes(items.id));
-  const purchase = Users.map(items => items.purchaseOrder)
+  const purchase = Users.map(items => items.purchaseOrder);
   return (
     <div className={cx("user")}>
       <div className={cx("info")}>
@@ -39,7 +41,7 @@ function User() {
             {(purchase.length!== 0) ?
               dataUser.map((item) =>
                 item.purchaseOrder.map((items, index) => (
-                  <div className={cx("items")} key={index}>
+                  <div className={cx("items")} key={index} onClick={() =>{navigate("/detail/" + items.id)}}>
                     <div className={cx("image")}>
                       <img src={items.url} alt="Img Product" />
                     </div>
