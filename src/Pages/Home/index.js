@@ -5,6 +5,7 @@ import Product from "./Product-demo";
 import AccDemo from "./Accessory-demo";
 import ListItems from "./List/List";
 import FeaturedProduct from "./FeaturedProduct";
+import NewsProduct from "./NewsProduct";
 
 const cx = classNames.bind(style);
 
@@ -14,6 +15,7 @@ function Home() {
       <Slideshow />
       <ListItems />
       <FeaturedProduct />
+      <NewsProduct />
       <Product />
       <AccDemo />
       

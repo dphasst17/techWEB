@@ -27,14 +27,7 @@ const CheckOut = () => {
     };
     fetchData();
   }, [urlGet]);
-
-  /* useEffect(() =>{
-    axios.get(urlGet)
-      .then(res =>{setList(res.data.listCart)})
-  },[urlGet,list]) */
   let handleCheckOut = () => {
-    /* axios.get(urlGet)
-  .then(res => setData(res.data.purchaseOrder)) */
     if (cartItems.length !== 0) {
       const option = {
         method: "PUT",
@@ -53,7 +46,9 @@ const CheckOut = () => {
       alert("You need to add a product to your cart");
     }
   };
-  let total = cartItems?.map((item) => item.total)/* (cartItems.length !== 0 ) ? cartItems.map((item) => item.total): [] */;
+  let total = cartItems?.map(
+    (item) => item.total
+  ); /* (cartItems.length !== 0 ) ? cartItems.map((item) => item.total): [] */
   const sumArray = (total) => {
     let sum = 0;
     if (total.length >= 1) {
@@ -82,7 +77,8 @@ const CheckOut = () => {
                   }}
                 >
                   <h2>
-                    You have {cartItems?.length > 0 ? cartItems.length : 0} orders
+                    You have {cartItems?.length > 0 ? cartItems.length : 0}{" "}
+                    orders
                   </h2>
                   <div className={cx("itemsDetail")}>
                     {cartItems.map((cartItems, index) => (
@@ -92,7 +88,12 @@ const CheckOut = () => {
                             <div className={cx("imgProduct")}>
                               <img src={cartItems.url} alt="" />
                             </div>
-                            <div className={cx("product_detail")}onClick={() =>{navigate("/detail/" + cartItems.id)}}>
+                            <div
+                              className={cx("product_detail")}
+                              onClick={() => {
+                                navigate("/detail/" + cartItems.id);
+                              }}
+                            >
                               <h4>
                                 Name product:
                                 {cartItems.title.length > 20
@@ -103,9 +104,17 @@ const CheckOut = () => {
                               <h4>Price product: {cartItems.price} USD</h4>
                             </div>
                             <div className={cx("product_detail_second")}>
-                              <CartContext.Consumer>{({decrementItems}) => <button onClick={() => decrementItems(cartItems)}>-</button>}</CartContext.Consumer>
+                              <CartContext.Consumer>
+                                {({ decrementItems }) => (
+                                  <button
+                                    onClick={() => decrementItems(cartItems)}
+                                  >
+                                    -
+                                  </button>
+                                )}
+                              </CartContext.Consumer>
                               <div className={cx("countItems")}>
-                                  {cartItems.quantity}
+                                {cartItems.quantity}
                               </div>
                               <CartContext.Consumer>
                                 {({ incrementItems }) => (
@@ -117,7 +126,15 @@ const CheckOut = () => {
                                   </button>
                                 )}
                               </CartContext.Consumer>
-                              <CartContext.Consumer>{({deleteItems}) => <button onClick={() =>deleteItems(cartItems)}>delete</button>}</CartContext.Consumer>
+                              <CartContext.Consumer>
+                                {({ deleteItems }) => (
+                                  <button
+                                    onClick={() => deleteItems(cartItems)}
+                                  >
+                                    delete
+                                  </button>
+                                )}
+                              </CartContext.Consumer>
                             </div>
                           </div>
                         </div>

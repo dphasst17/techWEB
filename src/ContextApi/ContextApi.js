@@ -36,25 +36,25 @@ export const ApiProvider = ({ children }) => {
         setUsers(dataUsers);
       })
       .catch((err) => console.error(err));
-
-   /*  fetch(urlUsers + `/` + userID ) 
-      .then(req => req.json())
-      .then(res => sessionStorage.setItem("list",JSON.stringify(res.purchaseOrder)))
-      .catch((err) => console.log(err)) */
-      
-  },[]);
-
-
+  }, []);
 
   const handelValueSearch = (valueSearch) => {
     setValueSearch(valueSearch.target.value);
-    if(valueSearch.target.value.length > 0){setIsShowResult(true)}else{setIsShowResult(false)}
+    if (valueSearch.target.value.length > 0) {
+      setIsShowResult(true);
+    } else {
+      setIsShowResult(false);
+    }
   };
   const handleSetIsShowResult = () => {
-    if(valueSearch.length > 0){setIsShowResult(true)}else{setIsShowResult(false)}
-  }
+    if (valueSearch.length > 0) {
+      setIsShowResult(true);
+    } else {
+      setIsShowResult(false);
+    }
+  };
   const handleSetHideResult = () => {
-    if(showResult === true){
+    if (showResult === true) {
       setIsShowResult(false);
     }
   };
@@ -70,10 +70,9 @@ export const ApiProvider = ({ children }) => {
         showResult,
         isToggleNav,
         setIsToggleNav,
-        /* input, */
         handelValueSearch,
         handleSetIsShowResult,
-        handleSetHideResult
+        handleSetHideResult,
       }}
     >
       {children}

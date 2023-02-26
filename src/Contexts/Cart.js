@@ -23,113 +23,115 @@ export class CartProvider extends Component {
     this.deleteItems = this.deleteItems.bind(this);
     this.incrementItems = this.incrementItems.bind(this);
     this.decrementItems = this.decrementItems.bind(this);
-    this.setState = this.setState.bind(this)
+    this.setState = this.setState.bind(this);
   }
   addToCart(product) {
     let checkLogin = JSON.parse(localStorage.getItem("isLogin"));
-      if(checkLogin){
-        if(checkLogin === true){
-          let listCart = this.state.cartItems;
-          let y = listCart.map(items => items.id)
-          let x = y.includes(product.id);
-          if(listCart){
-            if (listCart.length !== 0) {
-              /* if product exists in list cart */
-              if (x === true) {
-                /* Check id , if product.id === items .id  */
-                let checkID = listCart.map((items) => {
-                  if (product.id === items.id) {
-                    return {
-                      id: items.id,
-                      url: items.url,
-                      title: items.title,
-                      price: items.price,
-                      quantity: items.quantity + 1,
-                      total: items.price * (items.quantity + 1),
-                      detail: items.detail,
-                    };
-                  } else {
-                    return { ...items };
-                  }
-                });
-                this.setState({cartItems:checkID})
-                const option = {
-                  method: "PUT",
-                  headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                  },
-                  body: JSON.stringify({
-                    listCart: checkID,
-                  }),
-                };
-                fetch(urlBase + "/" + useID, option)
-                  .then((response) => response.json())
-                  /* .then((json) =>
-                    this.setState({
-                      cartItems: json.listCart,
-                    })
-                  ); */
-              } else {
-                /* If product doesn't exists in list cart */
-                this.setState({
-                  cartItems: this.state.cartItems.concat(product),
-                });
-                listCart.push(product);
-                /* Put Data----------------*/
-                const option = {
-                  method: "PUT",
-                  headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                  },
-                  body: JSON.stringify({
-                    listCart: listCart,
-                  }),
-                };
-                fetch(urlBase + "/" + useID, option)
-                  .then((response) => response.json())
-                  /* .then((json) =>
-                    this.setState({
-                      cartItems: json.listCart,
-                    })
-                  ); */
-                /* ====================== */
-              }
-              
-            } else {
-              this.setState({
-                cartItems: this.state.cartItems.concat(product),
+    if (checkLogin) {
+      if (checkLogin === true) {
+        let listCart = this.state.cartItems;
+        let y = listCart.map((items) => items.id);
+        let x = y.includes(product.id);
+        if (listCart) {
+          if (listCart.length !== 0) {
+            /* if product exists in list cart */
+            if (x === true) {
+              /* Check id , if product.id === items .id  */
+              let checkID = listCart.map((items) => {
+                if (product.id === items.id) {
+                  return {
+                    id: items.id,
+                    url: items.url,
+                    title: items.title,
+                    price: items.price,
+                    quantity: items.quantity + 1,
+                    total: items.price * (items.quantity + 1),
+                    detail: items.detail,
+                  };
+                } else {
+                  return { ...items };
+                }
               });
-              listCart.push(product);
+              this.setState({ cartItems: checkID });
               const option = {
                 method: "PUT",
                 headers: {
                   "Content-type": "application/json; charset=UTF-8",
                 },
                 body: JSON.stringify({
-                  listCart: [product],
+                  listCart: checkID,
                 }),
               };
-              fetch(urlBase + "/" + useID, option)
-                .then((response) => response.json())
-                /* .then((json) =>
+              fetch(urlBase + "/" + useID, option).then((response) =>
+                response.json()
+              );
+              /* .then((json) =>
+                    this.setState({
+                      cartItems: json.listCart,
+                    })
+                  ); */
+            } else {
+              /* If product doesn't exists in list cart */
+              this.setState({
+                cartItems: this.state.cartItems.concat(product),
+              });
+              listCart.push(product);
+              /* Put Data----------------*/
+              const option = {
+                method: "PUT",
+                headers: {
+                  "Content-type": "application/json; charset=UTF-8",
+                },
+                body: JSON.stringify({
+                  listCart: listCart,
+                }),
+              };
+              fetch(urlBase + "/" + useID, option).then((response) =>
+                response.json()
+              );
+              /* .then((json) =>
+                    this.setState({
+                      cartItems: json.listCart,
+                    })
+                  ); */
+              /* ====================== */
+            }
+          } else {
+            this.setState({
+              cartItems: this.state.cartItems.concat(product),
+            });
+            listCart.push(product);
+            const option = {
+              method: "PUT",
+              headers: {
+                "Content-type": "application/json; charset=UTF-8",
+              },
+              body: JSON.stringify({
+                listCart: [product],
+              }),
+            };
+            fetch(urlBase + "/" + useID, option).then((response) =>
+              response.json()
+            );
+            /* .then((json) =>
                   this.setState({
                     cartItems: json.listCart,
                   })
                 ); */
-            }
           }
-        }else{
-          window.location.pathname = "/login"
         }
-      }else{
-        window.location.pathname = "/login"
+      } else {
+        window.location.pathname = "/login";
       }
+    } else {
+      window.location.pathname = "/login";
+    }
   }
   /* Delete an item */
   deleteItems(product) {
     let currentItems = this.state.cartItems;
     currentItems = currentItems.filter((items) => items.id !== product.id);
-    this.setState({cartItems:currentItems})
+    this.setState({ cartItems: currentItems });
     const option = {
       method: "PUT",
       headers: {
@@ -139,12 +141,10 @@ export class CartProvider extends Component {
         listCart: currentItems,
       }),
     };
-    fetch(urlBase + "/" + useID, option)
-      .then((response) => response.json())
-      /* .then((json) => this.setState({
+    fetch(urlBase + "/" + useID, option).then((response) => response.json());
+    /* .then((json) => this.setState({
         cartItems: json.listCart,
       })); */
-    
   }
   /* Increment an items in localStorage */
   incrementItems(product) {
@@ -165,7 +165,7 @@ export class CartProvider extends Component {
         };
       }
     });
-    this.setState({cartItems:increment})
+    this.setState({ cartItems: increment });
     const option = {
       method: "PUT",
       headers: {
@@ -175,9 +175,8 @@ export class CartProvider extends Component {
         listCart: increment,
       }),
     };
-    fetch(urlBase + "/" + useID, option)
-      .then((response) => response.json())
-      /* .then((json) =>
+    fetch(urlBase + "/" + useID, option).then((response) => response.json());
+    /* .then((json) =>
         this.setState({
           cartItems: json.listCart,
         })
@@ -202,7 +201,7 @@ export class CartProvider extends Component {
         };
       }
     });
-    this.setState({cartItems:decrement})
+    this.setState({ cartItems: decrement });
     const option = {
       method: "PUT",
       headers: {
@@ -212,27 +211,25 @@ export class CartProvider extends Component {
         listCart: decrement,
       }),
     };
-    fetch(urlBase + "/" + useID, option)
-      .then((response) => response.json())
-      /* .then((json) =>
+    fetch(urlBase + "/" + useID, option).then((response) => response.json());
+    /* .then((json) =>
         this.setState({
           cartItems: json.listCart,
         })
       ); */
   }
-  checkOut(){
+  checkOut() {
     const option = {
       method: "PUT",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
       body: JSON.stringify({
-        purchaseOrder:this.state.cartItems,
+        purchaseOrder: this.state.cartItems,
         listCart: [],
       }),
     };
-    fetch(urlBase + "/" + useID, option)
-      .then((response) => response.json())
+    fetch(urlBase + "/" + useID, option).then((response) => response.json());
   }
   render() {
     return (
@@ -243,7 +240,7 @@ export class CartProvider extends Component {
           deleteItems: this.deleteItems,
           incrementItems: this.incrementItems,
           decrementItems: this.decrementItems,
-          setState:this.setState
+          setState: this.setState,
         }}
       >
         {this.props.children}

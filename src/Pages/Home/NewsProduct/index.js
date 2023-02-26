@@ -1,27 +1,30 @@
+import classNames from "classnames/bind";
+import style from "../Home.module.scss";
+import { CartContext } from "~/Contexts/Cart";
 import {
   faHeart,
   faShoppingCart,
   faTableList,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { ApiContext } from "~/ContextApi/ContextApi";
-import { CartContext } from "~/Contexts/Cart";
-import classNames from "classnames/bind";
-import style from "../Home.module.scss";
-import { Link } from "react-router-dom";
 
 const cx = classNames.bind(style);
 
-const FeaturedProduct = () => {
-  const { DataProduct, Access } = useContext(ApiContext);
-  const data = [...DataProduct, ...Access];
-  const filterData = data.filter((items) => items.id % 4 === 0);
+const NewsProduct = () => {
+  const { DataProduct } = useContext(ApiContext);
+  const dataProduct = DataProduct.filter(
+    (items) =>
+      items.detail.map((check) => check.general.map((check) => check.year)) >=
+      2020
+  );
   return (
     <div className={cx("featuredProduct")}>
-      <h2>Featured Product</h2>
+      <h2>News Product</h2>
       <div className={cx("fpDetail")}>
-        {filterData.map((items) => (
+        {dataProduct.map((items) => (
           <div className={cx("fpItems")} key={items.id}>
             <div className={cx("fpImg")}>
               <img src={items.url} alt="img Featured" />
@@ -55,5 +58,4 @@ const FeaturedProduct = () => {
     </div>
   );
 };
-
-export default FeaturedProduct;
+export default NewsProduct;
