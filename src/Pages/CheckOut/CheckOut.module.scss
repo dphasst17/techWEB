@@ -65,17 +65,40 @@
                             .product_detail_second {
                                 width: 30%;
                                 display: flex;
-                                flex-direction: column;
+                                flex-wrap: wrap;
+                                align-content: center;
                                 justify-content: space-between;
+                                border-left: solid 1px;
+                                padding-right:1%;
                                 .countItems {
+                                    width:40%;
                                     font-size: 20px;
                                     font-weight: 600;
+                                    display:flex;
+                                    flex-wrap: wrap;
+                                    align-content: center;
+                                    justify-content: center;
                                 }
-                                .payment_money {
-                                    font-size: 19px;
-                                    font-weight: 600;
-                                    margin-top: -1%;
+                                button{
+                                    width: 15%;
+                                    /* height: 50%; */
+                                    background-color: #fff;
+                                    outline: none;
+                                    border: none;
+                                    display: flex;
+                                    align-content: center;
+                                    flex-wrap: wrap;
+                                    justify-content: center;
+                                    cursor: pointer;
+                                    font-size:30px;
                                 }
+                                button:nth-child(4){
+                                    width:20%;
+                                    border:solid 0.5px;
+                                    border-radius:10px;
+                                    font-size: 15px;
+                                }
+                                
                             }
                         }
                     }
@@ -144,14 +167,12 @@
                 
                 .detail {
                     width: 100%;
-                    
-                    
-                    .itemsDetail {
-                        
+                    .itemsDetail {  
                         .listItems {
-                            
                             .item {
+                                flex-direction: column;
                                 .imgProduct {
+                                    width:100%;
                                     flex-wrap: wrap;
                                     align-content: center;
                                     margin-top:5%;
@@ -161,22 +182,20 @@
                                     }
                                 }
                                 .product_detail {
-                                    
+                                    width:100%;
                                     h4 {
                                         font-size: 15px;
                                     }
                                 }
                                 .product_detail_second {
-                                    
+                                    width:100%;
+                                    padding-right:0;
                                     .countItems {
-                                        font-size: 15px;
+                                        width:30%;
+                                        font-size: 25px;
                                         
                                     }
-                                    .payment_money {
-                                        font-size: 14px;
-                                        
-                                       
-                                    }
+                                
                                 }
                             }
                         }

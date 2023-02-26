@@ -1,4 +1,5 @@
-import React, { useContext } from "react";import classNames from "classnames/bind";
+import React, { useContext } from "react";
+import classNames from "classnames/bind";
 import style from "../Home.module.scss";
 import { CartContext } from "~/Contexts/Cart";
 import { ApiContext } from "~/ContextApi/ContextApi";

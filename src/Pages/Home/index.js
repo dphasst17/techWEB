@@ -4,6 +4,7 @@ import Slideshow from "./SlideShow";
 import Product from "./Product-demo";
 import AccDemo from "./Accessory-demo";
 import ListItems from "./List/List";
+import FeaturedProduct from "./FeaturedProduct";
 
 const cx = classNames.bind(style);
 
@@ -12,6 +13,7 @@ function Home() {
     <div className={cx("home")}>
       <Slideshow />
       <ListItems />
+      <FeaturedProduct />
       <Product />
       <AccDemo />
       

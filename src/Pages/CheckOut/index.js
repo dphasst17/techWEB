@@ -53,7 +53,7 @@ const CheckOut = () => {
       alert("You need to add a product to your cart");
     }
   };
-  let total = cartItems.map((item) => item.total);
+  let total = cartItems?.map((item) => item.total)/* (cartItems.length !== 0 ) ? cartItems.map((item) => item.total): [] */;
   const sumArray = (total) => {
     let sum = 0;
     if (total.length >= 1) {
@@ -68,7 +68,7 @@ const CheckOut = () => {
   return (
     <div className={cx("cart_detail")}>
       <div className={cx("container")}>
-        {/* <button onClick={() => {console.log(list)}}>Check</button> */}
+        {/* <button onClick={() => {console.log(total)}}>Check</button> */}
         <h1>Check Out</h1>
         <div className={cx("box")}>
           <CartContext.Consumer>
@@ -82,20 +82,19 @@ const CheckOut = () => {
                   }}
                 >
                   <h2>
-                    You have {cartItems?.length > 0 ? cartItems.length : 0}{" "}
-                    orders
+                    You have {cartItems?.length > 0 ? cartItems.length : 0} orders
                   </h2>
                   <div className={cx("itemsDetail")}>
                     {cartItems.map((cartItems, index) => (
                       <>
-                        <div className={cx("listItems")} key={index} onClick={() =>{navigate("/detail/" + cartItems.id)}}>
+                        <div className={cx("listItems")} key={index}>
                           <div className={cx("item")}>
                             <div className={cx("imgProduct")}>
                               <img src={cartItems.url} alt="" />
                             </div>
-                            <div className={cx("product_detail")}>
+                            <div className={cx("product_detail")}onClick={() =>{navigate("/detail/" + cartItems.id)}}>
                               <h4>
-                                Name product:{" "}
+                                Name product:
                                 {cartItems.title.length > 20
                                   ? cartItems.title.slice(0, 16) + `...`
                                   : cartItems.title}
@@ -104,13 +103,21 @@ const CheckOut = () => {
                               <h4>Price product: {cartItems.price} USD</h4>
                             </div>
                             <div className={cx("product_detail_second")}>
+                              <CartContext.Consumer>{({decrementItems}) => <button onClick={() => decrementItems(cartItems)}>-</button>}</CartContext.Consumer>
                               <div className={cx("countItems")}>
-                                Quantity: {cartItems.quantity}
+                                  {cartItems.quantity}
                               </div>
-                              <div className={cx("payment_money")}>
-                                Price: {cartItems.quantity * cartItems.price}{" "}
-                                USD
-                              </div>
+                              <CartContext.Consumer>
+                                {({ incrementItems }) => (
+                                  <button
+                                    className="increment"
+                                    onClick={() => incrementItems(cartItems)}
+                                  >
+                                    +
+                                  </button>
+                                )}
+                              </CartContext.Consumer>
+                              <CartContext.Consumer>{({deleteItems}) => <button onClick={() =>deleteItems(cartItems)}>delete</button>}</CartContext.Consumer>
                             </div>
                           </div>
                         </div>
@@ -120,7 +127,7 @@ const CheckOut = () => {
                 </div>
                 <div className={cx("detail_second")}>
                   <div className={cx("total")}>
-                    <p>Total Payment: {sumArray(total)} USD</p>
+                    <p>Total Payment: {sumArray(total)}USD</p>
                   </div>
                   <button>Continue shopping</button>
                   <button onClick={handleCheckOut}>Purchase</button>

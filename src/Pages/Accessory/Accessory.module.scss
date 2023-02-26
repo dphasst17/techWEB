@@ -38,9 +38,11 @@
                 input[type="checkbox"] {
                     accent-color: #373635;
                     border-radius: 50%;
+                    cursor: pointer;
                 }
                 label {
                     margin-left: 7%;
+                    cursor: pointer;
                 }
             }
         }
@@ -101,6 +103,7 @@
                 margin-left:4%;
                 margin-top: 3%;
                 border-radius:15px;
+                cursor: pointer;
                 .detail-box {
                     width: 100%;
                     min-width: 150px;
@@ -132,9 +135,9 @@
                             border: none;
                             border-radius: 10px;
                             background-color: #bbbbbb;
-
                             margin-right: 5%;
                             box-shadow: 2px 2px #444444;
+                            cursor: pointer;
                         }
                         button:nth-child(2){
                             a{
