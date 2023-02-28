@@ -28,7 +28,7 @@ const Product = () => {
               <div className={cx("productAccess")}>
                 {product.detail.map((items,index) => (
                 <div className={cx("information")} key={index}>
-                  <p>Cpu: {items.cpu.map((detail) => (detail.type.length > 15) ? detail.type.slice(0,15)+`...`: detail.type)}</p>
+                  <p>Cpu: {items.cpu.map((detail) => detail.type)}</p>
                   <p>Display: {items.display.map((detail) => (detail.size__inch))} inch - {items.display.map((detail) => (detail.refresh_rate__hz))}hz</p>
                   <p>Ram: {items.memory.map((detail) => (detail.ram__gb))}GB</p>
                   <p>Hard drive: {items.storage.map((detail) =>(detail.type))}-{items.storage.map((detail) =>(detail.capacity__gb))}GB</p>

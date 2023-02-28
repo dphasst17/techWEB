@@ -19,11 +19,7 @@ function ProductDetail() {
   ).slice(0,6);
   return (
     <div className="detailPage">
-      {/* <button onClick={() => {console.log(relatedProducts)}}>Check</button>
-      <button onClick={() => {console.log(random)}}>Check</button> */}
-      {/* <h1>Product detail pages</h1> */}
       <div className="items">
-        {/*             <button onClick={() => {console.log(parseInt(productID))}}>Check</button> */}
         {thisProduct !== undefined ? (
           thisProduct.map((items, index) => (
             <div className="itemsChild" key={index}>
@@ -44,9 +40,7 @@ function ProductDetail() {
                         <h3>
                           Cpu:
                           {items.cpu.map((detail) =>
-                            detail.type.length > 15
-                              ? detail.type.slice(0, 15) + `...`
-                              : detail.type
+                            detail.type
                           )}
                         </h3>
                         <h3>
@@ -103,7 +97,7 @@ function ProductDetail() {
                     <img src={items.url} alt="img Related"/>
                 </div>
                 <div className="titleRelated">
-                    <h4>{(items.title.length > 20) ? items.title.slice(0,18): items.title}</h4>
+                    <h4>{(items.title.length > 18) ? items.title.slice(0,18)+ `...`: items.title}</h4>
                 </div>
                 <div className="priceRelated">
                     <h4>Price: {items.price} USD</h4>
