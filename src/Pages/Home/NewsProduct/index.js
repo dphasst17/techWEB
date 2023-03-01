@@ -7,13 +7,14 @@ import {
   faTableList,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { ApiContext } from "~/ContextApi/ContextApi";
 
 const cx = classNames.bind(style);
 
 const NewsProduct = () => {
+  const navigate = useNavigate();
   const { DataProduct } = useContext(ApiContext);
   const dataProduct = DataProduct.filter(
     (items) =>
@@ -43,8 +44,8 @@ const NewsProduct = () => {
                   </button>
                 )}
               </CartContext.Consumer>
-              <button>
-                <Link to={"/detail/" + items.id}>
+              <button onClick={() => {navigate("/detail/" + items.id + "/" + items.title)}}>
+                <Link to={`/detail/${items.id}/${items.title}`}>
                   <FontAwesomeIcon icon={faTableList} />
                 </Link>
               </button>

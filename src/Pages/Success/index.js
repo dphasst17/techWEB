@@ -10,7 +10,7 @@ function Success() {
             <h2>SUCCESSFULLY PURCHASE</h2>
         </div>
         <div className="checkItems">
-            <Link to="/user">CHECK PRODUCT IN USER INFORMATION</Link>
+            <Link onClick={() => {window.location.pathname = "/user"}}>CHECK PRODUCT IN USER INFORMATION</Link>
         </div>
         <div className="back">
             <Link to="/">

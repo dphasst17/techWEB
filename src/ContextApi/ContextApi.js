@@ -22,7 +22,8 @@ export const ApiProvider = ({ children }) => {
         setDataProduct(dataProducts);
       })
       .catch((err) => console.error(err));
-
+  }, []);
+  useEffect(() =>{
     fetch(urlProduct + "tw21n4e42mqw")
       .then((dataAccess) => dataAccess.json())
       .then((dataAccess) => {
@@ -30,13 +31,15 @@ export const ApiProvider = ({ children }) => {
       })
       .catch((err) => console.error(err));
 
+  },[])
+  useEffect(() =>{
     fetch(urlUsers)
       .then((dataUsers) => dataUsers.json())
       .then((dataUsers) => {
         setUsers(dataUsers);
       })
       .catch((err) => console.error(err));
-  }, []);
+  },[])
 
   const handelValueSearch = (valueSearch) => {
     setValueSearch(valueSearch.target.value);
@@ -62,6 +65,7 @@ export const ApiProvider = ({ children }) => {
   return (
     <ApiContext.Provider
       value={{
+        urlProduct,
         urlUsers,
         DataProduct,
         Access,

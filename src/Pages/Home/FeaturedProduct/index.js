@@ -9,14 +9,15 @@ import { ApiContext } from "~/ContextApi/ContextApi";
 import { CartContext } from "~/Contexts/Cart";
 import classNames from "classnames/bind";
 import style from "../Home.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(style);
 
 const FeaturedProduct = () => {
+  const navigate = useNavigate()
   const { DataProduct, Access } = useContext(ApiContext);
   const data = [...DataProduct, ...Access];
-  const filterData = data.filter((items) => items.id % 4 === 0);
+  const filterData = data.filter((items) => Number(items.id) % 4 === 0);
   return (
     <div className={cx("featuredProduct")}>
       <h2>Featured Product</h2>
@@ -40,8 +41,8 @@ const FeaturedProduct = () => {
                   </button>
                 )}
               </CartContext.Consumer>
-              <button>
-                <Link to={"/detail/" + items.id}>
+              <button onClick={() => {navigate("/detail/" + items.id + "/" + items.title)}}>
+                <Link to={`/detail/${items.id}/${items.title}`}>
                   <FontAwesomeIcon icon={faTableList} />
                 </Link>
               </button>

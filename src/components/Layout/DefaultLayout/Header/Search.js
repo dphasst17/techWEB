@@ -26,7 +26,7 @@ function SearchResults() {
         <div className={cx("detail")} key={index} onClick={() => {navigate("/detail/"+ items.id)}}>
           <img src={items.url} alt="" />
           <div className={cx("resultTitle")}>
-            <h3>Title: {(items.title.length >= 33) ? items.title.slice(0,33) + `...` : items.title }</h3>
+            <h3>Title: {(items.title.length >= 40) ? items.title.slice(0,40) + `...` : items.title }</h3>
             <h3>Price: {items.price} USD</h3>
           </div>
         </div>

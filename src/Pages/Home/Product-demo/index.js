@@ -23,7 +23,7 @@ const Product = () => {
             <div className={cx("image")}><img src={product.url} alt="Slide-show" /></div>
             <div className={cx("items")}>
               <div className={cx("title")}>
-                <p>{(product.title.length > 15) ? product.title.slice(0,15)+`...`:product.title}</p>
+                <p>{/* (product.title.length > 15) ? product.title.slice(0,15)+`...`: */product.title}</p>
               </div>
               <div className={cx("productAccess")}>
                 {product.detail.map((items,index) => (
@@ -45,7 +45,7 @@ const Product = () => {
                     )}
                     
                   </CartContext.Consumer>
-                  <button><Link to={`/detail/${product.id}`}><FontAwesomeIcon icon={faTableList}/></Link ></button>
+                  <button><Link to={"/detail/" + product.id + "/" + product.title}><FontAwesomeIcon icon={faTableList}/></Link ></button>
                 </div>
               </div>
             </div>

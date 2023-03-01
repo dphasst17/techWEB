@@ -17,7 +17,7 @@ const AccDemo = () => {
         <div className={cx("accDemo")} key={index}>
           <div className={cx("accDemo_Child")}>
             <div className={cx("image")}><img src={dataAcc.url} alt="" /></div>
-            <div className={cx("title")}><p>{(dataAcc.title.length > 20) ? dataAcc.title.slice(0,20)+`...`:dataAcc.title}</p></div >
+            <div className={cx("title")}><p>{/* (dataAcc.title.length > 20) ? dataAcc.title.slice(0,20)+`...`: */dataAcc.title}</p></div >
             <div className={cx("items-child")}>
               <div className={cx("price")}>{dataAcc.price} USD</div>
               <div className={cx("button")}>
@@ -31,7 +31,7 @@ const AccDemo = () => {
                     </button>
                   )}
                 </CartContext.Consumer>
-                <button><Link to={`/detail/${dataAcc.id}`}><FontAwesomeIcon icon={faTableList}/></Link ></button>
+                <button><Link to={`/detail/${dataAcc.id}/${dataAcc.title}`}><FontAwesomeIcon icon={faTableList}/></Link ></button>
               </div>
             </div >
           </div>

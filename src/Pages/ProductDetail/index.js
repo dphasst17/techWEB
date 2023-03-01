@@ -1,17 +1,19 @@
 import React, { useContext } from "react";
 import "./ProductDetail.scss";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams} from "react-router-dom";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faHeart, faTableList } from "@fortawesome/free-solid-svg-icons";
 import { CartContext } from "~/Contexts/Cart";
 
-function ProductDetail() {
+const ProductDetail = () => {
   const { DataProduct, Access } = useContext(ApiContext);
-  const { productID } = useParams();
+  const navigate = useNavigate();
+  const {productID} = useParams()
+  /* const productID = window.location.pathname.slice(8).split('/').shift() */
   const productsData = [...DataProduct, ...Access];
   const thisProduct = productsData.filter(
-    (items) => items.id === parseInt(productID)
+    (items) => Math.floor(items.id) === Math.floor(productID)
   );
   const random = Math.floor(Math.random() * 10) + 9;
   const relatedProducts = productsData.filter(
@@ -20,9 +22,7 @@ function ProductDetail() {
   return (
     <div className="detailPage">
       <div className="items">
-        {thisProduct !== undefined ? (
-          thisProduct.map((items, index) => (
-            <div className="itemsChild" key={index}>
+        {thisProduct.map((items, index) => {return <div className="itemsChild" key={index}>
               <div className="image">
                 <img src={items.url} alt="img Product" />
               </div>
@@ -81,11 +81,9 @@ function ProductDetail() {
                   <button>Add to favorites</button>
                 </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <></>
-        )}
+            </div>}
+            
+          )}
       </div>
       <div className="relatedProducts">
         <h1>YOU MAY ALSO LIKE</h1>
@@ -110,7 +108,7 @@ function ProductDetail() {
                       </button>
                     )}
                   </CartContext.Consumer>
-                    <button><Link to={`/detail/${items.id}`}><FontAwesomeIcon icon={faTableList}/></Link ></button>
+                    <button onClick={() => {navigate("/detail/"+ items.id +"/" + items.title)}}><Link to={`/detail/${items.id}/${items.title}`}><FontAwesomeIcon icon={faTableList}/></Link ></button>
                     <button><FontAwesomeIcon icon={faHeart}/></button>
                 </div>
             </div>

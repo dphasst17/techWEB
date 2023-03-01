@@ -158,9 +158,7 @@ function Accessory() {
                 <img src={product.url} alt="" />
                 <div className={cx("title")}>
                   <h4>
-                    {product.title.length >= 19
-                      ? product.title.slice(0, 20) + `...`
-                      : product.title}
+                    {product.title}
                   </h4>
                 </div>
                 <p>{product.price} USD</p>
@@ -173,7 +171,7 @@ function Accessory() {
                     )}
                   </CartContext.Consumer>
                   <button>
-                    <Link to={`/detail/${product.id}`}><FontAwesomeIcon icon={faTableList} /></Link>
+                    <Link to={"/detail/" + product.id + "/" + product.title}><FontAwesomeIcon icon={faTableList} /></Link>
                   </button>
                   <button>
                     <FontAwesomeIcon icon={faHeart} />

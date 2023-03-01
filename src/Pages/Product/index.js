@@ -181,7 +181,7 @@ function Product() {
                     )}
                   </CartContext.Consumer>
                   <button>
-                    <Link to={`/detail/${product.id}`}><FontAwesomeIcon icon={faTableList} /></Link>
+                    <Link to={`/detail/${product.id}/${product.title}`}><FontAwesomeIcon icon={faTableList} /></Link>
                   </button>
                   <button>
                     <FontAwesomeIcon icon={faHeart} />

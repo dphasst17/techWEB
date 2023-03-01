@@ -187,7 +187,7 @@ function SearchResult() {
                       </button>
                     )}
                   </CartContext.Consumer>
-                  <button onClick={() => {navigate("/detail/"+ product.id)}}>
+                  <button onClick={() => {navigate("/detail/"+ product.id +"/" + product.title)}}>
                     <FontAwesomeIcon icon={faTableList} />
                   </button>
                   <button>
