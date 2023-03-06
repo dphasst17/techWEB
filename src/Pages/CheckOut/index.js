@@ -13,20 +13,17 @@ const CheckOut = () => {
   const { cartItems, setState } = useContext(CartContext);
   const { urlUsers } = useContext(ApiContext);
   const navigate = useNavigate();
-  /* const [data, setData] = useState({purchaseOrder:[]}); */
   let userID = JSON.parse(localStorage.getItem("identificationID") || "[]");
   const urlGet = urlUsers + `/` + userID;
-  /* let navigate = useNavigate; */
   /* Check login  */
   const [data, setData] = useState();
-  /*   const [showN, setIsShowN] = useState(false)
-   */ useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       const result = await axios(urlGet);
       setData(result.data.purchaseOrder);
     };
     fetchData();
-  }, [urlGet]);
+  }, [urlGet, data]);
   let handleCheckOut = () => {
     if (cartItems.length !== 0) {
       const option = {
@@ -46,9 +43,7 @@ const CheckOut = () => {
       alert("You need to add a product to your cart");
     }
   };
-  let total = cartItems?.map(
-    (item) => item.total
-  ); /* (cartItems.length !== 0 ) ? cartItems.map((item) => item.total): [] */
+  let total = cartItems?.map((item) => item.total);
   const sumArray = (total) => {
     let sum = 0;
     if (total.length >= 1) {
@@ -63,7 +58,6 @@ const CheckOut = () => {
   return (
     <div className={cx("cart_detail")}>
       <div className={cx("container")}>
-        {/* <button onClick={() => {console.log(total)}}>Check</button> */}
         <h1>Check Out</h1>
         <div className={cx("box")}>
           <CartContext.Consumer>
@@ -77,11 +71,11 @@ const CheckOut = () => {
                   }}
                 >
                   <h2>
-                    You have {cartItems?.length > 0 ? cartItems.length : 0}{" "}
+                    You have {cartItems.length > 0 ? cartItems.length : 0}
                     orders
                   </h2>
                   <div className={cx("itemsDetail")}>
-                    {cartItems.map((cartItems, index) => (
+                    {cartItems?.map((cartItems, index) => (
                       <>
                         <div className={cx("listItems")} key={index}>
                           <div className={cx("item")}>
@@ -91,7 +85,12 @@ const CheckOut = () => {
                             <div
                               className={cx("product_detail")}
                               onClick={() => {
-                                navigate("/detail/" + cartItems.id);
+                                navigate(
+                                  "/detail/" +
+                                    cartItems.id +
+                                    "/" +
+                                    cartItems.title
+                                );
                               }}
                             >
                               <h4>

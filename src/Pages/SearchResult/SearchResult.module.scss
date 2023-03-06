@@ -41,6 +41,10 @@
                     font-weight: 500;
                     cursor: pointer;
                 }
+                input:checked + label{
+                    color: #1e00ff;
+                    font-weight: 550;
+                }
             }
         }
 
@@ -59,44 +63,65 @@
                 text-align: center;
             }
         }
-        .aboutBrand{
-            .brandDetail{
-                display: flex;
-                justify-content: flex-start;
+        .aboutBrand, .aboutType{
+            .brandDetail, .typeDetail{
+                display:flex;
                 flex-wrap: wrap;
-                .filterBrand{
+                justify-content: flex-start;
+                .filterBrand, .filterType{
                     display:flex;
                     width:auto;
                     border-radius:10px;
-                    background-color: #1b0b97;
-                    color:#fff;
+                    color:#000;
                     padding:0 4%;
                     margin:2% 1%;
-                    input[type="checkbox"]{
-                        display:none;
+                    label{
+                        margin-left:2%;
+                        color:#000;
+                        display:flex;
+                        justify-content: flex-start;
+                        cursor: pointer;
+                        input[type="checkbox"]{
+                            margin-right:10%;
+                            cursor: pointer;
+                        }
+                        
                     }
-
+                    label:after{
+                        color:#4e37fc;
+                        
+                    }
                 }
             }
         }
-        .aboutType{
-            .typeDetail{
-                display: flex;
-                justify-content: flex-start;
-                flex-wrap: wrap;
-                    .filterType{
-                        display:flex;
-                        width:auto;
-                        border-radius:10px;
-                        background-color: #1b0b97;
-                        color:#fff;
-                        padding:0 4%;
-                        margin:2% 1%;
-                        input[type="checkbox"]{
-                            display:none;
-                        }
-                    }
+
+        .price{
+            width:100%;
+            height:6em;
+            h3{
+                text-align: center;
             }
+            input[type="radio"]{
+                opacity: 0;
+                height:20px;
+                width:130px;
+                position: absolute;
+                cursor: pointer;
+            }
+            label{
+                width:auto;
+                height:30px;
+                padding:1% 3%;
+                border-radius:10px;
+                color: #000;
+                font-weight: 550;
+                cursor: pointer;
+            }
+            input:checked + label{
+                color: #4e37fc;
+                font-weight: 600;
+            }
+            
         }
     }
     .items_container {
@@ -130,7 +155,7 @@
                     border: solid 0.5px grey;
                     border-radius: 15px;
                     flex-direction: column;
-                    justify-content: space-between;
+                    justify-content: center;
                     img {
                         width: 50%;
                         height: 40%;
@@ -149,10 +174,27 @@
                             font-size: 16px;
                             border: none;
                             border-radius: 10px;
-                            background-color: #bbbbbb;
+                            background-color: rgb(70, 117, 200);
                             margin-right: 5%;
                             box-shadow: 2px 2px #444444;
                             cursor: pointer;
+                        }
+                        button{
+                            svg{
+                                path{
+                                    fill:#fff;
+                                }
+                            }
+                        }
+                        button:nth-child(2){
+                            a{
+                                text-decoration: none;
+                                svg{
+                                    path{
+                                        fill:#fff
+                                    }
+                                }
+                            }
                         }
                         button:hover {
                             transform: scale(1.1, 1.1);
@@ -169,9 +211,7 @@
                         button:nth-child(3):hover svg path {
                             fill: rgb(211, 8, 8);
                         }
-                        button:nth-child(1):hover svg path {
-                            fill: rgb(2, 19, 169);
-                        }
+                        
                     }
                     .title {
                         width: 100%;
@@ -179,6 +219,9 @@
                         h4 {
                             text-align: center;
                             color: rgb(188, 12, 12);
+                            overflow: hidden;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
                         }
                     }
                     p {
@@ -220,9 +263,17 @@
             width:95%;
             margin: 2% auto;
             .show{
-                justify-content: space-around;
+                width:auto;
+                display: flex;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                align-content: center;
+                justify-content: flex-start;
+                padding:2% 0;
                 .product-detail{
-                    margin-left:0%;
+                    display:flex;
+                    margin:1% auto;
+                    justify-content: center;
                     min-width:150px;
                 }
             }

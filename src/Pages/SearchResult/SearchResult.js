@@ -13,10 +13,26 @@ import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(style);
 
+const valuePice = [
+  {
+    content: "Low to Hight",
+    inputValue: "1",
+    inputID: "low",
+  },
+  {
+    content: "Hight to Low",
+    inputValue: "2",
+    inputID: "hight",
+  },
+];
+
 function SearchResult() {
   const { valueSearch, DataProduct, Access } = useContext(ApiContext);
   const [value, setValue] = useState([]);
-  const navigate = useNavigate()
+  const [valueType, setValueType] = useState([]);
+  const [price, setPrice] = useState();
+  const navigate = useNavigate();
+
   const dataProduct = DataProduct.filter((data) =>
     valueSearch.length > 0
       ? data.title.toUpperCase().includes(valueSearch.toUpperCase()) ||
@@ -37,14 +53,24 @@ function SearchResult() {
   const dataType = data.map((items) => items.type);
   let filterBrand = Array.from(new Set(dataBrand));
   let filterType = Array.from(new Set(dataType));
-  /* const handleCheck = () => {
-    console.log(data);
-  }; */
+
   let result = data.filter((items) =>
-    value.length !== 0
-      ? value.includes(items.brand) || value.includes(items.type)
+    value.length !== 0 && valueType.length !== 0
+      ? value.includes(items.brand) && valueType.includes(items.type)
+      : value.length !== 0 || valueType.length !== 0
+      ? value.length !== 0
+        ? value.includes(items.brand)
+        : valueType.includes(items.type)
       : items
   );
+
+  result =
+    price !== undefined
+      ? price === "1"
+        ? result.sort((items, check) => (items.price > check.price ? 1 : -1))
+        : result.sort((items, check) => (items.price < check.price ? 1 : -1))
+      : result;
+
   return (
     <div className={cx("resultSearch")}>
       <div className={cx("filter")}>
@@ -75,9 +101,11 @@ function SearchResult() {
                 <input
                   type="checkbox"
                   onClick={() => {
-                    value.includes(items)
-                      ? setValue(value.filter((check) => check !== items))
-                      : setValue([...value, items]);
+                    valueType.includes(items)
+                      ? setValueType(
+                          valueType.filter((check) => check !== items)
+                        )
+                      : setValueType([...valueType, items]);
                   }}
                   id={cx("type") + `${index}`}
                 />
@@ -90,76 +118,119 @@ function SearchResult() {
           {filterType.length > 1 || filterBrand.length > 1 ? (
             <div className={cx("price")}>
               <h3>About Price</h3>
-              <input
-                type="radio"
-                name="check"
-                id={cx("lowToHigh")}
-                value={cx("1")}
-              />
-              <label htmlFor={cx("lowToHigh")}>Low to High</label>
-              <br></br>
-              <input
-                type="radio"
-                name="check"
-                id={cx("lowToHigh2")}
-                value={cx("2")}
-              />
-              <label htmlFor={cx("lowToHigh2")}>High to Low</label>
+              {valuePice.map((items, index) => (
+                <div key={index}>
+                  <input
+                    type="radio"
+                    name="check"
+                    id={items.inputID}
+                    value={items.inputValue}
+                    onClick={() => {
+                      setPrice(items.inputValue);
+                    }}
+                  />
+                  <label htmlFor={items.inputID}>{items.content}</label>
+                </div>
+              ))}
             </div>
           ) : (
             <></>
           )}
         </div>
-        {/* <button onClick={() => {console.log(filterType)}}>check</button> */}
       </div>
-      <div className={cx("filterMob")}>
-        <div className={cx("aboutBrand")}>
-          {filterBrand.length > 1 ? <h3>About Brand</h3> : <></>}
-          <div className={cx("brandDetail")}>
-            {filterBrand.length > 1 ? (
-              filterBrand.map((items, index) => (
-                <div className={cx("filterBrand")} key={index}>
-                  <input
-                    type="checkbox"
-                    onClick={() => {
-                      value.includes(items)
-                        ? setValue(value.filter((check) => check !== items))
-                        : setValue([...value, items]);
-                    }}
-                    id={cx("brand") + `${index}`}
-                  />
-                  <label htmlFor={cx("brand") + `${index}`}>{items}</label>
-                </div>
-              ))
-            ) : (
-              <></>
-            )}
+      {valueSearch.length !== 0 ? (
+        <div className={cx("filterMob")}>
+          <div className={cx("aboutBrand")}>
+            {filterBrand.length > 1 ? <h3>About Brand</h3> : <></>}
+            <div className={cx("brandDetail")}>
+              {filterBrand.length > 1 ? (
+                filterBrand.map((items, index) => (
+                  <div className={cx("filterBrand")} key={index}>
+                    <label
+                      onClick={(e) => {
+                        e.target.style.color === "rgb(78, 55, 252)"
+                          ? (e.target.style.color = "rgb(0,0,0)")
+                          : (e.target.style.color = "rgb(78, 55, 252)");
+                      }}
+                    >
+                      <input
+                        type="checkbox"
+                        onClick={() => {
+                          value.includes(items)
+                            ? setValue(value.filter((check) => check !== items))
+                            : setValue([...value, items]);
+                        }}
+                        id={cx("brand") + `${index}`}
+                      />
+                      {items}
+                    </label>
+                  </div>
+                ))
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
-        </div>
-        <div className={cx("aboutType")}>
-        {filterType.length > 1 ? <h3>About Type</h3> : <></>}
-          <div className={cx("typeDetail")}>
-            {filterType.length > 1 ? (
-              filterType.map((items, index) => (
-                <div className={cx("filterType")} key={index}>
+          <div className={cx("aboutType")}>
+            {filterType.length > 1 ? <h3>About Type</h3> : <></>}
+            <div className={cx("typeDetail")}>
+              {filterType.length > 1 ? (
+                filterType.map((items, index) => (
+                  <div className={cx("filterType")} key={index}>
+                    <label
+                      onClick={(e) => {
+                        e.target.style.color === "rgb(78, 55, 252)"
+                          ? (e.target.style.color = "rgb(0,0,0)")
+                          : (e.target.style.color = "rgb(78, 55, 252)");
+                      }}
+                    >
+                      <input
+                        type="checkbox"
+                        onClick={() => {
+                          valueType.includes(items)
+                            ? setValueType(
+                                valueType.filter((check) => check !== items)
+                              )
+                            : setValueType([...valueType, items]);
+                        }}
+                        name={cx("type") + `${index}`}
+                        id={cx("type") + `${index}`}
+                      />
+                      {items}
+                    </label>
+                  </div>
+                ))
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
+          {filterType.length > 1 || filterBrand.length > 1 ? (
+            <div className={cx("price")}>
+              <h3>About Price</h3>
+
+              {valuePice.map((items) => (
+                <>
                   <input
-                    type="checkbox"
+                    type="radio"
+                    name="check"
+                    id={items.inputID}
+                    value={items.inputValue}
                     onClick={() => {
-                      value.includes(items)
-                        ? setValue(value.filter((check) => check !== items))
-                        : setValue([...value, items]);
+                      setPrice(items.inputValue);
                     }}
-                    id={cx("type") + `${index}`}
                   />
-                  <label htmlFor={cx("type") + `${index}`}>{items}</label>
-                </div>
-              ))
-            ) : (
-              <></>
-            )}
-          </div >
+                  <label htmlFor={items.inputID}>{items.content}</label>
+                </>
+              ))}
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
-      </div>
+      ) : (
+        <></>
+      )}
       <div className={cx("items_container")}>
         <div className={cx("show")}>
           {result.map((product) => (
@@ -172,11 +243,7 @@ function SearchResult() {
               >
                 <img src={product.url} alt="" />
                 <div className={cx("title")}>
-                  <h4>
-                    {product.title.length >= 19
-                      ? product.title.slice(0, 20) + `...`
-                      : product.title}
-                  </h4>
+                  <h4>{product.title}</h4>
                 </div>
                 <p>{product.price} USD</p>
                 <div className={cx("button")}>
@@ -187,7 +254,11 @@ function SearchResult() {
                       </button>
                     )}
                   </CartContext.Consumer>
-                  <button onClick={() => {navigate("/detail/"+ product.id +"/" + product.title)}}>
+                  <button
+                    onClick={() => {
+                      navigate("/detail/" + product.id + "/" + product.title);
+                    }}
+                  >
                     <FontAwesomeIcon icon={faTableList} />
                   </button>
                   <button>

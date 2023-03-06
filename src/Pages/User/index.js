@@ -41,7 +41,7 @@ function User() {
             {(purchase.length!== 0) ?
               dataUser.map((item) =>
                 item.purchaseOrder.map((items, index) => (
-                  <div className={cx("items")} key={index} onClick={() =>{navigate("/detail/" + items.id)}}>
+                  <div className={cx("items")} key={index} onClick={() =>{navigate("/detail/" + items.id + "/" + items.title)}}>
                     <div className={cx("image")}>
                       <img src={items.url} alt="Img Product" />
                     </div>

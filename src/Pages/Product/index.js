@@ -31,13 +31,6 @@ function Product() {
   } else if (newPrice.length === 1) {
     min = [newPrice.map((items) => items.min)];
     max = [newPrice.map((items) => items.max)];
-    /* newPrice.map(items => (items.max !== undefined) ? (
-      min = [newPrice.map(items => items.min)],
-      max = [newPrice.map(items => items.max)]
-    ) : (
-      min = [newPrice.map(items => items.min)],
-      max = ""
-    )) */
   } else {
     min = 0;
     max = 0;
@@ -50,9 +43,7 @@ function Product() {
     } else if (newValue.length !== 0 || newPrice.length !== 0) {
       return newValue.length !== 0
         ? newValue.includes(value.brand)
-        : value.price > min &&
-            value.price <
-              max /* min < value.price < max */ /* ((max !== undefined) ? value.price > min && value.price < max : value.price > min) */;
+        : value.price > min && value.price < max;
     } else {
       return value;
     }
@@ -101,7 +92,6 @@ function Product() {
                       setNewPrice(newPrice.filter((items) => items !== price));
                     } else {
                       setNewPrice([...newPrice, price]);
-                      /* setData(DataProduct.filter(value => inputName.includes(value.brand))) */
                     }
                   }}
                   id={cx("keyword-price") + `${price.id}`}
@@ -120,20 +110,30 @@ function Product() {
           <div className={cx("itemsBrand")}>
             {filterBrand.map((brand, index) => (
               <div className={cx("brandDetail")} key={index}>
-                <input
-                  type="checkbox"
-                  name="keyword"
-                  onClick={() => {
-                    if (newValue.includes(brand)) {
-                      setNewValue(newValue.filter((items) => items !== brand));
-                    } else {
-                      setNewValue([...newValue, brand]);
-                      /* setData(DataProduct.filter(value => inputName.includes(value.brand))) */
-                    }
+                <label
+                  className="infType"
+                  onClick={(e) => {
+                    e.target.style.color === "rgb(78, 55, 252)"
+                      ? (e.target.style.color = "rgb(0,0,0)")
+                      : (e.target.style.color = "rgb(78, 55, 252)");
                   }}
-                  id={cx("keyword-brand") + `${index}`}
-                />
-                <label htmlFor={cx("keyword-brand") + `${index}`} className="infType">{brand}</label>
+                >
+                  <input
+                    type="checkbox"
+                    name="keyword"
+                    onClick={() => {
+                      if (newValue.includes(brand)) {
+                        setNewValue(
+                          newValue.filter((items) => items !== brand)
+                        );
+                      } else {
+                        setNewValue([...newValue, brand]);
+                      }
+                    }}
+                    id={cx("keyword-brand") + `${index}`}
+                  />
+                  {brand}
+                </label>
               </div>
             ))}
           </div>
@@ -141,24 +141,34 @@ function Product() {
         <div className={cx("aboutPriceMob")}>
           <h2>About Price</h2>
           <div className={cx("itemsPrice")}>
-            {price.map((check,index) => <div className={cx("priceDetail")} key={index}>
-            <input
-                  type="checkbox"
-                  name="keyword"
-                  onClick={() => {
-                    if (newPrice.includes(check)) {
-                      setNewPrice(newPrice.filter((items) => items !== check));
-                    } else {
-                      setNewPrice([...newPrice, check]);
-                      /* setData(DataProduct.filter(value => inputName.includes(value.brand))) */
-                    }
+            {price.map((check, index) => (
+              <div className={cx("priceDetail")} key={index}>
+                <label
+                  className="infType"
+                  onClick={(e) => {
+                    e.target.style.color === "rgb(78, 55, 252)"
+                      ? (e.target.style.color = "rgb(0,0,0)")
+                      : (e.target.style.color = "rgb(78, 55, 252)");
                   }}
-                  id={cx("keyword-price") + `${check.id}`}
-                ></input>
-                <label htmlFor={cx("keyword-price") + `${check.id}`} className="infType">
+                >
+                  <input
+                    type="checkbox"
+                    name="keyword"
+                    onClick={() => {
+                      if (newPrice.includes(check)) {
+                        setNewPrice(
+                          newPrice.filter((items) => items !== check)
+                        );
+                      } else {
+                        setNewPrice([...newPrice, check]);
+                      }
+                    }}
+                    id={cx("keyword-price") + `${check.id}`}
+                  ></input>
                   {check.min} - {check.max}
                 </label>
-            </div>)}
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -181,7 +191,9 @@ function Product() {
                     )}
                   </CartContext.Consumer>
                   <button>
-                    <Link to={`/detail/${product.id}/${product.title}`}><FontAwesomeIcon icon={faTableList} /></Link>
+                    <Link to={`/detail/${product.id}/${product.title}`}>
+                      <FontAwesomeIcon icon={faTableList} />
+                    </Link>
                   </button>
                   <button>
                     <FontAwesomeIcon icon={faHeart} />

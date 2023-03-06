@@ -11,8 +11,6 @@ const cx = classNames.bind(style);
 const Product = () => {
   const {DataProduct}=useContext(ApiContext)
   const data = DataProduct.filter(data => data.id % 2 !== 0)
-/*   const detail = data.map(data => data.detail.map(items => (items.software.map(typeCpu => typeCpu.os))))
-  console.log(detail) */
 
 
   return (
@@ -23,7 +21,7 @@ const Product = () => {
             <div className={cx("image")}><img src={product.url} alt="Slide-show" /></div>
             <div className={cx("items")}>
               <div className={cx("title")}>
-                <p>{/* (product.title.length > 15) ? product.title.slice(0,15)+`...`: */product.title}</p>
+                <p>{product.title}</p>
               </div>
               <div className={cx("productAccess")}>
                 {product.detail.map((items,index) => (

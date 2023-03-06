@@ -132,7 +132,7 @@
                 }
                 .fpButton{
                     width:100%;
-                    height:30%;
+                    height:20%;
                     display:flex;
                     flex-wrap: wrap;
                     align-content:center;
@@ -145,8 +145,12 @@
                         border:none;
                         background-color: rgb(70, 117, 200);
                         cursor: pointer;
+                        display:flex;
+                        flex-wrap: wrap;
+                        align-content: center;
+                        justify-content: center;
                         svg{
-                            height:50%;
+                            height:15px;
                             path{
                                 fill:#fff;
                             }

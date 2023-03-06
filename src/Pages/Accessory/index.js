@@ -75,7 +75,6 @@ function Accessory() {
                       );
                     } else {
                       setValueType([...valueType, price]);
-                      /* setData(DataProduct.filter(value => inputName.includes(value.brand))) */
                     }
                   }}
                   id={cx("keyword-price") + `${index}`}
@@ -94,25 +93,28 @@ function Accessory() {
           <div className={cx("itemsBrand")}>
             {filterBrand.map((brand, index) => (
               <div className={cx("brandDetail")} key={index}>
-                <input
-                  type="checkbox"
-                  name="keyword"
-                  onClick={() => {
-                    if (valueBrand.includes(brand)) {
-                      setValueBrand(
-                        valueBrand.filter((items) => items !== brand)
-                      );
-                    } else {
-                      setValueBrand([...valueBrand, brand]);
-                      /* setData(DataProduct.filter(value => inputName.includes(value.brand))) */
-                    }
-                  }}
-                  id={cx("keyword-brand") + `${index}`}
-                />
                 <label
-                  htmlFor={cx("keyword-brand") + `${index}`}
+                  onClick={(e) => {
+                    e.target.style.color === "rgb(78, 55, 252)"
+                      ? (e.target.style.color = "rgb(0,0,0)")
+                      : (e.target.style.color = "rgb(78, 55, 252)");
+                  }}
                   className="infType"
                 >
+                  <input
+                    type="checkbox"
+                    name="keyword"
+                    onClick={() => {
+                      if (valueBrand.includes(brand)) {
+                        setValueBrand(
+                          valueBrand.filter((items) => items !== brand)
+                        );
+                      } else {
+                        setValueBrand([...valueBrand, brand]);
+                      }
+                    }}
+                    id={cx("keyword-brand") + `${index}`}
+                  />
                   {brand}
                 </label>
               </div>
@@ -120,29 +122,32 @@ function Accessory() {
           </div>
         </div>
         <div className={cx("aboutTypeMob")}>
-          <h2>About Price</h2>
+          <h2>About Type</h2>
           <div className={cx("itemsPrice")}>
             {filterType.map((check, index) => (
               <div className={cx("priceDetail")} key={index}>
-                <input
-                  type="checkbox"
-                  name="keyword"
-                  onClick={() => {
-                    if (valueType.includes(check)) {
-                      setValueType(
-                        valueType.filter((items) => items !== check)
-                      );
-                    } else {
-                      setValueType([...valueType, check]);
-                      /* setData(DataProduct.filter(value => inputName.includes(value.brand))) */
-                    }
-                  }}
-                  id={cx("keyword-price") + `${check.id}`}
-                ></input>
                 <label
-                  htmlFor={cx("keyword-price") + `${check.id}`}
+                  onClick={(e) => {
+                    e.target.style.color === "rgb(78, 55, 252)"
+                      ? (e.target.style.color = "rgb(0,0,0)")
+                      : (e.target.style.color = "rgb(78, 55, 252)");
+                  }}
                   className="infType"
                 >
+                  <input
+                    type="checkbox"
+                    name="keyword"
+                    onClick={() => {
+                      if (valueType.includes(check)) {
+                        setValueType(
+                          valueType.filter((items) => items !== check)
+                        );
+                      } else {
+                        setValueType([...valueType, check]);
+                      }
+                    }}
+                    id={cx("keyword-price") + `${check.id}`}
+                  />
                   {check}
                 </label>
               </div>
@@ -157,9 +162,7 @@ function Accessory() {
               <div className={cx("detail-box")}>
                 <img src={product.url} alt="" />
                 <div className={cx("title")}>
-                  <h4>
-                    {product.title}
-                  </h4>
+                  <h4>{product.title}</h4>
                 </div>
                 <p>{product.price} USD</p>
                 <div className={cx("button")}>
@@ -171,7 +174,9 @@ function Accessory() {
                     )}
                   </CartContext.Consumer>
                   <button>
-                    <Link to={"/detail/" + product.id + "/" + product.title}><FontAwesomeIcon icon={faTableList} /></Link>
+                    <Link to={"/detail/" + product.id + "/" + product.title}>
+                      <FontAwesomeIcon icon={faTableList} />
+                    </Link>
                   </button>
                   <button>
                     <FontAwesomeIcon icon={faHeart} />

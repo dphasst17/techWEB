@@ -44,6 +44,10 @@
                     margin-left: 7%;
                     cursor: pointer;
                 }
+                input:checked + label{
+                    color:#0534f4;
+                    font-weight:550
+                }
             }
         }
     }
@@ -61,24 +65,20 @@
             .itemsBrand,.itemsPrice{
                 display: flex;
                 justify-content: flex-start;
-                flex-direction: row;
                 flex-wrap: wrap;
-                input[type="checkbox"]{
-                    display: none;
-                }
+                
                 .brandDetail,.priceDetail{
-                    width:auto;
-                    background-color: rgb(70, 117, 200);
-                    color:#fff;
-                    padding:1%;
-                    border-radius:10px;
-                    margin:1%;
-                    .infType{
-                        font-size: 18px;
+                    margin-left:4%;
+                    margin-bottom:2%;
+                    label{
+                        display:flex;
+                        color:#000;
+                        cursor: pointer;
+                        input{
+                            margin-right:10%;
+                            cursor: pointer;
+                        }
                     }
-                }
-                .brandDetail:hover,.priceDetail:hover{
-                    background-color: #0534f4;
                 }
             }
         }
@@ -134,7 +134,7 @@
                             font-size: 16px;
                             border: none;
                             border-radius: 10px;
-                            background-color: #bbbbbb;
+                            background-color: rgb(70, 117, 200);
                             margin-right: 5%;
                             box-shadow: 2px 2px #444444;
                             cursor: pointer;
@@ -145,6 +145,22 @@
                                 svg{
                                     path{
                                         fill:#000
+                                    }
+                                }
+                            }
+                        }button{
+                            svg{
+                                path{
+                                    fill:#fff;
+                                }
+                            }
+                        }
+                        button:nth-child(2){
+                            a{
+                                text-decoration: none;
+                                svg{
+                                    path{
+                                        fill:#fff
                                     }
                                 }
                             }
@@ -164,9 +180,7 @@
                         button:nth-child(3):hover svg path {
                             fill: rgb(211, 8, 8);
                         }
-                        button:nth-child(1):hover svg path {
-                            fill: rgb(2, 19, 169);
-                        }
+                        
                     }
                     .title {
                         width: 100%;
@@ -227,8 +241,8 @@
             .show{
                 justify-content: flex-start;
                 .product-detail{
-                    min-width: 150px;
-                    margin-left:4%;
+                    min-width: 160px;
+                    margin:2% auto;
                     .detail-box{
                         height:13em;
                         .title{

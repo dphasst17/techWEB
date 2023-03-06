@@ -40,13 +40,9 @@ export class CartProvider extends Component {
               let checkID = listCart.map((items) => {
                 if (product.id === items.id) {
                   return {
-                    id: items.id,
-                    url: items.url,
-                    title: items.title,
-                    price: items.price,
+                    ...items,
                     quantity: items.quantity + 1,
                     total: items.price * (items.quantity + 1),
-                    detail: items.detail,
                   };
                 } else {
                   return { ...items };
@@ -152,10 +148,7 @@ export class CartProvider extends Component {
     increment = increment.map((items) => {
       if (items.id === product.id) {
         return {
-          id: items.id,
-          url: items.url,
-          title: items.title,
-          price: items.price,
+          ...items,
           quantity: items.quantity + 1,
           total: items.price * (items.quantity + 1),
         };
@@ -188,10 +181,7 @@ export class CartProvider extends Component {
     decrement = decrement.map((items) => {
       if (items.id === product.id && items.quantity > 1) {
         return {
-          id: items.id,
-          url: items.url,
-          title: items.title,
-          price: items.price,
+          ...items,
           quantity: items.quantity - 1,
           total: items.price * (items.quantity - 1),
         };
@@ -217,19 +207,6 @@ export class CartProvider extends Component {
           cartItems: json.listCart,
         })
       ); */
-  }
-  checkOut() {
-    const option = {
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-      body: JSON.stringify({
-        purchaseOrder: this.state.cartItems,
-        listCart: [],
-      }),
-    };
-    fetch(urlBase + "/" + useID, option).then((response) => response.json());
   }
   render() {
     return (
