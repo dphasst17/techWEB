@@ -13,8 +13,8 @@ function Footer() {
             <div className={cx("items")}>
                 <h3>CONTACT US</h3>
                 <div className={cx("iconFooter")}>
-                    <div className={cx("detail")}><FontAwesomeIcon icon={faFacebook}/><span>Facebook</span></div>
-                    <div className={cx("detail")}><FontAwesomeIcon icon={faGithub}/><span>Github</span></div>
+                    <div className={cx("detail")} onClick={() => {window.location = "https://www.facebook.com/dfasst5"}}><FontAwesomeIcon icon={faFacebook}/><span>Facebook</span></div>
+                    <div className={cx("detail")} onClick={() => {window.location = "https://github.com/dphasst17/techReactJSApp"}}><FontAwesomeIcon icon={faGithub}/><span>Github</span></div>
                     <div className={cx("detail")}><FcGoogle/><span>Gmail</span></div>
                 </div>
             </div>
@@ -23,7 +23,7 @@ function Footer() {
                     <div className={cx("serviceDetail")}>POLICIES AND SERVICES</div>
                     <div className={cx("serviceDetail")}>WARRANTY SERVICES</div>
                 </div>
-                <div className={cx("service")}>COPYRIGHT©D-FAST @2023</div>
+                <div className={cx("service")}>COPYRIGHT©DINH-PHAT</div>
             </div>
         </div>
      );

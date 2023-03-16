@@ -1,5 +1,5 @@
 import "./Header.scss";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -43,11 +43,11 @@ function Header() {
     valueSearch,
     handelValueSearch,
     showResult,
-    isToggleNav,
-    setIsToggleNav,
     handleSetIsShowResult,
     handleSetHideResult,
   } = useContext(ApiContext);
+  const [isToggleNav, setIsToggleNav] = useState("translateX(-200%)");
+  const [valueIP, setValueIP] = useState("Login");
   let navigate = useNavigate();
   const { pathname } = useLocation();
   /*  */
@@ -56,13 +56,13 @@ function Header() {
   /* const menuToggle = () => nav.current.classList.toggle('active'); */
   /*  */
   let checkLogin = JSON.parse(localStorage.getItem("isLogin") || "[]");
-  let check = () => {
+  useEffect(()=>{
     if (checkLogin === true) {
-      return (check = "Log out");
+      setValueIP("Logout")
     } else {
-      return (check = "Log in");
+      setValueIP("Login")
     }
-  };
+  },[checkLogin])
   /* check Login */
   let handleButtonLog = () => {
     sessionStorage.setItem(
@@ -83,6 +83,10 @@ function Header() {
     if (checkLogin === true) {
       navigate("/checkout");
     } else {
+      sessionStorage.setItem(
+        "pathName",
+        JSON.stringify(window.location.pathname)
+      );
       navigate("/login");
     }
   };
@@ -242,7 +246,7 @@ function Header() {
                   <a href="/login">
                     <input
                       type="button"
-                      value={check()}
+                      value={valueIP}
                       onClick={handleButtonLog}
                     />
                   </a>
@@ -254,10 +258,10 @@ function Header() {
       </div>
       <div className="headerMob">
         <div className="navMob">
-          <FontAwesomeIcon icon={faBars} onClick={() => {setIsToggleNav(true)}}/>
-          {isToggleNav && <div className="navDetail">
+          <FontAwesomeIcon icon={faBars} onClick={() => {setIsToggleNav("translateX(-17%)")}}/>
+          <div className="navDetail" style={{transform: isToggleNav}}>
             <div className="navClose">
-              <FontAwesomeIcon icon={faX} onClick={() => {setIsToggleNav(false)}}/>
+              <FontAwesomeIcon icon={faX} onClick={() => {setIsToggleNav("translateX(-200%)")}}/>
               <Link to="/checkout">
                 <div className="cartMob">
                   <FontAwesomeIcon icon={faCartShopping} />
@@ -287,7 +291,7 @@ function Header() {
               <div className="navItemsMob">
                 <div className="iconNavMob"><FontAwesomeIcon icon={faCircleUser} /></div>
                 <span>
-                  <Link to="/user">User information</Link>
+                  <Link to={(checkLogin === true ) ? "/user" : "/login"}>User information</Link>
                 </span>
               </div>
             </div>
@@ -296,7 +300,7 @@ function Header() {
                   <a href="/login">
                     <input
                       type="button"
-                      value={check()}
+                      value={valueIP}
                       onClick={handleButtonLog}
                     />
                   </a>
@@ -309,7 +313,7 @@ function Header() {
               <div className="iconContact"><FontAwesomeIcon icon={faGithub}/><span>Github</span></div>
               <div className="iconContact"><FcGoogle /><span>Mail</span></div>
             </div>
-          </div>}
+          </div>
         </div>
         <div className="logoMob">
           <img src="" alt="" />

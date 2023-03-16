@@ -12,15 +12,16 @@
 }
 html {
     font-size:62.5%;
+    scroll-behavior: smooth;
 }
 body { 
     font-family: 'Montserrat', sans-serif;
     font-size:1.6rem;
     line-height: 1.5;
     text-rendering: optimizeSpeed;
-    background: rgb(32,32,32);
     background:  rgb(255, 255, 255);
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 #root{
     width:100%;
@@ -36,7 +37,7 @@ body {
 }
 
 ::-webkit-scrollbar{
-    width:5px;
+    width:0px;
     
 }
 ::-webkit-scrollbar-track{
@@ -46,7 +47,6 @@ body {
     background-color: rgba(94, 93, 93, 0.889);
     border-radius: 10px;
 }
-
 .mainPage{
     width:100%;
     height:70%;
@@ -55,92 +55,282 @@ body {
     width:100%;
     height:auto;
 }
-.slide-container{
-    width:100%;
-    height:34em;
-    margin-top:2%;
-    .react-slideshow-container{
-        height:34em;
-        display: flex;
-        align-items: center;
-        position: relative;
-        flex-direction: row;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        align-content: space-between;
-        .default-nav{
-            margin:0 1%;
-            background-color: transparent; 
-        }
-        .default-nav:hover{
-            background-color:  rgb(70, 117, 200);
-            animation:button ease 1s;
-        }
+@keyframes toY{
+    0%{transform: translateY(-100%)}
+    100%{transform: translateY(0%)}
+}
+@keyframes to2Y{
+    0%{opacity:0;transform: translateY(100%)}
+    60%{opacity:0;transform: translateY(40%)}
+    100%{opacity:1;transform: translateY(0%)}
+}
+.slideshow {
+    display: block;
+    background:url("https://i.pinimg.com/originals/e1/6d/42/e16d4219e671bac00d1c23131e6d723f.jpg") no-repeat ;
+    background-size: 100% 400px;
+    width: 100%;
+    height: 500px;
+    margin: 0 auto;
+    overflow: hidden;
+    .slideshowSlider {
+        display:block;
+        width: 100%;
+        white-space: nowrap;
+        transition:transform linear 000ms;
+        margin-right: 2%;
         .slide {
-            background-repeat: no-repeat;
-            width:100%;
-            img{
-                width:90%;
-                height:33em;
-                margin-left:5%;
+            display: inline-flex;
+            flex-wrap: wrap;
+            height: 400px;
+            width: 100%;
+            border-radius: 40px;
+            .image{
+                width:35%;
+                height:100%;
+                display:flex;
+                flex-wrap: wrap;
+                transform: translateY(-200%);
+                align-content: center;
+                justify-content: center;
+                img {
+                    width: 100%;
+                    height: 70%;
+                    object-fit:contain;
+                    transition:animation .5s;
+                    animation: img 5s ease infinite;
+                }
+                @keyframes img{
+                    0%{transform:rotate(0)}
+                    25%{transform:rotate(-10deg)}
+                    50%{transform:rotate(0)}
+                    75%{transform:rotate(10deg)}
+                    100%{transform:rotate(0)}
+                }
+                img:hover{
+                    transform:scale(1.1);
+                    transition:animation .3s;
+                    animation: scale .3s ease-in-out;
+                  }
+                  @keyframes scale{
+                    0%{transform:scale(1)}
+                    100%{transform:scale(1.1)}
+                  }
+            }
+            .content{
+                width:60%;
+                height:100%;
+                display:flex;                
+                .items{
+                    height: 100%;
+                    display:flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    flex-wrap: wrap;
+                    align-content: center;
+                    position: relative;
+                    .title{
+                        width:100%;
+                        height:auto;
+                        margin:2% auto;
+                        animation: typing 4s alternate steps(15) infinite;
+                        white-space: nowrap;
+                        border-right:3px solid;
+                        overflow: hidden;
+                        font-size: 35px;
+                        font-weight: 600;
+                        text-align: center;
+                        -webkit-text-stroke: 0.3px rgb(29, 28, 28);
+                        color:transparent;
+                        cursor: pointer;
+                        @keyframes typing {
+                            0%{
+                                width:0;
+                                color:transparent;
+                                -webkit-text-stroke: 0.3px rgb(29, 28, 28);
+                            }
+                            50%{
+                                width:50%;
+                                color:rgb(70, 117, 200);
+                                -webkit-text-stroke: 1px rgb(70, 117, 200);
+                            }
+                            100%{
+                                width:100%;
+                                color:rgb(70, 117, 200);
+                                -webkit-text-stroke: 1px rgb(70, 117, 200);
+                            }
+                        }
+    
+                    }
+                    .inf{
+                        width:100%;
+                        height:60%;
+                        color: rgb(77, 133, 231);
+                        font-size:25px;
+                        font-weight: 550;
+                        display:flex;
+                        justify-content: center;
+                        animation: text 4s alternate linear infinite;
+                        p{
+                            width:100%;
+                            margin-top:4%;
+                        }
+                    }
+                    @keyframes text{
+                        0%{
+                            color:rgb(255, 255, 255)
+                        }
+                        100%{
+                            color: rgb(77, 133, 231);
+                        }
+                    }
+                    button{
+                        width:45%;
+                        outline:none;
+                        border:none;
+                        background:transparent;
+                        margin: 4% auto;
+                        cursor: pointer;
+/*                         animation:trans 3s alternate infinite; */
+                        .icon{
+                            stroke-dasharray: 1200;
+                            animation: stroke 6s alternate linear infinite;
+                            path{
+                                stroke-width: 1;
+                                stroke: rgb(244, 244, 244);
+                                fill:transparent;
+                                animation: color 3s alternate linear infinite
+                            }
+                            text{
+                                fill:#fff;
+                            }
+                            @keyframes color {
+                                0%{
+                                    fill:transparent
+                                }
+                                100%{
+                                    fill:rgb(70, 117, 200);
+                                }
+                            }
+                        }
+                        .icon:hover path{
+                            fill: aqua;
+                            transition: all 0.5s ease-out;
+                            d:path("M 50 40 L 50 50 V50 70 H-10 M -9.64 70 L -20 70 V40 H 53")
+                        }
+                        .icon:hover text{
+                            transition: all 0.5s ease-out;
+                            fill:rgb(255, 56, 56);
+                            font-weight: 500;
+                        }
+                        @keyframes stroke {
+                            0%{
+                                stroke-dashoffset: 0;
+                            }
+                            100% {
+                                
+                                stroke-dashoffset: 1200;
+                            }
+                        }
+                    }
+                    @keyframes trans{
+                        0%{
+                            border-radius: 20%;
+                            background-color: rgb(70, 117, 200);
+                            box-shadow: 0 0 5px rgb(70, 117, 200),
+                            0 0 25px rgb(70, 117, 200);
+                        }
+                        100%{
+                            background-color: rgb(70, 117, 200);
+                            box-shadow: 0 0 5px rgb(70, 117, 200),
+                            0 0 25px rgb(70, 117, 200),0 0 50px rgb(70, 117, 200),
+                            0 0 100px rgb(70, 117, 200),0 0 200px rgb(70, 117, 200),;
+                        }
+                    }
+                }
+                .items:nth-child(1){
+                    width:40%;
+                    opacity: 0;
+                    transform: translateY(100%);
+                }
+                .items:nth-child(2){
+                    width:60%;
+                    transform: translateY(-100%);
+                    animation: to-Y 2s alternate;
+                }
             }
         }
-    }
-    @keyframes button{
-        0%{background-color: rgb(91, 112, 128);}
-        100%{background-color:  rgb(70, 117, 200)}
-    }
-
-}
-@media (max-width:800px) and (min-width:600px){
-    .slide-container{
-        height:25em;
-        .react-slideshow-container{
-            height:25em;
-            .slide {
-                img{
-                    width:90%;
-                    height:24em;
-                    margin-left:5%;
+        .slide.active{
+            .image{
+                transform: translateY(0%);
+                animation: toY 2s alternate;
+            }
+            .content{
+                .items:nth-child(1){
+                    opacity: 1;
+                    transform: translateY(0%);
+                    animation: to2Y 1.5s alternate;
+                }
+                .items:nth-child(2){
+                    transform: translateY(0%);
+                    animation: toY 2s alternate;
                 }
             }
         }
     }
-}
-@media (max-width:599.99px) and (min-width:300px){
-    .slide-container{
-        height:19em;
-        .react-slideshow-container{
-            height:19em;
-            .default-nav{
-                display: none;
-            }
-            .slide {
-                img{
-                    width:90%;
-                    height:18em;
-                    margin-left:5%;
-                }
-            }
+    .slideshowDots {
+        display: flex;
+        width: 100%;
+        height:30px;
+        text-align: center;
+        justify-content:center;
+        margin-top:2%;
+        .slideshowDot{
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin: 15px 7px 0px;
+            background-color: #9e9e9e;
+        }
+        .active {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            margin: 15px 7px 0px;
+            background-color: #023cdaa4;
         }
     }
 }
-@media (max-width:299.99px){
-
-    .slide-container{
-        height:11em;
-        .react-slideshow-container{
-            height:11em;
-            .default-nav{
-                display: none;
-            }
-            .slide {
-                img{
-                    width:90%;
-                    height:10em;
-                    margin-left:5%;
+@media (max-width:709px){
+    .slideshow{
+        .slideshowSlider{
+            display:block;
+            .slide{
+                .content{
+                    flex-direction:column-reverse;
+                    justify-content: center;
+                    .items:nth-child(1){
+                        width:100%;
+                        button{
+                            width:40%;
+                        }
+                    }
+                    .items:nth-child(2){
+                        width:100%;
+                        .title{
+                            text-align: center;
+                            font-size:1em
+                        }
+                        .inf{
+                            font-size:1em
+                        }
+                    }
                 }
             }
+        }
+        .slideshowDots{
+            display:flex;
         }
     }
 }

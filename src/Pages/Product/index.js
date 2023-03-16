@@ -15,9 +15,12 @@ import { Link } from "react-router-dom";
 const cx = classNames.bind(style);
 
 function Product() {
-  const { DataProduct } = useContext(ApiContext);
+  const { DataProduct,PaginationPage,numPage,isShowButton } = useContext(ApiContext);
   const [newValue, setNewValue] = useState([]);
   const [newPrice, setNewPrice] = useState([]);
+  const [Slice, setSlice] = useState(12);
+  /* const [isShowButton, setIsShowButton] = useState(false);
+  const [numPage, setNumPage] = useState([]); */
 
   let min = "";
   let max = "";
@@ -48,14 +51,39 @@ function Product() {
       return value;
     }
   });
+  /* useMemo(() => {
+    if (data.length > 12) {
+      if (data.length % 12 === 0) {
+        setIsShowButton(true);
+        let arr = [];
+        for (let i = 1; i <= data.length / 12; i++) {
+          arr.push(i);
+          setNumPage(arr);
+        }
+      } else {
+        setIsShowButton(true);
+        let arr = [];
+        for (let i = 1; i <= data.length / 12 + 1; i++) {
+          arr.push(i);
+          setNumPage(arr);
+        }
+      }
+    } else {
+      setIsShowButton(false);
+    }
+  }, [data.length]); */
+  PaginationPage(data)
+  const handlePagi = (e) => {
+    setSlice(12 * e);
+  };
   const dataBrand = DataProduct.map((items) => items.brand);
   const setBrand = new Set(dataBrand);
   let filterBrand = [...setBrand];
+  const activePage = numPage.findIndex((e) => e === Slice / 12);
 
   return (
     <div className={cx("product")}>
       <div className={cx("filter")}>
-        <p>Filter</p>
         <div className={cx("box_filter")}>
           <h3>About Brand</h3>
           {filterBrand.map((check, index) => (
@@ -174,13 +202,34 @@ function Product() {
       </div>
       <div className={cx("items_container")}>
         <div className={cx("show")}>
-          {data.map((product) => (
+          {(data.length > 12
+            ? data.slice(Slice - 12, Slice)
+            : data.slice(0)
+          ).map((product) => (
             <div className={cx("product-detail")} key={product.id}>
               <div className={cx("detail-box")}>
                 <img src={product.url} alt="" />
                 <div className={cx("title")}>
                   <h4>{product.title}</h4>
                 </div>
+                {product.detail.map((items, index) => (
+                  <div className={cx("infProduct")} key={index}>
+                    <p>Cpu: {items.cpu.map((detail) => detail.type)}</p>
+                    <p>
+                      Display:{" "}
+                      {items.display.map((detail) => detail.size__inch)} inch -{" "}
+                      {items.display.map((detail) => detail.refresh_rate__hz)}
+                      hz
+                    </p>
+                    <p>Ram: {items.memory.map((detail) => detail.ram__gb)}GB</p>
+                    <p>
+                      Hard drive: {items.storage.map((detail) => detail.type)}-
+                      {items.storage.map((detail) => detail.capacity__gb)}GB
+                    </p>
+                    <p>Os: {items.software.map((detail) => detail.os)}</p>
+                  </div>
+                ))}
+
                 <p>{product.price} USD</p>
                 <div className={cx("button")}>
                   <CartContext.Consumer>
@@ -202,6 +251,24 @@ function Product() {
               </div>
             </div>
           ))}
+        </div>
+        <div className={cx("buttonPG")}>
+          <div className={cx("buttonCT")}>
+            {isShowButton === true ? (
+              numPage.map((items, index) => (
+                <div
+                  className={cx(
+                    `pagination${index === activePage ? "Active" : ""}`
+                  )}
+                  key={index}
+                >
+                  <button onClick={() => handlePagi(items)}>{items}</button>
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
       </div>
     </div>

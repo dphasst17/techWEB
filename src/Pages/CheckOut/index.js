@@ -71,8 +71,7 @@ const CheckOut = () => {
                   }}
                 >
                   <h2>
-                    You have {cartItems.length > 0 ? cartItems.length : 0}
-                    orders
+                    You have {cartItems.length > 0 ? cartItems.length : 0} orders
                   </h2>
                   <div className={cx("itemsDetail")}>
                     {cartItems?.map((cartItems, index) => (

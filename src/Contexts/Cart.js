@@ -27,83 +27,34 @@ export class CartProvider extends Component {
   }
   addToCart(product) {
     let checkLogin = JSON.parse(localStorage.getItem("isLogin"));
-    if (checkLogin) {
-      if (checkLogin === true) {
-        let listCart = this.state.cartItems;
-        let y = listCart.map((items) => items.id);
-        let x = y.includes(product.id);
-        if (listCart) {
-          if (listCart.length !== 0) {
-            /* if product exists in list cart */
-            if (x === true) {
-              /* Check id , if product.id === items .id  */
-              let checkID = listCart.map((items) => {
-                if (product.id === items.id) {
-                  return {
-                    ...items,
-                    quantity: items.quantity + 1,
-                    total: items.price * (items.quantity + 1),
-                  };
-                } else {
-                  return { ...items };
-                }
-              });
-              this.setState({ cartItems: checkID });
-              const option = {
-                method: "PUT",
-                headers: {
-                  "Content-type": "application/json; charset=UTF-8",
-                },
-                body: JSON.stringify({
-                  listCart: checkID,
-                }),
-              };
-              fetch(urlBase + "/" + useID, option).then((response) =>
-                response.json()
-              );
-              /* .then((json) =>
-                    this.setState({
-                      cartItems: json.listCart,
-                    })
-                  ); */
-            } else {
-              /* If product doesn't exists in list cart */
-              this.setState({
-                cartItems: this.state.cartItems.concat(product),
-              });
-              listCart.push(product);
-              /* Put Data----------------*/
-              const option = {
-                method: "PUT",
-                headers: {
-                  "Content-type": "application/json; charset=UTF-8",
-                },
-                body: JSON.stringify({
-                  listCart: listCart,
-                }),
-              };
-              fetch(urlBase + "/" + useID, option).then((response) =>
-                response.json()
-              );
-              /* .then((json) =>
-                    this.setState({
-                      cartItems: json.listCart,
-                    })
-                  ); */
-              /* ====================== */
-            }
-          } else {
-            this.setState({
-              cartItems: this.state.cartItems.concat(product),
+    if (checkLogin === true) {
+      let listCart = this.state.cartItems;
+      if (listCart) {
+        if (listCart.length !== 0) {
+          /* if product exists in list cart */
+          let y = listCart.map((items) => items.id);
+          let x = y.includes(product.id);
+          if (x === true) {
+            /* Check id , if product.id === items .id  */
+            let checkID = listCart.map((items) => {
+              if (product.id === items.id) {
+                return {
+                  ...items,
+                  quantity: items.quantity + 1,
+                  total: items.price * (items.quantity + 1),
+                };
+              } else {
+                return { ...items };
+              }
             });
-            listCart.push(product);
+            this.setState({ cartItems: checkID });
             const option = {
               method: "PUT",
               headers: {
                 "Content-type": "application/json; charset=UTF-8",
               },
               body: JSON.stringify({
-                listCart: [product],
+                listCart: checkID,
               }),
             };
             fetch(urlBase + "/" + useID, option).then((response) =>
@@ -114,12 +65,61 @@ export class CartProvider extends Component {
                     cartItems: json.listCart,
                   })
                 ); */
+          } else {
+            /* If product doesn't exists in list cart */
+            this.setState({
+              cartItems: this.state.cartItems.concat(product),
+            });
+            listCart.push(product);
+            /* Put Data----------------*/
+            const option = {
+              method: "PUT",
+              headers: {
+                "Content-type": "application/json; charset=UTF-8",
+              },
+              body: JSON.stringify({
+                listCart: listCart,
+              }),
+            };
+            fetch(urlBase + "/" + useID, option).then((response) =>
+              response.json()
+            );
+            /* .then((json) =>
+                  this.setState({
+                    cartItems: json.listCart,
+                  })
+                ); */
+            /* ====================== */
           }
+        } else {
+          this.setState({
+            cartItems: this.state.cartItems.concat(product),
+          });
+          listCart.push(product);
+          const option = {
+            method: "PUT",
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+            },
+            body: JSON.stringify({
+              listCart: [product],
+            }),
+          };
+          fetch(urlBase + "/" + useID, option).then((response) =>
+            response.json()
+          );
+          /* .then((json) =>
+                this.setState({
+                  cartItems: json.listCart,
+                })
+              ); */
         }
-      } else {
-        window.location.pathname = "/login";
       }
     } else {
+      sessionStorage.setItem(
+        "pathName",
+        JSON.stringify(window.location.pathname)
+      );
       window.location.pathname = "/login";
     }
   }

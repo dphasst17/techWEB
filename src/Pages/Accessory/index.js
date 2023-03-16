@@ -3,7 +3,7 @@ import style from "./Accessory.module.scss";
 /* import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesLeft, faAnglesRight } from "@fortawesome/free-solid-svg-icons"; */
 import { CartContext } from "~/Contexts/Cart";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -16,10 +16,15 @@ import { Link } from "react-router-dom";
 const cx = classNames.bind(style);
 
 function Accessory() {
-  const { Access } = useContext(ApiContext);
+  const { Access,PaginationPage,numPage,isShowButton} = useContext(ApiContext);
   const [valueBrand, setValueBrand] = useState([]);
   const [valueType, setValueType] = useState([]);
+  const [isShowInPut, setIsShowInPut] = useState(false);
+  const [sliceB, setSliceB] = useState(5);
+  const [Slice, setSlice] = useState(12);
+
   let filterBrand = Array.from(new Set(Access.map((items) => items.brand)));
+  let filterMob = filterBrand
   let filterType = Array.from(new Set(Access.map((items) => items.type)));
   let data = Access.filter((items) => {
     if (valueBrand.length !== 0 && valueType.length !== 0) {
@@ -32,10 +37,20 @@ function Accessory() {
       return items;
     }
   });
+  filterBrand = filterBrand.slice(0,sliceB)
+  useEffect(() => {
+    filterBrand.length < 12 ? setIsShowInPut(true): setIsShowInPut(false)
+  },[filterBrand])
+  /* Pagination Page */
+  PaginationPage(data)
+  const handlePagi = (e) => {
+    setSlice(12 * e);
+  };
+  const activePage = numPage.findIndex((e) => e === (Slice/12));
+
   return (
     <div className={cx("accessory")}>
       <div className={cx("filter")}>
-        <p>Filter</p>
         <div className={cx("box_filter")}>
           <h3>About Brand</h3>
           {filterBrand.map((check, index) => (
@@ -61,6 +76,7 @@ function Accessory() {
               </div>
             </div>
           ))}
+          {(isShowInPut === true) ? <div className={cx("load")}><button onClick={() => {setSliceB(sliceB + 4)}}>Load more</button></div> :<div className={cx("load")}><button onClick={() => {setSliceB(sliceB - 8)}}>Hide</button></div>}
           <h3>About Type</h3>
           {filterType.map((price, index) => (
             <div className={cx("box_filter_detail")} key={index}>
@@ -91,7 +107,7 @@ function Accessory() {
         <div className={cx("aboutBrandMob")}>
           <h2>About Brand</h2>
           <div className={cx("itemsBrand")}>
-            {filterBrand.map((brand, index) => (
+            {filterMob.map((brand, index) => (
               <div className={cx("brandDetail")} key={index}>
                 <label
                   onClick={(e) => {
@@ -117,8 +133,10 @@ function Accessory() {
                   />
                   {brand}
                 </label>
+                
               </div>
             ))}
+            
           </div>
         </div>
         <div className={cx("aboutTypeMob")}>
@@ -157,7 +175,7 @@ function Accessory() {
       </div>
       <div className={cx("items_container")}>
         <div className={cx("show")}>
-          {data.map((product) => (
+          {((data.length > 12)?data.slice(Slice - 12, Slice):data.slice(0)).map((product) => (
             <div className={cx("product-detail")} key={product.id}>
               <div className={cx("detail-box")}>
                 <img src={product.url} alt="" />
@@ -185,6 +203,19 @@ function Accessory() {
               </div>
             </div>
           ))}
+        </div>
+        <div className={cx("buttonPG")}>
+        <div className={cx("buttonCT")}>
+            {isShowButton === true ? (
+              numPage.map((items, index) => (
+                <div className={cx(`pagination${index === activePage ? "Active" : ""}`)} key={index}>
+                  <button onClick={() => handlePagi(items)}>{items}</button>
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
       </div>
     </div>

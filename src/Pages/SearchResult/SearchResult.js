@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import style from "./SearchResult.module.scss";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import { CartContext } from "~/Contexts/Cart";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,6 +10,7 @@ import {
   faTableList,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import LazyLoad from 'react-lazy-load';
 
 const cx = classNames.bind(style);
 
@@ -27,33 +28,43 @@ const valuePice = [
 ];
 
 function SearchResult() {
-  const { valueSearch, DataProduct, Access } = useContext(ApiContext);
+  const { valueSearch, DataProduct, Access,PaginationPage,numPage,isShowButton } = useContext(ApiContext);
+  const [SliceIP, setSliceIP] = useState(6);
+  const [isShowButtonIP, setIsShowButtonIP] = useState(false);
   const [value, setValue] = useState([]);
   const [valueType, setValueType] = useState([]);
   const [price, setPrice] = useState();
+  const [button, setButton] = useState(false);
   const navigate = useNavigate();
+  const [Slice, setSlice] = useState(12);
+  /* FILTER DATA BASED ON VALUE SEARCH */
+  const allData = [...DataProduct, ...Access];
+  const data = allData.filter((data) =>
+  valueSearch.length > 0
+    ? data.brand.toUpperCase().includes(valueSearch.toUpperCase()) ||
+      data.title.toUpperCase().includes(valueSearch.toUpperCase()) ||
+      data.type.toUpperCase().includes(valueSearch.toUpperCase())
+    : null
+);
 
-  const dataProduct = DataProduct.filter((data) =>
-    valueSearch.length > 0
-      ? data.title.toUpperCase().includes(valueSearch.toUpperCase()) ||
-        data.brand.toUpperCase().includes(valueSearch.toUpperCase())
-      : null
-  );
-  const dataAccess = Access.filter((data) =>
-    valueSearch.length > 0
-      ? data.brand.toUpperCase().includes(valueSearch.toUpperCase()) ||
-        data.title.toUpperCase().includes(valueSearch.toUpperCase()) ||
-        data.type.toUpperCase().includes(valueSearch.toUpperCase())
-      : null
-  );
-
-  const data = [...dataProduct, ...dataAccess];
-
+  /*FILTER TYPE AND BRAND  */
   const dataBrand = data.map((items) => items.brand);
   const dataType = data.map((items) => items.type);
   let filterBrand = Array.from(new Set(dataBrand));
+  useEffect(() => {
+    filterBrand.length >= 5 ? setButton(true) : setButton(false);
+  }, [filterBrand]);
+  filterBrand = filterBrand.slice(0, SliceIP);
+
+  useEffect(() => {
+    filterBrand.length < 13
+      ? setIsShowButtonIP(true)
+      : setIsShowButtonIP(false);
+  }, [filterBrand]);
+
   let filterType = Array.from(new Set(dataType));
 
+  /*FILTER DATA BASED ON INPUT */
   let result = data.filter((items) =>
     value.length !== 0 && valueType.length !== 0
       ? value.includes(items.brand) && valueType.includes(items.type)
@@ -63,7 +74,13 @@ function SearchResult() {
         : valueType.includes(items.type)
       : items
   );
-
+  /* PAGINATION PAGES */
+  PaginationPage(result)
+  const handlePagi = (e) => {
+    setSlice(12 * e);
+  };
+  const activePage = numPage.findIndex((e) => e === (Slice/12));
+  /* FILTER DATA BASED ON INPUT PRICE */
   result =
     price !== undefined
       ? price === "1"
@@ -91,6 +108,35 @@ function SearchResult() {
                 <label htmlFor={cx("brand") + `${index}`}>{items}</label>
               </div>
             ))
+          ) : (
+            <></>
+          )}
+          {filterBrand.length > 1 ? (
+            button === true ? (
+              isShowButtonIP === true ? (
+                <div className={cx("load")}>
+                  <button
+                    onClick={() => {
+                      setSliceIP(SliceIP + 4);
+                    }}
+                  >
+                    Load More...
+                  </button>
+                </div>
+              ) : (
+                <div className={cx("load")}>
+                  <button
+                    onClick={() => {
+                      setSliceIP(SliceIP - 8);
+                    }}
+                  >
+                    Hide
+                  </button>
+                </div>
+              )
+            ) : (
+              <></>
+            )
           ) : (
             <></>
           )}
@@ -233,41 +279,51 @@ function SearchResult() {
       )}
       <div className={cx("items_container")}>
         <div className={cx("show")}>
-          {result.map((product) => (
+          {((result.length > 12)?result.slice(Slice - 12, Slice):result.slice(0)).map((product) => (
             <div className={cx("product-detail")} key={product.id}>
-              <div
-                className={cx("detail-box")}
-                onClick={() => {
-                  console.log(product);
-                }}
-              >
-                <img src={product.url} alt="" />
-                <div className={cx("title")}>
-                  <h4>{product.title}</h4>
+              <LazyLoad height={"auto"}>
+                <div className={cx("detail-box")}>
+                  <img src={product.url} alt="img Product" loading="lazy"/>
+                  <div className={cx("title")}>
+                    <h4>{product.title}</h4>
+                  </div>
+                  <p>{product.price} USD</p>
+                  <div className={cx("button")}>
+                    <CartContext.Consumer>
+                      {({ addToCart }) => (
+                        <button onClick={() => addToCart(product)}>
+                          <FontAwesomeIcon icon={faCartShopping} />
+                        </button>
+                      )}
+                    </CartContext.Consumer>
+                    <button
+                      onClick={() => {
+                        navigate("/detail/" + product.id + "/" + product.title);
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faTableList} />
+                    </button>
+                    <button>
+                      <FontAwesomeIcon icon={faHeart} />
+                    </button>
+                  </div>
                 </div>
-                <p>{product.price} USD</p>
-                <div className={cx("button")}>
-                  <CartContext.Consumer>
-                    {({ addToCart }) => (
-                      <button onClick={() => addToCart(product)}>
-                        <FontAwesomeIcon icon={faCartShopping} />
-                      </button>
-                    )}
-                  </CartContext.Consumer>
-                  <button
-                    onClick={() => {
-                      navigate("/detail/" + product.id + "/" + product.title);
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faTableList} />
-                  </button>
-                  <button>
-                    <FontAwesomeIcon icon={faHeart} />
-                  </button>
-                </div>
-              </div>
+              </LazyLoad>
             </div>
           ))}
+        </div>
+        <div className={cx("buttonPG")}>
+          <div className={cx("buttonCT")}>
+            {isShowButton === true ? (
+              numPage.map((items, index) => (
+                <div className={cx(`pagination${index === activePage ? "Active" : ""}`)} key={index}>
+                  <button onClick={() => handlePagi(items)}>{items}</button>
+                </div>
+              ))
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
       </div>
     </div>

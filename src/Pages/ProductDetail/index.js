@@ -10,14 +10,13 @@ const ProductDetail = () => {
   const { DataProduct, Access } = useContext(ApiContext);
   const navigate = useNavigate();
   const {productID} = useParams()
-  /* const productID = window.location.pathname.slice(8).split('/').shift() */
   const productsData = [...DataProduct, ...Access];
   const thisProduct = productsData.filter(
     (items) => Math.floor(items.id) === Math.floor(productID)
   );
   const random = Math.floor(Math.random() * 10) + 9;
   const relatedProducts = productsData.filter(
-    (items) => items.id % random === 0
+    (items) => items.id % random === 0 && items.id !== productID
   ).slice(0,6);
   return (
     <div className="detailPage">

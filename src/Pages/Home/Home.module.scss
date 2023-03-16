@@ -7,6 +7,14 @@
         transform: scale(1.1, 1.1);
     }
 }
+@keyframes scale2 {
+    0% {
+        transform: scale(1.1, 1.1);
+    }
+    100% {
+        transform: scale(1, 1);
+    }
+}
 @keyframes anima {
     0% {
         background-image: linear-gradient(to right, #aaaaaa, #999999, #888888, #777777);
@@ -24,10 +32,25 @@
         background-image: linear-gradient(to right, #aaaaaa, #999999, #888888, #777777);
     }
 }
-
+@keyframes bc{
+    0%{
+        background-size: 0;
+    }
+    100%{
+        background-size: cover;
+    }
+}
 .home {
     width: 100%;
     height: 100%;
+    h1{
+        width:100%;
+        color:tan;
+        text-align: center;
+        font-size: 5em;
+        font-family:Georgia, 'Times New Roman', Times, serif;
+        background-color: #010545;
+    }
     .list {
         width: 90%;
         height: 90px;
@@ -72,140 +95,182 @@
             }
         }
     }
-    .featuredProduct{
-        width:90%;
-        height:30em;
-        display:flex;
+    .featuredProduct {
+        width: 100%;
+        height: 30em;
+        display: flex;
         flex-direction: column;
-        margin:auto;
-        h2{
-            height:20%;
+        flex-wrap: wrap;
+        align-content: center;
+        margin: auto;
+        h2 {
+            height: 15%;
             text-align: center;
             cursor: pointer;
+            color:tan;
+            font-weight: 650;
+            font-size: 2.2em;
+            animation:x 2s alternate linear infinite;
+        }
+        @keyframes x{
+            0%{color:#202bc3;}
+            50%{
+                color:tan
+            }
+            100%{color:tan}
         }
         .fpDetail{
-            width:100%;
-            height:70%;
+            width: 100%;
+            height: 100%;
             display: flex;
             /* overflow-y: scroll; */
             overflow-x: scroll;
-            scroll-snap-type: x mandatory;
-            padding:1% 0% 4% 4%;
-            border:solid 0.2px;
-            border-radius:10px;
+            /* scroll-snap-type: x mandatory; */
+            padding: 1% 0% 4% 4%;
+            /* border: solid 0.2px;
+            border-radius: 10px; */
             cursor: pointer;
             &::-webkit-scrollbar {
-                height: 8px;
-              }
+                height: 5px;
+            }
             .fpItems{
                 scroll-snap-align: start;
-                border-radius:10px;
+                border-radius: 10px;
                 min-width: 200px;
-                height:100%;
-                display:flex;
+                height: 100%;
+                display: flex;
                 justify-content: center;
                 flex-direction: column;
-                margin-right:5%;
-                box-shadow: 1px 1px 1px 2px grey;
-                .fpImg{
-                    width:100%;
-                    height:50%;
+                margin-right: 5%;
+                transform: translateX(0);
+                animation:op .5s alternate linear;
+                border-radius:10px;
+                border:solid 0.5px grey;
+                .fpImg {
+                    width: 100%;
+                    height: 50%;
                     display: flex;
                     justify-content: center;
-                    img{
-                        width:70%;
-                        height:100%;
+                    img {
+                        width: 70%;
+                        height: 100%;
                         object-fit: contain;
-
                     }
                 }
-                .fpTitle{
-                    width:100%;
-                    height:10%;
+                .fpTitle {
+                    width: 100%;
+                    height: 10%;
                     text-align: center;
-                    color:#940606;
+                    color: #940606;
+                    font-size: 15px;
+                    font-weight: 550;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
                 }
-                .fpPrice{
-                    width:100%;
-                    height:10%;
-                    color:#940606;
+                .fpPrice {
+                    width: 100%;
+                    height: 10%;
+                    color: #940606;
                 }
-                .fpButton{
-                    width:100%;
-                    height:20%;
-                    display:flex;
+                .fpButton {
+                    width: 100%;
+                    height: 20%;
+                    display: flex;
                     flex-wrap: wrap;
-                    align-content:center;
+                    align-content: center;
                     justify-content: space-around;
-                    button{
-                        width:30%;
-                        height:50%;
-                        outline:none;
-                        border-radius:10px;
-                        border:none;
+                    button {
+                        width: 30%;
+                        height: 50%;
+                        outline: none;
+                        border-radius: 10px;
+                        border: none;
                         background-color: rgb(70, 117, 200);
                         cursor: pointer;
-                        display:flex;
+                        display: flex;
                         flex-wrap: wrap;
                         align-content: center;
                         justify-content: center;
-                        svg{
-                            height:15px;
-                            path{
-                                fill:#fff;
+                        svg {
+                            height: 15px;
+                            path {
+                                fill: #fff;
                             }
                         }
                     }
-                    button:hover{
+                    button:hover {
                         background-color: rgb(4, 87, 231);
                     }
-                    button:nth-child(3):hover{
-                        svg{
-                            path{
-                                fill:rgb(212, 0, 0)
+                    button:nth-child(3):hover {
+                        svg {
+                            path {
+                                fill: rgb(212, 0, 0);
                             }
                         }
                     }
                 }
             }
+            .fpItems:hover{
+                background-color: #c8c8c8;
+                transition:all 1s; 
+            }
+            @keyframes op{
+                0%{
+                    transform: translateX(-100%);
+                }
+                100%{transform: translateX(0%);}
+            }
         }
-
     }
     .product {
-        width: 90%;
-        height: 50%;
+        width: 100%;
+        height: auto;
         display: flex;
         flex-wrap: wrap;
-        margin: 4% auto;
         justify-content: space-between;
-        .product-info{
-            width: 25%;
+        background: url("https://img.freepik.com/premium-vector/fingerprint-scan-provides-security-access-with-biometrics-identification_74231-1175.jpg") no-repeat;
+        background-size: cover;
+        background-position-x: center;
+        animation:bc .5s alternate linear;
+        .imageBC{
+            width: inherit;
+            height:max-content;
+            position: absolute;
+            z-index:-11111111;
+            object-fit: cover;
+            background-size:auto;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .product-info {
+            width: 20%;
             height: 350px;
-            /* display: inline-block; */
-            /* margin-left: 6.3%; */
-            /* margin-top: 2%; */
             margin: 2%;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            box-shadow: 0 4px 30px rgb(0 0 0 / 10%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
             transform: scale(1, 1);
             border-radius: 10px;
+            opacity: 1;
             cursor: pointer;
             .product-detail {
                 display: flex;
                 flex-direction: column;
                 width: 100%;
                 height: 100%;
+                padding-bottom:2%;
+                border-radius:10px;
+                border:1px solid grey;
                 background-color: transparent;
                 .image {
                     width: 100%;
                     height: 30%;
+                    display: flex;
+                    justify-content: center;
+                    overflow: hidden;
                     img {
-                        width: 75%;
-                        height: 100%;
-                        margin-bottom: 10%;
-                        margin-left: 12%;
+                        width: 100%;
+                        height: 130px;
                         object-fit: contain;
                         mix-blend-mode: color-burn;
                         background-image: none !important;
@@ -227,7 +292,8 @@
                             font-size: 20px;
                             height: 50px;
                             width: 100%;
-                            color: #940606;
+                            color: #ff0505;
+                            font-weight: 600;
                             overflow: hidden;
                             white-space: nowrap;
                             text-overflow: ellipsis;
@@ -238,11 +304,13 @@
                         height: 36%;
                         .information {
                             padding-left: 3%;
-                            p{
+                            p {
                                 font-size: 16px;
                                 overflow: hidden;
                                 white-space: nowrap;
                                 text-overflow: ellipsis;
+                                color:#ffffff;
+                                font-weight: 550;
                             }
                         }
                     }
@@ -255,26 +323,27 @@
                             width: 50%;
                             font-size: 20px;
                             margin-left: 3%;
-                            color: #940606;
+                            color: #ff0505;
                         }
                         .button {
                             width: 40%;
                             display: flex;
-                            justify-content: flex-start;
+                            justify-content:space-between;
                             flex-direction: row-reverse;
+                            margin-right:3%;
                             button {
-                                width: 30px;
+                                width: 45%;
                                 height: 30px;
                                 font-size: 16px;
                                 border: none;
                                 border-radius: 10px;
                                 background-color: rgb(70, 117, 200);
                                 box-shadow: 2px 2px #444444;
-                                margin-right: 5%;
+                                
                                 cursor: pointer;
-                                svg{
-                                    path{
-                                        fill:#fff;
+                                svg {
+                                    path {
+                                        fill: #fff;
                                     }
                                 }
                             }
@@ -282,262 +351,335 @@
                                 background-color: rgb(4, 87, 231);
                                 text-decoration: underline;
                                 color: #fff;
+                                transition:all 1s;
                             }
                         }
                     }
                 }
             }
         }
+        .product-info:nth-child(even){
+            .product-detail{
+                opacity: 1;
+                transform: translateY(0%);
+                animation:trans .5s alternate linear
+            }
+        }
+        .product-info:nth-child(odd){
+            .product-detail{
+                opacity: 1;
+                transform: translateY(0%);
+                animation:trans2 .5s alternate linear
+            }
+        }
+        @keyframes  trans{
+            0%{opacity:0;transform: translateY(-50%)}
+            100%{opacity:1;transform: translateY(0%)}
+        }
+        @keyframes  trans2{
+            0%{opacity:0;transform: translateY(50%)}
+            100%{opacity:1;transform: translateY(0%)}
+        }
         .product-info:hover {
-            transform: scale(1.1, 1.1);
-            animation: scale 0.5s ease normal;
-            opacity: 1;
+            
+            .product-detail{
+                background-color: #c8c8c8;
+                transition:all 1s;
+                .items{
+                    .productAccess{
+                        .information{
+                            p{
+                                color:#020a7c;
+                                
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     .Access {
-        margin: 5%;
-        width: 90%;
+        width: 100%;
         height: auto;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         align-content: flex-start;
         justify-content: space-around;
+        background: url("https://www.afdigitale.it/wp-content/uploads/2021/06/POSTAZIONE-ASUS.jpg") no-repeat;
+        background-size: cover;
+        background-position-x: center;
+        animation:bc .5s alternate linear;
         .accDemo {
-            min-width:160px;
+            min-width: 160px;
             width: 21%;
             height: auto;
-            margin-top: 5%;
-            //animation glassmorphism
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
             transform: scale(1, 1);
             border-radius: 10px;
-            padding-bottom:2%;
+            padding-bottom: 2%;
             cursor: pointer;
             .accDemo_Child {
                 width: 100%;
                 display: flex;
                 flex-direction: column;
-            }
-            .image {
-                width: 100%;
-                height: 30%;
-                display: flex;
-                justify-content: center;
-                img {
-                    width: 75%;
-                    height: 150px;
-                    object-fit: contain;
-                    mix-blend-mode: color-burn;
-                    background-image: none !important;
-                }
-            }
-            .title {
-                width: 100%;
-                height: 40px;
-                p {
-                    text-align: center;
-                    margin-left: 0%;
-                    font-size: 20px;
-                    height: 50px;
+                border-radius: 10px;
+                border: 1px solid grey;
+                background-color: transparent;
+                padding:0 2%;
+                .image {
                     width: 100%;
-                    color: #940606;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                }
-            }
-            .items-child {
-                width: 100%;
-                height: 21%;
-                display: flex;
-                justify-content: space-between;
-                margin-top: 10%;
-                .price {
-                    width: 50%;
-                    height: 40px;
-                    color: #940606;
-                    font-size: 20px;
-                    font-weight: 500;
-                }
-                .button {
-                    width: 50%;
+                    height: 30%;
                     display: flex;
-                    justify-content: flex-start;
-                    flex-direction: row-reverse;
-                    button {
-                        width: 30px;
-                        height: 35px;
-                        font-size: 16px;
-                        border: none;
-                        border-radius: 10px;
-                        background-color: rgb(70, 117, 200);
-                        box-shadow: 2px 2px #444444;
-                        margin-right: 5%;
-                        cursor: pointer;
-                        svg{
-                            path{
-                                fill:#fff;
+                    justify-content: center;
+                    img {
+                        width: 75%;
+                        height: 150px;
+                        object-fit: contain;
+                    }
+                }
+                .title {
+                    width: 100%;
+                    height: 40px;
+                    p {
+                        text-align: center;
+                        margin-left: 0%;
+                        font-size: 20px;
+                        height: 50px;
+                        width: 100%;
+                        color: #ff0505;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        font-weight: 600;
+                    }
+                }
+                .items-child {
+                    width: 100%;
+                    height: 21%;
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 10%;
+                    .price {
+                        width: 50%;
+                        height: 40px;
+                        color: #ff0505;
+                        font-size: 20px;
+                        font-weight: 500;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+                    .button {
+                        width: 50%;
+                        display: flex;
+                        justify-content: flex-start;
+                        flex-direction: row-reverse;
+                        button {
+                            width: 50%;
+                            height: 35px;
+                            font-size: 16px;
+                            border: none;
+                            border-radius: 10px;
+                            background-color: rgb(70, 117, 200);
+                            margin-right: 5%;
+                            cursor: pointer;
+                            svg {
+                                path {
+                                    fill: #fff;
+                                }
                             }
                         }
-                    }
-                    button:hover {
-                        background-color: rgb(4, 87, 231);
-                        text-decoration: underline;
-                        color: #fff;
+                        button:hover {
+                            background-color: rgb(4, 87, 231);
+                            text-decoration: underline;
+                            color: #fff;
+                        }
                     }
                 }
+            }
+        }
+        .accDemo:nth-child(odd){
+            .accDemo_Child{
+                transform:translateX(0%);
+                animation:trans .5s alternate linear;
+                transition: all .5s linear;
+            }
+            
+        }
+        .accDemo:nth-child(even){
+            .accDemo_Child{
+                transform:translateX(0%);
+                animation:trans2 .5s alternate linear;
+                transition: all .5s linear;
             }
         }
         .accDemo:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: scale(1.1, 1.1);
-            animation: scale 0.5s ease normal;
+            .accDemo_Child{
+                background-color: #c8c8c8;
+                transition:all 1s;
+            }
         }
     }
 }
 
-@media (max-width:1200px) and (min-width:761px){
-    .home{
-        .list{display:none}
-        .product{
-            .product-info{
-                min-width:200px;
-                .product-detail{
-                    padding:1%;
+@media (max-width: 1200px) and (min-width: 761px) {
+    .home {
+        .list {
+            display: none;
+        }
+        h1{
+            font-size: 2em;
+        }
+        .product {
+            .product-info {
+                min-width: 200px;
+                .product-detail {
+                    padding: 1% 0% 4% 0%;
                     /* .image{} */
-                    .items{
-                        .title{
+                    .items {
+                        .title {
                             font-size: 18px;
                         }
-                       /* .productAccess{
+                        /* .productAccess{
                         .information{
                             
                         }
                        } */
-                       .items-child{
-                        .money{
-                            font-size:18px;
+                        .items-child {
+                            .money {
+                                font-size: 18px;
+                            }
                         }
-                       }
                     }
                 }
             }
         }
-
     }
 }
-@media (max-width:760px) and (min-width:610px){
-    .home{
-        .list{display:none}
-        .product{
+@media (max-width: 760px) and (min-width: 610px) {
+    .home {
+        .list {
+            display: none;
+        }
+        h1{
+            font-size: 3em;
+        }
+        .product {
             justify-content: space-around;
-            .product-info{
-                min-width:250px;
-                .product-detail{
-                    padding:1%;
+            .product-info {
+                min-width: 250px;
+                .product-detail {
+                    padding: 1% 0% 4% 0%;
                     /* .image{} */
-                    .items{
+                    .items {
                         /* .title{} */
-                       /* .productAccess{
+                        /* .productAccess{
                         .information{
                             
                         }
                        } */
-                       
-                       .items-child{
-                        .money{
-                            font-size:17px;
+
+                        .items-child {
+                            .money {
+                                font-size: 17px;
+                            }
                         }
-                       }
                     }
                 }
             }
         }
-
     }
 }
-@media (max-width:609px){
-    .home{
-        .list{display:none}
-        .product{
+@media (max-width: 609px) {
+    .home {
+        .list {
+            display: none;
+        }
+        h1{
+            font-size: 2em;
+        }
+        .product {
             justify-content: space-around;
-            .product-info{
-                min-width:140px;
+            .product-info {
+                min-width: 148px;
                 min-height: 425px;
-                .product-detail{
-                    padding:1%;
-                    .image{
-                        height:24%;
+                .product-detail {
+                    padding: 1% 0% 4% 0%;
+                    .image {
+                        height: 24%;
                     }
-                    .items{
+                    .items {
                         justify-content: space-evenly;
-                        .title{
-                            p{
-                                font-size:16px;
+                        .title {
+                            p {
+                                font-size: 16px;
                             }
                         }
-                       .productAccess{
-                        height: auto;
-                        .information{
-                            p{
-                                font-size:12px;
-                            }
-                        }
-                       }
-                       .items-child{
-                        flex-direction: column;
-                        justify-content: space-around;
-                        .money{
-                            width:100%;
-                            font-size:12px;
-                        }
-                        .button{
-                            width:100%;
-                            button{
-                                width:48%;
-                                height:20px;
-                                border-radius:5px;
-                                svg{
-                                    height:12px;
+                        .productAccess {
+                            height: auto;
+                            .information {
+                                p {
+                                    font-size: 12px;
                                 }
                             }
                         }
-                       }
+                        .items-child {
+                            flex-direction: column;
+                            justify-content: space-around;
+                            .money {
+                                width: 100%;
+                                font-size: 12px;
+                            }
+                            .button {
+                                width: 100%;
+                                button {
+                                    width: 48%;
+                                    height: 20px;
+                                    border-radius: 5px;
+                                    svg {
+                                        height: 12px;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
+            .product-info:hover{
+                transform: scale(1);
+            }
         }
-        .Access{
-            .accDemo{
-                .accDemo_Child{
-                    .title{
-                        p{
+        .Access {
+            .accDemo {
+                .accDemo_Child {
+                    .title {
+                        p {
                             font-size: 15px;
                         }
                     }
-                    .items-child{
+                    .items-child {
                         flex-direction: column;
-                        .price{
-                            width:100%;
+                        .price {
+                            width: 100%;
                             font-size: 15px;
                             padding-left: 4%;
                         }
-                        .button{
-                            width:100%;
-                            button{
+                        .button {
+                            width: 100%;
+                            button {
                                 width: 48%;
                                 height: 20px;
                                 border-radius: 5px;
-                                svg{
-                                    height:12px;
+                                svg {
+                                    height: 12px;
                                 }
                             }
                         }
                     }
                 }
+            }
+            .accDemo:hover{
+                transform: scale(1);
             }
         }
     }

@@ -14,17 +14,6 @@
         height: 70px;
         background: transparent;
         display: flex;
-         /* a{
-            text-decoration: none;
-            font-size: 20px;
-            margin-top: 4%;
-            margin-left:5%;
-            color:#000;
-            font-weight: 500;
-         }
-         a.active{
-            font-weight: 700;
-        } */
         .navItems {
             height: 70px;
             margin-left: 10%;
@@ -41,7 +30,7 @@
                         .hover_nav {
                             width: 0%;
                             height: 2px;
-                            background-color: #000;
+                            background-color: rgb(70, 117, 200);
                         }
                     }
                     .nav_text:hover .hover_nav {
@@ -53,9 +42,10 @@
         .navItems.active {
             font-weight: 700;
             .nav_text {
-                color: #322020;
+                color: rgb(70, 117, 200);
                 .hover_nav {
                     width: 100%;
+                    background-color: rgb(70, 117, 200);
                 }
             }
         }
@@ -468,13 +458,12 @@
             height:100%;
             position:fixed;
             background-color: #fff;
-            transform: translateX(-17%);
+            transition: all linear .2s;
             z-index: 11111111111111111;
             padding-left:10%;
             padding-right:1%;
             box-shadow: 2px 2px 2px 2px grey;
             transition: .3s;
-            animation: navTranslate .3s ease-in-out;
             .navClose{
                 width:100%;
                 height:10%;
@@ -500,13 +489,17 @@
                             height:25px;
                         }
                         .totalItems{
-                            width:auto;
-                            height:20px;
-                            background-color: rgb(195, 9, 9);;
-                            color:#fff;
+                            width: auto;
+                            height: 20px;
+                            background-color: rgb(195, 9, 9);
+                            color: #fff;
                             border-radius: 15px;
-                            margin-top:30%;
-                            padding:0 5%;
+                            margin-top: 30%;
+                            padding: 0% 10%;
+                            display: flex;
+                            justify-content: center;
+                            align-content: center;
+                            flex-wrap: wrap;
                         }
                     }
                 }
@@ -625,10 +618,6 @@
                     height: 48%;
                 } */
             }
-        }
-        @keyframes navTranslate{
-            0%{transform: translateX(-120%)};
-            100%{transform: translateX(-17%)};
         }
     }
     .logoMob{
