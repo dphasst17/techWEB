@@ -52,9 +52,10 @@
                 height:100%;
                 display:flex;
                 flex-direction: column;
+                justify-content: center;
                 h2{
                     width:100%;
-                    height: 20%;
+                    
                     display: flex;
                     padding: auto;
                     align-content: center;
@@ -99,23 +100,24 @@
                         border-style:none;
                         border-radius:10px;
                         background-color: rgb(70, 117, 200);
+                        cursor: pointer;
                     }
                     .forgotPass,.navigation{
                         text-align: right;
-                        a{
+                        p{
                             color: #000;
                             text-decoration: none;
                             font-weight: 600;
                             font-size: 16px;
-                            
+                            cursor: pointer;
                         }
-                        a:hover{
+                        p:hover{
                            color:#c30202;
                         }
                     }
                     .navigation{
-                        a{
-                            margin-top: 14%;
+                        p{
+                            margin-top: 1%;
                             margin-left:14%;
                             color: #000;
                             text-decoration: none;
@@ -125,46 +127,185 @@
                 .loginIcon{
                     width: 100%;
                     height: 10%;;
-                    /* margin-top: 48%; */
-                    /* position: absolute; */
                     display: flex;
-                    justify-content: space-evenly;
+                    justify-content: space-evenly;  
                     .Icon{
-                        height:25px;
+                        width:32%;
+                        height:35px;
+                        background-color: #3b5998;
+                        border:none;
+                        border-radius: 10px;
+                        outline: none;
+                        color:#ffffff;
+                        cursor: pointer;
+                        display:flex;
+                        justify-content: space-around;
+                        
                         svg{
-                            height:40px;
+                            width:25px;
+                            height:30px;
+                            margin:auto 2%;
                         }
-                        .facebook{ 
-                            path{
-                                fill:#00246b;
-                            }
-    
+                        span{
+                            width: 100%;
+                            display: flex;
+                            
+                            flex-wrap: wrap;
+                            align-content: center;
+                            justify-content: center;
                         }
                         
                     }
                     .Icon:nth-child(2){
-                        svg{
-                            width:50px;
-                        }
+                        background-image:linear-gradient(to left,#DB4437,#F4B400,#0F9D58,#4285F4);
                     }
                     .Icon:nth-child(3){
-                        svg{
-                            width:39px;
-                            height:39px;
-                            background-color: rgb(12, 12, 12);
-                            border-radius:50%;
-                            path{
-                                fill:#fff;
-                            }
-                        }
+                        background-color: #24292e;
                     }
+                    
+                    
                 }
             }
         }
         
     }
 }
-@media (max-width:1500px){
+.falseMess{
+    width: 250px;
+    height:50px;
+    background-color: #ececec;
+    position: absolute;
+    top: 20%;
+    transition: all .1s linear;
+    transform: translateX(2%);
+    border-radius:10px;
+    box-shadow: 1px 2px 1px 1px grey;
+    animation:false .1s alternate linear;
+    display:flex;
+    .falseCT{
+        width:80%;
+        height:100%;
+        padding:2% 4%;
+        p{
+            font-size: 10px;
+            font-weight: 550;
+            color: rgb(70, 117, 200);
+        }
+    }
+    .falseBTN{
+        width:20%;
+        height:100%;
+        display:flex;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        padding:2% 4%;
+        svg{
+            cursor: pointer;
+            path{
+                fill:rgb(70, 117, 200)
+            }
+        }
+    }
+}
+@keyframes false{
+    0%{transform: translateX(-50%);}
+    100%{transform: translateX(2%);}
+}
+@media (min-width:850px)and (max-width:1400px){
+    .login_container{
+        .form{
+            width:80%;
+            form{
+                width:100%;
+                h2{
+                    width:100%;
+                    text-align: center;
+                    margin-left:-8%;
+                }
+                img{
+                    width:50%;
+                    height:100%;
+                }
+                .itemsForm{
+                    width:100%;
+                    h2{
+                        margin:0 1%;
+                    }
+                    .detail{
+                        .input{
+                            input{
+                                font-size:15px;
+                            }
+                            .eyeSlash{
+                                display:none;
+                            }
+                        }
+                        .navigation{
+                            p{
+                                margin-top:-1%;
+                            }
+                        }
+                    }
+                    .loginIcon{
+                        /* flex-direction: column; */
+                        margin-top:2%;
+                        .Icon{
+                            width: 80%;
+                            margin:2% auto;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+@media (min-width:711px)and (max-width:849px){
+    .login_container{
+        .form{
+            width:80%;
+            form{
+                width:100%;
+                h2{
+                    width:100%;
+                    text-align: center;
+                    margin-left:-8%;
+                }
+                img{
+                    display: none;
+                }
+                .itemsForm{
+                    width:100%;
+                    h2{
+                        margin:0 1%;
+                    }
+                    .detail{
+                        .input{
+                            input{
+                                font-size:15px;
+                            }
+                            .eyeSlash{
+                                display:none;
+                            }
+                        }
+                        .navigation{
+                            p{
+                                margin-top:-1%;
+                            }
+                        }
+                    }
+                    .loginIcon{
+                        margin-top:2%;
+                        .Icon{
+                            width: 30%;
+                            margin:2% auto;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+@media (max-width:710px){
     .login_container{
         .form{
             width:80%;
@@ -191,6 +332,19 @@
                             .eyeSlash{
                                 display:none;
                             }
+                        }
+                        .navigation{
+                            p{
+                                margin-top:-1%;
+                            }
+                        }
+                    }
+                    .loginIcon{
+                        flex-direction: column;
+                        margin-top:2%;
+                        .Icon{
+                            width: 80%;
+                            margin:2% auto;
                         }
                     }
                 }

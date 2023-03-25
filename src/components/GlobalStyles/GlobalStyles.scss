@@ -64,14 +64,104 @@ body {
     60%{opacity:0;transform: translateY(40%)}
     100%{opacity:1;transform: translateY(0%)}
 }
+.loading{
+    width:100%;
+    height:100%;
+    position:fixed;
+    /* opacity: 0.4; */
+    z-index: 1111111111111111111;
+    top:0;
+    left:0;
+    right:0;
+    display:flex;
+    flex-wrap: wrap;
+    align-content:center;
+    justify-content: center;
+    .overlay{
+        width:100%;
+        height: 100%;
+        background-color: #6b6a6a;
+        opacity: 0.5;
+        position: absolute;
+        z-index: -11111;
+    }
+    .imgLoad{
+        width:200px;
+        height:80px;
+        .loadChild{
+            width:100%;
+            height:100%;
+            display:inline-flex;
+            justify-content: space-around;
+            overflow-y: hidden;
+            &::-webkit-scrollbar {
+                height: 0px;
+            }
+            
+            span{
+                min-width: 10px;
+                height: 50%;
+                background-color: #000000;
+                border-radius:10px;
+                margin:auto 0;
+                opacity: 1;
+                animation: isLoad 1s alternate linear infinite;
+                animation-delay: 0s;
+                
+            }
+            span:nth-child(2){
+                height: 60%;
+                animation-delay: 0.2s;
+            }
+            span:nth-child(3){
+                height: 70%;
+                animation-delay: 0.4s;
+            }
+            span:nth-child(4){
+                height: 70%;
+                animation-delay: 0.6s;
+            }
+            span:nth-child(5){
+                height: 60%;
+                animation-delay: 0.8s;
+            }
+            span:nth-child(6){
+                height: 50%;
+                animation-delay: 1s;
+            }
+        }
+    }
+    @keyframes isLoad{
+        0%{opacity: 0;}
+        100%{opacity: 1;}
+    }
+}
 .slideshow {
     display: block;
-    background:url("https://i.pinimg.com/originals/e1/6d/42/e16d4219e671bac00d1c23131e6d723f.jpg") no-repeat ;
-    background-size: 100% 400px;
+    /* background:url("https://i.pinimg.com/originals/e1/6d/42/e16d4219e671bac00d1c23131e6d723f.jpg") no-repeat ;
+    background-size: 100% 400px; */
     width: 100%;
     height: 500px;
     margin: 0 auto;
     overflow: hidden;
+    .sliceBG{
+        width:100%;
+        height:100%;
+        display:block;
+        z-index: -11111111;
+        position: absolute;
+        img{
+            width:100%;
+            height:400px;
+            opacity: 1;
+            animation:op 2s alternate linear;
+            transition: animation 2s linear;
+        }
+        @keyframes op{
+            0%{opacity: 0}
+            100%{opacity: 1}
+        }
+    }
     .slideshowSlider {
         display:block;
         width: 100%;
@@ -132,7 +222,6 @@ body {
                         width:100%;
                         height:auto;
                         margin:2% auto;
-                        animation: typing 4s alternate steps(15) infinite;
                         white-space: nowrap;
                         border-right:3px solid;
                         overflow: hidden;

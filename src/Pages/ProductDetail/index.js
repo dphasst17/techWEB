@@ -38,28 +38,26 @@ const ProductDetail = () => {
                       <div className="infoProduct" key={index}>
                         <h3>
                           Cpu:
-                          {items.cpu.map((detail) =>
-                            detail.type
-                          )}
+                          {items.cpu.type
+                          }
                         </h3>
                         <h3>
                           Display:
-                          {items.display.map((detail) => detail.size__inch)}
+                          {items.display.size__inch}
                           inch -
-                          {items.display.map(
-                            (detail) => detail.refresh_rate__hz
-                          )}
+                          {items.display.refresh_rate__hz
+                          }
                           hz
                         </h3>
                         <h3>
-                          Ram: {items.memory.map((detail) => detail.ram__gb)}GB
+                          Ram: {items.memory.ram__gb}GB
                         </h3>
                         <h3>
                           Hard drive:
-                          {items.storage.map((detail) => detail.type)}-
-                          {items.storage.map((detail) => detail.capacity__gb)}GB
+                          {items.storage.type}-
+                          {items.storage.capacity__gb}GB
                         </h3>
-                        <h3>Os: {items.software.map((detail) => detail.os)}</h3>
+                        <h3>Os: {items.software.os}</h3>
                       </div>
                     ))
                   : items.detail.map((item, index) => (

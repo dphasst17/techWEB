@@ -14,7 +14,7 @@ function Footer() {
                 <h3>CONTACT US</h3>
                 <div className={cx("iconFooter")}>
                     <div className={cx("detail")} onClick={() => {window.location = "https://www.facebook.com/dfasst5"}}><FontAwesomeIcon icon={faFacebook}/><span>Facebook</span></div>
-                    <div className={cx("detail")} onClick={() => {window.location = "https://github.com/dphasst17/techReactJSApp"}}><FontAwesomeIcon icon={faGithub}/><span>Github</span></div>
+                    <div className={cx("detail")} onClick={() => {window.location = "https://github.com/dphasst17"}}><FontAwesomeIcon icon={faGithub}/><span>Github</span></div>
                     <div className={cx("detail")}><FcGoogle/><span>Gmail</span></div>
                 </div>
             </div>

@@ -10,7 +10,7 @@ export class CartProvider extends Component {
     super(props);
     this.state = { cartItems: [] };
     /*Get API listCart  */
-    fetch(urlBase + `/` + useID)
+    fetch(urlBase + "/" + useID)
       .then((res) => res.json())
       .then((json) =>
         this.setState({

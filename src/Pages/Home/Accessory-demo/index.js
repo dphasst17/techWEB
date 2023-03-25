@@ -14,7 +14,7 @@ const AccDemo = () => {
   const { Access } = useContext(ApiContext);
   return (
     <>
-      {Access.length !==0 ? <h1>ACCESSORY</h1> : <></>}
+      {Access.length !==0 ? <h1>OUR ACCESSORY</h1> : <></>}
       <div className={cx("Access")}>
         {Access.slice(0, 12).map((dataAcc, index) => (
           <div className={cx("accDemo")} key={index}>
@@ -25,6 +25,10 @@ const AccDemo = () => {
                 </div>
                 <div className={cx("title")}>
                   <p>{dataAcc.title}</p>
+                </div>
+                <div className={cx("accessInf")}>
+                  <p>Brand: {dataAcc.brand}</p>
+                  <p>Type: {dataAcc.type.toUpperCase()}</p>
                 </div>
                 <div className={cx("items-child")}>
                   <div className={cx("price")}>Price:{dataAcc.price} USD</div>

@@ -6,12 +6,17 @@ import React, { useContext, useEffect, useState } from "react";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Loading from "~/components/Loading/Loading";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faX } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(style);
 
 const CheckOut = () => {
   const { cartItems, setState } = useContext(CartContext);
   const { urlUsers } = useContext(ApiContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [height, setHeight] = useState("-200%")
   const navigate = useNavigate();
   let userID = JSON.parse(localStorage.getItem("identificationID") || "[]");
   const urlGet = urlUsers + `/` + userID;
@@ -26,6 +31,7 @@ const CheckOut = () => {
   }, [urlGet, data]);
   let handleCheckOut = () => {
     if (cartItems.length !== 0) {
+      setIsLoading(true)
       const option = {
         method: "PUT",
         headers: {
@@ -36,11 +42,10 @@ const CheckOut = () => {
           listCart: [],
         }),
       };
-      fetch(urlUsers + `/` + userID, option).then((res) => res.json());
-      setState({ cartItems: [] });
-      navigate("/success");
+      fetch(urlUsers + `/` + userID, option).then((res) => {if(res.status === 200 ){setIsLoading(false);setState({ cartItems: [] });;navigate("/success");}});
     } else {
-      alert("You need to add a product to your cart");
+      setTimeout(() => {setHeight("0%")})
+      setTimeout(() => {setHeight("-120%")},2500)
     }
   };
   let total = cartItems?.map((item) => item.total);
@@ -57,6 +62,7 @@ const CheckOut = () => {
   };
   return (
     <div className={cx("cart_detail")}>
+      {isLoading=== true ? <Loading /> : <></>}
       <div className={cx("container")}>
         <h1>Check Out</h1>
         <div className={cx("box")}>
@@ -150,6 +156,12 @@ const CheckOut = () => {
               </>
             )}
           </CartContext.Consumer>
+        </div>
+      </div>
+      <div className={cx("messFalse")} style={{transform:"translateX(" + height + ")"}}>
+        <p>You need to add a product to your cart</p>
+        <div className={cx("iClose")}>
+          <FontAwesomeIcon icon={faX} onClick={() => {setHeight("-120%")}}/>
         </div>
       </div>
     </div>

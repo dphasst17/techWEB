@@ -3,7 +3,7 @@ import Product from "~/Pages/Product";
 import Accessory from "~/Pages/Accessory";
 import User from "~/Pages/User";
 import Login from "~/Pages/Login";
-import SignUp from "~/Pages/SignUp";
+
 import CheckOut from "~/Pages/CheckOut";
 import SearchResult from "~/Pages/SearchResult/SearchResult";
 import ProductDetail from "~/Pages/ProductDetail/index";
@@ -20,7 +20,6 @@ const publicRoutes = [
   { path: "/searchResult", component: SearchResult },
   { path: "/user", component: User },
   { path: "/login", component: Login },
-  { path: "/signup", component: SignUp },
 ];
 
 const privateRoutes = [];

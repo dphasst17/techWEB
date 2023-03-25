@@ -1,13 +1,12 @@
 import axios from "axios";
-import { createContext, useEffect, useMemo, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const ApiContext = createContext({});
 
 export const ApiProvider = ({ children }) => {
   const urlProduct =
     "https://63a16120a543280f77548d0f.mockapi.io/tx3en1cj8hjaw/";
-  const urlUsers =
-    "https://63d4daaa0e7ae91a00a3604b.mockapi.io/tx3en1cj8ha/uw13fsu8eg4yhr";
+  const urlUsers = process.env.REACT_APP_URL_API;
   const [DataProduct, setDataProduct] = useState([]);
   const [Access, setAccess] = useState([]);
   const [Users, setUsers] = useState([]);
@@ -15,7 +14,8 @@ export const ApiProvider = ({ children }) => {
   const [showResult, setIsShowResult] = useState(false);
   const [isShowButton, setIsShowButton] = useState(false);
   const [numPage, setNumPage] = useState([]);
-  /* let [input] = useState([]); */
+  const [isLoad, setIsLoad] = useState(false);
+  const [activePage, setActivePage] = useState()
   useEffect(() => {
     const fetchDataPro = async () => {
       const dataPro = await axios(urlProduct + "tqwu5d31kjdih2o")
@@ -45,17 +45,16 @@ export const ApiProvider = ({ children }) => {
   },[])
   useEffect(() =>{
     const fetchDataUS = async () => {
-      const dataPro = await axios(urlUsers)
-      setUsers(dataPro.data)
+      setIsLoad(true)
+      const dataUS = await axios.get(urlUsers)
+      if(dataUS.status === 200) {
+        setUsers(dataUS.data);
+        setIsLoad(false)
+      }
+      
     }
     fetchDataUS()
-    /* fetch(urlUsers)
-      .then((dataUsers) => dataUsers.json())
-      .then((dataUsers) => {
-        setUsers(dataUsers);
-      })
-      .catch((err) => console.error(err)); */
-  },[])
+  },[urlUsers])
 
   const handelValueSearch = (valueSearch) => {
     setValueSearch(valueSearch.target.value);
@@ -77,28 +76,73 @@ export const ApiProvider = ({ children }) => {
       setIsShowResult(false);
     }
   };
-  const PaginationPage = (e) => {
-    useMemo(() => {
-      if (e.length > 12) {
-        if (e.length % 12 === 0) {
-          setIsShowButton(true);
+  const PaginationPage = (e,z) => {
+    useEffect(() => {
+      if (e.length > z) {
+        let length = (e.length % z === 0) ? e.length / z : (e.length / z) + 1;
+        setIsShowButton(true);
+        
           let arr = [];
-          for (let i = 1; i <= e.length / 12; i++) {
+          for (let i = 1; i <= length; i++) {
             arr.push(i);
             setNumPage(arr);
           }
-        } else {
-          setIsShowButton(true);
-          let arr = [];
-          for (let i = 1; i <= e.length / 12 + 1; i++) {
-            arr.push(i);
-            setNumPage(arr);
-          }
-        }
       } else {
         setIsShowButton(false);
       }
-    }, [e.length]);
+    }, [e.length,z]);
+  };
+  const HandleActivePage = (i) => {
+    useEffect(() => {
+      
+      setActivePage(numPage.findIndex((e) => e === i / 12)) 
+    })
+  }
+  const HandleLogin = (name,mail,path) => {
+    const user = Users.filter((items) =>
+            items.user.flatMap((last) => last.email).includes(mail)
+          );
+          if (user.length === 0) {
+            setIsLoad(true);
+            const option = {
+              method: "POST",
+              headers: { "Content-type": "application/json; charset=UTF-8" },
+              body: JSON.stringify({
+                username:"",
+                password:"",
+                user: [
+                  {
+                    fullName: name,
+                    phoneNumber: "",
+                    email:mail,
+                    address: "",
+                  },
+                ],
+                listCart: [],
+                purchaseOrder: [],
+                id: Users.length + 1,
+              }),
+            };
+            fetch(urlUsers, option).then((res) => {
+              if (res.status === 201) {
+                setIsLoad(false);
+                localStorage.setItem("isLogin", true);
+                localStorage.setItem(
+                  "identificationID",
+                  JSON.stringify(Users.length + 1)
+                );
+                window.location.pathname = path;
+              }
+            });
+          } else {
+            localStorage.setItem("isLogin", true);
+            localStorage.setItem(
+              "identificationID",
+              JSON.stringify(user.flatMap((items) => items.id))
+            );
+            window.location.pathname = path;
+          }
+        
   }
   return (
     <ApiContext.Provider
@@ -110,9 +154,14 @@ export const ApiProvider = ({ children }) => {
         Users,
         valueSearch,
         showResult,
-        isShowButton,/* set show button number pagination */
-        numPage,/* number pagination */
-        PaginationPage,/* handle division of page count */
+        isShowButton,   /* set show button number pagination */
+        numPage,
+        isLoad,
+        activePage,
+        HandleLogin,
+        HandleActivePage,
+        setIsLoad,        /* number pagination */
+        PaginationPage, /* handle division of page count */
         handelValueSearch,
         handleSetIsShowResult,
         handleSetHideResult,

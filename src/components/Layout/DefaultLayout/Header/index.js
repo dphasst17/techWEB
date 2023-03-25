@@ -14,7 +14,7 @@ import {
   faUser,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
-import logo01 from "~/components/Layout/DefaultLayout/Header/img/logo01-removebg-preview.png";
+import logo01 from "~/components/Layout/DefaultLayout/Header/img/tech-store-low-resolution-logo-black-on-transparent-background.png";
 import { CartContext } from "~/Contexts/Cart";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ApiContext } from "~/ContextApi/ContextApi";
@@ -53,8 +53,7 @@ function Header() {
   /*  */
   const activeNav = menuNav.findIndex((e) => e.path === pathname);
   const nav = useRef(null);
-  /* const menuToggle = () => nav.current.classList.toggle('active'); */
-  /*  */
+
   let checkLogin = JSON.parse(localStorage.getItem("isLogin") || "[]");
   useEffect(()=>{
     if (checkLogin === true) {

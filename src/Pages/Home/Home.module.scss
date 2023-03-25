@@ -45,55 +45,15 @@
     height: 100%;
     h1{
         width:100%;
-        color:tan;
         text-align: center;
-        font-size: 5em;
-        font-family:Georgia, 'Times New Roman', Times, serif;
-        background-color: #010545;
-    }
-    .list {
-        width: 90%;
-        height: 90px;
-        background-color: transparent;
-        margin: 4% auto;
-        display: flex;
-        border-radius: 10px;
-        border: solid 1px;
-        padding: 5px;
-        .listDetail {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            input[type="checkbox"] {
-                display: none;
-            }
-            .items {
-                width: 50%;
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                align-content: center;
-                flex-wrap: wrap;
-                svg {
-                    height: 50px;
-                    margin: 0 auto;
-                }
-                p {
-                    font-size: 15px;
-                    font-weight: 600;
-                    text-align: center;
-                    color: #940606;
-                }
-            }
-            .items:hover {
-                transform: scale(1.1, 1.1);
-                animation: scale 0.5s ease;
-            }
-            .items:hover svg path {
-                fill: #940606;
-            }
-        }
+        cursor: pointer;
+        color:tan;
+        font-weight: 650;
+        font-size: 2.2em;
+        animation:x 2s alternate linear infinite;
+        border-top:solid 0.5px;
+        padding:0 2%;
+        
     }
     .featuredProduct {
         width: 100%;
@@ -229,9 +189,6 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        background: url("https://img.freepik.com/premium-vector/fingerprint-scan-provides-security-access-with-biometrics-identification_74231-1175.jpg") no-repeat;
-        background-size: cover;
-        background-position-x: center;
         animation:bc .5s alternate linear;
         .imageBC{
             width: inherit;
@@ -309,7 +266,7 @@
                                 overflow: hidden;
                                 white-space: nowrap;
                                 text-overflow: ellipsis;
-                                color:#ffffff;
+                                color:#000;
                                 font-weight: 550;
                             }
                         }
@@ -406,9 +363,6 @@
         flex-wrap: wrap;
         align-content: flex-start;
         justify-content: space-around;
-        background: url("https://www.afdigitale.it/wp-content/uploads/2021/06/POSTAZIONE-ASUS.jpg") no-repeat;
-        background-size: cover;
-        background-position-x: center;
         animation:bc .5s alternate linear;
         .accDemo {
             min-width: 160px;
@@ -448,10 +402,15 @@
                         width: 100%;
                         color: #ff0505;
                         overflow: hidden;
-                        white-space: nowrap;
+                        white-space:nowrap;
                         text-overflow: ellipsis;
                         font-weight: 600;
                     }
+                }
+                .accessInf{
+                    width:100%;
+                    color:#000;
+                    font-weight: 550;
                 }
                 .items-child {
                     width: 100%;
@@ -517,8 +476,154 @@
             .accDemo_Child{
                 background-color: #c8c8c8;
                 transition:all 1s;
+                .accessInf{
+                    color:#020a7c;
+                }
             }
         }
+    }
+    .contact{
+        width:100%;
+        height:250px;
+        display:flex;
+        justify-content: center;
+        opacity: 1;
+        transition: height .1s linear;
+        .content{
+            width:80%;
+            height:100%;
+            display:flex;
+            .items{
+                width:30%;
+                height:100%;
+                display:flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                align-content: center;
+                justify-content: space-around;
+                
+                h2{
+                    width:100%;
+                    text-align: center;
+                }
+                .contactIcon{
+                    width:100%;
+                    height:80%;
+                    .contactChild{
+                        width:60%;
+                        height:30px;
+                        margin:3% auto;
+                        border-radius:10px;
+                        padding-left:2%;
+                        display:flex;
+                        flex-wrap: wrap;
+                        align-content: center;
+                        animation:oP 2s alternate linear infinite;
+                        transition: all 5s linear;
+                        cursor: pointer;
+                        svg{
+                            width:10%;
+                            height:100%;
+                            margin:auto 0;
+                            
+                        }
+                        span{
+                            margin:auto 2%;
+                            color:#fff;
+                            font-weight: 550;
+                        }
+                    }
+                    .contactChild:nth-child(1){
+                        background-color: #3b5998;
+                        animation-delay: 0s;
+                        svg{
+                            path{
+                                fill:#fff
+                            }
+                        }                       
+                    }
+                    .contactChild:nth-child(2){
+                        background-color: #24292e;
+                        animation-delay: 0.4s;
+                        svg{
+                            path{
+                                fill:#fff
+                            }
+                        }
+                    }
+                    .contactChild:nth-child(3){
+                        background-image:linear-gradient(to left,#DB4437,#F4B400,#0F9D58,#4285F4);
+                        animation-delay: 0.8s;
+                    }
+                    
+                }
+                .contactIP{
+                    width:80%;
+                    height:80%;
+                    display:flex;
+                    flex-direction: column;
+                    position: relative;
+                    margin:0 auto;
+                    label {
+                        
+                        display: inline-block;
+                        font-weight: 600;
+                        cursor: pointer;
+                        position: absolute;
+                        top: 0;
+                        left: 10px;
+                        background-color: #ffffff;
+                        padding: 1px 5px;
+                        font-size: 12px;
+                        transform: translateY(-50%);
+                        color: #222037;
+                        border-radius:10px;
+                      }
+                      input {
+
+                        padding: 15px;
+                        display: block;
+                        width: 100%;
+                        font-size: 14px;
+                        border: 1px solid #6a5af9;
+                        border-radius: 4px;
+                        background-color: transparent;
+                        color: rgb(37, 33, 33);
+                        outline: none;
+                      }
+                      textarea{
+                        width:100%;
+                        outline: none;
+                        border-radius: 4px;
+                        padding-left:2.5%;
+                        margin-top:4%;
+                        border: 1px solid #6a5af9;
+                      }
+                      button{
+                        width:70%;
+                        height:30px;
+                        margin:2% auto;
+                        border-radius:10px;
+                        outline: none;
+                        border:none;
+                        background-color: rgb(70, 117, 200);
+                        color:#fff;
+                        font-size: 20px;
+                        cursor: pointer;
+                      }
+                      
+                }
+            }
+            .items:nth-child(2){
+                width:60%;
+                
+            }
+        }
+    }
+    @keyframes oP{
+        0%{transform: scale(1);}
+        50%{transform: scale(1.1);}
+        100%{transform: scale(1);}
     }
 }
 
@@ -558,9 +663,7 @@
 }
 @media (max-width: 760px) and (min-width: 610px) {
     .home {
-        .list {
-            display: none;
-        }
+
         h1{
             font-size: 3em;
         }
@@ -588,13 +691,30 @@
                 }
             }
         }
+        .contact{
+            height:450px;
+            .content{
+                flex-direction: column;
+                .items{
+                    width:100%;
+                    .contactIcon{
+                        flex-direction: column;
+                    }
+                }
+                .items:nth-child(1){
+                    display:flex;
+                    flex-direction: column;
+                }
+                .items:nth-child(2){
+                    width: 100%;
+                }
+            }
+        }
     }
 }
 @media (max-width: 609px) {
     .home {
-        .list {
-            display: none;
-        }
+
         h1{
             font-size: 2em;
         }
@@ -602,7 +722,7 @@
             justify-content: space-around;
             .product-info {
                 min-width: 148px;
-                min-height: 425px;
+                /* min-height: 425px; */
                 .product-detail {
                     padding: 1% 0% 4% 0%;
                     .image {
@@ -680,6 +800,30 @@
             }
             .accDemo:hover{
                 transform: scale(1);
+            }
+        }
+        .contact{
+            height:550px;
+            .content{
+                flex-direction: column-reverse;
+                .items{
+                    width:100%;
+                    
+                    .contactIcon{
+                        height:50%;
+                        display:flex;
+                        flex-direction: column;
+                        
+                    }
+                }
+                .items:nth-child(1){
+                    display:flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                }
+                .items:nth-child(2){
+                    width: 100%;
+                }
             }
         }
     }

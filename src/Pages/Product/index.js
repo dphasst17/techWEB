@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import style from "./Product.module.scss";
-import price from "./FIlter/price";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCartShopping,
@@ -11,82 +10,72 @@ import {
 import { CartContext } from "~/Contexts/Cart";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import { Link } from "react-router-dom";
+import { HiChevronDoubleLeft,HiChevronDoubleRight } from "react-icons/hi";
+
 
 const cx = classNames.bind(style);
 
+const valuePice = [
+  {
+    content: "Low to Hight",
+    inputValue: "1",
+    inputID: "low",
+  },
+  {
+    content: "Hight to Low",
+    inputValue: "2",
+    inputID: "hight",
+  },
+];
 function Product() {
-  const { DataProduct,PaginationPage,numPage,isShowButton } = useContext(ApiContext);
+  const { DataProduct,PaginationPage,numPage,isShowButton,HandleActivePage,activePage} = useContext(ApiContext);
   const [newValue, setNewValue] = useState([]);
   const [newPrice, setNewPrice] = useState([]);
   const [Slice, setSlice] = useState(12);
-  /* const [isShowButton, setIsShowButton] = useState(false);
-  const [numPage, setNumPage] = useState([]); */
-
-  let min = "";
-  let max = "";
-  if (newPrice.length > 1) {
-    min = newPrice.reduce((items, check) => {
-      return items.min < check.min ? items.min : check.min;
-    });
-    max = newPrice.reduce((items, check) => {
-      return items.max > check.max ? items.max : check.max;
-    });
-  } else if (newPrice.length === 1) {
-    min = [newPrice.map((items) => items.min)];
-    max = [newPrice.map((items) => items.max)];
-  } else {
-    min = 0;
-    max = 0;
-  }
+  const [isShow, setIsShow] = useState(false)
+  const [isShowFil,setIsShowFil] = useState("-200%")
   let data = DataProduct.filter((value) => {
-    if (newValue.length !== 0 && newPrice.length !== 0) {
+    newValue.includes(value.brand)
+    if (newValue.length !== 0 ) {
       return (
-        newValue.includes(value.brand) && value.price > min && value.price < max
+        newValue.includes(value.brand)
       );
-    } else if (newValue.length !== 0 || newPrice.length !== 0) {
-      return newValue.length !== 0
-        ? newValue.includes(value.brand)
-        : value.price > min && value.price < max;
-    } else {
+    }else {
       return value;
     }
   });
-  /* useMemo(() => {
-    if (data.length > 12) {
-      if (data.length % 12 === 0) {
-        setIsShowButton(true);
-        let arr = [];
-        for (let i = 1; i <= data.length / 12; i++) {
-          arr.push(i);
-          setNumPage(arr);
-        }
-      } else {
-        setIsShowButton(true);
-        let arr = [];
-        for (let i = 1; i <= data.length / 12 + 1; i++) {
-          arr.push(i);
-          setNumPage(arr);
-        }
-      }
-    } else {
-      setIsShowButton(false);
+  data =
+  newPrice !== undefined
+    ? newPrice === "1"
+      ? data.sort((items, check) => (items.price > check.price ? 1 : -1))
+      : data.sort((items, check) => (items.price < check.price ? 1 : -1))
+    : data;
+
+  PaginationPage(data,12)
+  useEffect(() => {
+    if (!numPage.includes(Slice / 12)) {
+      setSlice(12);
     }
-  }, [data.length]); */
-  PaginationPage(data)
-  const handlePagi = (e) => {
-    setSlice(12 * e);
+  }, [Slice, numPage]);
+  const HandlePagi = (e) => {
+    (data.length > 12) ? (numPage.includes(Slice/12) ? setSlice(12 * e) : setSlice(12)) : <></>
   };
   const dataBrand = DataProduct.map((items) => items.brand);
   const setBrand = new Set(dataBrand);
   let filterBrand = [...setBrand];
-  const activePage = numPage.findIndex((e) => e === Slice / 12);
+  HandleActivePage(Slice)
 
   return (
     <div className={cx("product")}>
-      <div className={cx("filter")}>
+      <div className={cx("fill")} onClick={() => {setIsShowFil("0%")}}>Filter your result <HiChevronDoubleRight /></div>
+      <div className={cx("filter")} style={{transform:"translateX(" + isShowFil + ")"}}>
+        <div className={cx("closeFil")}>
+          <p onClick={() => {setNewValue([]); setNewPrice([])}}>Reset All</p>
+          <HiChevronDoubleLeft onClick={() => {setIsShowFil("-200%")}}/>
+        </div>
         <div className={cx("box_filter")}>
-          <h3>About Brand</h3>
-          {filterBrand.map((check, index) => (
+          <p onClick={() => {setIsShow(!isShow)}}>About Brand</p>
+          {isShow && filterBrand.map((check, index) => (
             <div className={cx("box_filter_detail")} key={index}>
               <div className={cx("detail")}>
                 <input
@@ -97,9 +86,11 @@ function Product() {
                       setNewValue(newValue.filter((items) => items !== check));
                     } else {
                       setNewValue([...newValue, check]);
-                      /* setData(DataProduct.filter(value => inputName.includes(value.brand))) */
+                      
                     }
                   }}
+                  onChange={() => {}}
+                  checked={newValue.includes(check) ? true : false}
                   id={cx("keyword-brand") + `${index}`}
                 />
                 <label htmlFor={cx("keyword-brand") + `${index}`}>
@@ -108,96 +99,24 @@ function Product() {
               </div>
             </div>
           ))}
-          <h3>About Price</h3>
-          {price.map((price, index) => (
-            <div className={cx("box_filter_detail")} key={index}>
-              <div htmlFor="keyword" className={cx("detail")}>
-                <input
-                  type="checkbox"
-                  name="keyword"
-                  onClick={() => {
-                    if (newPrice.includes(price)) {
-                      setNewPrice(newPrice.filter((items) => items !== price));
-                    } else {
-                      setNewPrice([...newPrice, price]);
-                    }
-                  }}
-                  id={cx("keyword-price") + `${price.id}`}
-                ></input>
-                <label htmlFor={cx("keyword-price") + `${price.id}`}>
-                  {price.min} - {price.max}
-                </label>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className={cx("filterMob")}>
-        <div className={cx("aboutBrandMob")}>
-          <h2>About Brand</h2>
-          <div className={cx("itemsBrand")}>
-            {filterBrand.map((brand, index) => (
-              <div className={cx("brandDetail")} key={index}>
-                <label
-                  className="infType"
-                  onClick={(e) => {
-                    e.target.style.color === "rgb(78, 55, 252)"
-                      ? (e.target.style.color = "rgb(0,0,0)")
-                      : (e.target.style.color = "rgb(78, 55, 252)");
-                  }}
-                >
+          <p>About Price</p>
+          
+          {valuePice.map((items, index) => (
+                <div className={cx("box_filter_detail")} key={index}>
                   <input
-                    type="checkbox"
-                    name="keyword"
+                    type="radio"
+                    name="check"
+                    id={items.inputID}
+                    value={items.inputValue}
                     onClick={() => {
-                      if (newValue.includes(brand)) {
-                        setNewValue(
-                          newValue.filter((items) => items !== brand)
-                        );
-                      } else {
-                        setNewValue([...newValue, brand]);
-                      }
+                      setNewPrice(items.inputValue);
                     }}
-                    id={cx("keyword-brand") + `${index}`}
+                    onChange={() => {}}
+                    checked={newPrice.includes(items.inputValue) ? true : false}
                   />
-                  {brand}
-                </label>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className={cx("aboutPriceMob")}>
-          <h2>About Price</h2>
-          <div className={cx("itemsPrice")}>
-            {price.map((check, index) => (
-              <div className={cx("priceDetail")} key={index}>
-                <label
-                  className="infType"
-                  onClick={(e) => {
-                    e.target.style.color === "rgb(78, 55, 252)"
-                      ? (e.target.style.color = "rgb(0,0,0)")
-                      : (e.target.style.color = "rgb(78, 55, 252)");
-                  }}
-                >
-                  <input
-                    type="checkbox"
-                    name="keyword"
-                    onClick={() => {
-                      if (newPrice.includes(check)) {
-                        setNewPrice(
-                          newPrice.filter((items) => items !== check)
-                        );
-                      } else {
-                        setNewPrice([...newPrice, check]);
-                      }
-                    }}
-                    id={cx("keyword-price") + `${check.id}`}
-                  ></input>
-                  {check.min} - {check.max}
-                </label>
-              </div>
-            ))}
-          </div>
+                  <label htmlFor={items.inputID}>{items.content}</label>
+                </div>
+          ))}
         </div>
       </div>
       <div className={cx("items_container")}>
@@ -208,25 +127,25 @@ function Product() {
           ).map((product) => (
             <div className={cx("product-detail")} key={product.id}>
               <div className={cx("detail-box")}>
-                <img src={product.url} alt="" />
+                <div className={cx("itemsImg")}><img src={product.url} alt="" /></div>
                 <div className={cx("title")}>
                   <h4>{product.title}</h4>
                 </div>
                 {product.detail.map((items, index) => (
                   <div className={cx("infProduct")} key={index}>
-                    <p>Cpu: {items.cpu.map((detail) => detail.type)}</p>
+                    <p>Cpu: {items.cpu.type}</p>
                     <p>
                       Display:{" "}
-                      {items.display.map((detail) => detail.size__inch)} inch -{" "}
-                      {items.display.map((detail) => detail.refresh_rate__hz)}
+                      {items.display.size__inch} inch -{" "}
+                      {items.display.refresh_rate__hz}
                       hz
                     </p>
-                    <p>Ram: {items.memory.map((detail) => detail.ram__gb)}GB</p>
+                    <p>Ram: {items.memory.ram__gb}GB</p>
                     <p>
-                      Hard drive: {items.storage.map((detail) => detail.type)}-
-                      {items.storage.map((detail) => detail.capacity__gb)}GB
+                      Hard drive: {items.storage.type}-
+                      {items.storage.capacity__gb}GB
                     </p>
-                    <p>Os: {items.software.map((detail) => detail.os)}</p>
+                    <p>Os: {items.software.os}</p>
                   </div>
                 ))}
 
@@ -252,24 +171,28 @@ function Product() {
             </div>
           ))}
         </div>
+        {isShowButton === true ? 
         <div className={cx("buttonPG")}>
-          <div className={cx("buttonCT")}>
-            {isShowButton === true ? (
-              numPage.map((items, index) => (
-                <div
-                  className={cx(
-                    `pagination${index === activePage ? "Active" : ""}`
-                  )}
-                  key={index}
-                >
-                  <button onClick={() => handlePagi(items)}>{items}</button>
-                </div>
-              ))
-            ) : (
-              <></>
-            )}
-          </div>
+        {/* tạo button prev: set lại giá trị slice*/}
+        <button onClick={() => HandlePagi((activePage))}  disabled={activePage === 0}>prev</button>
+        <div className={cx("buttonCT")}>
+          
+          {numPage.map((items, index) => (
+              <div
+                className={cx(
+                  `pagination${index === activePage ? "Active" : ""}`
+                )}
+                key={index}
+              >
+                <button onClick={() => HandlePagi(items)}>{items}</button>
+              </div>
+            ))}
         </div>
+        <button onClick={() => HandlePagi((activePage+ 2))} disabled={activePage + 1 === numPage.length}>next</button>
+        
+      </div>
+        : <></>}
+        
       </div>
     </div>
   );

@@ -15,10 +15,10 @@ const Product = () => {
 
   return (
     <>
-      {data.length !== 0 ? <h1>PRODUCT</h1> : <></>}
+      {data.length !== 0 ? <h1>OUR PRODUCT</h1> : <></>}
       {data.length !== 0 ? 
         <div className={cx("product")}>
-        {data.map((product) => (
+        {data.slice(0,12).map((product) => (
           <div className={cx("product-info")} key={product.id}>
             <LazyLoad height={"auto"}>
               <div className={cx("product-detail")}>
@@ -32,25 +32,24 @@ const Product = () => {
                   <div className={cx("productAccess")}>
                     {product.detail.map((items, index) => (
                       <div className={cx("information")} key={index}>
-                        <p>Cpu: {items.cpu.map((detail) => detail.type)}</p>
+                        <p>Cpu: {items.cpu.type}</p>
                         <p>
                           Display:{" "}
-                          {items.display.map((detail) => detail.size__inch)}{" "}
+                          {items.display.size__inch}{" "}
                           inch -{" "}
-                          {items.display.map(
-                            (detail) => detail.refresh_rate__hz
-                          )}
+                          {items.display.refresh_rate__hz
+                          }
                           hz
                         </p>
                         <p>
-                          Ram: {items.memory.map((detail) => detail.ram__gb)}GB
+                          Ram: {items.memory.ram__gb}GB
                         </p>
                         <p>
                           Hard drive:{" "}
-                          {items.storage.map((detail) => detail.type)}-
-                          {items.storage.map((detail) => detail.capacity__gb)}GB
+                          {items.storage.type}-
+                          {items.storage.capacity__gb}GB
                         </p>
-                        <p>Os: {items.software.map((detail) => detail.os)}</p>
+                        <p>Os: {items.software.os}</p>
                       </div>
                     ))}
                   </div>

@@ -6,6 +6,7 @@ import { Fragment } from "react";
 import { CartProvider } from "./Contexts/Cart";
 import { ApiProvider } from "./ContextApi/ContextApi";
 
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -32,37 +33,37 @@ function App() {
 
   return (
     <CartProvider>
-      <ApiProvider>
-        <Router>
-          <div className="App">
-            <Routes>
-              {publicRoutes.map((route, index) => {
-                const Pages = route.component;
-  
-                let Layout = DefaultLayout;
-  
-                if (route.layout) {
-                  Layout = route.layout;
-                } else if (route.layout === null) {
-                  Layout = Fragment;
-                }
-                return (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    element={
-                      <Layout>
-                        <Pages/>
-                      </Layout>
-                    }
-                  />
-                );
-              })}
-            </Routes>
-          </div>
-        </Router>
-      </ApiProvider>
-    </CartProvider>
+        <ApiProvider>
+          <Router>
+            <div className="App">
+              <Routes>
+                {publicRoutes.map((route, index) => {
+                  const Pages = route.component;
+    
+                  let Layout = DefaultLayout;
+    
+                  if (route.layout) {
+                    Layout = route.layout;
+                  } else if (route.layout === null) {
+                    Layout = Fragment;
+                  }
+                  return (
+                    <Route
+                      key={index}
+                      path={route.path}
+                      element={
+                        <Layout>
+                          <Pages/>
+                        </Layout>
+                      }
+                    />
+                  );
+                })}
+              </Routes>
+            </div>
+          </Router>
+        </ApiProvider>
+      </CartProvider>
   );
 }
 

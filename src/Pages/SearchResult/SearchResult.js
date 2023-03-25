@@ -10,7 +10,8 @@ import {
   faTableList,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import LazyLoad from 'react-lazy-load';
+import LazyLoad from "react-lazy-load";
+import { HiChevronDoubleLeft,HiChevronDoubleRight } from "react-icons/hi";
 
 const cx = classNames.bind(style);
 
@@ -28,39 +29,41 @@ const valuePice = [
 ];
 
 function SearchResult() {
-  const { valueSearch, DataProduct, Access,PaginationPage,numPage,isShowButton } = useContext(ApiContext);
-  const [SliceIP, setSliceIP] = useState(6);
-  const [isShowButtonIP, setIsShowButtonIP] = useState(false);
+  const {
+    valueSearch,
+    DataProduct,
+    Access,
+    PaginationPage,
+    numPage,
+    isShowButton,
+    HandleActivePage,
+    activePage,
+  } = useContext(ApiContext);
   const [value, setValue] = useState([]);
   const [valueType, setValueType] = useState([]);
-  const [price, setPrice] = useState();
-  const [button, setButton] = useState(false);
+  const [price, setPrice] = useState([]);
   const navigate = useNavigate();
   const [Slice, setSlice] = useState(12);
+  const [isShow, setIsShow] = useState(false);
+  const [isShowS, setIsShowS] = useState(false);
+  const [isShowFil,setIsShowFil] = useState("-200%")
   /* FILTER DATA BASED ON VALUE SEARCH */
   const allData = [...DataProduct, ...Access];
   const data = allData.filter((data) =>
-  valueSearch.length > 0
-    ? data.brand.toUpperCase().includes(valueSearch.toUpperCase()) ||
-      data.title.toUpperCase().includes(valueSearch.toUpperCase()) ||
-      data.type.toUpperCase().includes(valueSearch.toUpperCase())
-    : null
-);
+    valueSearch.length > 0
+      ? /* (data.brand.toUpperCase() || data.title.toUpperCase() || data.type.toUpperCase()).includes(valueSearch.toUpperCase()) */
+        data.brand.toUpperCase().includes(valueSearch.toUpperCase()) ||
+        data.title.toUpperCase().includes(valueSearch.toUpperCase()) ||
+        data.type.toUpperCase().includes(valueSearch.toUpperCase())
+      : null
+  );
 
   /*FILTER TYPE AND BRAND  */
   const dataBrand = data.map((items) => items.brand);
   const dataType = data.map((items) => items.type);
   let filterBrand = Array.from(new Set(dataBrand));
-  useEffect(() => {
-    filterBrand.length >= 5 ? setButton(true) : setButton(false);
-  }, [filterBrand]);
-  filterBrand = filterBrand.slice(0, SliceIP);
 
-  useEffect(() => {
-    filterBrand.length < 13
-      ? setIsShowButtonIP(true)
-      : setIsShowButtonIP(false);
-  }, [filterBrand]);
+
 
   let filterType = Array.from(new Set(dataType));
 
@@ -75,11 +78,16 @@ function SearchResult() {
       : items
   );
   /* PAGINATION PAGES */
-  PaginationPage(result)
+  PaginationPage(result, 12);
+  useEffect(() => {
+    if (!numPage.includes(Slice / 12)) {
+      setSlice(12);
+    }
+  }, [Slice, numPage]);
   const handlePagi = (e) => {
     setSlice(12 * e);
   };
-  const activePage = numPage.findIndex((e) => e === (Slice/12));
+  HandleActivePage(Slice);
   /* FILTER DATA BASED ON INPUT PRICE */
   result =
     price !== undefined
@@ -90,58 +98,39 @@ function SearchResult() {
 
   return (
     <div className={cx("resultSearch")}>
-      <div className={cx("filter")}>
+      <div className={cx("fill")} onClick={() => {setIsShowFil("0%")}}>Filter your result <HiChevronDoubleRight /></div>
+      
+      <div className={cx("filter")} style={{transform:"translateX(" + isShowFil + ")"}}>
+        <div className={cx("closeFil")}>
+            <p onClick={() => {setValue([]); setValueType([]); setPrice([])}}>Reset All</p>
+            <HiChevronDoubleLeft onClick={() => {setIsShowFil("-200%")}}/>
+        </div>
+        
         <div className={cx("detail")}>
-          {filterBrand.length > 1 ? <h3>About Brand</h3> : <></>}
+          {filterBrand.length > 1 ? <p onClick={() => {setIsShow(!isShow);setIsShowS(false)}}>About Brand</p> : <></>}
+          {filterType.length > 1 ? <p onClick={() => {setIsShowS(!isShowS);setIsShow(false)}}>About Type</p> : <></>}
           {filterBrand.length > 1 ? (
-            filterBrand.map((items, index) => (
+            isShow && filterBrand.map((items, index) => (
               <div className={cx("filterBrand")} key={index}>
                 <input
                   type="checkbox"
                   onClick={() => {
-                    value.includes(items)
-                      ? setValue(value.filter((check) => check !== items))
-                      : setValue([...value, items]);
+                    if(value.includes(items))
+                      {setValue(value.filter((check) => check !== items))}
+                      else{setValue([...value, items])}
                   }}
+                  onChange={() => {}}
+                  checked={value.includes(items) ? true: false}
                   id={cx("brand") + `${index}`}
                 />
-                <label htmlFor={cx("brand") + `${index}`}>{items}</label>
+                <label htmlFor={cx("brand") + `${index}`} >{items}</label>
               </div>
             ))
           ) : (
             <></>
           )}
-          {filterBrand.length > 1 ? (
-            button === true ? (
-              isShowButtonIP === true ? (
-                <div className={cx("load")}>
-                  <button
-                    onClick={() => {
-                      setSliceIP(SliceIP + 4);
-                    }}
-                  >
-                    Load More...
-                  </button>
-                </div>
-              ) : (
-                <div className={cx("load")}>
-                  <button
-                    onClick={() => {
-                      setSliceIP(SliceIP - 8);
-                    }}
-                  >
-                    Hide
-                  </button>
-                </div>
-              )
-            ) : (
-              <></>
-            )
-          ) : (
-            <></>
-          )}
-          {filterType.length > 1 ? <h3>About Type</h3> : <></>}
-          {filterType.length > 1 ? (
+          
+          {isShowS && filterType.length > 1 ? (
             filterType.map((items, index) => (
               <div className={cx("filterType")} key={index}>
                 <input
@@ -153,6 +142,8 @@ function SearchResult() {
                         )
                       : setValueType([...valueType, items]);
                   }}
+                  onChange={() =>{}}
+                  checked={valueType.includes(items) ? true : false}
                   id={cx("type") + `${index}`}
                 />
                 <label htmlFor={cx("type") + `${index}`}>{items}</label>
@@ -161,9 +152,11 @@ function SearchResult() {
           ) : (
             <></>
           )}
-          {filterType.length > 1 || filterBrand.length > 1 ? (
+          
+        </div>
+        {filterType.length > 1 || filterBrand.length > 1 ? (
             <div className={cx("price")}>
-              <h3>About Price</h3>
+              <p>About Price</p>
               {valuePice.map((items, index) => (
                 <div key={index}>
                   <input
@@ -174,6 +167,8 @@ function SearchResult() {
                     onClick={() => {
                       setPrice(items.inputValue);
                     }}
+                    onChange={() => {}}
+                    checked={price.includes(items.inputValue) ? true : false}
                   />
                   <label htmlFor={items.inputID}>{items.content}</label>
                 </div>
@@ -182,108 +177,17 @@ function SearchResult() {
           ) : (
             <></>
           )}
-        </div>
       </div>
-      {valueSearch.length !== 0 ? (
-        <div className={cx("filterMob")}>
-          <div className={cx("aboutBrand")}>
-            {filterBrand.length > 1 ? <h3>About Brand</h3> : <></>}
-            <div className={cx("brandDetail")}>
-              {filterBrand.length > 1 ? (
-                filterBrand.map((items, index) => (
-                  <div className={cx("filterBrand")} key={index}>
-                    <label
-                      onClick={(e) => {
-                        e.target.style.color === "rgb(78, 55, 252)"
-                          ? (e.target.style.color = "rgb(0,0,0)")
-                          : (e.target.style.color = "rgb(78, 55, 252)");
-                      }}
-                    >
-                      <input
-                        type="checkbox"
-                        onClick={() => {
-                          value.includes(items)
-                            ? setValue(value.filter((check) => check !== items))
-                            : setValue([...value, items]);
-                        }}
-                        id={cx("brand") + `${index}`}
-                      />
-                      {items}
-                    </label>
-                  </div>
-                ))
-              ) : (
-                <></>
-              )}
-            </div>
-          </div>
-          <div className={cx("aboutType")}>
-            {filterType.length > 1 ? <h3>About Type</h3> : <></>}
-            <div className={cx("typeDetail")}>
-              {filterType.length > 1 ? (
-                filterType.map((items, index) => (
-                  <div className={cx("filterType")} key={index}>
-                    <label
-                      onClick={(e) => {
-                        e.target.style.color === "rgb(78, 55, 252)"
-                          ? (e.target.style.color = "rgb(0,0,0)")
-                          : (e.target.style.color = "rgb(78, 55, 252)");
-                      }}
-                    >
-                      <input
-                        type="checkbox"
-                        onClick={() => {
-                          valueType.includes(items)
-                            ? setValueType(
-                                valueType.filter((check) => check !== items)
-                              )
-                            : setValueType([...valueType, items]);
-                        }}
-                        name={cx("type") + `${index}`}
-                        id={cx("type") + `${index}`}
-                      />
-                      {items}
-                    </label>
-                  </div>
-                ))
-              ) : (
-                <></>
-              )}
-            </div>
-          </div>
-          {filterType.length > 1 || filterBrand.length > 1 ? (
-            <div className={cx("price")}>
-              <h3>About Price</h3>
-
-              {valuePice.map((items) => (
-                <>
-                  <input
-                    type="radio"
-                    name="check"
-                    id={items.inputID}
-                    value={items.inputValue}
-                    onClick={() => {
-                      setPrice(items.inputValue);
-                    }}
-                  />
-                  <label htmlFor={items.inputID}>{items.content}</label>
-                </>
-              ))}
-            </div>
-          ) : (
-            <></>
-          )}
-        </div>
-      ) : (
-        <></>
-      )}
       <div className={cx("items_container")}>
         <div className={cx("show")}>
-          {((result.length > 12)?result.slice(Slice - 12, Slice):result.slice(0)).map((product) => (
+          {(result.length > 12
+            ? result.slice(Slice - 12, Slice)
+            : result.slice(0)
+          ).map((product) => (
             <div className={cx("product-detail")} key={product.id}>
               <LazyLoad height={"auto"}>
                 <div className={cx("detail-box")}>
-                  <img src={product.url} alt="img Product" loading="lazy"/>
+                  <img src={product.url} alt="img Product" loading="lazy" />
                   <div className={cx("title")}>
                     <h4>{product.title}</h4>
                   </div>
@@ -312,19 +216,36 @@ function SearchResult() {
             </div>
           ))}
         </div>
-        <div className={cx("buttonPG")}>
-          <div className={cx("buttonCT")}>
-            {isShowButton === true ? (
-              numPage.map((items, index) => (
-                <div className={cx(`pagination${index === activePage ? "Active" : ""}`)} key={index}>
+        {isShowButton === true ? (
+          <div className={cx("buttonPG")}>
+            <button
+              onClick={() => handlePagi(activePage)}
+              disabled={activePage === 0}
+            >
+              prev
+            </button>
+            <div className={cx("buttonCT")}>
+              {numPage.map((items, index) => (
+                <div
+                  className={cx(
+                    `pagination${index === activePage ? "Active" : ""}`
+                  )}
+                  key={index}
+                >
                   <button onClick={() => handlePagi(items)}>{items}</button>
                 </div>
-              ))
-            ) : (
-              <></>
-            )}
+              ))}
+            </div>
+            <button
+              onClick={() => handlePagi(activePage + 2)}
+              disabled={activePage + 1 === numPage.length}
+            >
+              next
+            </button>
           </div>
-        </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

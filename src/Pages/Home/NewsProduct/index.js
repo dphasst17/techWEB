@@ -20,7 +20,7 @@ const NewsProduct = () => {
   const { DataProduct } = useContext(ApiContext);
   const dataProduct = DataProduct.filter(
     (items) =>
-      items.detail.map((check) => check.general.map((check) => check.year)) >=
+      items.detail.map((check) => check.general.year) >=
       2020
   );
   return (
