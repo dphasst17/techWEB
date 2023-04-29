@@ -4,7 +4,6 @@ import style from "./CheckOut.module.scss";
 /* import { useNavigate } from "react-router-dom"; */
 import React, { useContext, useEffect, useState } from "react";
 import { ApiContext } from "~/ContextApi/ContextApi";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Loading from "~/components/Loading/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,45 +12,39 @@ import { faX } from "@fortawesome/free-solid-svg-icons";
 const cx = classNames.bind(style);
 
 const CheckOut = () => {
-  const { cartItems, setState } = useContext(CartContext);
-  const { urlUsers } = useContext(ApiContext);
+  const { cartItems } = useContext(CartContext);
+  const {Users,handlePost } = useContext(ApiContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [messResult, setMessResult] = useState("")
   const [height, setHeight] = useState("-200%")
   const navigate = useNavigate();
-  let userID = JSON.parse(localStorage.getItem("identificationID") || "[]");
-  const urlGet = urlUsers + `/` + userID;
-  /* Check login  */
+  let userID = JSON.parse(localStorage.getItem("isLogin") || "[]");
   const [data, setData] = useState();
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(urlGet);
-      setData(result.data.purchaseOrder);
-    };
-    fetchData();
-  }, [urlGet, data]);
+    Users.map(us =>
+      setData(us.purchaseOrder)
+    )
+  }, [Users]);
+
   let handleCheckOut = () => {
-    if (cartItems.length !== 0) {
+    if (cartItems?.length !== 0) {
       setIsLoading(true)
-      const option = {
-        method: "PUT",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-        body: JSON.stringify({
-          purchaseOrder: cartItems.concat(...data),
-          listCart: [],
-        }),
-      };
-      fetch(urlUsers + `/` + userID, option).then((res) => {if(res.status === 200 ){setIsLoading(false);setState({ cartItems: [] });;navigate("/success");}});
+      handlePost({
+        purchaseOrder: cartItems.concat(...data),
+        listCart: [],
+      },setIsLoading,"/success")
     } else {
+      setMessResult("You need to add a product to your cart")
       setTimeout(() => {setHeight("0%")})
       setTimeout(() => {setHeight("-120%")},2500)
     }
   };
+
+
   let total = cartItems?.map((item) => item.total);
   const sumArray = (total) => {
     let sum = 0;
-    if (total.length >= 1) {
+    if (total?.length >= 1) {
       total.map((value) => {
         return (sum += value);
       });
@@ -77,7 +70,7 @@ const CheckOut = () => {
                   }}
                 >
                   <h2>
-                    You have {cartItems.length > 0 ? cartItems.length : 0} orders
+                    You have {cartItems?.length > 0 ? cartItems.length : 0} orders
                   </h2>
                   <div className={cx("itemsDetail")}>
                     {cartItems?.map((cartItems, index) => (
@@ -147,11 +140,22 @@ const CheckOut = () => {
                   </div>
                 </div>
                 <div className={cx("detail_second")}>
-                  <div className={cx("total")}>
-                    <p>Total Payment: {sumArray(total)}USD</p>
+                  <div className={cx("first")}>
+                    {userID === true ? Users.map(us => <div className={cx("usDetail")}>
+                      <div className={cx("input")}>Full name: {us.fullName}</div>
+                      <div className={cx("input")}>Phone number: {us.phoneNumber}</div>
+                      <div className={cx("input")}>Email: {us.email}</div>
+                      <div className={cx("input")}>Address: {us.address}</div>
+                    </div>)
+                    :<></>}
                   </div>
-                  <button>Continue shopping</button>
-                  <button onClick={handleCheckOut}>Purchase</button>
+                  <div className={cx("second")}>
+                    <div className={cx("total")}>
+                      <p>Total Payment: {sumArray(total)}USD</p>
+                    </div>
+                    <button>Continue shopping</button>
+                    <button onClick={handleCheckOut}>Purchase</button>
+                  </div>
                 </div>
               </>
             )}
@@ -159,7 +163,7 @@ const CheckOut = () => {
         </div>
       </div>
       <div className={cx("messFalse")} style={{transform:"translateX(" + height + ")"}}>
-        <p>You need to add a product to your cart</p>
+        <p>{messResult}</p>
         <div className={cx("iClose")}>
           <FontAwesomeIcon icon={faX} onClick={() => {setHeight("-120%")}}/>
         </div>

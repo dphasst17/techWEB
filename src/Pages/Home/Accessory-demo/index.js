@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import style from "../Home.module.scss";
 import { CartContext } from "~/Contexts/Cart";
@@ -12,13 +12,30 @@ const cx = classNames.bind(style);
 
 const AccDemo = () => {
   const { Access } = useContext(ApiContext);
+  const [showElement, setShowElement] = useState(false);
+  const [offSet, setOffSet] = useState(0)
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  useEffect(() => {
+    window.innerWidth >=800 ? setOffSet(10) : setOffSet(0)
+  },[])
+  const handleScroll = () => {
+    const currentScrollPos = window.pageYOffset;
+    setShowElement(currentScrollPos > 3000);
+    window.innerWidth >=800 
+      ?currentScrollPos > 2000  ? setShowElement(true):setShowElement(false)
+      :currentScrollPos > 3000  ? setShowElement(true):setShowElement(false)
+  };
   return (
     <>
       {Access.length !==0 ? <h1>OUR ACCESSORY</h1> : <></>}
       <div className={cx("Access")}>
         {Access.slice(0, 12).map((dataAcc, index) => (
           <div className={cx("accDemo")} key={index}>
-            <LazyLoad height={"auto"}>
+            {showElement && <LazyLoad height={"auto"} offset={offSet}>
               <div className={cx("accDemo_Child")}>
                 <div className={cx("image")}>
                   <img src={dataAcc.url} alt="img Access demo" loading="lazy"/>
@@ -40,7 +57,7 @@ const AccDemo = () => {
                         </button>
                       )}
                     </CartContext.Consumer>
-                    <button>
+                    <button onClick={() =>{window.location.pathname = ("/detail/" + dataAcc.id+"/"+ dataAcc.title)}}>
                       <Link to={`/detail/${dataAcc.id}/${dataAcc.title}`}>
                         <FontAwesomeIcon icon={faTableList} />
                       </Link>
@@ -48,7 +65,7 @@ const AccDemo = () => {
                   </div>
                 </div>
               </div>
-            </LazyLoad>
+            </LazyLoad>}
           </div>
         ))}
       </div>

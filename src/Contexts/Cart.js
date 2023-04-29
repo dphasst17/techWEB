@@ -1,34 +1,21 @@
-import React, { Component } from "react";
-/* import {withErrorBoundary} from "react-error-boundary" */
 
-const urlBase =
-  "https://63d4daaa0e7ae91a00a3604b.mockapi.io/tx3en1cj8ha/uw13fsu8eg4yhr";
-const useID = JSON.parse(localStorage.getItem("identificationID") || "[]");
+import React, { useState, useContext } from "react";
+import { ApiContext } from "~/ContextApi/ContextApi";
+
+
 export const CartContext = React.createContext();
-export class CartProvider extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { cartItems: [] };
-    /*Get API listCart  */
-    fetch(urlBase + "/" + useID)
-      .then((res) => res.json())
-      .then((json) =>
-        this.setState({
-          cartItems: json.listCart,
-        })
-      )
-      .catch((err) => console.log(err));
 
-    this.addToCart = this.addToCart.bind(this);
-    this.deleteItems = this.deleteItems.bind(this);
-    this.incrementItems = this.incrementItems.bind(this);
-    this.decrementItems = this.decrementItems.bind(this);
-    this.setState = this.setState.bind(this);
-  }
-  addToCart(product) {
+export const CartProvider = (props) => {
+  const {GetData,handlePost} = useContext(ApiContext)
+  const [cartItems, setCartItems] = useState([]);
+  /* const location = useLocation();
+  const navigate = useNavigate() */
+  GetData(setCartItems)
+  
+  const addToCart = (product) => {
     let checkLogin = JSON.parse(localStorage.getItem("isLogin"));
     if (checkLogin === true) {
-      let listCart = this.state.cartItems;
+      let listCart = cartItems;
       if (listCart) {
         if (listCart.length !== 0) {
           /* if product exists in list cart */
@@ -40,111 +27,50 @@ export class CartProvider extends Component {
               if (product.id === items.id) {
                 return {
                   ...items,
+                  detail: [],
                   quantity: items.quantity + 1,
                   total: items.price * (items.quantity + 1),
                 };
               } else {
-                return { ...items };
+                return { ...items, detail: [] };
               }
             });
-            this.setState({ cartItems: checkID });
-            const option = {
-              method: "PUT",
-              headers: {
-                "Content-type": "application/json; charset=UTF-8",
-              },
-              body: JSON.stringify({
-                listCart: checkID,
-              }),
-            };
-            fetch(urlBase + "/" + useID, option).then((response) =>
-              response.json()
-            );
-            /* .then((json) =>
-                  this.setState({
-                    cartItems: json.listCart,
-                  })
-                ); */
+            setCartItems(checkID);
+            handlePost({listCart: checkID});
           } else {
             /* If product doesn't exists in list cart */
-            this.setState({
-              cartItems: this.state.cartItems.concat(product),
-            });
-            listCart.push(product);
-            /* Put Data----------------*/
-            const option = {
-              method: "PUT",
-              headers: {
-                "Content-type": "application/json; charset=UTF-8",
-              },
-              body: JSON.stringify({
-                listCart: listCart,
-              }),
-            };
-            fetch(urlBase + "/" + useID, option).then((response) =>
-              response.json()
-            );
-            /* .then((json) =>
-                  this.setState({
-                    cartItems: json.listCart,
-                  })
-                ); */
+            setCartItems(cartItems.concat({ ...product, detail: [] }));
+            listCart.push({ ...product, detail: [] });
+            handlePost({listCart: listCart});
+  
             /* ====================== */
           }
         } else {
-          this.setState({
-            cartItems: this.state.cartItems.concat(product),
-          });
-          listCart.push(product);
-          const option = {
-            method: "PUT",
-            headers: {
-              "Content-type": "application/json; charset=UTF-8",
-            },
-            body: JSON.stringify({
-              listCart: [product],
-            }),
-          };
-          fetch(urlBase + "/" + useID, option).then((response) =>
-            response.json()
-          );
-          /* .then((json) =>
-                this.setState({
-                  cartItems: json.listCart,
-                })
-              ); */
+          setCartItems(cartItems.concat({ ...product, detail: [] }));
+          listCart.push({ ...product, detail: [] });
+          handlePost({listCart: [{ ...product, detail: [] }]});
         }
       }
     } else {
+      
       sessionStorage.setItem(
         "pathName",
         JSON.stringify(window.location.pathname)
       );
       window.location.pathname = "/login";
     }
-  }
-  /* Delete an item */
-  deleteItems(product) {
-    let currentItems = this.state.cartItems;
+  };
+
+  const deleteItems = (product) => {
+    let currentItems = cartItems;
     currentItems = currentItems.filter((items) => items.id !== product.id);
-    this.setState({ cartItems: currentItems });
-    const option = {
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-      body: JSON.stringify({
-        listCart: currentItems,
-      }),
-    };
-    fetch(urlBase + "/" + useID, option).then((response) => response.json());
-    /* .then((json) => this.setState({
-        cartItems: json.listCart,
-      })); */
-  }
-  /* Increment an items in localStorage */
-  incrementItems(product) {
-    let increment = this.state.cartItems;
+    setCartItems(currentItems);
+    handlePost({listCart:currentItems});
+    
+  };
+
+  const incrementItems = (product) => {
+    let increment = cartItems;
     increment = increment.map((items) => {
       if (items.id === product.id) {
         return {
@@ -158,26 +84,11 @@ export class CartProvider extends Component {
         };
       }
     });
-    this.setState({ cartItems: increment });
-    const option = {
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-      body: JSON.stringify({
-        listCart: increment,
-      }),
-    };
-    fetch(urlBase + "/" + useID, option).then((response) => response.json());
-    /* .then((json) =>
-        this.setState({
-          cartItems: json.listCart,
-        })
-      ); */
-  }
-  /* Decrement an item in localStorage */
-  decrementItems(product) {
-    let decrement = this.state.cartItems;
+    setCartItems(increment);
+    handlePost({listCart:increment});
+  };
+  const decrementItems = (product) => {
+    let decrement = cartItems;
     decrement = decrement.map((items) => {
       if (items.id === product.id && items.quantity > 1) {
         return {
@@ -191,37 +102,20 @@ export class CartProvider extends Component {
         };
       }
     });
-    this.setState({ cartItems: decrement });
-    const option = {
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-      body: JSON.stringify({
-        listCart: decrement,
-      }),
-    };
-    fetch(urlBase + "/" + useID, option).then((response) => response.json());
-    /* .then((json) =>
-        this.setState({
-          cartItems: json.listCart,
-        })
-      ); */
-  }
-  render() {
-    return (
-      <CartContext.Provider
-        value={{
-          cartItems: this.state.cartItems,
-          addToCart: this.addToCart,
-          deleteItems: this.deleteItems,
-          incrementItems: this.incrementItems,
-          decrementItems: this.decrementItems,
-          setState: this.setState,
-        }}
-      >
-        {this.props.children}
-      </CartContext.Provider>
-    );
-  }
-} /* export default withErrorBoundary(this.state.cartItems) */
+    setCartItems(decrement);
+    handlePost({listCart:decrement});
+  };
+  return (
+    <CartContext.Provider
+      value={{
+        cartItems: cartItems,
+        addToCart: addToCart,
+        deleteItems: deleteItems,
+        incrementItems: incrementItems,
+        decrementItems: decrementItems
+      }}
+    >
+      {props.children}
+    </CartContext.Provider>
+  );
+};

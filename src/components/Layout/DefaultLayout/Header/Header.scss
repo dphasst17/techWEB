@@ -396,18 +396,15 @@
                 flex-wrap: wrap;
                 align-content: stretch;
                 padding:8% 0 7% 0;
-                .user_information,
-                .list_order {
-                    height: 30px;
-                    a {
-                        font-size: 17px;
-                        text-align: left;
-                        margin-left: 5%;
-                        color: #000;
-                        font-weight: 600;
-                        text-decoration: none;
-                    }
-                    a:hover {
+                .user_information, .list_order{
+                    font-size: 17px;
+                    text-align: left;
+                    margin-left: 5%;
+                    color: #000;
+                    font-weight: 600;
+                    text-decoration: none;
+                    cursor: pointer;
+                    &:hover{
                         color:rgb(70, 117, 200);
                     }
                 }
@@ -535,6 +532,12 @@
                         color:#000;
                         font-weight: 600;
                     
+                    }
+                    span{
+                        font-size: 16px;
+                        text-decoration: none;
+                        color:#000;
+                        font-weight: 600; 
                     }
                 }
                 .navItemsMob:hover .iconNavMob svg path,.navItemsMob:hover a{
