@@ -7,7 +7,8 @@ import Loading from "~/components/Loading/Loading";
 
 const cx = classNames.bind(style);
 function User() {
-  const { Users, PaginationPage, isShowButton, numPage, urlUsers,isLoad } =
+  const { Users, PaginationPage, isShowButton, numPage,isLoad,HandleActivePage,
+    activePage,handlePost } =
     useContext(ApiContext);
   const navigate = useNavigate();
   const [editUser, setEditUser] = useState(false);
@@ -17,73 +18,70 @@ function User() {
   const [Address, setAddress] = useState("");
   const [Slice, setSlice] = useState(5);
   const [isLoading, setIsLoading] = useState(false);
-  let userID = JSON.parse(localStorage.getItem("identificationID") || "[]");
-  let dataUser = Users.filter((items) => items.id.includes(userID));
-  const purchase = dataUser.flatMap((items) => items.purchaseOrder);
+  const purchase = Users.flatMap((items) => items.purchaseOrder);
   PaginationPage(purchase, 5);
-  const handlePagi = (e) => {
+  const handlePagination = (e) => {
     setSlice(5 * e);
   };
-  const activePage = numPage.findIndex((e) => e === Slice / 5);
+  HandleActivePage(Slice)
 
   return (
     <>
-      {/* <button onClick={() => {console.log(dataUser)}}>check</button> */}
       <div className={cx("user")}>
-        {/* <button onClick={() => {console.log("us" + (Users.length+1))}}>Check</button> */}
+        
         <div className={cx("info")}>
           <div className={cx("title")}>
             <h1>User Information</h1>
           </div>
           <div className={cx("list")}>
             <div className={cx("detail")}>
-              {dataUser.map((user) => {
-                return user.user.map((user, index) =>
-                  editUser === false ? (
-                    <div className={cx("inf")} key={index}>
-                      <div className={cx("input")}>{user.fullName}</div>
-                      <div className={cx("input")}>{user.phoneNumber}</div>
-                      <div className={cx("input")}>{user.email}</div>
-                      <div className={cx("input")}>{user.address}</div>
-                    </div>
-                  ) : (
-                    <div className={cx("inf")} key={index}>
-                      <input
-                        type="text"
-                        placeholder={user.fullName}
-                        value={FullName}
-                        onChange={(e) => {
-                          setFullName(e.target.value);
-                        }}
-                      />
-                      <input
-                        type="text"
-                        placeholder={user.phoneNumber}
-                        value={Phone}
-                        onChange={(e) => {
-                          setPhone(e.target.value);
-                        }}
-                      />
-                      <input
-                        type="text"
-                        placeholder={user.email}
-                        value={Email}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                        }}
-                      />
-                      <input
-                        type="text"
-                        placeholder={user.address}
-                        value={Address}
-                        onChange={(e) => {
-                          setAddress(e.target.value);
-                        }}
-                      />
-                    </div>
-                  )
-                );
-              })}
+              {Users.map((user,index) => 
+                editUser === false ? (
+                  <div className={cx("inf")} key={index}>
+                    <div className={cx("input")}>{user.fullName}</div>
+                    <div className={cx("input")}>{user.phoneNumber}</div>
+                    <div className={cx("input")}>{user.email}</div>
+                    <div className={cx("input")}>{user.address}</div>
+                  </div>
+                ) : (
+                  <div className={cx("inf")} key={index}>
+                    <input
+                      type="text"
+                      placeholder={user.fullName}
+                      value={FullName}
+                      onChange={(e) => {
+                        setFullName(e.target.value);
+                      }}
+                    />
+                    <input
+                      type="text"
+                      placeholder={user.phoneNumber}
+                      value={Phone}
+                      onChange={(e) => {
+                        setPhone(e.target.value);
+                      }}
+                    />
+                    <input
+                      type="text"
+                      placeholder={user.email}
+                      value={Email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                    />
+                    <input
+                      type="text"
+                      placeholder={user.address}
+                      value={Address}
+                      
+                      onChange={(e) => {
+                        setAddress(e.target.value);
+                      }}
+                      
+                    />
+                  </div>
+                )
+              )}
             </div>
             <div className={cx("buttonUser")}>
               {editUser === false ? (
@@ -98,27 +96,14 @@ function User() {
                 <button
                   onClick={() => {
                     setIsLoading(true)
-                    const option = {
-                      method: "PUT",
-                      headers: {
-                        "Content-type": "application/json; charset=UTF-8",
-                      },
-                      body: JSON.stringify({
-                        user: [{
-                          "fullName":(FullName ==="") ? dataUser.flatMap(us => us.user.flatMap(items => items.fullName)).toString() : FullName,
-                          "phoneNumber":(Phone ==="") ? dataUser.flatMap(us => us.user.flatMap(items => items.phoneNumber)).toString() : Phone,
-                          "email":(Email ==="") ? dataUser.flatMap(us => us.user.flatMap(items => items.email)).toString() : Email,
-                          "address":(Address ==="") ? dataUser.flatMap(us => us.user.flatMap(items => items.address)).toString() : Address,
-                        }]
-                      }),
-                    }
-                    fetch(urlUsers + "/" + userID, option)
-                    .then((response) =>{if(response.status === 200){
-                      setIsLoading(false)
-                      window.location.pathname = "/user";
-                      setEditUser(false)
-                    }})
-                    
+                    handlePost(
+                      {
+                        "fullName":(FullName ==="") ? Users.flatMap(us => us.fullName).toString() : FullName,
+                        "phoneNumber":(Phone ==="") ? Users.flatMap(us => us.phoneNumber).toString() : Phone,
+                        "email":(Email ==="") ? Users.flatMap(us => us.email).toString() : Email,
+                        "address":(Address ==="") ? Users.flatMap(us => us.address).toString() : Address,
+                      },setIsLoading,"/user",setEditUser
+                    )
                   }}
                 >
                   Success
@@ -171,7 +156,7 @@ function User() {
                     )}
                     key={index}
                   >
-                    <button onClick={() => handlePagi(items)}>{items}</button>
+                    <button onClick={() => handlePagination(items)}>{items}</button>
                   </div>
                 ))
               ) : (

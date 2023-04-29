@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import style from "./Login.module.scss";
 import classNames from "classnames/bind";
+import Cookies from "js-cookie";
 import {
   faEye,
   faEyeSlash,
@@ -11,7 +12,6 @@ import {
   faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { FcGoogle } from "react-icons/fc";
-import { useNavigate } from "react-router-dom";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import Loading from "~/components/Loading/Loading";
 import { FaFacebook, FaGithub } from "react-icons/fa";
@@ -19,19 +19,19 @@ import { useGoogleLogin } from "@leecheuk/react-google-login";
 import { gapi } from "gapi-script";
 
 const cx = classNames.bind(style);
-/* const clientId = "132575877421-gig4g2ahetogi4sr2071v1i3d4j1eifu.apps.googleusercontent.com"; */
 
 const Login = () => {
-  const { Users, isLoad, setIsLoad, urlUsers,HandleLogin } = useContext(ApiContext);
+  const { isLoad, setIsLoad, HandleLogin } =
+    useContext(ApiContext);
   const [username, setUserName] = useState("");
   const [pass, setPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
   const [type, setType] = useState("password");
   const [showPass, setShowPass] = useState(true);
-  const [falseMess, setFalseMess] = useState(false);
+  const [falseMess, setFalseMess] = useState("-200%");
+  const [isFalse, setIsFalse] = useState(false);
+  const [result, setResult] = useState("");
   const [isLog, setIsLog] = useState(true);
-  const navigate = useNavigate();
-
   const clientId =
     "132575877421-gig4g2ahetogi4sr2071v1i3d4j1eifu.apps.googleusercontent.com";
 
@@ -45,7 +45,11 @@ const Login = () => {
     setConfirmPass(confirmPass.target.value);
   };
 
-  const name = JSON.parse(sessionStorage.getItem("pathName") || "/");
+  const name = sessionStorage.getItem("pathName")
+    ? JSON.parse(sessionStorage.getItem("pathName"))
+    : "/";
+
+  /* const name = location.pathname; */
   useEffect(() => {
     // Khởi tạo SDK của Facebook
     window.fbAsyncInit = function () {
@@ -71,10 +75,10 @@ const Login = () => {
     window.FB.login((response) => {
       if (response.authResponse) {
         window.FB.api("/me", { fields: "name,email" }, (response) => {
-          HandleLogin(response.name,response.email,name)
+          HandleLogin(response.name, response.email, name);
         });
       } else {
-        setFalseMess(false);
+        setFalseMess("2%");
       }
     });
   };
@@ -85,10 +89,10 @@ const Login = () => {
     });
   }, []);
   const onFailure = (error) => {
-    console.log(error);/* message err */
+    console.log(error); /* message err */
   };
   const onSuccess = (response) => {
-    HandleLogin(response.profileObj.name,response.profileObj.email,name)
+    HandleLogin(response.profileObj.name, response.profileObj.email, name);
   };
 
   const { signIn } = useGoogleLogin({
@@ -98,87 +102,99 @@ const Login = () => {
   });
   /* LOGIN WITH USERNAME */
   const handleClick = () => {
-    const dataUsers = Users.filter(
-      (user) => user.username === username && user.password === pass
-    );
-    if (dataUsers.length !== 0) {
-      if (name) {
-        navigate(name);
-        localStorage.setItem("isLogin", true);
-        localStorage.setItem(
-          "identificationID",
-          JSON.stringify(dataUsers.map((items) => items.id))
-        );
-      } else {
-        navigate("/");
-        localStorage.setItem("isLogin", true);
-        localStorage.setItem(
-          "identificationID",
-          JSON.stringify(dataUsers.map((items) => items.id))
-        );
-      }
+    if (username !== "" && pass !== "") {
+      setIsLoad(true)
+      const option = {
+        method: "POST",
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+        body: JSON.stringify({
+          username: username,
+          password: pass,
+        }),
+      };
+      fetch(process.env.REACT_APP_URL_LOGIN, option)
+        .then((res) => res.json())
+        .then((res) => {
+          const accessToken = res.accessToken;
+          const refreshToken = res.refreshToken;
+          const expirationTime = new Date().getTime() + 600 * 1000; // Thêm 10  vào thời gian hiện tại
+
+          localStorage.setItem("accessTK", accessToken);
+          localStorage.setItem("expirationTime", expirationTime);
+          Cookies.set("RFTokens", refreshToken, { expires: 5, path: "/" });
+          localStorage.setItem("isLogin", true);
+          setIsLoad(false)
+          
+          name 
+          ? name === "/login" ? window.location.pathname = "/": window.location.pathname = name 
+          : window.location.pathname = "/";
+        });
     } else {
+      setResult("Please enter in your login information!");
       setTimeout(() => {
-        setFalseMess(true);
+        setIsFalse(!isFalse);
+        setFalseMess("2%");
       });
       setTimeout(() => {
-        setFalseMess(false);
-      }, 5000);
+        setIsFalse(!isFalse);
+        setFalseMess("-200%");
+      }, 4000);
     }
   };
   /* CREATE ACCOUNT */
   let handleClickCreate = () => {
     if (username !== "" && pass !== "" && confirmPass !== "") {
-      if (
-        Users.filter((items) => items.username.includes(username)).length === 0
-      ) {
-        if (confirmPass === pass) {
-          setIsLoad(true);
-          const option = {
-            method: "POST",
-            headers: { "Content-type": "application/json; charset=UTF-8" },
-            body: JSON.stringify({
-              username: username,
-              password: pass,
-              user: [{ fullName: "", phoneNumber: "", email: "", address: "" }],
-              listOrder: [],
-              purchaseOrder: [],
-              id: Users.length + 1,
-            }),
-          };
-          fetch(urlUsers, option).then((res) => {
+      if (confirmPass === pass) {
+        setIsLoad(true);
+        const option = {
+          method: "POST",
+          headers: { "Content-type": "application/json; charset=UTF-8" },
+          body: JSON.stringify({
+            username: username,
+            password: pass,
+          }),
+        };
+        fetch(process.env.REACT_APP_URL_REGISTER, option).then((res) => {
+          if (res.status === 201 || res.status === 400) {
             if (res.status === 201) {
               setIsLoad(false);
-              window.location.reload();
               setIsLog(true);
+            } else {
+              setIsLoad(false);
+              setResult("Username is already taken");
+              setTimeout(() => {
+                setIsFalse(!isFalse);
+                setFalseMess("2%");
+              });
+              setTimeout(() => {
+                setIsFalse(!isFalse);
+                setFalseMess("-200%");
+              }, 4000);
             }
-          });
-        } else {
-          setResult("Password confirmation failed");
-          setTimeout(() => {
-            setIsFalse("2%");
-          });
-          setTimeout(() => {
-            setIsFalse("-200%");
-          }, 2300);
-        }
+          } else {
+          }
+        });
       } else {
-        setResult("This account has already existed");
+        setResult("Password confirmation failed");
         setTimeout(() => {
-          setIsFalse("2%");
+          setIsFalse(!isFalse);
+          setFalseMess("2%");
         });
         setTimeout(() => {
-          setIsFalse("-200%");
-        }, 2300);
+          setIsFalse(!isFalse);
+          setFalseMess("-200%");
+        }, 4000);
       }
     } else {
       setResult("Please enter information!");
       setTimeout(() => {
-        setIsFalse("2%");
+        setIsFalse(!isFalse);
+        setFalseMess("2%");
       });
       setTimeout(() => {
-        setIsFalse("-200%");
-      }, 2300);
+        setIsFalse(!isFalse);
+        setFalseMess("-200%");
+      }, 4000);
     }
   };
 
@@ -192,28 +208,44 @@ const Login = () => {
             </a>
           </div>
           <form>
-            <img src="https://wallpaperaccess.com/full/1682077.png" alt="" />
             <div className={cx("itemsForm")}>
-              {/* <h2>Log In form</h2> */}
               {isLog === true ? (
                 <>
                   <h2>Log In form</h2>
                   <div className={cx("detail")}>
-                    <div className={cx("input")}>
+                    <div
+                      className={cx("input")}
+                      style={{
+                        borderColor:
+                          username.length > 0
+                            ? "rgb(70, 117, 200)"
+                            : "rgb(195, 9, 9)",
+                      }}
+                    >
                       <input
                         type="username"
                         placeholder="Enter your username"
                         onChange={handleUserNameChange}
                         value={username}
+                        required
                       />
                     </div>
-                    <div className={cx("input")}>
+                    <div
+                      className={cx("input")}
+                      style={{
+                        borderColor:
+                          pass.length > 0
+                            ? "rgb(70, 117, 200)"
+                            : "rgb(195, 9, 9)",
+                      }}
+                    >
                       <input
                         type={type}
                         autoComplete="Password"
                         placeholder="Enter your Password"
                         onChange={handlePassChange}
                         value={pass}
+                        required
                       />
                       <div className={cx("eyeSlash")}>
                         {showPass === true ? (
@@ -239,7 +271,7 @@ const Login = () => {
                       <p>Forgot Password? </p>
                     </div>
                     <button type="button" onClick={handleClick}>
-                      Log in
+                      Login
                     </button>
                     <div className={cx("navigation")}>
                       <p onClick={() => setIsLog(false)}>Create account</p>
@@ -250,17 +282,34 @@ const Login = () => {
                 <>
                   <h2>Create account From</h2>
                   <div className={cx("detail")}>
-                    <div className={cx("input")}>
+                    <div
+                      className={cx("input")}
+                      style={{
+                        borderColor:
+                          username.length > 0
+                            ? "rgb(70, 117, 200)"
+                            : "rgb(195, 9, 9)",
+                      }}
+                    >
                       <input
                         type="text"
                         placeholder="Enter your username"
                         id="username"
                         value={username}
                         onChange={handleUserNameChange}
+                        required
                       />
                     </div>
 
-                    <div className={cx("input")}>
+                    <div
+                      className={cx("input")}
+                      style={{
+                        borderColor:
+                          pass.length > 0
+                            ? "rgb(70, 117, 200)"
+                            : "rgb(195, 9, 9)",
+                      }}
+                    >
                       <input
                         type="password"
                         autoComplete="Password"
@@ -268,9 +317,18 @@ const Login = () => {
                         id={cx("pass")}
                         value={pass}
                         onChange={handlePassChange}
+                        required
                       />
                     </div>
-                    <div className={cx("input")}>
+                    <div
+                      className={cx("input")}
+                      style={{
+                        borderColor:
+                          confirmPass.length > 0
+                            ? "rgb(70, 117, 200)"
+                            : "rgb(195, 9, 9)",
+                      }}
+                    >
                       <input
                         type="password"
                         autoComplete="Confirm Password"
@@ -278,6 +336,7 @@ const Login = () => {
                         id={cx("confirmPass")}
                         value={confirmPass}
                         onChange={handleConfirmChange}
+                        required
                       />
                     </div>
                     <button type="button" onClick={handleClickCreate}>
@@ -310,24 +369,23 @@ const Login = () => {
         </div>
       </div>
       {isLoad === true && <Loading />}
-      {falseMess === true ? (
-        <div className={cx("falseMess")}>
+      {isFalse && (
+        <div
+          className={cx("falseMess")}
+          style={{ transform: "translateX(" + falseMess + ")" }}
+        >
           <div className={cx("falseCT")}>
-            <p>
-              Login false!<br></br>Please check again
-            </p>
+            <p>{result}</p>
           </div>
           <div className={cx("falseBTN")}>
             <FontAwesomeIcon
               icon={faX}
               onClick={() => {
-                setFalseMess(false);
+                setFalseMess("-200%");
               }}
             />
           </div>
         </div>
-      ) : (
-        <></>
       )}
     </>
   );

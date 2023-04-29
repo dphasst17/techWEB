@@ -19,9 +19,9 @@ import { CartContext } from "~/Contexts/Cart";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import SearchResults from "./Search";
-import { faFacebook, faGithub /* faGoogle */ } from "@fortawesome/free-brands-svg-icons";
+import { faFacebook, faGithub} from "@fortawesome/free-brands-svg-icons";
 import {FcGoogle } from "react-icons/fc";
-
+import Cookies from "js-cookie";
 const menuNav = [
   {
     title: "HOME",
@@ -39,6 +39,7 @@ const menuNav = [
 
 function Header() {
   const [isShow, setIsShow] = useState(false);
+  const {cartItems} = useContext(CartContext)
   const {
     valueSearch,
     handelValueSearch,
@@ -71,20 +72,22 @@ function Header() {
     if (checkLogin === true) {
       localStorage.setItem("isLogin", false);
       localStorage.removeItem("identificationID")
+      localStorage.removeItem("accessTK")
+      Cookies.remove('RFTokens')
       navigate("/login");
     } else {
       navigate("/login");
     }
   };
-  /* Button check out */
   /* Check Login */
+  /* Button check out */
   let handleCheckout = () => {
     if (checkLogin === true) {
       navigate("/checkout");
     } else {
       sessionStorage.setItem(
         "pathName",
-        JSON.stringify(window.location.pathname)
+        JSON.stringify('/checkout')
       );
       navigate("/login");
     }
@@ -95,6 +98,15 @@ function Header() {
   let show = () => {
     navigate("/searchResult");
   };
+  let handleUser = () => {
+    if(checkLogin === true){
+      window.location.pathname = "/user"
+    }else{
+      sessionStorage.setItem("pathName",JSON.stringify('/user'));
+      navigate("/login");
+    }
+    
+  }
   return (
     <>
       <div className="header">
@@ -151,11 +163,9 @@ function Header() {
         {/* Icon */}
         <div className="icon">
           <div className="detail">
-            {/*cart-Shopping */}
-            <CartContext.Consumer>
-              {({ cartItems }) => (
-                <div className="cart_Shopping">
-                  <div className="show">{(cartItems?.length > 0)? cartItems.length : 0}{/* {cartItems?.length} */}</div>
+            
+            <div className="cart_Shopping">
+                  <div className="show">{(cartItems?.length > 0)? cartItems.length : 0}</div>
                   <FontAwesomeIcon icon={faCartShopping} />
                   <div className="cart_content">
                     <div className="cover">
@@ -164,7 +174,7 @@ function Header() {
                           <div className="item">
                             <div className="img"><img src={cartItems.url} alt="IMG-product" /></div>
                             <div className="information">
-                              <h4>{cartItems.title.length > 20 ? cartItems.title.slice(0,20)+`...`: cartItems.title}{/*  {cartItems.title} */}</h4>
+                              <h4>{cartItems.title.length > 20 ? cartItems.title.slice(0,20)+`...`: cartItems.title}</h4>
                               <h4>{cartItems.price} USD</h4>
                             </div>
                             <div className="button">
@@ -215,8 +225,6 @@ function Header() {
                     {/* button remove all items */}
                   </div>
                 </div>
-              )}
-            </CartContext.Consumer>
 
             {/* User*/}
             <div className="user" onClick={handleSetShow}>
@@ -227,17 +235,13 @@ function Header() {
             <div className="showItems">
               <div className="box">
                 {/* User information */}
-                <div className="user_information">
-                  <a href="/user">
-                    <FontAwesomeIcon icon={faUser} /> User information
-                  </a>
+                <div className="user_information" onClick={handleUser}>
+                    <FontAwesomeIcon icon={faUser}/> User information
                   <br></br>
                 </div>
                 {/* List order */}
                 <div className="list_order">
-                  <a href="/checkout">
                     <FontAwesomeIcon icon={faList} /> List order
-                  </a>
                 </div>
 
                 {/* button Login/Logout */}
@@ -261,7 +265,7 @@ function Header() {
           <div className="navDetail" style={{transform: isToggleNav}}>
             <div className="navClose">
               <FontAwesomeIcon icon={faX} onClick={() => {setIsToggleNav("translateX(-200%)")}}/>
-              <Link to="/checkout">
+              <Link to={checkLogin === true ? "/checkout" : "/login"}>
                 <div className="cartMob">
                   <FontAwesomeIcon icon={faCartShopping} />
                   <CartContext.Consumer>{({cartItems}) => <div className="totalItems">{(cartItems?.length > 0)? cartItems.length : 0}</div>}</CartContext.Consumer>
@@ -287,10 +291,10 @@ function Header() {
                   <Link to="/accessory">ACCESSORY</Link>
                 </span>
               </div>
-              <div className="navItemsMob">
-                <div className="iconNavMob"><FontAwesomeIcon icon={faCircleUser} /></div>
+              <div className="navItemsMob" onClick={handleUser}>
+                <div className="iconNavMob"onClick={handleUser}><FontAwesomeIcon icon={faCircleUser} /></div>
                 <span>
-                  <Link to={(checkLogin === true ) ? "/user" : "/login"}>User information</Link>
+                  User information
                 </span>
               </div>
             </div>

@@ -37,6 +37,9 @@
                         flex-wrap: wrap;
                         cursor: pointer;
                         font-weight: 550;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
                     }
                     input{
                         width:100%;

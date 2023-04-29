@@ -1,7 +1,5 @@
 import classNames from "classnames/bind";
 import style from "./Accessory.module.scss";
-/* import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAnglesLeft, faAnglesRight } from "@fortawesome/free-solid-svg-icons"; */
 import { CartContext } from "~/Contexts/Cart";
 import { useContext, useEffect, useState } from "react";
 import { ApiContext } from "~/ContextApi/ContextApi";
@@ -27,7 +25,7 @@ function Accessory() {
   const [valueBrand, setValueBrand] = useState([]);
   const [valueType, setValueType] = useState([]);
   const [Slice, setSlice] = useState(12);
-  const [isShow, setIsShow] = useState(false);
+  const [isShow, setIsShow] = useState(true);
   const [isShowS, setIsShowS] = useState(false);
   const [isShowFil,setIsShowFil] = useState("-200%")
   let filterBrand = Array.from(new Set(Access.map((items) => items.brand)));
@@ -51,23 +49,22 @@ function Accessory() {
       setSlice(12);
     }
   }, [Slice, numPage]);
-  const handlePagi = (e) => {
+  const handlePagination = (e) => {
     setSlice(12 * e);
   };
   HandleActivePage(Slice);
-  /* const activePage = numPage.findIndex((e) => e === Slice / 12); */
 
   return (
     <div className={cx("accessory")}>
-      <div className={cx("fill")} onClick={() => {setIsShowFil("0%")}}>Filter your result <HiChevronDoubleRight /></div>
+      <div className={cx("fill")} onClick={() => {setIsShowFil("4%")}}>Filter your result <HiChevronDoubleRight /></div>
       <div className={cx("filter")} style={{transform:"translateX(" + isShowFil + ")"}}>
         <div className={cx("closeFil")}>
             <p onClick={() => {setValueBrand([]); setValueType([])}}>Reset All</p>
             <HiChevronDoubleLeft onClick={() => {setIsShowFil("-200%")}}/>
         </div>
         <div className={cx("box_filter")}>
-          <p onClick={() => {setIsShow(!isShow);setIsShowS(false)}}>About Brand</p>
-          <p onClick={() => {setIsShowS(!isShowS);setIsShow(false)}}>About Type</p>
+          <p onClick={() => {setIsShow(!isShow);setIsShowS(false)}} style={{backgroundColor: (isShow === true ) ? "#2735af" : "#b2b1b1"}}>About Brand</p>
+          <p onClick={() => {setIsShowS(!isShowS);setIsShow(false)}}style={{backgroundColor: (isShowS === true ) ? "#2735af" : "#b2b1b1"}}>About Type</p>
           {isShow && filterBrand.map((check, index) => (
             <div className={cx("box_filter_detail")} key={index}>
               <div className={cx("detail")}>
@@ -88,7 +85,7 @@ function Accessory() {
                   id={cx("keyword-brand") + `${index}`}
                 />
                 <label htmlFor={cx("keyword-brand") + `${index}`}>
-                  {check}
+                  {check.toUpperCase()}
                 </label>
               </div>
             </div>
@@ -130,11 +127,11 @@ function Accessory() {
           ).map((product) => (
             <div className={cx("product-detail")} key={product.id} style={{animationDelay: "." + product.id + "s"}}>
               <div className={cx("detail-box")}>
-                <img src={product.url} alt="" />
+                <img src={product.url} alt="img Access" />
                 <div className={cx("title")}>
                   <h4>{product.title}</h4>
                 </div>
-                <p>{product.price} USD</p>
+                <p>Price: {product.price} USD</p>
                 <div className={cx("button")}>
                   <CartContext.Consumer>
                     {({ addToCart }) => (
@@ -143,7 +140,7 @@ function Accessory() {
                       </button>
                     )}
                   </CartContext.Consumer>
-                  <button>
+                  <button onClick={() =>{window.location.pathname = ("/detail/" + product.id+"/"+ product.title)}}>
                     <Link to={"/detail/" + product.id + "/" + product.title}>
                       <FontAwesomeIcon icon={faTableList} />
                     </Link>
@@ -159,7 +156,7 @@ function Accessory() {
         {isShowButton === true ? (
           <div className={cx("buttonPG")}>
             <button
-              onClick={() => handlePagi(activePage)}
+              onClick={() => handlePagination(activePage)}
               disabled={activePage === 0}
             >
               prev
@@ -172,12 +169,12 @@ function Accessory() {
                   )}
                   key={index}
                 >
-                  <button onClick={() => handlePagi(items)}>{items}</button>
+                  <button onClick={() => handlePagination(items)}>{items}</button>
                 </div>
               ))}
             </div>
             <button
-              onClick={() => handlePagi(activePage + 2)}
+              onClick={() => handlePagination(activePage + 2)}
               disabled={activePage + 1 === numPage.length}
             >
               next

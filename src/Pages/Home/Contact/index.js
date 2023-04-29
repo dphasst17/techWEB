@@ -28,7 +28,7 @@ function Contact() {
           <div className={cx("items")}>
             <h2>You have a question</h2>
             <div className={cx("contactIP")}>
-              <label for="username3">Email</label>
+              <label htmlFor="username3">Email</label>
               <input
                 
                 type="text"

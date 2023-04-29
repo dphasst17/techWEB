@@ -12,27 +12,15 @@ import { ApiContext } from "~/ContextApi/ContextApi";
 import { Link } from "react-router-dom";
 import { HiChevronDoubleLeft,HiChevronDoubleRight } from "react-icons/hi";
 
-
 const cx = classNames.bind(style);
 
-const valuePice = [
-  {
-    content: "Low to Hight",
-    inputValue: "1",
-    inputID: "low",
-  },
-  {
-    content: "Hight to Low",
-    inputValue: "2",
-    inputID: "hight",
-  },
-];
+
 function Product() {
-  const { DataProduct,PaginationPage,numPage,isShowButton,HandleActivePage,activePage} = useContext(ApiContext);
+  const { DataProduct,PaginationPage,numPage,isShowButton,HandleActivePage,activePage,valuePice} = useContext(ApiContext);
   const [newValue, setNewValue] = useState([]);
   const [newPrice, setNewPrice] = useState([]);
   const [Slice, setSlice] = useState(12);
-  const [isShow, setIsShow] = useState(false)
+  const [isShow, setIsShow] = useState(true)
   const [isShowFil,setIsShowFil] = useState("-200%")
   let data = DataProduct.filter((value) => {
     newValue.includes(value.brand)
@@ -57,7 +45,7 @@ function Product() {
       setSlice(12);
     }
   }, [Slice, numPage]);
-  const HandlePagi = (e) => {
+  const HandlePagination = (e) => {
     (data.length > 12) ? (numPage.includes(Slice/12) ? setSlice(12 * e) : setSlice(12)) : <></>
   };
   const dataBrand = DataProduct.map((items) => items.brand);
@@ -65,16 +53,18 @@ function Product() {
   let filterBrand = [...setBrand];
   HandleActivePage(Slice)
 
+  /* renderProduct(data) */
   return (
     <div className={cx("product")}>
-      <div className={cx("fill")} onClick={() => {setIsShowFil("0%")}}>Filter your result <HiChevronDoubleRight /></div>
+      
+      <div className={cx("fill")} onClick={() => {setIsShowFil("4%")}}>Filter your result <HiChevronDoubleRight /></div>
       <div className={cx("filter")} style={{transform:"translateX(" + isShowFil + ")"}}>
         <div className={cx("closeFil")}>
           <p onClick={() => {setNewValue([]); setNewPrice([])}}>Reset All</p>
           <HiChevronDoubleLeft onClick={() => {setIsShowFil("-200%")}}/>
         </div>
         <div className={cx("box_filter")}>
-          <p onClick={() => {setIsShow(!isShow)}}>About Brand</p>
+          <p onClick={() => {setIsShow(!isShow)}} style={{backgroundColor: (isShow === true ) ? "#2735af" : "#b2b1b1"}}>About Brand</p>
           {isShow && filterBrand.map((check, index) => (
             <div className={cx("box_filter_detail")} key={index}>
               <div className={cx("detail")}>
@@ -127,7 +117,7 @@ function Product() {
           ).map((product) => (
             <div className={cx("product-detail")} key={product.id}>
               <div className={cx("detail-box")}>
-                <div className={cx("itemsImg")}><img src={product.url} alt="" /></div>
+                <div className={cx("itemsImg")}><img src={product.url} alt="img Product Laptop" /></div>
                 <div className={cx("title")}>
                   <h4>{product.title}</h4>
                 </div>
@@ -158,7 +148,7 @@ function Product() {
                       </button>
                     )}
                   </CartContext.Consumer>
-                  <button>
+                  <button onClick={() =>{window.location.pathname = ("/detail/" + product.id+"/"+ product.title)}}>
                     <Link to={`/detail/${product.id}/${product.title}`}>
                       <FontAwesomeIcon icon={faTableList} />
                     </Link>
@@ -174,7 +164,7 @@ function Product() {
         {isShowButton === true ? 
         <div className={cx("buttonPG")}>
         {/* tạo button prev: set lại giá trị slice*/}
-        <button onClick={() => HandlePagi((activePage))}  disabled={activePage === 0}>prev</button>
+        <button onClick={() => HandlePagination((activePage))}  disabled={activePage === 0}>prev</button>
         <div className={cx("buttonCT")}>
           
           {numPage.map((items, index) => (
@@ -184,11 +174,11 @@ function Product() {
                 )}
                 key={index}
               >
-                <button onClick={() => HandlePagi(items)}>{items}</button>
+                <button onClick={() => HandlePagination(items)}>{items}</button>
               </div>
             ))}
         </div>
-        <button onClick={() => HandlePagi((activePage+ 2))} disabled={activePage + 1 === numPage.length}>next</button>
+        <button onClick={() => HandlePagination((activePage+ 2))} disabled={activePage + 1 === numPage.length}>next</button>
         
       </div>
         : <></>}

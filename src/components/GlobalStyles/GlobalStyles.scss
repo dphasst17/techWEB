@@ -13,6 +13,8 @@
 html {
     font-size:62.5%;
     scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
 }
 body { 
     font-family: 'Montserrat', sans-serif;
@@ -22,6 +24,8 @@ body {
     background:  rgb(255, 255, 255);
     overflow-x: hidden;
     scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
 }
 #root{
     width:100%;
@@ -53,7 +57,7 @@ body {
 }
 .content{
     width:100%;
-    height:auto;
+    height:100%;
 }
 @keyframes toY{
     0%{transform: translateY(-100%)}
