@@ -8,8 +8,6 @@ export const CartContext = React.createContext();
 export const CartProvider = (props) => {
   const {GetData,handlePost} = useContext(ApiContext)
   const [cartItems, setCartItems] = useState([]);
-  /* const location = useLocation();
-  const navigate = useNavigate() */
   GetData(setCartItems)
   
   const addToCart = (product) => {

@@ -49,7 +49,7 @@ const Login = () => {
     ? JSON.parse(sessionStorage.getItem("pathName"))
     : "/";
 
-  /* const name = location.pathname; */
+  
   useEffect(() => {
     // Khởi tạo SDK của Facebook
     window.fbAsyncInit = function () {
@@ -70,6 +70,8 @@ const Login = () => {
       fjs.parentNode.insertBefore(js, fjs);
     })(document, "script", "facebook-jssdk");
   }, []);
+
+  
   /* LOGIN WITH FACEBOOK */
   const HandleFacebookLogin = () => {
     window.FB.login((response) => {
@@ -82,6 +84,8 @@ const Login = () => {
       }
     });
   };
+
+
   /*LOGIN WITH GOOGLE  */
   useEffect(() => {
     gapi.load("client:auth2", () => {

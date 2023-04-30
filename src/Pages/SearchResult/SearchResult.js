@@ -39,7 +39,7 @@ function SearchResult() {
   const allData = [...DataProduct, ...Access];
   const data = allData.filter((data) =>
     valueSearch.length > 0
-      ? /* (data.brand.toUpperCase() || data.title.toUpperCase() || data.type.toUpperCase()).includes(valueSearch.toUpperCase()) */
+      ? 
       data.brand.toUpperCase().includes(valueSearch.toUpperCase()) ||
       data.title.toUpperCase().includes(valueSearch.toUpperCase()) ||
       data.type.toUpperCase().includes(valueSearch.toUpperCase())

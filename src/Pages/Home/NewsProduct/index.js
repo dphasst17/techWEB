@@ -34,7 +34,7 @@ const NewsProduct = () => {
     window.innerWidth >=800 ? setOffSet(10) : setOffSet(0)
   },[])
   const handleScroll = () => {
-    const currentScrollPos = window.pageYOffset;
+    const currentScrollPos = window.scrollY;
     setShowElement(currentScrollPos > 100);
     window.innerWidth >=800 
       ?currentScrollPos < 100 || currentScrollPos > 1500  ? setShowElement(false):setShowElement(true)

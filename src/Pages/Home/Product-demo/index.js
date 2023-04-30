@@ -22,7 +22,7 @@ const Product = () => {
     window.innerWidth >=800 ? setOffSet(50) : setOffSet(250)
   },[])
   const handleScroll = () => {
-    const currentScrollPos = window.pageYOffset;
+    const currentScrollPos = window.scrollY;
     setShowElement(currentScrollPos > 10);
     window.innerWidth >=800 
       ?currentScrollPos > 3000 || currentScrollPos < 10 ? setShowElement(false):setShowElement(true)
@@ -72,7 +72,7 @@ const Product = () => {
                         ))}
                       </div>
                       <div className={cx("items-child")}>
-                        <div className={cx("money")}>{product.price} USD</div>
+                        <div className={cx("money")}>Price:{product.price} USD</div>
                         <div className={cx("button")}>
                           <CartContext.Consumer>
                             {({ addToCart }) => (

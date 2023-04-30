@@ -23,7 +23,7 @@ const AccDemo = () => {
     window.innerWidth >=800 ? setOffSet(10) : setOffSet(0)
   },[])
   const handleScroll = () => {
-    const currentScrollPos = window.pageYOffset;
+    const currentScrollPos = window.scrollY;
     setShowElement(currentScrollPos > 3000);
     window.innerWidth >=800 
       ?currentScrollPos > 2000  ? setShowElement(true):setShowElement(false)
