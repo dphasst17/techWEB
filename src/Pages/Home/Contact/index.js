@@ -33,7 +33,7 @@ function Contact() {
                 
                 type="text"
                 id="username3"
-                placeholder="Enter your username"
+                placeholder="Enter your email"
               />
               <textarea
                 rows="4"

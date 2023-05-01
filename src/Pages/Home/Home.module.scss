@@ -95,8 +95,8 @@
                 opacity:1;
                 animation:op .5s alternate linear;
                 background: rgba(255, 255, 255, 0.2);
-                border-radius: 16px;
-                box-shadow: inset -10px -10px 15px rgba(207, 205, 205, 0.5), inset 10px 10px 15px rgba(70, 70, 70, 0.12);
+                border-radius: 8px;
+                transition:box-shadow .5s linear; 
                 border: 1px solid rgba(255, 255, 255, 0.3);
                 .fpImg {
                     width: 100%;
@@ -114,7 +114,7 @@
                     height: 10%;
                     text-align: center;
                     color: #940606;
-                    font-size: 15px;
+                    font-size: 20px;
                     font-weight: 550;
                     overflow: hidden;
                     white-space: nowrap;
@@ -124,6 +124,7 @@
                     width: 100%;
                     height: 10%;
                     color: #940606;
+                    font-size: 18px;
                 }
                 .fpButton {
                     width: 100%;
@@ -133,7 +134,7 @@
                     align-content: center;
                     justify-content: space-around;
                     button {
-                        width: 30%;
+                        width: 45%;
                         height: 50%;
                         outline: none;
                         border-radius: 10px;
@@ -165,8 +166,6 @@
             }
             .fpItems:hover{
                 box-shadow: -5px -5px 10px rgba(163, 163, 163, 0.5),10px 10px 15px rgba(70,70,70,0.12);
-                
-                transition:all 1s; 
             }
             @keyframes op{
                 0%{
@@ -212,7 +211,7 @@
                 padding-bottom:2%;
                 background: rgba(255, 255, 255, 0.2);
                 border-radius: 16px;
-                box-shadow: inset -10px -10px 15px rgba(207, 205, 205, 0.5), inset 10px 10px 15px rgba(70, 70, 70, 0.12);
+                
                 border: 1px solid rgba(255, 255, 255, 0.3);
                 .image {
                     width: 100%;
@@ -224,7 +223,7 @@
                         width: 100%;
                         height: 130px;
                         object-fit: contain;
-                        mix-blend-mode: color-burn;
+                        
                         background-image: none !important;
                     }
                 }
@@ -272,7 +271,7 @@
                         display: flex;
                         justify-content: space-between;
                         .money {
-                            width: 50%;
+                            width: 52%;
                             font-size: 20px;
                             margin-left: 3%;
                             color: #ff0505;
@@ -334,7 +333,7 @@
             
             .product-detail{
                 box-shadow: -10px -10px 15px rgba(163, 163, 163, 0.5),10px 10px 15px rgba(70,70,70,0.12);
-                transition:all 1s;
+                transition:box-shadow .5s linear;
                 .items{
                     .productAccess{
                         .information{
@@ -371,8 +370,6 @@
                 flex-direction: column;
                 background: rgba(255, 255, 255, 0.2);
                 border-radius: 16px;
-                box-shadow: inset -10px -10px 15px rgba(207, 205, 205, 0.5), inset 10px 10px 15px rgba(70, 70, 70, 0.12);
-
                 border: 1px solid rgba(255, 255, 255, 0.3);
                 padding:0 2%;
                 .image {
@@ -668,7 +665,7 @@
                 min-width: 250px;
                 .product-detail {
                     padding: 1% 0% 4% 0%;
-                    /* .image{} */
+                    
                     .items {
                         /* .title{} */
                         /* .productAccess{
@@ -713,13 +710,23 @@
         h1{
             font-size: 2em;
         }
+        .featuredProduct{
+            .fpDetail{
+                .fpItems{
+                    box-shadow: none;
+                    border-radius:0;
+                }
+            }
+        }
         .product {
-            justify-content: space-around;
+            justify-content: center;
             .product-info {
-                min-width: 148px;
-                /* min-height: 425px; */
+                min-width: 147px;
+                
                 .product-detail {
                     padding: 1% 0% 4% 0%;
+                    border-radius:0;
+                    box-shadow: none;
                     .image {
                         height: 24%;
                     }
@@ -766,7 +773,10 @@
         }
         .Access {
             .accDemo {
+                
                 .accDemo_Child {
+                    box-shadow: none;
+                    border-radius:0;
                     .title {
                         p {
                             font-size: 15px;

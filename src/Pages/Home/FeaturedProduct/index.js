@@ -1,5 +1,5 @@
 import {
-  faHeart,
+
   faShoppingCart,
   faTableList,
 } from "@fortawesome/free-solid-svg-icons";
@@ -52,6 +52,12 @@ const FeaturedProduct = () => {
                 </div>
                 <div className={cx("fpPrice")}>Price:{items.price} USD</div>
                 <div className={cx("fpButton")}>
+                  
+                  <button onClick={() => {navigate("/detail/" + items.id + "/" + items.title)}}>
+                    <Link to={`/detail/${items.id}/${items.title}`}>
+                      <FontAwesomeIcon icon={faTableList} />
+                    </Link>
+                  </button>
                   <CartContext.Consumer>
                     {({ addToCart }) => (
                       <button onClick={() => addToCart(items)}>
@@ -59,14 +65,6 @@ const FeaturedProduct = () => {
                       </button>
                     )}
                   </CartContext.Consumer>
-                  <button onClick={() => {navigate("/detail/" + items.id + "/" + items.title)}}>
-                    <Link to={`/detail/${items.id}/${items.title}`}>
-                      <FontAwesomeIcon icon={faTableList} />
-                    </Link>
-                  </button>
-                  <button>
-                    <FontAwesomeIcon icon={faHeart} />
-                  </button>
                 </div>
               </div>
             ))}

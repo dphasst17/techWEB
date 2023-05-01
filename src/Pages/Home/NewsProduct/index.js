@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import style from "../Home.module.scss";
 import { CartContext } from "~/Contexts/Cart";
 import {
-  faHeart,
+
   faShoppingCart,
   faTableList,
 } from "@fortawesome/free-solid-svg-icons";
@@ -57,6 +57,12 @@ const NewsProduct = () => {
                 </div>
                 <div className={cx("fpPrice")}>Price:{items.price} USD</div>
                 <div className={cx("fpButton")}>
+                  
+                  <button onClick={() => {navigate("/detail/" + items.id + "/" + items.title)}}>
+                    <Link to={`/detail/${items.id}/${items.title}`}>
+                      <FontAwesomeIcon icon={faTableList} />
+                    </Link>
+                  </button>
                   <CartContext.Consumer>
                     {({ addToCart }) => (
                       <button onClick={() => addToCart(items)}>
@@ -64,14 +70,6 @@ const NewsProduct = () => {
                       </button>
                     )}
                   </CartContext.Consumer>
-                  <button onClick={() => {navigate("/detail/" + items.id + "/" + items.title)}}>
-                    <Link to={`/detail/${items.id}/${items.title}`}>
-                      <FontAwesomeIcon icon={faTableList} />
-                    </Link>
-                  </button>
-                  <button>
-                    <FontAwesomeIcon icon={faHeart} />
-                  </button>
                 </div>
               </div>
             ))}

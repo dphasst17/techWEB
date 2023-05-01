@@ -26,8 +26,8 @@ const AccDemo = () => {
     const currentScrollPos = window.scrollY;
     setShowElement(currentScrollPos > 3000);
     window.innerWidth >=800 
-      ?currentScrollPos > 2000  ? setShowElement(true):setShowElement(false)
-      :currentScrollPos > 3000  ? setShowElement(true):setShowElement(false)
+      ?currentScrollPos > 1000  ? setShowElement(true):setShowElement(false)
+      :currentScrollPos > 2000  ? setShowElement(true):setShowElement(false)
   };
   return (
     <>
