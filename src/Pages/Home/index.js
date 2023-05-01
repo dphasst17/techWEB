@@ -18,6 +18,7 @@ function Home() {
   return (
     <>
       <div className={cx("home")}>
+        
         <Slideshow />
         <FeaturedProduct />
         <NewsProduct />
@@ -27,7 +28,7 @@ function Home() {
         
         <Suspense fallback={<div>LOADING...</div>}><Contact /></Suspense>
       </div>
-      {/* {isLoad === true && <Loading />} */}
+      {isLoad === true && <Loading />}
     </>
   );
 }

@@ -46,7 +46,7 @@ export const ApiProvider = ({ children }) => {
       if(window.location.pathname !== "/login" && accss){
         setIsLoad(true)
           let token;
-          if (expirationTime && new Date().getTime() - expirationTime > 600000) {
+          if (expirationTime && Date.now() > expirationTime - (10 * 60 * 100)) {
             /* setIsLoad(true) */
             fetch("https://nodeserver-h23e.onrender.com/refresh", {
               method: "POST",
@@ -62,7 +62,10 @@ export const ApiProvider = ({ children }) => {
               })
               .then((res) => {
                 token = res.newAccessToken;
-                // assuming the response is an object containing a 'token' property
+                const expirationTime = new Date().getTime() + 600 * 1000;
+                localStorage.setItem("accessTK",res.newAccessToken);
+                localStorage.setItem("expirationTime", expirationTime);
+                
                 const option = {
                   method: "GET",
                   headers: {
@@ -72,9 +75,11 @@ export const ApiProvider = ({ children }) => {
                 fetch("https://nodeserver-h23e.onrender.com/requser", option)
                   .then((res) => res.json())
                   .then((json) => {
+
                     setUsers([json.dataUser]);
                     setIsLoad(false)
-                  });
+                  })
+                  .catch(err => console.log(err))
               });
           } else {
             token = localStorage.getItem("accessTK");
@@ -100,6 +105,7 @@ export const ApiProvider = ({ children }) => {
       localStorage.removeItem("accessTK");
       localStorage.removeItem("expirationTime")
     }else{
+      
       localStorage.setItem("isLogin",true)
     }
   },[cookie])
@@ -218,63 +224,11 @@ export const ApiProvider = ({ children }) => {
     }, []);
   }
 
-  const GetData = (setItems) => {
-    useEffect(() => {
-      if(window.location.pathname !== "/login" && accss){
-        let token;
-        if (expirationTime && new Date().getTime() - expirationTime > 600000) {
-          fetch("https://nodeserver-h23e.onrender.com/refresh", {
-            method: "POST",
-            headers: {
-              "Content-type": "application/json; charset=UTF-8",
-            },
-            body: JSON.stringify({
-              refreshToken: Cookies.get("RFTokens"),
-            }),
-          })
-            .then((res) => {
-              return res.json();
-            })
-            .then((res) => {
-              token = res.newAccessToken;
-              const expirationTime = new Date().getTime() + 600 * 1000;
-              localStorage.setItem("accessTK",res.newAccessToken)
-              localStorage.setItem("expirationTime", expirationTime);
-              
-              const option = {
-                method: "GET",
-                headers: {
-                  Authorization: "Bearer " + token,
-                },
-              };
-              fetch("https://nodeserver-h23e.onrender.com/requser", option)
-                .then((res) => res.json())
-                .then((json) => {
-                  return setItems(json.dataUser.listCart);
-                });
-            });
-        } else {
-          token = localStorage.getItem("accessTK");
-          const option = {
-            method: "GET",
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          };
-          fetch("https://nodeserver-h23e.onrender.com/requser", option)
-            .then((res) => res.json())
-            .then((json) => {
-              return setItems(json.dataUser.listCart);
-            });
-        }
-      }
-      
-    }, [setItems]);
-  }
+  
 
   const handlePost = (items,e,z,y) => {
     let token;
-    if (expirationTime && new Date().getTime() - expirationTime > 600000) {
+    if (expirationTime && new Date().getTime() - expirationTime > 480000) {
       fetch("https://nodeserver-h23e.onrender.com/refresh", {
         method: "POST",
         headers: { "Content-type": "application/json; charset=UTF-8" },
@@ -350,7 +304,6 @@ export const ApiProvider = ({ children }) => {
         valuePice,
         ref,
         isIntersecting,
-        GetData,
         handlePost,
         Intersecting,
         HandleLogin,

@@ -1,14 +1,15 @@
 
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { ApiContext } from "~/ContextApi/ContextApi";
 
 
 export const CartContext = React.createContext();
 
 export const CartProvider = (props) => {
-  const {GetData,handlePost} = useContext(ApiContext)
+  const {Users,handlePost} = useContext(ApiContext)
   const [cartItems, setCartItems] = useState([]);
-  GetData(setCartItems)
+  useEffect(() =>{setCartItems(Users.flatMap(e => e.listCart))},[Users])
+  
   
   const addToCart = (product) => {
     let checkLogin = JSON.parse(localStorage.getItem("isLogin"));
