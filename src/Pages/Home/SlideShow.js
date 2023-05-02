@@ -50,7 +50,7 @@ function Slideshow() {
         style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}
       >
         {data.map((items, s) => (
-          <div className={`slide${index === s ? " active" : ""}`} key={s}>
+          <div className={`slide${index === s ? " active" : ""}`} key={items.id}>
             <div className="image">
               <img src={items.url} alt="" />
             </div>
@@ -121,19 +121,19 @@ function Slideshow() {
                   {items.title}
                 </div>
                 <div className="inf">
-                  {items.detail.map((items, index) => (
-                    <div className="infDetail" key={index}>
-                      <p>Cpu: {items.cpu.type}</p>
+                  {items.detail.map((child) => (
+                    <div className="infDetail" key={items.id}>
+                      <p>Cpu: {child.cpu.type}</p>
                       <p>
-                        Display: {items.size__inch} inch -{" "}
-                        {items.refresh_rate__hz}hz
+                        Display: {child.size__inch} inch -{" "}
+                        {child.refresh_rate__hz}hz
                       </p>
-                      <p>Ram: {items.memory.ram__gb}GB</p>
+                      <p>Ram: {child.memory.ram__gb}GB</p>
                       <p>
-                        Hard drive: {items.storage.type}-
-                        {items.storage.capacity__gb}GB
+                        Hard drive: {child.storage.type}-
+                        {child.storage.capacity__gb}GB
                       </p>
-                      <p>Os: {items.software.os}</p>
+                      <p>Os: {child.software.os}</p>
                     </div>
                   ))}
                 </div>

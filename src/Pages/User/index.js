@@ -35,16 +35,16 @@ function User() {
           </div>
           <div className={cx("list")}>
             <div className={cx("detail")}>
-              {Users.map((user,index) => 
+              {Users.map((user) => 
                 editUser === false ? (
-                  <div className={cx("inf")} key={index}>
+                  <div className={cx("inf")} key={user.fullName}>
                     <div className={cx("input")}>{user.fullName}</div>
                     <div className={cx("input")}>{user.phoneNumber}</div>
                     <div className={cx("input")}>{user.email}</div>
                     <div className={cx("input")}>{user.address}</div>
                   </div>
                 ) : (
-                  <div className={cx("inf")} key={index}>
+                  <div className={cx("inf")} key={user.fullName}>
                     <input
                       type="text"
                       placeholder={user.fullName}
@@ -154,7 +154,7 @@ function User() {
                     className={cx(
                       `pagination${index === activePage ? "Active" : ""}`
                     )}
-                    key={index}
+                    key={items}
                   >
                     <button onClick={() => handlePagination(items)}>{items}</button>
                   </div>

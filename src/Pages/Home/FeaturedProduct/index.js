@@ -4,14 +4,13 @@ import {
   faTableList,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext } from "react";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import { CartContext } from "~/Contexts/Cart";
 import classNames from "classnames/bind";
 import style from "../Home.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import LazyLoad from "react-lazy-load";
-import { useState,useEffect } from "react";
+import { useState,useEffect,useContext } from "react";
 
 const cx = classNames.bind(style);
 

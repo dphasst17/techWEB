@@ -33,8 +33,8 @@ const AccDemo = () => {
     <>
       {Access.length !==0 ? <h1>OUR ACCESSORY</h1> : <></>}
       <div className={cx("Access")}>
-        {Access.slice(0, 12).map((dataAcc, index) => (
-          <div className={cx("accDemo")} key={index}>
+        {Access.slice(0, 12).map((dataAcc) => (
+          <div className={cx("accDemo")} key={dataAcc.id}>
             {showElement && <LazyLoad height={"auto"} offset={offSet}>
               <div className={cx("accDemo_Child")}>
                 <div className={cx("image")}>

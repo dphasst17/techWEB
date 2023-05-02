@@ -23,8 +23,8 @@ function SearchResults() {
   const data = [...dataProduct, ...dataAccess];
   return (
     <div className={cx("itemsResults")}>
-      {data.slice(0,8).map((items, index) => (
-        <div className={cx("detail")} key={index} onClick={() => {navigate("/detail/"+ items.id + "/" + items.title)}}>
+      {data.slice(0,8).map((items) => (
+        <div className={cx("detail")} key={items.id} onClick={() => {navigate("/detail/"+ items.id + "/" + items.title)}}>
           <img src={items.url} alt="" />
           <div className={cx("resultTitle")}>
             <h3>Title: {(items.title.length >= 40) ? items.title.slice(0,40) + `...` : items.title }</h3>

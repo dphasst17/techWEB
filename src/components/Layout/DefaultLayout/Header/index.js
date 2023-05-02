@@ -113,7 +113,7 @@ function Header() {
         {/* NAV */}
         <nav ref={nav}>
           {menuNav.map((nav, index) => (
-            <div className={`navItems ${index === activeNav ? `active` : ``}`} key={index}>
+            <div className={`navItems ${index === activeNav ? `active` : ``}`} key={nav}>
               <Link to={nav.path}>
                 <div className="nav_text">
                   {nav.title}
@@ -169,8 +169,8 @@ function Header() {
                   <FontAwesomeIcon icon={faCartShopping} />
                   <div className="cart_content">
                     <div className="cover">
-                      {cartItems?.map((cartItems, index) => (
-                        <div className="cart_detail" key={index}>
+                      {cartItems?.map((cartItems) => (
+                        <div className="cart_detail" key={cartItems.id}>
                           <div className="item">
                             <div className="img"><img src={cartItems.url} alt="IMG-product" /></div>
                             <div className="information">

@@ -93,8 +93,8 @@ function SearchResult() {
           {filterBrand.length > 1 ? <p onClick={() => { setIsShow(!isShow); setIsShowS(false) }} style={{ backgroundColor: (isShow === true) ? "#2735af" : "#b2b1b1" }}>About Brand</p> : <></>}
           {filterType.length > 1 ? <p onClick={() => { setIsShowS(!isShowS); setIsShow(false) }} style={{ backgroundColor: (isShowS === true) ? "#2735af" : "#b2b1b1" }}>About Type</p> : <></>}
           {filterBrand.length > 1 ? (
-            isShow && filterBrand.map((items, index) => (
-              <div className={cx("filterBrand")} key={index}>
+            isShow && filterBrand.map((items) => (
+              <div className={cx("filterBrand")} key={items}>
                 <input
                   type="checkbox"
                   onClick={() => {
@@ -103,9 +103,9 @@ function SearchResult() {
                   }}
                   onChange={() => { }}
                   checked={value.includes(items) ? true : false}
-                  id={cx("brand") + `${index}`}
+                  id={cx("brand-") + `${items}`}
                 />
-                <label htmlFor={cx("brand") + `${index}`} >{items}</label>
+                <label htmlFor={cx("brand-") + `${items}`} >{items}</label>
               </div>
             ))
           ) : (
@@ -113,8 +113,8 @@ function SearchResult() {
           )}
 
           {isShowS && filterType.length > 1 ? (
-            filterType.map((items, index) => (
-              <div className={cx("filterType")} key={index}>
+            filterType.map((items) => (
+              <div className={cx("filterType")} key={items}>
                 <input
                   type="checkbox"
                   onClick={() => {
@@ -126,9 +126,9 @@ function SearchResult() {
                   }}
                   onChange={() => { }}
                   checked={valueType.includes(items) ? true : false}
-                  id={cx("type") + `${index}`}
+                  id={cx("type-") + `${items}`}
                 />
-                <label htmlFor={cx("type") + `${index}`}>{items}</label>
+                <label htmlFor={cx("type-") + `${items}`}>{items}</label>
               </div>
             ))
           ) : (
@@ -139,8 +139,8 @@ function SearchResult() {
         {filterType.length > 1 || filterBrand.length > 1 ? (
           <div className={cx("price")}>
             <p>About Price</p>
-            {valuePice.map((items, index) => (
-              <div key={index}>
+            {valuePice.map((items) => (
+              <div key={items}>
                 <input
                   type="radio"
                   name="check"
@@ -212,7 +212,7 @@ function SearchResult() {
                   className={cx(
                     `pagination${index === activePage ? "Active" : ""}`
                   )}
-                  key={index}
+                  key={items}
                 >
                   <button onClick={() => HandlePagination(items)}>{items}</button>
                 </div>

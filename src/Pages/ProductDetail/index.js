@@ -21,7 +21,7 @@ const ProductDetail = () => {
   return (
     <div className="detailPage">
       <div className="items">
-        {thisProduct.map((items, index) => {return <div className="itemsChild" key={index}>
+        {thisProduct.map((items) => {return <div className="itemsChild" key={items.id}>
               <div className="image">
                 <img src={items.url} alt="img Product" />
               </div>
@@ -34,34 +34,34 @@ const ProductDetail = () => {
                   <h1>Price: {items.price} USD</h1>
                 </div>
                 {items.type === "laptop"
-                  ? items.detail.map((items, index) => (
-                      <div className="infoProduct" key={index}>
+                  ? items.detail.map((child) => (
+                      <div className="infoProduct" key={items.id}>
                         <h3>
                           Cpu:
-                          {items.cpu.type
+                          {child.cpu.type
                           }
                         </h3>
                         <h3>
                           Display:
-                          {items.display.size__inch}
+                          {child.display.size__inch}
                           inch -
-                          {items.display.refresh_rate__hz
+                          {child.display.refresh_rate__hz
                           }
                           hz
                         </h3>
                         <h3>
-                          Ram: {items.memory.ram__gb}GB
+                          Ram: {child.memory.ram__gb}GB
                         </h3>
                         <h3>
                           Hard drive:
-                          {items.storage.type}-
-                          {items.storage.capacity__gb}GB
+                          {child.storage.type}-
+                          {child.storage.capacity__gb}GB
                         </h3>
-                        <h3>Os: {items.software.os}</h3>
+                        <h3>Os: {child.software.os}</h3>
                       </div>
                     ))
-                  : items.detail.map((item, index) => (
-                      <div className="infoProduct" key={index}>
+                  : items.detail.map((item) => (
+                      <div className="infoProduct" key={items.id}>
                         <h3>{item.inf.map((items) => items.inf1)}</h3>
                         <h3>{item.inf.map((items) => items.inf2)}</h3>
                         <h3>{item.inf.map((items) => items.inf3)}</h3>

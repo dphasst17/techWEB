@@ -1,7 +1,6 @@
 import classNames from "classnames/bind";
 import { CartContext } from "~/Contexts/Cart";
 import style from "./CheckOut.module.scss";
-/* import { useNavigate } from "react-router-dom"; */
 import React, { useContext, useEffect, useState } from "react";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import { useNavigate } from "react-router-dom";
@@ -64,18 +63,15 @@ const CheckOut = () => {
               <>
                 <div
                   className={cx("detail")}
-                  onChange={() => {
-                    if (cartItems.length > 0) {
-                    }
-                  }}
+                  
                 >
                   <h2>
                     You have {cartItems?.length > 0 ? cartItems.length : 0} orders
                   </h2>
                   <div className={cx("itemsDetail")}>
-                    {cartItems?.map((cartItems, index) => (
+                    {cartItems?.map((cartItems) => (
                       <>
-                        <div className={cx("listItems")} key={index}>
+                        <div className={cx("listItems")} key={cartItems.id}>
                           <div className={cx("item")}>
                             <div className={cx("imgProduct")}>
                               <img src={cartItems.url} alt="" />
@@ -141,7 +137,7 @@ const CheckOut = () => {
                 </div>
                 <div className={cx("detail_second")}>
                   <div className={cx("first")}>
-                    {userID === true ? Users.map(us => <div className={cx("usDetail")}>
+                    {userID === true ? Users.map(us => <div className={cx("usDetail")} key={us.fullName}>
                       <div className={cx("input")}>Full name: {us.fullName}</div>
                       <div className={cx("input")}>Phone number: {us.phoneNumber}</div>
                       <div className={cx("input")}>Email: {us.email}</div>

@@ -46,14 +46,18 @@ function Product() {
     }
   }, [Slice, numPage]);
   const HandlePagination = (e) => {
-    (data.length > 12) ? (numPage.includes(Slice/12) ? setSlice(12 * e) : setSlice(12)) : setSlice(12)
+    if(data.length > 12){
+      (numPage.includes(Slice/12) ? setSlice(12 * e) : setSlice(12))
+    }else{ 
+      setSlice(12)
+    }
   };
   const dataBrand = DataProduct.map((items) => items.brand);
   const setBrand = new Set(dataBrand);
   let filterBrand = [...setBrand];
   HandleActivePage(Slice)
 
-  /* renderProduct(data) */
+
   return (
     <div className={cx("product")}>
       
@@ -65,8 +69,8 @@ function Product() {
         </div>
         <div className={cx("box_filter")}>
           <p onClick={() => {setIsShow(!isShow)}} style={{backgroundColor: (isShow === true ) ? "#2735af" : "#b2b1b1"}}>About Brand</p>
-          {isShow && filterBrand.map((check, index) => (
-            <div className={cx("box_filter_detail")} key={index}>
+          {isShow && filterBrand.map((check) => (
+            <div className={cx("box_filter_detail")} key={check}>
               <div className={cx("detail")}>
                 <input
                   type="checkbox"
@@ -81,9 +85,9 @@ function Product() {
                   }}
                   onChange={() => {}}
                   checked={newValue.includes(check) ? true : false}
-                  id={cx("keyword-brand") + `${index}`}
+                  id={cx("keyword-brand-") + `${check}`}
                 />
-                <label htmlFor={cx("keyword-brand") + `${index}`}>
+                <label htmlFor={cx("keyword-brand-") + `${check}`}>
                   {check}
                 </label>
               </div>
@@ -91,8 +95,8 @@ function Product() {
           ))}
           <p>About Price</p>
           
-          {valuePice.map((items, index) => (
-                <div className={cx("box_filter_detail")} key={index}>
+          {valuePice.map((items) => (
+                <div className={cx("box_filter_detail")} key={items}>
                   <input
                     type="radio"
                     name="check"
@@ -121,8 +125,8 @@ function Product() {
                 <div className={cx("title")}>
                   <h4>{product.title}</h4>
                 </div>
-                {product.detail.map((items, index) => (
-                  <div className={cx("infProduct")} key={index}>
+                {product.detail.map((items) => (
+                  <div className={cx("infProduct")} key={product.id}>
                     <p>Cpu: {items.cpu.type}</p>
                     <p>
                       Display:{" "}
@@ -139,7 +143,7 @@ function Product() {
                   </div>
                 ))}
 
-                <p>{product.price} USD</p>
+                <p>Price: {product.price} USD</p>
                 <div className={cx("button")}>
                   <CartContext.Consumer>
                     {({ addToCart }) => (

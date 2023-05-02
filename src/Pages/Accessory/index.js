@@ -65,8 +65,8 @@ function Accessory() {
         <div className={cx("box_filter")}>
           <p onClick={() => {setIsShow(!isShow);setIsShowS(false)}} style={{backgroundColor: (isShow === true ) ? "#2735af" : "#b2b1b1"}}>About Brand</p>
           <p onClick={() => {setIsShowS(!isShowS);setIsShow(false)}}style={{backgroundColor: (isShowS === true ) ? "#2735af" : "#b2b1b1"}}>About Type</p>
-          {isShow && filterBrand.map((check, index) => (
-            <div className={cx("box_filter_detail")} key={index}>
+          {isShow && filterBrand.map((check) => (
+            <div className={cx("box_filter_detail")} key={check}>
               <div className={cx("detail")}>
                 <input
                   type="checkbox"
@@ -82,9 +82,9 @@ function Accessory() {
                   }}
                   onChange={() => {}}
                   checked={valueBrand.includes(check) ? true : false}
-                  id={cx("keyword-brand") + `${index}`}
+                  id={cx("keyword-brand-") + `${check}`}
                 />
-                <label htmlFor={cx("keyword-brand") + `${index}`}>
+                <label htmlFor={cx("keyword-brand-") + `${check}`}>
                   {check.toUpperCase()}
                 </label>
               </div>
@@ -92,8 +92,8 @@ function Accessory() {
           ))}
          
           
-          {isShowS && filterType.map((price, index) => (
-            <div className={cx("box_filter_detail")} key={index}>
+          {isShowS && filterType.map((price) => (
+            <div className={cx("box_filter_detail")} key={price}>
               <div htmlFor="keyword" className={cx("detail")}>
                 <input
                   type="checkbox"
@@ -109,9 +109,9 @@ function Accessory() {
                   }}
                   onChange={() => {}}
                   checked={valueType.includes(price) ? true : false}
-                  id={cx("keyword-price") + `${index}`}
+                  id={cx("keyword-price-") + `${price}`}
                 ></input>
-                <label htmlFor={cx("keyword-price") + `${index}`}>
+                <label htmlFor={cx("keyword-price-") + `${price}`}>
                   {price}
                 </label>
               </div>

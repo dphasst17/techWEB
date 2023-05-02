@@ -48,8 +48,8 @@ const Product = () => {
                         <p>{product.title}</p>
                       </div>
                       <div className={cx("productAccess")}>
-                        {product.detail.map((items, index) => (
-                          <div className={cx("information")} key={index}>
+                        {product.detail.map((items) => (
+                          <div className={cx("information")} key={product.id}>
                             <p>Cpu: {items.cpu.type}</p>
                             <p>
                               Display:{" "}

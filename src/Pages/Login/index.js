@@ -50,6 +50,19 @@ const Login = () => {
     : "/";
 
   
+    const showMessage = (message) => {
+      setResult(message);
+      setTimeout(() => {
+        setIsFalse(!isFalse);
+        setFalseMess("2%");
+      });
+      setTimeout(() => {
+        setIsFalse(!isFalse);
+        setFalseMess("-200%");
+      }, 4000);
+    };
+
+  
   useEffect(() => {
     // Khởi tạo SDK của Facebook
     window.fbAsyncInit = function () {
@@ -61,7 +74,7 @@ const Login = () => {
       });
     };
     (function (d, s, id) {
-      var js,
+      let js,
         fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;
       js = d.createElement(s);
@@ -128,10 +141,11 @@ const Login = () => {
           Cookies.set("RFTokens", refreshToken, { expires: 5, path: "/" });
           localStorage.setItem("isLogin", true);
           setIsLoad(false)
-          
-          name 
-          ? name === "/login" ? window.location.pathname = "/": window.location.pathname = name 
-          : window.location.pathname = "/";
+          if (name){ 
+            name === "/login" ? window.location.pathname = "/": window.location.pathname = name 
+          }else{ 
+            window.location.pathname = "/"; 
+          }
         });
     } else {
       setResult("Please enter in your login information!");
@@ -146,60 +160,39 @@ const Login = () => {
     }
   };
   /* CREATE ACCOUNT */
+  
+
   let handleClickCreate = () => {
-    if (username !== "" && pass !== "" && confirmPass !== "") {
-      if (confirmPass === pass) {
-        setIsLoad(true);
-        const option = {
-          method: "POST",
-          headers: { "Content-type": "application/json; charset=UTF-8" },
-          body: JSON.stringify({
-            username: username,
-            password: pass,
-          }),
-        };
-        fetch(process.env.REACT_APP_URL_REGISTER, option).then((res) => {
-          if (res.status === 201 || res.status === 400) {
-            if (res.status === 201) {
-              setIsLoad(false);
-              setIsLog(true);
-            } else {
-              setIsLoad(false);
-              setResult("Username is already taken");
-              setTimeout(() => {
-                setIsFalse(!isFalse);
-                setFalseMess("2%");
-              });
-              setTimeout(() => {
-                setIsFalse(!isFalse);
-                setFalseMess("-200%");
-              }, 4000);
-            }
-          } else {
-          }
-        });
-      } else {
-        setResult("Password confirmation failed");
-        setTimeout(() => {
-          setIsFalse(!isFalse);
-          setFalseMess("2%");
-        });
-        setTimeout(() => {
-          setIsFalse(!isFalse);
-          setFalseMess("-200%");
-        }, 4000);
-      }
-    } else {
-      setResult("Please enter information!");
-      setTimeout(() => {
-        setIsFalse(!isFalse);
-        setFalseMess("2%");
-      });
-      setTimeout(() => {
-        setIsFalse(!isFalse);
-        setFalseMess("-200%");
-      }, 4000);
+    if (username === "" || pass === "" || confirmPass === "") {
+      showMessage("Please enter information!");
+      return;
     }
+  
+    if (confirmPass !== pass) {
+      showMessage("Password confirmation failed");
+      return;
+    }
+  
+    setIsLoad(true);
+    const option = {
+      method: "POST",
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+      body: JSON.stringify({
+        username: username,
+        password: pass,
+      }),
+    };
+    fetch(process.env.REACT_APP_URL_REGISTER, option).then((res) => {
+      if (res.status === 201 || res.status === 400) {
+        if (res.status === 201) {
+          setIsLoad(false);
+          setIsLog(true);
+        } else {
+          setIsLoad(false);
+          showMessage("Username is already taken");
+        }
+      }
+    });
   };
 
   return (
