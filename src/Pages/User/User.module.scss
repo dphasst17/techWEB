@@ -238,7 +238,7 @@
             animation:isLoad .8s alternate linear infinite;
         }
         @keyframes isLoad{
-            0%{width:0%};
+            0%{width:0%}
             100%{width:100%}
         }
     }

@@ -46,7 +46,7 @@ function Product() {
     }
   }, [Slice, numPage]);
   const HandlePagination = (e) => {
-    (data.length > 12) ? (numPage.includes(Slice/12) ? setSlice(12 * e) : setSlice(12)) : <></>
+    (data.length > 12) ? (numPage.includes(Slice/12) ? setSlice(12 * e) : setSlice(12)) : setSlice(12)
   };
   const dataBrand = DataProduct.map((items) => items.brand);
   const setBrand = new Set(dataBrand);

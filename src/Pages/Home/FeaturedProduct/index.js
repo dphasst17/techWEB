@@ -11,8 +11,7 @@ import classNames from "classnames/bind";
 import style from "../Home.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import LazyLoad from "react-lazy-load";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState,useEffect } from "react";
 
 const cx = classNames.bind(style);
 

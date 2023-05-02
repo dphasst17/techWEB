@@ -13,7 +13,7 @@ import { getAnalytics } from "firebase/analytics";
 import PrivateRoute from "./components/Private/PrivateRoute";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCXRWsJ6358VWxdjWYcgLRAZRU1VQZx03w",
+  apiKey: process.env.REACT_APP_URL_KEY,
   authDomain: "tech-store-ca5b0.firebaseapp.com",
   projectId: "tech-store-ca5b0",
   storageBucket: "tech-store-ca5b0.appspot.com",

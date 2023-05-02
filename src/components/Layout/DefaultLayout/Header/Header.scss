@@ -450,7 +450,6 @@
             cursor: pointer;
         }
         .navDetail{
-            /* position: relative; */
             display: flex;
             justify-content: space-around;
             flex-direction: column;
@@ -463,7 +462,6 @@
             padding-left:10%;
             padding-right:1%;
             box-shadow: 2px 2px 2px 2px grey;
-            transition: .3s;
             .navClose{
                 width:100%;
                 height:10%;
@@ -541,7 +539,7 @@
                 }
                 .navItemsMob:hover .iconNavMob svg path,.navItemsMob:hover a{
                     fill:rgb(70, 117, 200);
-                    color:rgb(70, 117, 200);;
+                    color:rgb(70, 117, 200);
                 }
             }
             .navUser{
@@ -570,10 +568,8 @@
                 }
                 .buttonLog {
                     margin: 0 -2%;
-                    /* position: absolute; */
                     width: 100%;
                     height: 30px;
-                    /* margin-top: 15%; */
                     a {
                         input {
                             width: 100%;
@@ -770,8 +766,8 @@
                 width:60%;
             }
             @keyframes navTranslate{
-                0%{transform: translateX(-120%)};
-                100%{transform: translateX(-17%)};
+                0%{transform: translateX(-120%)}
+                100%{transform: translateX(-17%)}
             }
         }
     }
@@ -788,8 +784,8 @@
                 width:70%;
             }
             @keyframes navTranslate{
-                0%{transform: translateX(-120%)};
-                100%{transform: translateX(-17%)};
+                0%{transform: translateX(-120%)}
+                100%{transform: translateX(-17%)}
             }
         }
     }

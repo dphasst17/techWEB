@@ -47,7 +47,6 @@ export const ApiProvider = ({ children }) => {
         setIsLoad(true)
           let token;
           if (expirationTime && Date.now() > expirationTime - (10 * 60 * 100)) {
-            /* setIsLoad(true) */
             fetch("https://nodeserver-h23e.onrender.com/refresh", {
               method: "POST",
               headers: {
