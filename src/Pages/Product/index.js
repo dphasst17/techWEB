@@ -176,7 +176,7 @@ function Product() {
                 className={cx(
                   `pagination${index === activePage ? "Active" : ""}`
                 )}
-                key={index}
+                key={items}
               >
                 <button onClick={() => HandlePagination(items)}>{items}</button>
               </div>

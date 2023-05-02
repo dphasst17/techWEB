@@ -113,7 +113,7 @@ function Header() {
         {/* NAV */}
         <nav ref={nav}>
           {menuNav.map((nav, index) => (
-            <div className={`navItems ${index === activeNav ? `active` : ``}`} key={nav}>
+            <div className={`navItems ${index === activeNav ? 'active' : ''}`} key={nav.title}>
               <Link to={nav.path}>
                 <div className="nav_text">
                   {nav.title}

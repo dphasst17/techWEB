@@ -17,47 +17,46 @@ export const CartProvider = (props) => {
       let listCart = cartItems;
       if (listCart) {
         if (listCart.length !== 0) {
-          /* if product exists in list cart */
           let y = listCart.map((items) => items.id);
           let x = y.includes(product.id);
           if (x === true) {
-            /* Check id , if product.id === items .id  */
-            let checkID = listCart.map((items) => {
-              if (product.id === items.id) {
-                return {
-                  ...items,
-                  detail: [],
-                  quantity: items.quantity + 1,
-                  total: items.price * (items.quantity + 1),
-                };
-              } else {
-                return { ...items, detail: [] };
-              }
-            });
-            setCartItems(checkID);
-            handlePost({listCart: checkID});
+            updateExistingProductInCart(listCart, product);
           } else {
-            /* If product doesn't exists in list cart */
-            setCartItems(cartItems.concat({ ...product, detail: [] }));
-            listCart.push({ ...product, detail: [] });
-            handlePost({listCart: listCart});
-  
-            /* ====================== */
+            addNewProductToCart(listCart, product);
           }
         } else {
-          setCartItems(cartItems.concat({ ...product, detail: [] }));
-          listCart.push({ ...product, detail: [] });
-          handlePost({listCart: [{ ...product, detail: [] }]});
+          addNewProductToCart(listCart, product);
         }
       }
     } else {
-      
       sessionStorage.setItem(
         "pathName",
         JSON.stringify(window.location.pathname)
       );
-      window.location.pathname = "/login";
     }
+  };
+  
+  const updateExistingProductInCart = (listCart, product) => {
+    let checkID = listCart.map((items) => {
+      if (product.id === items.id) {
+        return {
+          ...items,
+          detail: [],
+          quantity: items.quantity + 1,
+          total: items.price * (items.quantity + 1),
+        };
+      } else {
+        return { ...items, detail: [] };
+      }
+    });
+    setCartItems(checkID);
+    handlePost({ listCart: checkID });
+  };
+  
+  const addNewProductToCart = (listCart, product) => {
+    setCartItems(cartItems.concat({ ...product, detail: [] }));
+    listCart.push({ ...product, detail: [] });
+    handlePost({ listCart: listCart });
   };
 
   const deleteItems = (product) => {

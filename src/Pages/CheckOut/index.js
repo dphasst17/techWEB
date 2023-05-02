@@ -44,14 +44,13 @@ const CheckOut = () => {
   const sumArray = (total) => {
     let sum = 0;
     if (total?.length >= 1) {
-      total.map((value) => {
-        return (sum += value);
+      total.forEach((value) => {
+        sum += value;
       });
-    } else {
-      return (sum = 0);
     }
     return sum;
   };
+  
   return (
     <div className={cx("cart_detail")}>
       {isLoading=== true ? <Loading /> : <></>}

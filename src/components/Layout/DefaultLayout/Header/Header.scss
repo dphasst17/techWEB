@@ -42,6 +42,8 @@
             font-weight: 700;
             .nav_text {
                 color: rgb(70, 117, 200);
+                font-weight: 700;
+                transition:all .1s linear;
                 .hover_nav {
                     width: 100%;
                     background-color: rgb(70, 117, 200);
@@ -144,8 +146,6 @@
                         width: 100%;
                         display: flex;
                         justify-content: space-between;
-                        /* flex-direction: row; */
-                        /* align-items: center; */
                         margin: 6% 0;
                         cursor: pointer;
                         img {
@@ -213,15 +213,11 @@
                 }
                 .show {
                     position: absolute;
-                    /* width: 1px; */
-                    /* height: 20px; */
                     background-color: rgb(195, 9, 9);
                     border-radius: 45%;
                     margin-left: 3%;
-                    /* margin-top: 2%; */
                     color: #fff;
                     text-align: center;
-                    /* line-height: initial; */
                     padding: 0 5px;
                 }
                 .cart_content {
@@ -307,7 +303,6 @@
                             }
                         }
                     }
-                    /* button---payment */
                     .checkout {
                         width: 100%;
                         height: 40px;
@@ -616,9 +611,7 @@
                         }
                     }
                 }
-                /* .iconContact:nth-child(3){
-                    height: 48%;
-                } */
+                
             }
         }
     }

@@ -86,8 +86,8 @@ const ProductDetail = () => {
         <h1>YOU MAY ALSO LIKE</h1>
         <div className="relatedChild">
         {thisProduct !== undefined ? (
-          relatedProducts.map((items, index) => (
-            <div className="relatedDetail" key={index}>
+          relatedProducts.map((items) => (
+            <div className="relatedDetail" key={items.id}>
                 <div className="imgRelated">
                     <img src={items.url} alt="img Related"/>
                 </div>

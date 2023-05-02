@@ -117,10 +117,10 @@ function User() {
           <div className={cx("listPurchase")}>
             <div className={cx("detailPurchase")}>
               {purchase.length !== 0 ? (
-                purchase.slice(Slice - 5, Slice).map((items, index) => (
+                purchase.slice(Slice - 5, Slice).map((items) => (
                   <div
                     className={cx("items")}
-                    key={index}
+                    key={items.id}
                     onClick={() => {
                       navigate("/detail/" + items.id + "/" + items.title);
                     }}
