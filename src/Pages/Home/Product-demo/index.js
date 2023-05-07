@@ -19,14 +19,14 @@ const Product = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   useEffect(() => {
-    window.innerWidth >=800 ? setOffSet(50) : setOffSet(250)
+    window.innerWidth >=800 ? setOffSet(50) : setOffSet(50)
   },[])
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
-    setShowElement(currentScrollPos > 10);
     window.innerWidth >=800 
-      ?currentScrollPos > 3000 || currentScrollPos < 10 ? setShowElement(false):setShowElement(true)
-      :currentScrollPos > 4000 || currentScrollPos < 10 ? setShowElement(false):setShowElement(true)
+      ?setShowElement(currentScrollPos < 10 || currentScrollPos > 3200 ? false : true)
+      :setShowElement(currentScrollPos < 10 || currentScrollPos > 4000 ? false : true)
+    
   };
   return (
     <>

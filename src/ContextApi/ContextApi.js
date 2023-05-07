@@ -40,18 +40,30 @@ export const ApiProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (window.location.pathname !== "/login" && accss && accss !== "undefined") {
+    let fetchData = (token) => {
+      const option = {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+      fetch(process.env.REACT_APP_URL_US2, option)
+        .then((res) => res.json())
+        .then((json) => {
+          setUsers([json.dataUser]);
+          setIsLoad(false);
+        });
+    };
+    if (window.location.pathname !== "/login" && accss && accss !== "undefined" ) {
       setIsLoad(true);
       let token;
       if (expirationTime && Date.now() > expirationTime - 10 * 60 * 100) {
-        fetch("https://nodeserver-h23e.onrender.com/refresh", {
+        fetch(process.env.REACT_APP_URL_REFRESH, {
           method: "POST",
           headers: {
             "Content-type": "application/json; charset=UTF-8",
           },
-          body: JSON.stringify({
-            refreshToken: Cookies.get("RFTokens"),
-          }),
+          body: JSON.stringify({ refreshToken: Cookies.get("RFTokens") }),
         })
           .then((res) => {
             return res.json();
@@ -61,46 +73,20 @@ export const ApiProvider = ({ children }) => {
             const expirationTime = new Date().getTime() + 600 * 1000;
             localStorage.setItem("accessTK", res.newAccessToken);
             localStorage.setItem("expirationTime", expirationTime);
-
-            const option = {
-              method: "GET",
-              headers: {
-                Authorization: "Bearer " + token,
-              },
-            };
-            fetch("https://nodeserver-h23e.onrender.com/requser", option)
-              .then((res) => res.json())
-              .then((json) => {
-                setUsers([json.dataUser]);
-                setIsLoad(false);
-              })
-              .catch((err) => console.log(err));
+            fetchData(token);
           });
       } else {
         token = localStorage.getItem("accessTK");
-        const option = {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        };
-        fetch("https://nodeserver-h23e.onrender.com/requser", option)
-          .then((res) => res.json())
-          .then((json) => {
-            setUsers([json.dataUser]);
-            setIsLoad(false);
-          });
+        fetchData(token);
       }
     } else if (accss === "undefined") {
       let token;
-      fetch("https://nodeserver-h23e.onrender.com/refresh", {
+      fetch(process.env.REACT_APP_URL_REFRESH, {
         method: "POST",
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
-        body: JSON.stringify({
-          refreshToken: Cookies.get("RFTokens"),
-        }),
+        body: JSON.stringify({ refreshToken: Cookies.get("RFTokens") }),
       })
         .then((res) => {
           return res.json();
@@ -110,20 +96,7 @@ export const ApiProvider = ({ children }) => {
           const expirationTime = new Date().getTime() + 600 * 1000;
           localStorage.setItem("accessTK", res.newAccessToken);
           localStorage.setItem("expirationTime", expirationTime);
-
-          const option = {
-            method: "GET",
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          };
-          fetch("https://nodeserver-h23e.onrender.com/requser", option)
-            .then((res) => res.json())
-            .then((json) => {
-              setUsers([json.dataUser]);
-              setIsLoad(false);
-            })
-            .catch((err) => console.log(err));
+          fetchData(token);
         });
     }
   }, [expirationTime, setUsers, accss]);

@@ -20,14 +20,14 @@ const AccDemo = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   useEffect(() => {
-    window.innerWidth >=800 ? setOffSet(10) : setOffSet(0)
+    window.innerWidth >= 800 ? setOffSet(10) : setOffSet(0)
   },[])
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
-    setShowElement(currentScrollPos > 3000);
     window.innerWidth >=800 
-      ?currentScrollPos > 1000  ? setShowElement(true):setShowElement(false)
-      :currentScrollPos > 2000  ? setShowElement(true):setShowElement(false)
+    ?setShowElement(currentScrollPos > 2100 ? true : false) 
+    :setShowElement(currentScrollPos > 2000 ? true : false)
+      
   };
   return (
     <>

@@ -26,13 +26,11 @@ const FeaturedProduct = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   useEffect(() => {
-    window.innerHeight >=800 ? setOffSet(10) : setOffSet(0)
+    window.innerHeight >= 800 ? setOffSet(10) : setOffSet(0)
   },[])
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
-    setShowElement(currentScrollPos > 100);
-    currentScrollPos > 1000   ? setShowElement(false):setShowElement(true)
-
+    setShowElement(currentScrollPos < 1000 ? true : false);
   };
   return (
     <div className={cx("featuredProduct")}>
