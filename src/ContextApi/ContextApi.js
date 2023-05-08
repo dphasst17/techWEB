@@ -66,7 +66,8 @@ export const ApiProvider = ({ children }) => {
           .then((json) => {
             setUsers([json.dataUser]);
             setIsLoad(false);
-          });
+          })
+          .catch((e) => {console.log(e)})
       };
       if (window.location.pathname !== "/login" && accss && accss !== "undefined" ) {
         setIsLoad(true);
@@ -88,7 +89,8 @@ export const ApiProvider = ({ children }) => {
               localStorage.setItem("accessTK", res.newAccessToken);
               localStorage.setItem("expirationTime", expirationTime);
               fetchData(token);
-            });
+            })
+            .catch((e) => {console.log(e)})
         } else {
           token = localStorage.getItem("accessTK");
           fetchData(token);
@@ -111,7 +113,8 @@ export const ApiProvider = ({ children }) => {
             localStorage.setItem("accessTK", res.newAccessToken);
             localStorage.setItem("expirationTime", expirationTime);
             fetchData(token);
-          });
+          })
+          .catch((e) => {console.log(e)})
       }
     }
     if (!cookie) {
@@ -192,7 +195,8 @@ export const ApiProvider = ({ children }) => {
         Cookies.set("RFTokens", refreshToken, { expires: 5, path: "/" });
         localStorage.setItem("isLogin", true);
         window.location.pathname = path ? (path === "/login" ? "/" : path) : "/";
-      });
+      })
+      .catch((e) => {console.log(e)})
   };
 
   const valuePice = [
@@ -258,7 +262,8 @@ export const ApiProvider = ({ children }) => {
       };
       fetch(process.env.REACT_APP_URL_CHANGE, option).then(
         handleResponse
-      );
+      )
+      .catch((e) => {console.log(e)})
     };
     if (
       expirationTime &&
