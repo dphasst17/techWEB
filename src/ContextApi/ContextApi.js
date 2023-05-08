@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { createContext, useCallback, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 
 export const ApiContext = createContext({});
 
@@ -40,25 +40,51 @@ export const ApiProvider = ({ children }) => {
   }, []);
 
 
-  const GetDataUs = useCallback(() => {
-    let fetchData = (token) => {
-      const option = {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
+  
+
+  useEffect(() => {
+    const GetDataUs = () =>{
+      let fetchData = (token) => {
+        const option = {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        };
+        fetch(process.env.REACT_APP_URL_US2, option)
+          .then((res) => res.json())
+          .then((json) => {
+            setUsers([json.dataUser]);
+            setIsLoad(false);
+          });
       };
-      fetch(process.env.REACT_APP_URL_US2, option)
-        .then((res) => res.json())
-        .then((json) => {
-          setUsers([json.dataUser]);
-          setIsLoad(false);
-        });
-    };
-    if (window.location.pathname !== "/login" && accss && accss !== "undefined" ) {
-      setIsLoad(true);
-      let token;
-      if (expirationTime && Date.now() > expirationTime - 10 * 60 * 100) {
+      if (window.location.pathname !== "/login" && accss && accss !== "undefined" ) {
+        setIsLoad(true);
+        let token;
+        if (expirationTime && Date.now() > expirationTime - 10 * 60 * 100) {
+          fetch(process.env.REACT_APP_URL_REFRESH, {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+            },
+            body: JSON.stringify({ refreshToken: Cookies.get("RFTokens") }),
+          })
+            .then((res) => {
+              return res.json();
+            })
+            .then((res) => {
+              token = res.newAccessToken;
+              const expirationTime = new Date().getTime() + 600 * 1000;
+              localStorage.setItem("accessTK", res.newAccessToken);
+              localStorage.setItem("expirationTime", expirationTime);
+              fetchData(token);
+            });
+        } else {
+          token = localStorage.getItem("accessTK");
+          fetchData(token);
+        }
+      } else if (accss === "undefined") {
+        let token;
         fetch(process.env.REACT_APP_URL_REFRESH, {
           method: "POST",
           headers: {
@@ -76,33 +102,8 @@ export const ApiProvider = ({ children }) => {
             localStorage.setItem("expirationTime", expirationTime);
             fetchData(token);
           });
-      } else {
-        token = localStorage.getItem("accessTK");
-        fetchData(token);
       }
-    } else if (accss === "undefined") {
-      let token;
-      fetch(process.env.REACT_APP_URL_REFRESH, {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-        body: JSON.stringify({ refreshToken: Cookies.get("RFTokens") }),
-      })
-        .then((res) => {
-          return res.json();
-        })
-        .then((res) => {
-          token = res.newAccessToken;
-          const expirationTime = new Date().getTime() + 600 * 1000;
-          localStorage.setItem("accessTK", res.newAccessToken);
-          localStorage.setItem("expirationTime", expirationTime);
-          fetchData(token);
-        });
     }
-  }, [expirationTime, setUsers, accss]);
-
-  useEffect(() => {
     if (!cookie) {
       localStorage.setItem("isLogin", false);
       localStorage.removeItem("accessTK");
@@ -110,7 +111,7 @@ export const ApiProvider = ({ children }) => {
     } else {
       GetDataUs()
     }
-  }, [cookie,GetDataUs]);
+  }, [cookie,accss,expirationTime]);
 
   const handelValueSearch = (valueSearch) => {
     setValueSearch(valueSearch.target.value);
@@ -245,7 +246,7 @@ export const ApiProvider = ({ children }) => {
         },
         body: JSON.stringify(items),
       };
-      fetch("https://nodeserver-h23e.onrender.com/changeuser", option).then(
+      fetch(process.env.REACT_APP_URL_CHANGE, option).then(
         handleResponse
       );
     };
@@ -253,7 +254,7 @@ export const ApiProvider = ({ children }) => {
       expirationTime &&
       new Date().getTime() - expirationTime > 480000
     ) {
-      fetch("https://nodeserver-h23e.onrender.com/refresh", {
+      fetch(process.env.REACT_APP_URL_REFRESH, {
         method: "POST",
         headers: { "Content-type": "application/json; charset=UTF-8" },
         body: JSON.stringify({
@@ -264,7 +265,8 @@ export const ApiProvider = ({ children }) => {
         .then((data) => {
           localStorage.setItem("accessTK", data.accessToken);
           postChangeUser(data.accessToken);
-        });
+        })
+        .catch((e) => {console.log(e)})
     } else {
       token = localStorage.getItem("accessTK");
       postChangeUser(token);

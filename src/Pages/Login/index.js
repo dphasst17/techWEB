@@ -147,7 +147,8 @@ const Login = () => {
           }else{ 
             window.location.pathname = "/"; 
           }
-        });
+        })
+        .catch((e) => {console.log(e)})
     } else {
       setResult("Please enter in your login information!");
       setTimeout(() => {
@@ -193,7 +194,8 @@ const Login = () => {
           showMessage("Username is already taken");
         }
       }
-    });
+    })
+    .catch((e) => {console.log(e)})
   };
 
   return (

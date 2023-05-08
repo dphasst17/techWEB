@@ -19,7 +19,7 @@ const Product = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   useEffect(() => {
-    window.innerWidth >=800 ? setOffSet(50) : setOffSet(50)
+    window.innerWidth >=800 ? setOffSet(50) : setOffSet(55)
   },[])
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
