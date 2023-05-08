@@ -35,9 +35,13 @@ const NewsProduct = () => {
   },[])
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
-    window.innerWidth >=800 
-    ?setShowElement(currentScrollPos < 200 || currentScrollPos > 1500 ? false : true)
-    :setShowElement(currentScrollPos < 300 || currentScrollPos > 1500 ? false : true)
+    let showElement;
+    if (window.innerWidth >= 800) {
+      showElement = currentScrollPos < 200 || currentScrollPos > 1500 ? false : true;
+    } else {
+      showElement = currentScrollPos < 300 || currentScrollPos > 1500 ? false : true;
+    }
+    setShowElement(showElement);
   };
   return (
     <div className={cx("featuredProduct")}>

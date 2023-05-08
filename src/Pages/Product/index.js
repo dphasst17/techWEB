@@ -126,7 +126,7 @@ function Product() {
                   <h4>{product.title}</h4>
                 </div>
                 {product.detail.map((items) => (
-                  <div className={cx("infProduct")} key={product.id}>
+                  <div className={cx("infProduct")} key={product.id + "_detail"}>
                     <p>Cpu: {items.cpu.type}</p>
                     <p>
                       Display:{" "}
@@ -176,7 +176,7 @@ function Product() {
                 className={cx(
                   `pagination${index === activePage ? "Active" : ""}`
                 )}
-                key={items}
+                key={index + "_product"}
               >
                 <button onClick={() => HandlePagination(items)}>{items}</button>
               </div>

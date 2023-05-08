@@ -23,10 +23,13 @@ const Product = () => {
   },[])
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
-    window.innerWidth >=800 
-      ?setShowElement(currentScrollPos < 10 || currentScrollPos > 3200 ? false : true)
-      :setShowElement(currentScrollPos < 10 || currentScrollPos > 4000 ? false : true)
-    
+    let showElement;
+    if (window.innerWidth >= 800) {
+      showElement = !(currentScrollPos < 10 || currentScrollPos > 3200);
+    } else {
+      showElement = !(currentScrollPos < 10 || currentScrollPos > 4000);
+    }
+    setShowElement(showElement);
   };
   return (
     <>

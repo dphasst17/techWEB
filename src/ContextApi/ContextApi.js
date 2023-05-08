@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useCallback, useEffect, useRef, useState } from "react";
 
 export const ApiContext = createContext({});
 
@@ -39,7 +39,8 @@ export const ApiProvider = ({ children }) => {
     fetchDataAccess();
   }, []);
 
-  useEffect(() => {
+
+  const GetDataUs = useCallback(() => {
     let fetchData = (token) => {
       const option = {
         method: "GET",
@@ -107,9 +108,9 @@ export const ApiProvider = ({ children }) => {
       localStorage.removeItem("accessTK");
       localStorage.removeItem("expirationTime");
     } else {
-      localStorage.setItem("isLogin", true);
+      GetDataUs()
     }
-  }, [cookie]);
+  }, [cookie,GetDataUs]);
 
   const handelValueSearch = (valueSearch) => {
     setValueSearch(valueSearch.target.value);
@@ -179,11 +180,7 @@ export const ApiProvider = ({ children }) => {
         localStorage.setItem("expirationTime", expirationTime);
         Cookies.set("RFTokens", refreshToken, { expires: 5, path: "/" });
         localStorage.setItem("isLogin", true);
-        path
-          ? path === "/login"
-            ? (window.location.pathname = "/")
-            : (window.location.pathname = path)
-          : (window.location.pathname = "/");
+        window.location.pathname = path ? (path === "/login" ? "/" : path) : "/";
       });
   };
 
@@ -226,44 +223,20 @@ export const ApiProvider = ({ children }) => {
 
   const handlePost = (items, e, z, y) => {
     let token;
-    if (expirationTime && new Date().getTime() - expirationTime > 480000) {
-      fetch("https://nodeserver-h23e.onrender.com/refresh", {
-        method: "POST",
-        headers: { "Content-type": "application/json; charset=UTF-8" },
-        body: JSON.stringify({
-          refreshToken: Cookies.get("RFTokens"),
-        }),
-      })
-        .then((res) => {
-          return res.json();
-        })
-        .then((res) => {
-          token = res.newAccessToken;
-          const expirationTime = new Date().getTime() + 600 * 1000;
-          localStorage.setItem("accessTK", res.newAccessToken);
-          localStorage.setItem("expirationTime", expirationTime);
-          const option = {
-            method: "POST",
-            headers: {
-              Authorization: "Bearer " + token,
-              "Content-type": "application/json; charset=UTF-8",
-            },
-            body: JSON.stringify(items),
-          };
-          fetch("https://nodeserver-h23e.onrender.com/changeuser", option).then(
-            (res) => {
-              if (e) {
-                e(false);
-                window.location.pathname = z;
-                y(false);
-              } else {
-                res.json();
-              }
-            }
-          );
-        });
-    } else {
-      token = localStorage.getItem("accessTK");
+    const handleResponse = (res) => {
+      if (e) {
+        if (res.status === 200) {
+          e(false);
+          window.location.pathname = z;
+          if (y) {
+            y(false);
+          }
+        }
+      } else {
+        res.json();
+      }
+    };
+    const postChangeUser = (token) => {
       const option = {
         method: "POST",
         headers: {
@@ -273,20 +246,28 @@ export const ApiProvider = ({ children }) => {
         body: JSON.stringify(items),
       };
       fetch("https://nodeserver-h23e.onrender.com/changeuser", option).then(
-        (res) => {
-          if (e) {
-            if (res.status === 200) {
-              e(false);
-              window.location.pathname = z;
-              if (y) {
-                y(false);
-              }
-            }
-          } else {
-            res.json();
-          }
-        }
+        handleResponse
       );
+    };
+    if (
+      expirationTime &&
+      new Date().getTime() - expirationTime > 480000
+    ) {
+      fetch("https://nodeserver-h23e.onrender.com/refresh", {
+        method: "POST",
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+        body: JSON.stringify({
+          refreshToken: Cookies.get("RFTokens"),
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          localStorage.setItem("accessTK", data.accessToken);
+          postChangeUser(data.accessToken);
+        });
+    } else {
+      token = localStorage.getItem("accessTK");
+      postChangeUser(token);
     }
   };
 

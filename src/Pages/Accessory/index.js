@@ -167,7 +167,7 @@ function Accessory() {
                   className={cx(
                     `pagination${index === activePage ? "Active" : ""}`
                   )}
-                  key={index}
+                  key={index+"_access"}
                 >
                   <button onClick={() => handlePagination(items)}>{items}</button>
                 </div>

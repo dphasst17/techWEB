@@ -24,10 +24,13 @@ const AccDemo = () => {
   },[])
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
-    window.innerWidth >=800 
-    ?setShowElement(currentScrollPos > 2100 ? true : false) 
-    :setShowElement(currentScrollPos > 2000 ? true : false)
-      
+    let showElement;
+    if (window.innerWidth >= 800) {
+      showElement = currentScrollPos > 2100 ? true : false;
+    } else {
+      showElement = currentScrollPos > 2000 ? true : false;
+    }
+    setShowElement(showElement);
   };
   return (
     <>

@@ -141,8 +141,9 @@ const Login = () => {
           Cookies.set("RFTokens", refreshToken, { expires: 5, path: "/" });
           localStorage.setItem("isLogin", true);
           setIsLoad(false)
-          if (name){ 
-            name === "/login" ? window.location.pathname = "/": window.location.pathname = name 
+          if (name){
+            window.location.pathname = name === "/login" ? "/" : name 
+            
           }else{ 
             window.location.pathname = "/"; 
           }
