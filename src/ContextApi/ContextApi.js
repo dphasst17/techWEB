@@ -25,16 +25,26 @@ export const ApiProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchDataPro = async () => {
-      const dataPro = await axios(urlProduct + "tqwu5d31kjdih2o");
-      setDataProduct(dataPro.data);
+      try {
+        const dataPro = await axios(urlProduct + "tqwu5d31kjdih2o");
+        setDataProduct(dataPro.data);
+      } catch (error) {
+        // Handle error here
+        console.error(error);
+      }
     };
     fetchDataPro();
   }, []);
 
   useEffect(() => {
     const fetchDataAccess = async () => {
-      const dataPro = await axios(urlProduct + "tw21n4e42mqw");
-      setAccess(dataPro.data);
+      try{
+        const dataPro = await axios(urlProduct + "tw21n4e42mqw");
+        setAccess(dataPro.data);
+      } catch (error) {
+        // Handle error here
+        console.error(error);
+      }
     };
     fetchDataAccess();
   }, []);
