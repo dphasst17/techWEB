@@ -22,7 +22,6 @@ export const ApiProvider = ({ children }) => {
   let accss = localStorage.getItem("accessTK");
   let cookie = Cookies.get("RFTokens");
   let observer;
-
   useEffect(() => {
     const fetchDataPro = async () => {
       try {
@@ -48,8 +47,9 @@ export const ApiProvider = ({ children }) => {
     };
     fetchDataAccess();
   }, []);
+  
 
-
+  //ANIMATION AND HANDLE CLICK BUTTON FOR SLIDE IN FEATURED PRODUCT AND NEW PRODUCT
   
 
   useEffect(() => {
@@ -186,13 +186,9 @@ export const ApiProvider = ({ children }) => {
       .then((res) => res.json())
       .then((res) => {
         setIsLoad(false);
-        const accessToken = res.accessToken;
-        const refreshToken = res.refreshToken;
-        const expirationTime = new Date().getTime() + 600 * 1000; // Thêm 10  vào thời gian hiện tại
-
-        localStorage.setItem("accessTK", accessToken);
-        localStorage.setItem("expirationTime", expirationTime);
-        Cookies.set("RFTokens", refreshToken, { expires: 5, path: "/" });
+        localStorage.setItem("accessTK", res.accessToken);
+        localStorage.setItem("expirationTime", new Date().getTime() + 600 * 1000);
+        Cookies.set("RFTokens", res.refreshToken, { expires: 5, path: "/" });
         localStorage.setItem("isLogin", true);
         window.location.pathname = path ? (path === "/login" ? "/" : path) : "/";
       })

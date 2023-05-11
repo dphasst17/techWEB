@@ -167,13 +167,7 @@ function User() {
         </div>
       </div>
       {isLoad === true && <Loading />}
-      {isLoading === true ? <div className={cx("loading")}>
-        <div className={cx("overlay")}></div>
-        <div className={cx("loadingCT")}> 
-          <p>Loading ...</p>
-          <div className={cx("last")}></div>
-        </div>
-      </div> : <></>}
+      {isLoading === true ? <Loading />: <></>}
     </>
   );
 }

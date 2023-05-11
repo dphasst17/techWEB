@@ -3,6 +3,10 @@
 
 :root {
     --primary:#fe2c55;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
 }
 
 *{
@@ -15,6 +19,7 @@ html {
     scroll-behavior: smooth;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
 }
 body { 
     font-family: 'Montserrat', sans-serif;
@@ -26,6 +31,7 @@ body {
     scroll-behavior: smooth;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
 }
 #root{
     width:100%;

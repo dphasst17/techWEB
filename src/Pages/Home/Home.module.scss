@@ -72,109 +72,155 @@
             font-size: 2.2em;
             
         }
-        
-        .fpDetail{
-            width: 100%;
-            height: 100%;
-            display: flex;
-            overflow-x: scroll;
-            padding: 1% 0% 4% 4%;
-            cursor: pointer;
-            &::-webkit-scrollbar {
-                height: 5px;
-            }
-            .fpItems{
-                scroll-snap-align: start;
-                min-width: 200px;
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                flex-direction: column;
-                margin-right: 5%;
-                transform: scale(1);
-                opacity:1;
-                animation:op .5s alternate linear;
-                background: rgba(255, 255, 255, 0.2);
-                border-radius: 8px;
-                transition:box-shadow .5s linear; 
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                .fpImg {
-                    width: 100%;
-                    height: 50%;
-                    display: flex;
-                    justify-content: center;
-                    img {
-                        width: 70%;
-                        height: 100%;
-                        object-fit: contain;
+        .itemsFeat{
+            width:100%;
+            height:80%;
+            display:flex;
+            justify-content: center;
+            padding:0 1%;
+            .click{
+                width:10%;
+                height:15%;
+                margin:auto;
+                background-color: transparent;
+                border:none;
+                cursor: pointer;
+                border-radius:40%;
+                svg{
+                    width:80%;
+                    height:80%;
+                    margin:auto;
+                    polygon{
+                        fill:#00e1fa;
                     }
                 }
-                .fpTitle {
-                    width: 100%;
-                    height: 10%;
-                    text-align: center;
-                    color: #940606;
-                    font-size: 20px;
-                    font-weight: 550;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
+                &:hover{
+                    svg{
+                        polygon{
+                            fill:#0008fa;
+                            transition: all .3s linear;
+                        } 
+                    }
                 }
-                .fpPrice {
-                    width: 100%;
-                    height: 10%;
-                    color: #940606;
-                    font-size: 18px;
+            }
+            .fpDetail{
+                width: 100%;
+                height: 100%;
+                display: flex;
+                overflow-x: scroll;
+                padding: 1% 0% 4% 4%;
+                cursor: pointer;
+                &::-webkit-scrollbar {
+                    height: 5px;
                 }
-                .fpButton {
-                    width: 100%;
-                    height: 20%;
+                .fpItems{
+                    scroll-snap-align: start;
+                    min-width: 200px;
+                    height: 100%;
                     display: flex;
-                    flex-wrap: wrap;
-                    align-content: center;
-                    justify-content: space-around;
-                    button {
-                        width: 45%;
+                    justify-content: center;
+                    flex-direction: column;
+                    margin-right: 4%;
+                    transform: scale(1);
+                    opacity:1;
+                    animation:op .5s alternate linear;
+                    background: rgba(255, 255, 255, 0.2);
+                    border-radius: 8px;
+                    transition:all .5s linear; 
+                    border: 1px solid rgba(255, 255, 255, 0.3);
+                    .fpImg {
+                        width: 100%;
                         height: 50%;
-                        outline: none;
-                        border-radius: 10px;
-                        border: none;
-                        background-color: rgb(70, 117, 200);
-                        cursor: pointer;
+                        display: flex;
+                        justify-content: center;
+                        img {
+                            width: 70%;
+                            height: 100%;
+                            object-fit: contain;
+                        }
+                    }
+                    .fpTitle {
+                        width: 100%;
+                        height: 10%;
+                        text-align: center;
+                        color: #940606;
+                        font-size: 20px;
+                        font-weight: 550;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+                    .fpPrice {
+                        width: 100%;
+                        height: 10%;
+                        color: #940606;
+                        font-size: 18px;
+                    }
+                    .fpButton {
+                        width: 100%;
+                        height: 20%;
                         display: flex;
                         flex-wrap: wrap;
                         align-content: center;
-                        justify-content: center;
-                        svg {
-                            height: 15px;
-                            path {
-                                fill: #fff;
+                        justify-content: space-around;
+                        button {
+                            width: 15%;
+                            height: 50%;
+                            outline: none;
+                            border-radius: 10px;
+                            border: none;
+                            background-color: transparent;
+                            cursor: pointer;
+                            display: flex;
+                            flex-wrap: wrap;
+                            align-content: center;
+                            justify-content: center;
+                            svg {
+                                height: 15px;
+                                path {
+                                    fill: #000000;
+                                }
                             }
                         }
-                    }
-                    button:hover {
-                        background-color: rgb(4, 87, 231);
-                    }
-                    button:nth-child(3):hover {
-                        svg {
-                            path {
-                                fill: rgb(212, 0, 0);
+                        button:nth-child(2){
+                            width:60%;
+                            border-radius: 10px;
+                            border: none;
+                            background-color: rgb(70, 117, 200);
+                            font-size: 15px;
+                            font-weight: 550;
+                            color:#fff;
+                        }
+                        button:hover {
+                            background-color: rgb(4, 87, 231);
+                            svg {
+                                path {
+                                    fill: rgb(255, 255, 255);
+                                }
+                            }
+                        }
+                        button:nth-child(3):hover {
+                            svg {
+                                path {
+                                    fill: rgb(212, 0, 0);
+                                }
                             }
                         }
                     }
                 }
-            }
-            .fpItems:hover{
-                box-shadow: -5px -5px 10px rgba(163, 163, 163, 0.5),10px 10px 15px rgba(70,70,70,0.12);
-            }
-            @keyframes op{
-                0%{
-                    
-                    opacity:0
+                .fpItems:hover{
+                    box-shadow: -5px -5px 10px rgba(163, 163, 163, 0.5),10px 10px 15px rgba(70,70,70,0.12);
                 }
-                100%{opacity:1}
+                @keyframes op{
+                    0%{
+                        
+                        opacity:0
+                    }
+                    100%{opacity:1}
+                }
             }
         }
+        
     }
     .product {
         width: 100%;
@@ -711,10 +757,12 @@
             font-size: 2em;
         }
         .featuredProduct{
-            .fpDetail{
-                .fpItems{
-                    box-shadow: none;
-                    border-radius:0;
+            .itemsFeat{
+                .fpDetail{
+                    .fpItems{
+                        box-shadow: none;
+                        border-radius:0;
+                    }
                 }
             }
         }

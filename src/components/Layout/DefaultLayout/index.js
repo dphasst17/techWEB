@@ -22,7 +22,6 @@ function DefaultLayout({ children }) {
       <ScrollToTop />
       </>
       :<>
-      <Header />
       <Login />
       </>
     }

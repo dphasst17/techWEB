@@ -2,6 +2,7 @@
 .login_container{
     position: relative;
     width:100%;
+    min-height: 100vh;
     display:flex;
     justify-content: center;
     background:url("https://i.pinimg.com/564x/e0/89/27/e089279cbb81453e64bdbde8a90e4178.jpg")no-repeat;
@@ -11,7 +12,7 @@
         width:50%;
         min-height: 350px;
         height:600px;
-        margin-top:5%;
+        margin-top:10.7%;
         .backHome{
             position:absolute;
             width:40%;

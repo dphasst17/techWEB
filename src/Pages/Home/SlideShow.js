@@ -15,7 +15,7 @@ function Slideshow() {
   const timeoutRef = useRef(null);
   const delay = 10000;
 
-  function resetTimeout() {
+  const resetTimeout = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
