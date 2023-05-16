@@ -32,7 +32,7 @@ export const ApiProvider = ({ children }) => {
         console.error(error);
       }
     };
-    fetchDataPro();
+    fetchDataPro().catch((err) => console.error(err));
   }, []);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export const ApiProvider = ({ children }) => {
         console.error(error);
       }
     };
-    fetchDataAccess();
+    fetchDataAccess().catch((err) => console.error(err));
   }, []);
   
 
