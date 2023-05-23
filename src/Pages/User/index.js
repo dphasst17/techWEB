@@ -117,7 +117,7 @@ function User() {
           <div className={cx("listPurchase")}>
             <div className={cx("detailPurchase")}>
               {purchase.length !== 0 ? (
-                purchase.slice(Slice - 5, Slice).map((items) => (
+                purchase?.slice(Slice - 5, Slice).map((items) => (
                   <div
                     className={cx("items")}
                     key={items.id}

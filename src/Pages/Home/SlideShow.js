@@ -144,7 +144,7 @@ function Slideshow() {
       <div className="slideshowDots">
         {data.map((_, idx) => (
           <div
-            key={idx + "_slide"}
+            key={_.id + 1}
             className={`slideshowDot${index === idx ? " active" : ""}`}
             onClick={() => {
               setIndex(idx);

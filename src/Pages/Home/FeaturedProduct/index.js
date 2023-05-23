@@ -69,8 +69,6 @@ const FeaturedProduct = () => {
       }
     }, 7000);
   
-    /* setIntervalId(intervalId); */
-  
     return () => {
       clearInterval(intervalId);
     };

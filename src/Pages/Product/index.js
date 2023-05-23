@@ -96,7 +96,7 @@ function Product() {
           <p>About Price</p>
           
           {valuePice.map((items,key) => (
-                <div className={cx("box_filter_detail")} key={key}>
+                <div className={cx("box_filter_detail")} key={items.inputID}>
                   <input
                     type="radio"
                     name="check"
@@ -172,7 +172,7 @@ function Product() {
                 className={cx(
                   `pagination${index === activePage ? "Active" : ""}`
                 )}
-                key={index + "_product"}
+                key={items}
               >
                 <button onClick={() => HandlePagination(items)}>{items}</button>
               </div>
