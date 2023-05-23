@@ -121,21 +121,20 @@ function Slideshow() {
                   {items.title}
                 </div>
                 <div className="inf">
-                  {items.detail.map((child) => (
-                    <div className="infDetail" key={items.id}>
-                      <p>Cpu: {child.cpu.type}</p>
+                  
+                    <div className="infDetail">
+                      <p>Cpu: {items.detail.cpu.type}</p>
                       <p>
-                        Display: {child.size__inch} inch -{" "}
-                        {child.refresh_rate__hz}hz
+                        Display: {items.detail.size__inch} inch -{" "}
+                        {items.detail.refresh_rate__hz}hz
                       </p>
-                      <p>Ram: {child.memory.ram__gb}GB</p>
+                      <p>Ram: {items.detail.memory.ram__gb}GB</p>
                       <p>
-                        Hard drive: {child.storage.type}-
-                        {child.storage.capacity__gb}GB
+                        Hard drive: {items.detail.storage.type}-
+                        {items.detail.storage.capacity__gb}GB
                       </p>
-                      <p>Os: {child.software.os}</p>
+                      <p>Os: {items.detail.software.os}</p>
                     </div>
-                  ))}
                 </div>
               </div>
             </div>

@@ -9,18 +9,18 @@ import { Link } from "react-router-dom";
 import LazyLoad from "react-lazy-load";
 const cx = classNames.bind(style);
 const Product = () => {
-  const { DataProduct} = useContext(ApiContext);
+  const { DataProduct } = useContext(ApiContext);
   const data = DataProduct.filter((data) => data.id % 2 !== 0);
   const [showElement, setShowElement] = useState(false);
-  const [offSet, setOffSet] = useState(50)
+  const [offSet, setOffSet] = useState(50);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   useEffect(() => {
-    window.innerWidth >=800 ? setOffSet(50) : setOffSet(55)
-  },[])
+    window.innerWidth >= 800 ? setOffSet(50) : setOffSet(55);
+  }, []);
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
     let showElement;
@@ -34,48 +34,44 @@ const Product = () => {
   return (
     <>
       {data.length !== 0 ? <h1>OUR PRODUCT</h1> : <></>}
-      {data.length !== 0 ? 
-
-          <div className={cx("product")}>
-          
-          {data.slice(0,12).map((product) => (
+      {data.length !== 0 ? (
+        <div className={cx("product")}>
+          {data.slice(0, 12).map((product) => (
             <div className={cx("product-info")} key={product.id}>
-              
-                {showElement && <LazyLoad height={"auto"} offset={offSet}>
+              {showElement && (
+                <LazyLoad height={"auto"} offset={offSet}>
                   <div className={cx("product-detail")}>
                     <div className={cx("image")}>
-                      <img src={product.url} alt="img Product Laptop" loading="lazy" />
+                      <img
+                        src={product.url}
+                        alt="img Product Laptop"
+                        loading="lazy"
+                      />
                     </div>
                     <div className={cx("items")}>
                       <div className={cx("title")}>
                         <p>{product.title}</p>
                       </div>
                       <div className={cx("productAccess")}>
-                        {product.detail.map((items) => (
-                          <div className={cx("information")} key={product.id}>
-                            <p>Cpu: {items.cpu.type}</p>
-                            <p>
-                              Display:{" "}
-                              {items.display.size__inch}{" "}
-                              inch -{" "}
-                              {items.display.refresh_rate__hz
-                              }
-                              hz
-                            </p>
-                            <p>
-                              Ram: {items.memory.ram__gb}GB
-                            </p>
-                            <p>
-                              Hard drive:{" "}
-                              {items.storage.type}-
-                              {items.storage.capacity__gb}GB
-                            </p>
-                            <p>Os: {items.software.os}</p>
-                          </div>
-                        ))}
+                        <div className={cx("information")}>
+                          <p>Cpu: {product.detail.cpu.type}</p>
+                          <p>
+                            Display: {product.detail.display.size__inch} inch -{" "}
+                            {product.detail.display.refresh_rate__hz}
+                            hz
+                          </p>
+                          <p>Ram: {product.detail.memory.ram__gb}GB</p>
+                          <p>
+                            Hard drive: {product.detail.storage.type}-
+                            {product.detail.storage.capacity__gb}GB
+                          </p>
+                          <p>Os: {product.detail.software.os}</p>
+                        </div>
                       </div>
                       <div className={cx("items-child")}>
-                        <div className={cx("money")}>Price:{product.price} USD</div>
+                        <div className={cx("money")}>
+                          Price:{product.price} USD
+                        </div>
                         <div className={cx("button")}>
                           <CartContext.Consumer>
                             {({ addToCart }) => (
@@ -84,7 +80,12 @@ const Product = () => {
                               </button>
                             )}
                           </CartContext.Consumer>
-                          <button onClick={() =>{window.location.pathname = ("/detail/" + product.id+"/"+ product.title)}}>
+                          <button
+                            onClick={() => {
+                              window.location.pathname =
+                                "/detail/" + product.id + "/" + product.title;
+                            }}
+                          >
                             <Link
                               to={"/detail/" + product.id + "/" + product.title}
                             >
@@ -95,13 +96,14 @@ const Product = () => {
                       </div>
                     </div>
                   </div>
-                </LazyLoad>}
-              
+                </LazyLoad>
+              )}
             </div>
           ))}
         </div>
-
-      : <></>}
+      ) : (
+        <></>
+      )}
     </>
   );
 };

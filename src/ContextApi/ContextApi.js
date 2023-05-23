@@ -190,7 +190,12 @@ export const ApiProvider = ({ children }) => {
         localStorage.setItem("expirationTime", new Date().getTime() + 600 * 1000);
         Cookies.set("RFTokens", res.refreshToken, { expires: 5, path: "/" });
         localStorage.setItem("isLogin", true);
-        window.location.pathname = path ? (path === "/login" ? "/" : path) : "/";
+        if(path){
+          if(path === "/login"){
+            window.location.pathname = "/"
+          }else{window.location.pathname = path}
+        }else{window.location.pathname = "/"}
+        /* window.location.pathname = path ? (path === "/login" ? "/" : path) : "/"; */
       })
       .catch((e) => {console.log(e)})
   };

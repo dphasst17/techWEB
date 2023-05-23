@@ -51,14 +51,21 @@ function SearchResult() {
   let filterType = Array.from(new Set(data.map((items) => items.type)));
 
   /*FILTER DATA BASED ON INPUT */
+ 
   let result = data.filter((items) =>
-    value.length !== 0 && valueType.length !== 0
-      ? value.includes(items.brand) && valueType.includes(items.type)
-      : value.length !== 0 || valueType.length !== 0
-        ? value.length !== 0
-          ? value.includes(items.brand)
-          : valueType.includes(items.type)
-        : items
+    {
+      if(value.length !== 0 && valueType.length !== 0){
+        return value.includes(items.brand) && valueType.includes(items.type)
+      }else{
+        if(value.length !== 0 || valueType.length !== 0){
+          return value.length !== 0
+              ? value.includes(items.brand)
+              : valueType.includes(items.type)
+        }else{
+          return items;
+        }
+      } 
+    }
   );
   /* PAGINATION PAGES */
   PaginationPage(result, 12);
@@ -90,9 +97,9 @@ function SearchResult() {
         </div>
 
         <div className={cx("detail")}>
-          {filterBrand.length > 1 ? <p onClick={() => { setIsShow(!isShow); setIsShowS(false) }} style={{ backgroundColor: (isShow === true) ? "#2735af" : "#b2b1b1" }}>About Brand</p> : <></>}
-          {filterType.length > 1 ? <p onClick={() => { setIsShowS(!isShowS); setIsShow(false) }} style={{ backgroundColor: (isShowS === true) ? "#2735af" : "#b2b1b1" }}>About Type</p> : <></>}
-          {filterBrand.length > 1 ? (
+          {filterBrand.length > 1 && <p onClick={() => { setIsShow(!isShow); setIsShowS(false) }} style={{ backgroundColor: (isShow === true) ? "#2735af" : "#b2b1b1" }}>About Brand</p>}
+          {filterType.length > 1 && <p onClick={() => { setIsShowS(!isShowS); setIsShow(false) }} style={{ backgroundColor: (isShowS === true) ? "#2735af" : "#b2b1b1" }}>About Type</p>}
+          {filterBrand.length > 1 && (
             isShow && filterBrand.map((items) => (
               <div className={cx("filterBrand")} key={items}>
                 <input
@@ -108,11 +115,9 @@ function SearchResult() {
                 <label htmlFor={cx("brand-") + `${items}`} >{items}</label>
               </div>
             ))
-          ) : (
-            <></>
           )}
 
-          {isShowS && filterType.length > 1 ? (
+          {isShowS && filterType.length > 1 && (
             filterType.map((items) => (
               <div className={cx("filterType")} key={items}>
                 <input
@@ -131,12 +136,10 @@ function SearchResult() {
                 <label htmlFor={cx("type-") + `${items}`}>{items}</label>
               </div>
             ))
-          ) : (
-            <></>
           )}
 
         </div>
-        {filterType.length > 1 || filterBrand.length > 1 ? (
+        {(filterType.length > 1 || filterBrand.length > 1) && (
           <div className={cx("price")}>
             <p>About Price</p>
             {valuePice.map((items) => (
@@ -156,8 +159,6 @@ function SearchResult() {
               </div>
             ))}
           </div>
-        ) : (
-          <></>
         )}
       </div>
       <div className={cx("items_container")}>
@@ -198,7 +199,7 @@ function SearchResult() {
             </div>
           ))}
         </div>
-        {isShowButton === true ? (
+        {isShowButton === true && (
           <div className={cx("buttonPG")}>
             <button
               onClick={() => HandlePagination(activePage)}
@@ -225,8 +226,6 @@ function SearchResult() {
               next
             </button>
           </div>
-        ) : (
-          <></>
         )}
       </div>
     </div>

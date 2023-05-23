@@ -95,8 +95,8 @@ function Product() {
           ))}
           <p>About Price</p>
           
-          {valuePice.map((items) => (
-                <div className={cx("box_filter_detail")} key={items}>
+          {valuePice.map((items,key) => (
+                <div className={cx("box_filter_detail")} key={key}>
                   <input
                     type="radio"
                     name="check"
@@ -125,24 +125,21 @@ function Product() {
                 <div className={cx("title")}>
                   <h4>{product.title}</h4>
                 </div>
-                {product.detail.map((items) => (
-                  <div className={cx("infProduct")} key={product.id + "_detail"}>
-                    <p>Cpu: {items.cpu.type}</p>
+                  <div className={cx("infProduct")}>
+                    <p>Cpu: {product.detail.cpu.type}</p>
                     <p>
                       Display:{" "}
-                      {items.display.size__inch} inch -{" "}
-                      {items.display.refresh_rate__hz}
+                      {product.detail.display.size__inch} inch -{" "}
+                      {product.detail.display.refresh_rate__hz}
                       hz
                     </p>
-                    <p>Ram: {items.memory.ram__gb}GB</p>
+                    <p>Ram: {product.detail.memory.ram__gb}GB</p>
                     <p>
-                      Hard drive: {items.storage.type}-
-                      {items.storage.capacity__gb}GB
+                      Hard drive: {product.detail.storage.type}-
+                      {product.detail.storage.capacity__gb}GB
                     </p>
-                    <p>Os: {items.software.os}</p>
+                    <p>Os: {product.detail.software.os}</p>
                   </div>
-                ))}
-
                 <p>Price: {product.price} USD</p>
                 <div className={cx("button")}>
                   <CartContext.Consumer>
@@ -170,7 +167,6 @@ function Product() {
         {/* tạo button prev: set lại giá trị slice*/}
         <button onClick={() => HandlePagination((activePage))}  disabled={activePage === 0}>prev</button>
         <div className={cx("buttonCT")}>
-          
           {numPage.map((items, index) => (
               <div
                 className={cx(

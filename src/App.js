@@ -35,7 +35,7 @@ function App() {
             <Router>
               <div className="App">
                 <Routes>
-                  {publicRoutes.map((route, index) => {
+                  {publicRoutes.map((route) => {
                     const Pages = route.component;
       
                     let Layout = DefaultLayout;
@@ -48,7 +48,7 @@ function App() {
                     if (route.path === '/checkout' || route.path === '/user') {
                       return (
                         <PrivateRoute
-                          key={index}
+                          key={route.path}
                           path={route.path}
                           element={
                             <Layout>
@@ -60,7 +60,7 @@ function App() {
                     }
                     return (
                       <Route
-                        key={index}
+                        key={route.path}
                         path={route.path}
                         element={
                           <Layout>
@@ -71,7 +71,7 @@ function App() {
                     );
                   })}
                   
-                  {privateRoutes.map((route, index) => {
+                  {privateRoutes.map((route) => {
                 const Pages = route.component;
 
                 let Layout = DefaultLayout;
@@ -84,7 +84,7 @@ function App() {
 
                 return (
                   <Route
-                    key={index}
+                    key={route.path}
                     path={route.path}
                     element={
                       <PrivateRoute>

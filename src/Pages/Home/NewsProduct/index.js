@@ -3,12 +3,11 @@ import style from "../Home.module.scss";
 import { CartContext } from "~/Contexts/Cart";
 
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState,useRef } from "react";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import LazyLoad from "react-lazy-load";
 import { FcNext, FcPrevious } from "react-icons/fc";
 import { FaEye, FaHeart } from "react-icons/fa";
-import { useRef } from "react";
 
 
 const cx = classNames.bind(style);
@@ -21,7 +20,7 @@ const NewsProduct = () => {
   const containerRefNew = useRef(null);
   const dataProduct = DataProduct.filter(
     (items) =>
-      items.detail.map((check) => check.general.year) >=
+      items.detail.general.year >=
       2020
   );
 
@@ -79,10 +78,7 @@ const NewsProduct = () => {
           });
         }
       }
-    }, 7000);
-  
-    /* setIntervalId(intervalId); */
-  
+    }, 7000);  
     return () => {
       clearInterval(intervalId);
     };
