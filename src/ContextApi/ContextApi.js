@@ -48,10 +48,6 @@ export const ApiProvider = ({ children }) => {
     fetchDataAccess().catch((err) => console.error(err));
   }, []);
   
-
-  //ANIMATION AND HANDLE CLICK BUTTON FOR SLIDE IN FEATURED PRODUCT AND NEW PRODUCT
-  
-
   useEffect(() => {
     const GetDataUs = () =>{
       let fetchData = (token) => {
@@ -85,9 +81,8 @@ export const ApiProvider = ({ children }) => {
             })
             .then((res) => {
               token = res.newAccessToken;
-              const expirationTime = new Date().getTime() + 600 * 1000;
               localStorage.setItem("accessTK", res.newAccessToken);
-              localStorage.setItem("expirationTime", expirationTime);
+              localStorage.setItem("expirationTime", res.expirationTime);
               fetchData(token);
             })
             .catch((e) => {console.log(e)})
@@ -109,9 +104,8 @@ export const ApiProvider = ({ children }) => {
           })
           .then((res) => {
             token = res.newAccessToken;
-            const expirationTime = new Date().getTime() + 600 * 1000;
             localStorage.setItem("accessTK", res.newAccessToken);
-            localStorage.setItem("expirationTime", expirationTime);
+            localStorage.setItem("expirationTime", res.expirationTime);
             fetchData(token);
           })
           .catch((e) => {console.log(e)})
@@ -187,7 +181,7 @@ export const ApiProvider = ({ children }) => {
       .then((res) => {
         setIsLoad(false);
         localStorage.setItem("accessTK", res.accessToken);
-        localStorage.setItem("expirationTime", new Date().getTime() + 600 * 1000);
+        localStorage.setItem("expirationTime", res.expirationTime);
         Cookies.set("RFTokens", res.refreshToken, { expires: 5, path: "/" });
         localStorage.setItem("isLogin", true);
         if(path){
@@ -195,7 +189,7 @@ export const ApiProvider = ({ children }) => {
             window.location.pathname = "/"
           }else{window.location.pathname = path}
         }else{window.location.pathname = "/"}
-        /* window.location.pathname = path ? (path === "/login" ? "/" : path) : "/"; */
+        
       })
       .catch((e) => {console.log(e)})
   };
@@ -268,7 +262,7 @@ export const ApiProvider = ({ children }) => {
     };
     if (
       expirationTime &&
-      new Date().getTime() - expirationTime > 480000
+      Date.now() > expirationTime - 10 * 60 * 100
     ) {
       fetch(process.env.REACT_APP_URL_REFRESH, {
         method: "POST",
@@ -279,8 +273,9 @@ export const ApiProvider = ({ children }) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          localStorage.setItem("accessTK", data.accessToken);
-          postChangeUser(data.accessToken);
+          localStorage.setItem("accessTK", data.newAccessToken);
+          localStorage.setItem("expirationTime", data.expirationTime);
+          postChangeUser(data.newAccessToken);
         })
         .catch((e) => {console.log(e)})
     } else {

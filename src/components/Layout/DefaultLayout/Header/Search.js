@@ -15,7 +15,7 @@ function SearchResults() {
       data.brand.toUpperCase().includes(valueSearch.toUpperCase())
   );
   const dataAccess = Access.filter(
-    (data) => (valueSearch.length > 0) ? /* (data.brand.toUpperCase()||data.title.toUpperCase()||data.type.toUpperCase()).includes(valueSearch.toUpperCase())  */
+    (data) => (valueSearch.length > 0) ?
     data.brand.toUpperCase().includes(valueSearch.toUpperCase()) ||
     data.title.toUpperCase().includes(valueSearch.toUpperCase()) ||
     data.type.toUpperCase().includes(valueSearch.toUpperCase()) : null

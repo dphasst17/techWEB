@@ -14,25 +14,22 @@ export const CartProvider = (props) => {
   const addToCart = (product) => {
     let checkLogin = JSON.parse(localStorage.getItem("isLogin"));
     if (checkLogin === true) {
-      let listCart = cartItems;
-      if (listCart) {
-        if (listCart.length !== 0) {
-          let y = listCart.map((items) => items.id);
-          let x = y.includes(product.id);
-          if (x === true) {
-            updateExistingProductInCart(listCart, product);
-          } else {
-            addNewProductToCart(listCart, product);
-          }
+      if (cartItems.length !== 0) {
+        let y = cartItems.filter((items) => items.id === product.id);
+        if (y.length !== 0) {
+          updateExistingProductInCart(cartItems, product);
         } else {
-          addNewProductToCart(listCart, product);
+          addNewProductToCart(cartItems, product);
         }
+      } else {
+        addNewProductToCart(cartItems, product);
       }
     } else {
       sessionStorage.setItem(
         "pathName",
         JSON.stringify(window.location.pathname)
       );
+      window.location.pathname = "/login"
     }
   };
   
@@ -54,8 +51,8 @@ export const CartProvider = (props) => {
   };
   
   const addNewProductToCart = (listCart, product) => {
-    setCartItems(cartItems.concat({ ...product, detail: [] }));
-    listCart.push({ ...product, detail: [] });
+    setCartItems(cartItems.concat({ ...product,total:product.quantity * product.price, detail: [] }));
+    listCart.push({ ...product,total:product.quantity * product.price, detail: [] });
     handlePost({ listCart: listCart });
   };
 

@@ -33,8 +33,8 @@ const Product = () => {
   };
   return (
     <>
-      {data.length !== 0 ? <h1>OUR PRODUCT</h1> : <></>}
-      {data.length !== 0 ? (
+      {data.length !== 0 && <h1>OUR PRODUCT</h1>}
+      {data.length !== 0 && (
         <div className={cx("product")}>
           {data.slice(0, 12).map((product) => (
             <div className={cx("product-info")} key={product.id}>
@@ -101,8 +101,6 @@ const Product = () => {
             </div>
           ))}
         </div>
-      ) : (
-        <></>
       )}
     </>
   );

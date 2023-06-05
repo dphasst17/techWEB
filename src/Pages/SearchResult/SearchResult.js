@@ -11,7 +11,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import LazyLoad from "react-lazy-load";
-import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
+import Pagination from "~/components/PaginationView/Pagination";
+import Filter from "~/components/FilterProduct/Filter";
 
 const cx = classNames.bind(style);
 
@@ -27,7 +28,7 @@ function SearchResult() {
     activePage,
     valuePice
   } = useContext(ApiContext);
-  const [value, setValue] = useState([]);
+  const [valueBrand, setValueBrand] = useState([]);
   const [valueType, setValueType] = useState([]);
   const [price, setPrice] = useState([]);
   const navigate = useNavigate();
@@ -54,12 +55,12 @@ function SearchResult() {
  
   let result = data.filter((items) =>
     {
-      if(value.length !== 0 && valueType.length !== 0){
-        return value.includes(items.brand) && valueType.includes(items.type)
+      if(valueBrand.length !== 0 && valueType.length !== 0){
+        return valueBrand.includes(items.brand) && valueType.includes(items.type)
       }else{
-        if(value.length !== 0 || valueType.length !== 0){
-          return value.length !== 0
-              ? value.includes(items.brand)
+        if(valueBrand.length !== 0 || valueType.length !== 0){
+          return valueBrand.length !== 0
+              ? valueBrand.includes(items.brand)
               : valueType.includes(items.type)
         }else{
           return items;
@@ -88,79 +89,8 @@ function SearchResult() {
 
   return (
     <div className={cx("resultSearch")}>
-      <div className={cx("fill")} onClick={() => { setIsShowFil("4%") }}>Filter your result <HiChevronDoubleRight /></div>
-
-      <div className={cx("filter")} style={{ transform: "translateX(" + isShowFil + ")" }}>
-        <div className={cx("closeFil")}>
-          <p onClick={() => { setValue([]); setValueType([]); setPrice([]) }}>Reset All</p>
-          <HiChevronDoubleLeft onClick={() => { setIsShowFil("-200%") }} />
-        </div>
-
-        <div className={cx("detail")}>
-          {filterBrand.length > 1 && <p onClick={() => { setIsShow(!isShow); setIsShowS(false) }} style={{ backgroundColor: (isShow === true) ? "#2735af" : "#b2b1b1" }}>About Brand</p>}
-          {filterType.length > 1 && <p onClick={() => { setIsShowS(!isShowS); setIsShow(false) }} style={{ backgroundColor: (isShowS === true) ? "#2735af" : "#b2b1b1" }}>About Type</p>}
-          {filterBrand.length > 1 && (
-            isShow && filterBrand.map((items) => (
-              <div className={cx("filterBrand")} key={items}>
-                <input
-                  type="checkbox"
-                  onClick={() => {
-                    if (value.includes(items)) { setValue(value.filter((check) => check !== items)) }
-                    else { setValue([...value, items]) }
-                  }}
-                  onChange={() => { }}
-                  checked={value.includes(items) ? true : false}
-                  id={cx("brand-") + `${items}`}
-                />
-                <label htmlFor={cx("brand-") + `${items}`} >{items}</label>
-              </div>
-            ))
-          )}
-
-          {isShowS && filterType.length > 1 && (
-            filterType.map((items) => (
-              <div className={cx("filterType")} key={items}>
-                <input
-                  type="checkbox"
-                  onClick={() => {
-                    valueType.includes(items)
-                      ? setValueType(
-                        valueType.filter((check) => check !== items)
-                      )
-                      : setValueType([...valueType, items]);
-                  }}
-                  onChange={() => { }}
-                  checked={valueType.includes(items) ? true : false}
-                  id={cx("type-") + `${items}`}
-                />
-                <label htmlFor={cx("type-") + `${items}`}>{items}</label>
-              </div>
-            ))
-          )}
-
-        </div>
-        {(filterType.length > 1 || filterBrand.length > 1) && (
-          <div className={cx("price")}>
-            <p>About Price</p>
-            {valuePice.map((items) => (
-              <div key={items}>
-                <input
-                  type="radio"
-                  name="check"
-                  id={items.inputID}
-                  value={items.inputValue}
-                  onClick={() => {
-                    setPrice(items.inputValue);
-                  }}
-                  onChange={() => { }}
-                  checked={price.includes(items.inputValue) ? true : false}
-                />
-                <label htmlFor={items.inputID}>{items.content}</label>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+      <Filter props={{filterBrand,filterType,valueBrand,valueType,isShowFil,isShow,isShowS,valuePice,price,setPrice,setValueBrand,setIsShow,setIsShowS,setIsShowFil,setValueType}}/>
+      
       <div className={cx("items_container")}>
         <div className={cx("show")}>
           {(result.length > 12
@@ -200,32 +130,7 @@ function SearchResult() {
           ))}
         </div>
         {isShowButton === true && (
-          <div className={cx("buttonPG")}>
-            <button
-              onClick={() => HandlePagination(activePage)}
-              disabled={activePage === 0}
-            >
-              prev
-            </button>
-            <div className={cx("buttonCT")}>
-              {numPage.map((items, index) => (
-                <div
-                  className={cx(
-                    `pagination${index === activePage ? "Active" : ""}`
-                  )}
-                  key={items}
-                >
-                  <button onClick={() => HandlePagination(items)}>{items}</button>
-                </div>
-              ))}
-            </div>
-            <button
-              onClick={() => HandlePagination((activePage + 2))}
-              disabled={activePage + 1 === numPage.length}
-            >
-              next
-            </button>
-          </div>
+          <Pagination props={{numPage,activePage,HandlePagination}}/>
         )}
       </div>
     </div>

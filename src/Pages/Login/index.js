@@ -6,17 +6,13 @@ import style from "./Login.module.scss";
 import classNames from "classnames/bind";
 import Cookies from "js-cookie";
 import {
-  faEye,
-  faEyeSlash,
-  faRightToBracket,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
-import { FcGoogle } from "react-icons/fc";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import Loading from "~/components/Loading/Loading";
-import { FaFacebook, FaGithub } from "react-icons/fa";
 import { useGoogleLogin } from "@leecheuk/react-google-login";
 import { gapi } from "gapi-script";
+import FormLogin from "./FormLogin";
 
 const cx = classNames.bind(style);
 
@@ -32,6 +28,10 @@ const Login = () => {
   const [isFalse, setIsFalse] = useState(false);
   const [result, setResult] = useState("");
   const [isLog, setIsLog] = useState(true);
+  
+  const name = sessionStorage.getItem("pathName")
+    ? JSON.parse(sessionStorage.getItem("pathName"))
+    : "/";
   const clientId =
     "132575877421-gig4g2ahetogi4sr2071v1i3d4j1eifu.apps.googleusercontent.com";
 
@@ -45,9 +45,6 @@ const Login = () => {
     setConfirmPass(confirmPass.target.value);
   };
 
-  const name = sessionStorage.getItem("pathName")
-    ? JSON.parse(sessionStorage.getItem("pathName"))
-    : "/";
 
   
     const showMessage = (message) => {
@@ -134,7 +131,7 @@ const Login = () => {
         .then((res) => {
           const accessToken = res.accessToken;
           const refreshToken = res.refreshToken;
-          const expirationTime = new Date().getTime() + 600 * 1000; // Thêm 10  vào thời gian hiện tại
+          const expirationTime = res.expirationTime 
 
           localStorage.setItem("accessTK", accessToken);
           localStorage.setItem("expirationTime", expirationTime);
@@ -200,174 +197,8 @@ const Login = () => {
 
   return (
     <>
-      <div className={cx("login_container")}>
-        <div className={cx("form")}>
-          <div className={cx("backHome")}>
-            <a href="/">
-              <FontAwesomeIcon icon={faRightToBracket} />
-            </a>
-          </div>
-          <form>
-            <div className={cx("itemsForm")}>
-              {isLog === true ? (
-                <>
-                  <h2>Log In form</h2>
-                  <div className={cx("detail")}>
-                    <div
-                      className={cx("input")}
-                      style={{
-                        borderColor:
-                          username.length > 0
-                            ? "rgb(70, 117, 200)"
-                            : "rgb(195, 9, 9)",
-                      }}
-                    >
-                      <input
-                        type="username"
-                        placeholder="Enter your username"
-                        onChange={handleUserNameChange}
-                        value={username}
-                        required
-                      />
-                    </div>
-                    <div
-                      className={cx("input")}
-                      style={{
-                        borderColor:
-                          pass.length > 0
-                            ? "rgb(70, 117, 200)"
-                            : "rgb(195, 9, 9)",
-                      }}
-                    >
-                      <input
-                        type={type}
-                        autoComplete="Password"
-                        placeholder="Enter your Password"
-                        onChange={handlePassChange}
-                        value={pass}
-                        required
-                      />
-                      <div className={cx("eyeSlash")}>
-                        {showPass === true ? (
-                          <FontAwesomeIcon
-                            icon={faEyeSlash}
-                            onClick={() => {
-                              setType("text");
-                              setShowPass(false);
-                            }}
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon={faEye}
-                            onClick={() => {
-                              setType("password");
-                              setShowPass(true);
-                            }}
-                          />
-                        )}
-                      </div>
-                    </div>
-                    <div className={cx("forgotPass")}>
-                      <p>Forgot Password? </p>
-                    </div>
-                    <button type="button" onClick={handleClick}>
-                      Login
-                    </button>
-                    <div className={cx("navigation")}>
-                      <p onClick={() => setIsLog(false)}>Create account</p>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <h2>Create account From</h2>
-                  <div className={cx("detail")}>
-                    <div
-                      className={cx("input")}
-                      style={{
-                        borderColor:
-                          username.length > 0
-                            ? "rgb(70, 117, 200)"
-                            : "rgb(195, 9, 9)",
-                      }}
-                    >
-                      <input
-                        type="text"
-                        placeholder="Enter your username"
-                        id="username"
-                        value={username}
-                        onChange={handleUserNameChange}
-                        required
-                      />
-                    </div>
-
-                    <div
-                      className={cx("input")}
-                      style={{
-                        borderColor:
-                          pass.length > 0
-                            ? "rgb(70, 117, 200)"
-                            : "rgb(195, 9, 9)",
-                      }}
-                    >
-                      <input
-                        type="password"
-                        autoComplete="Password"
-                        placeholder="Enter your password"
-                        id={cx("pass")}
-                        value={pass}
-                        onChange={handlePassChange}
-                        required
-                      />
-                    </div>
-                    <div
-                      className={cx("input")}
-                      style={{
-                        borderColor:
-                          confirmPass.length > 0
-                            ? "rgb(70, 117, 200)"
-                            : "rgb(195, 9, 9)",
-                      }}
-                    >
-                      <input
-                        type="password"
-                        autoComplete="Confirm Password"
-                        placeholder="Confirm your password"
-                        id={cx("confirmPass")}
-                        value={confirmPass}
-                        onChange={handleConfirmChange}
-                        required
-                      />
-                    </div>
-                    <button type="button" onClick={handleClickCreate}>
-                      Create account
-                    </button>
-                    <div className={cx("navigation")}>
-                      <p onClick={() => setIsLog(true)}>
-                        You have an account ?
-                      </p>
-                    </div>
-                  </div>
-                </>
-              )}
-              <span className={cx("loginIcon")}>
-                <span className={cx("Icon")} onClick={HandleFacebookLogin}>
-                  <FaFacebook />
-                  <span>FACEBOOK</span>
-                </span>
-                <span className={cx("Icon")} onClick={signIn}>
-                  <FcGoogle />
-                  <span>GOOGLE MAIL</span>
-                </span>
-                <span className={cx("Icon")}>
-                  <FaGithub />
-                  <span>GITHUB</span>
-                </span>
-              </span>
-            </div>
-          </form>
-        </div>
-      </div>
+      <FormLogin props={{HandleFacebookLogin,isLog,username,pass,confirmPass,type,showPass,setType,setShowPass,
+        setIsLog,handleClickCreate,handleClick,handleUserNameChange,handlePassChange,handleConfirmChange,signIn}}/>
       {isLoad === true && <Loading />}
       {isFalse && (
         <div

@@ -12,33 +12,38 @@ const cx = classNames.bind(style);
 
 const CheckOut = () => {
   const { cartItems } = useContext(CartContext);
-  const {Users,handlePost } = useContext(ApiContext);
+  const { Users, handlePost } = useContext(ApiContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [messResult, setMessResult] = useState("")
-  const [height, setHeight] = useState("-200%")
+  const [messResult, setMessResult] = useState("");
+  const [height, setHeight] = useState("-200%");
   const navigate = useNavigate();
   let userID = JSON.parse(localStorage.getItem("isLogin") || "[]");
   const [data, setData] = useState();
   useEffect(() => {
-    Users.map(us =>
-      setData(us.purchaseOrder)
-    )
+    Users.map((us) => setData(us.purchaseOrder));
   }, [Users]);
 
   let handleCheckOut = () => {
     if (cartItems?.length !== 0) {
-      setIsLoading(true)
-      handlePost({
-        purchaseOrder: cartItems.concat(...data),
-        listCart: [],
-      },setIsLoading,"/success")
+      setIsLoading(true);
+      handlePost(
+        {
+          purchaseOrder: cartItems.concat(...data),
+          listCart: [],
+        },
+        setIsLoading,
+        "/success"
+      );
     } else {
-      setMessResult("You need to add a product to your cart")
-      setTimeout(() => {setHeight("0%")})
-      setTimeout(() => {setHeight("-120%")},2500)
+      setMessResult("You need to add a product to your cart");
+      setTimeout(() => {
+        setHeight("0%");
+      });
+      setTimeout(() => {
+        setHeight("-120%");
+      }, 2500);
     }
   };
-
 
   let total = cartItems?.map((item) => item.total);
   const sumArray = (total) => {
@@ -50,22 +55,20 @@ const CheckOut = () => {
     }
     return sum;
   };
-  
+
   return (
     <div className={cx("cart_detail")}>
-      {isLoading=== true ? <Loading /> : <></>}
+      {isLoading === true ? <Loading /> : <></>}
       <div className={cx("container")}>
         <h1>Check Out</h1>
         <div className={cx("box")}>
           <CartContext.Consumer>
             {({ cartItems }) => (
               <>
-                <div
-                  className={cx("detail")}
-                  
-                >
+                <div className={cx("detail")}>
                   <h2>
-                    You have {cartItems?.length > 0 ? cartItems.length : 0} orders
+                    You have {cartItems?.length > 0 ? cartItems.length : 0}{" "}
+                    orders
                   </h2>
                   <div className={cx("itemsDetail")}>
                     {cartItems?.map((cartItems) => (
@@ -136,13 +139,24 @@ const CheckOut = () => {
                 </div>
                 <div className={cx("detail_second")}>
                   <div className={cx("first")}>
-                    {userID === true ? Users.map(us => <div className={cx("usDetail")} key={us.fullName}>
-                      <div className={cx("input")}>Full name: {us.fullName}</div>
-                      <div className={cx("input")}>Phone number: {us.phoneNumber}</div>
-                      <div className={cx("input")}>Email: {us.email}</div>
-                      <div className={cx("input")}>Address: {us.address}</div>
-                    </div>)
-                    :<></>}
+                    {userID === true ? (
+                      Users.map((us) => (
+                        <div className={cx("usDetail")} key={us.fullName}>
+                          <div className={cx("input")}>
+                            Full name: {us.fullName}
+                          </div>
+                          <div className={cx("input")}>
+                            Phone number: {us.phoneNumber}
+                          </div>
+                          <div className={cx("input")}>Email: {us.email}</div>
+                          <div className={cx("input")}>
+                            Address: {us.address}
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <></>
+                    )}
                   </div>
                   <div className={cx("second")}>
                     <div className={cx("total")}>
@@ -157,10 +171,18 @@ const CheckOut = () => {
           </CartContext.Consumer>
         </div>
       </div>
-      <div className={cx("messFalse")} style={{transform:"translateX(" + height + ")"}}>
+      <div
+        className={cx("messFalse")}
+        style={{ transform: "translateX(" + height + ")" }}
+      >
         <p>{messResult}</p>
         <div className={cx("iClose")}>
-          <FontAwesomeIcon icon={faX} onClick={() => {setHeight("-120%")}}/>
+          <FontAwesomeIcon
+            icon={faX}
+            onClick={() => {
+              setHeight("-120%");
+            }}
+          />
         </div>
       </div>
     </div>

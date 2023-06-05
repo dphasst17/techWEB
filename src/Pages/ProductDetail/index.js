@@ -34,32 +34,32 @@ const ProductDetail = () => {
                   <h1>Price: {items.price} USD</h1>
                 </div>
                 {items.type === "laptop"
-                  ? items.detail.map((child) => (
-                      <div className="infoProduct" key={items.id}>
+                  ? 
+                      <div className="infoProduct">
                         <h3>
                           Cpu:
-                          {child.cpu.type
+                          {items.detail.cpu.type
                           }
                         </h3>
                         <h3>
                           Display:
-                          {child.display.size__inch}
+                          {items.detail.display.size__inch}
                           inch -
-                          {child.display.refresh_rate__hz
+                          {items.detail.display.refresh_rate__hz
                           }
                           hz
                         </h3>
                         <h3>
-                          Ram: {child.memory.ram__gb}GB
+                          Ram: {items.detail.memory.ram__gb}GB
                         </h3>
                         <h3>
                           Hard drive:
-                          {child.storage.type}-
-                          {child.storage.capacity__gb}GB
+                          {items.detail.storage.type}-
+                          {items.detail.storage.capacity__gb}GB
                         </h3>
-                        <h3>Os: {child.software.os}</h3>
+                        <h3>Os: {items.detail.software.os}</h3>
                       </div>
-                    ))
+                    
                   : items.detail.map((item) => (
                       <div className="infoProduct" key={items.id}>
                         <h3>{item.inf.map((items) => items.inf1)}</h3>

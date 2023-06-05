@@ -10,7 +10,8 @@ import {
   faTableList,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { HiChevronDoubleLeft,HiChevronDoubleRight } from "react-icons/hi";
+import Pagination from "~/components/PaginationView/Pagination";
+import Filter from "~/components/FilterProduct/Filter";
 const cx = classNames.bind(style);
 
 function Accessory() {
@@ -21,9 +22,11 @@ function Accessory() {
     isShowButton,
     HandleActivePage,
     activePage,
+    valuePice
   } = useContext(ApiContext);
   const [valueBrand, setValueBrand] = useState([]);
   const [valueType, setValueType] = useState([]);
+  const [price, setPrice] = useState([]);
   const [Slice, setSlice] = useState(12);
   const [isShow, setIsShow] = useState(true);
   const [isShowS, setIsShowS] = useState(false);
@@ -42,6 +45,13 @@ function Accessory() {
     }
   });
 
+  data =
+  price !== undefined
+    ? price === "1"
+      ? data.sort((items, check) => (items.price > check.price ? 1 : -1))
+      : data.sort((items, check) => (items.price < check.price ? 1 : -1))
+    : data;
+
   /* Pagination Page */
   PaginationPage(data, 12);
   useEffect(() => {
@@ -49,76 +59,15 @@ function Accessory() {
       setSlice(12);
     }
   }, [Slice, numPage]);
-  const handlePagination = (e) => {
+  const HandlePagination = (e) => {
     setSlice(12 * e);
   };
   HandleActivePage(Slice);
 
   return (
     <div className={cx("accessory")}>
-      <div className={cx("fill")} onClick={() => {setIsShowFil("4%")}}>Filter your result <HiChevronDoubleRight /></div>
-      <div className={cx("filter")} style={{transform:"translateX(" + isShowFil + ")"}}>
-        <div className={cx("closeFil")}>
-            <p onClick={() => {setValueBrand([]); setValueType([])}}>Reset All</p>
-            <HiChevronDoubleLeft onClick={() => {setIsShowFil("-200%")}}/>
-        </div>
-        <div className={cx("box_filter")}>
-          <p onClick={() => {setIsShow(!isShow);setIsShowS(false)}} style={{backgroundColor: (isShow === true ) ? "#2735af" : "#b2b1b1"}}>About Brand</p>
-          <p onClick={() => {setIsShowS(!isShowS);setIsShow(false)}}style={{backgroundColor: (isShowS === true ) ? "#2735af" : "#b2b1b1"}}>About Type</p>
-          {isShow && filterBrand.map((check) => (
-            <div className={cx("box_filter_detail")} key={check}>
-              <div className={cx("detail")}>
-                <input
-                  type="checkbox"
-                  name="keyword"
-                  onClick={() => {
-                    if (valueBrand.includes(check)) {
-                      setValueBrand(
-                        valueBrand.filter((items) => items !== check)
-                      );
-                    } else {
-                      setValueBrand([...valueBrand, check]);
-                    }
-                  }}
-                  onChange={() => {}}
-                  checked={valueBrand.includes(check) ? true : false}
-                  id={cx("keyword-brand-") + `${check}`}
-                />
-                <label htmlFor={cx("keyword-brand-") + `${check}`}>
-                  {check.toUpperCase()}
-                </label>
-              </div>
-            </div>
-          ))}
-         
-          
-          {isShowS && filterType.map((price) => (
-            <div className={cx("box_filter_detail")} key={price}>
-              <div htmlFor="keyword" className={cx("detail")}>
-                <input
-                  type="checkbox"
-                  name="keyword"
-                  onClick={() => {
-                    if (valueType.includes(price)) {
-                      setValueType(
-                        valueType.filter((items) => items !== price)
-                      );
-                    } else {
-                      setValueType([...valueType, price]);
-                    }
-                  }}
-                  onChange={() => {}}
-                  checked={valueType.includes(price) ? true : false}
-                  id={cx("keyword-price-") + `${price}`}
-                ></input>
-                <label htmlFor={cx("keyword-price-") + `${price}`}>
-                  {price}
-                </label>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      
+      <Filter props={{filterBrand,filterType,valueBrand,valueType,isShowFil,isShow,isShowS,valuePice,price,setPrice,setValueBrand,setIsShow,setIsShowS,setIsShowFil,setValueType}}/>
       <div className={cx("items_container")}>
         <div className={cx("show")}>
           {(data.length > 12
@@ -153,35 +102,9 @@ function Accessory() {
             </div>
           ))}
         </div>
-        {isShowButton === true ? (
-          <div className={cx("buttonPG")}>
-            <button
-              onClick={() => handlePagination(activePage)}
-              disabled={activePage === 0}
-            >
-              prev
-            </button>
-            <div className={cx("buttonCT")}>
-              {numPage.map((items, index) => (
-                <div
-                  className={cx(
-                    `pagination${index === activePage ? "Active" : ""}`
-                  )}
-                  key={items}
-                >
-                  <button onClick={() => handlePagination(items)}>{items}</button>
-                </div>
-              ))}
-            </div>
-            <button
-              onClick={() => handlePagination(activePage + 2)}
-              disabled={activePage + 1 === numPage.length}
-            >
-              next
-            </button>
-          </div>
-        ) : (
-          <></>
+        {isShowButton === true && (
+          
+          <Pagination props={{numPage,activePage,HandlePagination}}/>
         )}
       </div>
     </div>
