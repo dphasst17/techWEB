@@ -26,7 +26,8 @@ function SearchResult() {
     isShowButton,
     HandleActivePage,
     activePage,
-    valuePice
+    valuePice,
+    SortDataBasedOnPrice
   } = useContext(ApiContext);
   const [valueBrand, setValueBrand] = useState([]);
   const [valueType, setValueType] = useState([]);
@@ -80,12 +81,8 @@ function SearchResult() {
   };
   HandleActivePage(Slice,12);
   /* FILTER DATA BASED ON INPUT PRICE */
-  result =
-    price !== undefined
-      ? price === "1"
-        ? result.sort((items, check) => (items.price > check.price ? 1 : -1))
-        : result.sort((items, check) => (items.price < check.price ? 1 : -1))
-      : result;
+  SortDataBasedOnPrice(result,price)
+  
 
   return (
     <div className={cx("resultSearch")}>

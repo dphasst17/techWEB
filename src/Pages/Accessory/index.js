@@ -22,7 +22,8 @@ function Accessory() {
     isShowButton,
     HandleActivePage,
     activePage,
-    valuePice
+    valuePice,
+    SortDataBasedOnPrice
   } = useContext(ApiContext);
   const [valueBrand, setValueBrand] = useState([]);
   const [valueType, setValueType] = useState([]);
@@ -44,13 +45,7 @@ function Accessory() {
       return items;
     }
   });
-
-  data =
-  price !== undefined
-    ? price === "1"
-      ? data.sort((items, check) => (items.price > check.price ? 1 : -1))
-      : data.sort((items, check) => (items.price < check.price ? 1 : -1))
-    : data;
+  SortDataBasedOnPrice(data,price)
 
   /* Pagination Page */
   PaginationPage(data, 12);

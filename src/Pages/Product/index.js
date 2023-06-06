@@ -17,7 +17,7 @@ const cx = classNames.bind(style);
 
 
 function Product() {
-  const { DataProduct, PaginationPage, numPage, isShowButton, HandleActivePage, activePage, valuePice } = useContext(ApiContext);
+  const { DataProduct, PaginationPage, numPage, isShowButton, HandleActivePage, activePage, valuePice,SortDataBasedOnPrice } = useContext(ApiContext);
   const [newValue, setNewValue] = useState([]);
   const [newPrice, setNewPrice] = useState([]);
   const [Slice, setSlice] = useState(12);
@@ -32,13 +32,7 @@ function Product() {
       return value;
     }
   });
-  data =
-    newPrice !== undefined
-      ? newPrice === "1"
-        ? data.sort((items, check) => (items.price > check.price ? 1 : -1))
-        : data.sort((items, check) => (items.price < check.price ? 1 : -1))
-      : data;
-
+  SortDataBasedOnPrice(data,newPrice)
   PaginationPage(data, 12)
   useEffect(() => {
     if (!numPage.includes(Slice / 12)) {

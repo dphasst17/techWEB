@@ -5,8 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { CartContext } from "~/Contexts/Cart";
 
-function HeaderMob({props}/* {setIsToggleNav,isToggleNav,checkLogin,handleUser,valueIP,handleButtonLog,
-    valueSearch,handelValueSearch,handleSetIsShowResult,show} */) {
+function HeaderMob({props}) {
     return <div className="headerMob">
     <div className="navMob">
       <FontAwesomeIcon icon={faBars} onClick={() => {props.setIsToggleNav("translateX(-17%)")}}/>

@@ -289,7 +289,16 @@ export const ApiProvider = ({ children }) => {
       postChangeUser(token);
     }
   };
-
+  const SortDataBasedOnPrice = (data,price) =>{
+    if (price !== undefined) {
+      if (price === "1") {
+        data = data.sort((items, check) => (items.price > check.price ? 1 : -1));
+      } else {
+        data = data.sort((items, check) => (items.price < check.price ? 1 : -1));
+      }
+    }
+    
+  }
   return (
     <ApiContext.Provider
       value={{
@@ -307,6 +316,7 @@ export const ApiProvider = ({ children }) => {
         valuePice,
         ref,
         isIntersecting,
+        SortDataBasedOnPrice,
         handlePost,
         Intersecting,
         HandleLogin,
