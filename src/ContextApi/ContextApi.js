@@ -47,7 +47,13 @@ export const ApiProvider = ({ children }) => {
     };
     fetchDataAccess().catch((err) => console.error(err));
   }, []);
-  
+  useEffect(() => {
+    if(accss === "undefined" || expirationTime === "undefined"){
+      localStorage.setItem("isLogin", false);
+      localStorage.removeItem("accessTK");
+      localStorage.removeItem("expirationTime");
+    }
+  },[accss,expirationTime])
   useEffect(() => {
     const GetDataUs = () =>{
       let fetchData = (token) => {
@@ -160,9 +166,9 @@ export const ApiProvider = ({ children }) => {
     }, [e.length, z]);
   };
 
-  const HandleActivePage = (i) => {
+  const HandleActivePage = (data,numberOfProductInPage) => {
     useEffect(() => {
-      setActivePage(numPage.findIndex((e) => e === i / 12));
+      setActivePage(numPage.findIndex((e) => e === data / numberOfProductInPage));
     });
   };
 

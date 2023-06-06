@@ -4,9 +4,6 @@ import { Link } from "react-router-dom";
 import { CartContext } from "~/Contexts/Cart";
 import logo01 from "~/components/Layout/DefaultLayout/Header/img/tech-store-low-resolution-logo-black-on-transparent-background.png";
 import SearchResults from "./Search";
-
-/* {activeNav,nav,menuNav,handleUser,valueIP,handleButtonLog,
-    valueSearch,handelValueSearch,handleSetIsShowResult,show,showResult,handleSetHideResult,handleSetShow,isShow,navigate} */
 function HeaderPc({props}) {
     return <div className="header">
     <nav ref={props.nav}>

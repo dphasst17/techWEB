@@ -62,7 +62,7 @@ function Accessory() {
   const HandlePagination = (e) => {
     setSlice(12 * e);
   };
-  HandleActivePage(Slice);
+  HandleActivePage(Slice,12);
 
   return (
     <div className={cx("accessory")}>
@@ -103,7 +103,6 @@ function Accessory() {
           ))}
         </div>
         {isShowButton === true && (
-          
           <Pagination props={{numPage,activePage,HandlePagination}}/>
         )}
       </div>

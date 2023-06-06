@@ -4,12 +4,12 @@ import { ApiContext } from "~/ContextApi/ContextApi";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "~/components/Loading/Loading";
+import Pagination from "~/components/PaginationView/Pagination";
 
 const cx = classNames.bind(style);
 function User() {
   const { Users, PaginationPage, isShowButton, numPage,isLoad,HandleActivePage,
-    activePage,handlePost } =
-    useContext(ApiContext);
+    activePage,handlePost } = useContext(ApiContext);
   const navigate = useNavigate();
   const [editUser, setEditUser] = useState(false);
   const [FullName, setFullName] = useState("");
@@ -20,15 +20,14 @@ function User() {
   const [isLoading, setIsLoading] = useState(false);
   const purchase = Users.flatMap((items) => items.purchaseOrder);
   PaginationPage(purchase, 5);
-  const handlePagination = (e) => {
+  const HandlePagination = (e) => {
     setSlice(5 * e);
   };
-  HandleActivePage(Slice)
+  HandleActivePage(Slice,5)
 
   return (
     <>
       <div className={cx("user")}>
-        
         <div className={cx("info")}>
           <div className={cx("title")}>
             <h1>User Information</h1>
@@ -146,24 +145,9 @@ function User() {
               )}
             </div>
           </div>
-          <div className={cx("buttonPG")}>
-            <div className={cx("buttonCT")}>
-              {isShowButton === true ? (
-                numPage.map((items, index) => (
-                  <div
-                    className={cx(
-                      `pagination${index === activePage ? "Active" : ""}`
-                    )}
-                    key={items}
-                  >
-                    <button onClick={() => handlePagination(items)}>{items}</button>
-                  </div>
-                ))
-              ) : (
-                <></>
-              )}
-            </div>
-          </div>
+          {isShowButton === true && (
+            <Pagination props={{numPage,activePage,HandlePagination}}/>
+          )}
         </div>
       </div>
       {isLoad === true && <Loading />}

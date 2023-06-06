@@ -55,7 +55,7 @@ function Product() {
   const dataBrand = DataProduct.map((items) => items.brand);
   const setBrand = new Set(dataBrand);
   let filterBrand = [...setBrand];
-  HandleActivePage(Slice)
+  HandleActivePage(Slice,12)
 
 
   return (

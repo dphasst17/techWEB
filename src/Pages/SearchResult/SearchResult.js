@@ -78,7 +78,7 @@ function SearchResult() {
   const HandlePagination = (e) => {
     setSlice(12 * e);
   };
-  HandleActivePage(Slice);
+  HandleActivePage(Slice,12);
   /* FILTER DATA BASED ON INPUT PRICE */
   result =
     price !== undefined

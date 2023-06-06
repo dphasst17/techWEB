@@ -72,7 +72,7 @@ function Filter({props}) {
                     <div className={cx("price")}>
                         <p>About Price</p>
                         {props.valuePice.map((items) => (
-                        <div key={items}>
+                        <div key={items.inputID}>
                             <input
                             type="radio"
                             name="check"
