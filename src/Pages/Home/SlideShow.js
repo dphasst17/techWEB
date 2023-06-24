@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import { CartContext } from "~/Contexts/Cart";
 import "~/components/GlobalStyles/GlobalStyles.scss";
+import "~/tailwind.css";
 function Slideshow() {
   const { DataProduct } = useContext(ApiContext);
   const data = DataProduct.filter(
@@ -43,6 +44,7 @@ function Slideshow() {
           src="https://i.pinimg.com/originals/e1/6d/42/e16d4219e671bac00d1c23131e6d723f.jpg"
           loading="lazy"
           alt="img Background Slide show"
+          
         />
       </div>}
       <div
@@ -52,34 +54,20 @@ function Slideshow() {
         {data.map((items, s) => (
           <div className={`slide${index === s ? " active" : ""}`} key={items.id}>
             <div className="image">
-              <img src={items.url} alt="" />
+              <img src={items.url} alt="" className="w-full h-3/4 object-contain" />
             </div>
-            <div className="content">
-              <div className="items">
+            <div className="content w-3/5 h-full flex">
+              <div className="items w-full lg:w-2/5 h-full flex flex-col flex-wrap justify-center content-center">
                 <CartContext.Consumer>
                   {({ addToCart }) => (
                     <button
                       onClick={() => {
                         addToCart(items);
                       }}
+                      className="w-3/5 lg:w-2/4 rounded-lg bg-blue-900 text-white text-3xl font-bold hover:bg-blue-700 transition "
                     >
-                      <svg className="icon" viewBox="-20 40 70 30">
-                        <path
-                          d="M 40.63 40 L 50 50 V50 70 H-10 M -9.64 70 L -20 60 V40 H 41"
-                          strokeWidth="1"
-                          stroke="#000"
-                          fill="transparent"
-                        ></path>
-                        <text
-                          x="-15"
-                          y="59"
-                          stroke="#000"
-                          strokeWidth="0"
-                          fill="#000"
-                        >
-                          Add to cart
-                        </text>
-                      </svg>
+                      ADD TO CART
+                      
                     </button>
                   )}
                 </CartContext.Consumer>
@@ -88,27 +76,12 @@ function Slideshow() {
                     window.location.pathname =
                       "/detail/" + items.id + "/" + items.title;
                   }}
+                  className="w-3/5 lg:w-2/4 rounded-lg bg-blue-900 text-white text-3xl font-bold hover:bg-blue-700 transition "
                 >
-                  <svg className="icon" viewBox="-20 40 70 30">
-                    <path
-                      d="M 40.63 40 L 50 50 V50 70 H-10 M -9.64 70 L -20 60 V40 H 41"
-                      strokeWidth="1"
-                      stroke="#000"
-                      fill="transparent"
-                    ></path>
-                    <text
-                      x="0"
-                      y="59"
-                      stroke="#000"
-                      strokeWidth="0"
-                      fill="#000"
-                    >
-                      Detail
-                    </text>
-                  </svg>
+                  DETAIL
                 </button>
               </div>
-              <div className="items">
+              <div className="items w-full lg:w-3/5 h-full flex flex-col flex-wrap justify-center content-center">
                 <div
                   className="title"
                   style={{

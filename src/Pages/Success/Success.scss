@@ -1,25 +1,10 @@
 .successContainer{
-    width:100%;
-    height:585px;
     .iconSuccess{
-        width: 100%;
-        height:30%;
-        display:flex;
-        flex-wrap: wrap;
-        align-content: center;
-        justify-content: center;
         svg{
             height:30%;
         }
-        h2{
-            margin-left:2%;
-        }
     }
     .checkItems, .back{
-        width:100%;
-        height:auto;
-        display:flex;
-        justify-content: center;
         a{
             width:50%;
             text-decoration: none;
@@ -35,8 +20,5 @@
         a:hover{
             color:rgb(70, 117, 200);
         }
-    }
-    .back{
-        margin-top:2%;
     }
 }

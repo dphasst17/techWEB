@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import classNames from "classnames/bind";
-import style from "../Home.module.scss";
+import "~/tailwind.css";
+import "../Home.scss";
 import { CartContext } from "~/Contexts/Cart";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faTableList } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import LazyLoad from "react-lazy-load";
-const cx = classNames.bind(style);
 const Product = () => {
   const { DataProduct } = useContext(ApiContext);
   const data = DataProduct.filter((data) => data.id % 2 !== 0);
@@ -35,47 +34,48 @@ const Product = () => {
     <>
       {data.length !== 0 && <h1>OUR PRODUCT</h1>}
       {data.length !== 0 && (
-        <div className={cx("product")}>
+        <div className="h-product w-full h-auto flex flex-wrap justify-between">
           {data.slice(0, 12).map((product) => (
-            <div className={cx("product-info")} key={product.id}>
+            <div className="product-info" key={product.id}>
               {showElement && (
                 <LazyLoad height={"auto"} offset={offSet}>
-                  <div className={cx("product-detail")}>
-                    <div className={cx("image")}>
+                  <div className="product-detail w-full h-full flex flex-col">
+                    <div className="image w-full flex justify-center">
                       <img
                         src={product.url}
                         alt="img Product Laptop"
                         loading="lazy"
+                        className="w-full h-44 object-contain"
                       />
                     </div>
-                    <div className={cx("items")}>
-                      <div className={cx("title")}>
-                        <p>{product.title}</p>
+                    <div className="items w-full flex flex-col flex-wrap justify-between">
+                      <div className="title">
+                        <p className="w-full text-center font-semibold overflow-hidden whitespace-nowrap text-ellipsis">{product.title}</p>
                       </div>
-                      <div className={cx("productAccess")}>
-                        <div className={cx("information")}>
-                          <p>Cpu: {product.detail.cpu.type}</p>
-                          <p>
+                      <div className="productAccess">
+                        <div className="information">
+                          <p className="overflow-hidden whitespace-nowrap text-ellipsis text-black">Cpu: {product.detail.cpu.type}</p>
+                          <p className="overflow-hidden whitespace-nowrap text-ellipsis text-black">
                             Display: {product.detail.display.size__inch} inch -{" "}
                             {product.detail.display.refresh_rate__hz}
                             hz
                           </p>
-                          <p>Ram: {product.detail.memory.ram__gb}GB</p>
-                          <p>
+                          <p className="overflow-hidden whitespace-nowrap text-ellipsis text-black">Ram: {product.detail.memory.ram__gb}GB</p>
+                          <p className="overflow-hidden whitespace-nowrap text-ellipsis text-black">
                             Hard drive: {product.detail.storage.type}-
                             {product.detail.storage.capacity__gb}GB
                           </p>
-                          <p>Os: {product.detail.software.os}</p>
+                          <p className="overflow-hidden whitespace-nowrap text-ellipsis text-black">Os: {product.detail.software.os}</p>
                         </div>
                       </div>
-                      <div className={cx("items-child")}>
-                        <div className={cx("money")}>
+                      <div className="items-child w-full flex lg:flex-row flex-col justify-between  ">
+                        <div className="money w-full lg:w-2/4">
                           Price:{product.price} USD
                         </div>
-                        <div className={cx("button")}>
+                        <div className="button w-full lg:w-2/5 flex flex-row justify-between">
                           <CartContext.Consumer>
                             {({ addToCart }) => (
-                              <button onClick={() => addToCart(product)}>
+                              <button onClick={() => addToCart(product)} className="w-3/4 lg:w-4/6 bg-blue-800 hover:bg-blue-600">
                                 <FontAwesomeIcon icon={faCartShopping} />
                               </button>
                             )}
@@ -85,6 +85,7 @@ const Product = () => {
                               window.location.pathname =
                                 "/detail/" + product.id + "/" + product.title;
                             }}
+                            className="w-1/5 lg:w-1/4 bg-blue-800 hover:bg-blue-600"
                           >
                             <Link
                               to={"/detail/" + product.id + "/" + product.title}

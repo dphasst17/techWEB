@@ -1,18 +1,15 @@
-import classNames from "classnames/bind";
-import style from "./Accessory.module.scss";
+import "./Accessory.scss";
 import { CartContext } from "~/Contexts/Cart";
 import { useContext, useEffect, useState } from "react";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCartShopping,
   faHeart,
   faTableList,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import Pagination from "~/components/PaginationView/Pagination";
 import Filter from "~/components/FilterProduct/Filter";
-const cx = classNames.bind(style);
 
 function Accessory() {
   const {
@@ -60,36 +57,42 @@ function Accessory() {
   HandleActivePage(Slice,12);
 
   return (
-    <div className={cx("accessory")}>
+    <div className="accessory w-full min-h-[600px] flex flex-col justify-center overflow-hidden">
       
       <Filter props={{filterBrand,filterType,valueBrand,valueType,isShowFil,isShow,isShowS,valuePice,price,setPrice,setValueBrand,setIsShow,setIsShowS,setIsShowFil,setValueType}}/>
-      <div className={cx("items_container")}>
-        <div className={cx("show")}>
+      <div className="items_container w-[90%] min-h-[500px] overflow-hidden">
+        <div className="show w-full min-h-[693px] flex flex-wrap justify-start items-start pb-[1%]">
           {(data.length > 12
             ? data.slice(Slice - 12, Slice)
             : data.slice(0)
           ).map((product) => (
-            <div className={cx("product-detail")} key={product.id} style={{animationDelay: "." + product.id + "s"}}>
-              <div className={cx("detail-box")}>
-                <img src={product.url} alt="img Access" />
-                <div className={cx("title")}>
-                  <h4>{product.title}</h4>
+            <div className="product-detail w-1/5 h-2/5 mt-[3%] ml-[4%] min-w-[150px] cursor-pointer" key={product.id} style={{animationDelay: "." + product.id + "s"}}>
+              <div className="detail-box w-full h-[14em] flex flex-col justify-around rounded-[16px]">
+                <div className="w-full h-4/5 flex justify-center overflow-hidden">
+                  <img src={product.url} alt="img Access" className="w-full h-auto object-contain"/>
                 </div>
-                <p>Price: {product.price} USD</p>
-                <div className={cx("button")}>
-                  <CartContext.Consumer>
-                    {({ addToCart }) => (
-                      <button onClick={() => addToCart(product)}>
-                        <FontAwesomeIcon icon={faCartShopping} />
-                      </button>
-                    )}
-                  </CartContext.Consumer>
-                  <button onClick={() =>{window.location.pathname = ("/detail/" + product.id+"/"+ product.title)}}>
+                <div className="title w-full h-1/5">
+                  <h4 className="text-center text-[18px] text-[#bc0c0c] font-semibold overflow-hidden whitespace-nowrap text-ellipsis">{product.title}</h4>
+                </div>
+                <p className="font-semibold text-[16px] text-[#bc0c0c] ml-[5%]">Price: {product.price} USD</p>
+                <div className="button w-full h-[12%] flex justify-around mb-[5%]">
+                  <button className="w-[20%] h-[30px] text-[16px] font-[550] text-white rounded-[5px] bg-blue-800 hover:bg-blue-600 cursor-pointer" onClick={() =>{window.location.pathname = ("/detail/" + product.id+"/"+ product.title)}}>
                     <Link to={"/detail/" + product.id + "/" + product.title}>
                       <FontAwesomeIcon icon={faTableList} />
                     </Link>
                   </button>
-                  <button>
+
+                  <CartContext.Consumer>
+                    {({ addToCart }) => (
+                      <button 
+                        className="w-1/2 h-[30px] text-[5px] lg:text-[16px] md:text-[15px] sm:text-[10px] font-[550] text-white rounded-[5px] bg-blue-800 hover:bg-blue-600 cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis px-[2%]" 
+                        onClick={() => addToCart(product)}>
+                        ADD TO CART
+                      </button>
+                    )}
+                  </CartContext.Consumer>
+
+                  <button className="w-[20%] h-[30px] text-[16px] font-[550] text-white rounded-[5px] bg-blue-800 hover:bg-blue-600 cursor-pointer">
                     <FontAwesomeIcon icon={faHeart} />
                   </button>
                 </div>

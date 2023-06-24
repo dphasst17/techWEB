@@ -14,16 +14,16 @@ const ProductDetail = () => {
   const thisProduct = productsData.filter(
     (items) => Math.floor(items.id) === Math.floor(productID)
   );
-  const random = Math.floor(Math.random() * 10) + 9;
-  const relatedProducts = productsData.filter(
-    (items) => items.id % random === 0 && items.id !== productID
-  ).slice(0,6);
+  const filteredArray = productsData.filter(item => Math.floor(item.id) !== Math.floor(productID));
+  const shuffledArray = filteredArray.sort(() => Math.random() - 0.5); 
+  /* const random = Math.floor(Math.random() * 10) + 9; */
+  const relatedProducts = shuffledArray.slice(0, 6);
   return (
-    <div className="detailPage">
-      <div className="items">
-        {thisProduct.map((items) => {return <div className="itemsChild" key={items.id}>
-              <div className="image">
-                <img src={items.url} alt="img Product" />
+    <div className="detailPage w-full h-auto min-h-[370px] flex flex-col justify-between">
+      <div className="items w-full min-h-[350px] h-auto mb-[4%]">
+        {thisProduct.map((items) => {return <div className="itemsChild w-full h-auto flex flex-row justify-center" key={items.id}>
+              <div className="image w-2/5 flex justify-center">
+                <img src={items.url} alt="img Product" className="w-4/5 h-full object-contain"/>
               </div>
               <div className="itemsContent">
                 <div className="title">

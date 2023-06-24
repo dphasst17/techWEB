@@ -73,10 +73,6 @@
             
         }
         .itemsFeat{
-            width:100%;
-            height:80%;
-            display:flex;
-            justify-content: center;
             padding:0 1%;
             .click{
                 width:10%;
@@ -104,9 +100,6 @@
                 }
             }
             .fpDetail{
-                width: 100%;
-                height: 100%;
-                display: flex;
                 overflow-x: scroll;
                 padding: 1% 0% 4% 4%;
                 cursor: pointer;
@@ -133,11 +126,6 @@
                         height: 50%;
                         display: flex;
                         justify-content: center;
-                        img {
-                            width: 70%;
-                            height: 100%;
-                            object-fit: contain;
-                        }
                     }
                     .fpTitle {
                         width: 100%;
@@ -163,18 +151,8 @@
                         flex-wrap: wrap;
                         align-content: center;
                         justify-content: space-around;
-                        button {
-                            width: 15%;
-                            height: 50%;
-                            outline: none;
-                            border-radius: 10px;
-                            border: none;
-                            background-color: transparent;
+                        .button{
                             cursor: pointer;
-                            display: flex;
-                            flex-wrap: wrap;
-                            align-content: center;
-                            justify-content: center;
                             svg {
                                 height: 15px;
                                 path {
@@ -182,17 +160,8 @@
                                 }
                             }
                         }
-                        button:nth-child(2){
-                            width:60%;
-                            border-radius: 10px;
-                            border: none;
-                            background-color: rgb(70, 117, 200);
-                            font-size: 15px;
-                            font-weight: 550;
-                            color:#fff;
-                        }
+                        
                         button:hover {
-                            background-color: rgb(4, 87, 231);
                             svg {
                                 path {
                                     fill: rgb(255, 255, 255);
@@ -222,26 +191,10 @@
         }
         
     }
-    .product {
-        width: 100%;
-        height: auto;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+    .h-product {
         animation:bc .5s alternate linear;
-        .imageBC{
-            width: inherit;
-            height:max-content;
-            position: absolute;
-            z-index:-11111111;
-            object-fit: cover;
-            background-size:auto;
-            img{
-                width: 100%;
-                height: 100%;
-            }
-        }
         .product-info {
+            min-width: 160px;
             width: 20%;
             height: 350px;
             margin: 2%;
@@ -250,50 +203,28 @@
             opacity: 1;
             cursor: pointer;
             .product-detail {
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                height: 100%;
                 padding-bottom:2%;
                 background: rgba(255, 255, 255, 0.2);
                 border-radius: 16px;
-                
                 border: 1px solid rgba(255, 255, 255, 0.3);
+                animation:trans2 .5s alternate linear;
                 .image {
-                    width: 100%;
                     height: 30%;
-                    display: flex;
-                    justify-content: center;
                     overflow: hidden;
                     img {
-                        width: 100%;
-                        height: 130px;
-                        object-fit: contain;
-                        
                         background-image: none !important;
                     }
                 }
                 .items {
-                    width: 100%;
                     height: 70%;
-                    display: flex;
-                    flex-direction: column;
-                    flex-wrap: wrap;
-                    justify-content: space-between;
                     .title {
                         width: 100%;
                         height: 10%;
                         p {
-                            text-align: center;
-                            margin-left: 0%;
                             font-size: 20px;
                             height: 50px;
-                            width: 100%;
                             color: #ff0505;
-                            font-weight: 600;
-                            overflow: hidden;
-                            white-space: nowrap;
-                            text-overflow: ellipsis;
+                           
                         }
                     }
                     .productAccess {
@@ -303,38 +234,26 @@
                             padding-left: 3%;
                             p {
                                 font-size: 16px;
-                                overflow: hidden;
-                                white-space: nowrap;
-                                text-overflow: ellipsis;
                                 color:#000;
                                 font-weight: 550;
                             }
                         }
                     }
                     .items-child {
-                        width: 100%;
                         height: 21%;
-                        display: flex;
-                        justify-content: space-between;
                         .money {
-                            width: 52%;
                             font-size: 20px;
                             margin-left: 3%;
                             color: #ff0505;
                         }
                         .button {
-                            width: 40%;
-                            display: flex;
-                            justify-content:space-between;
-                            flex-direction: row-reverse;
                             margin-right:3%;
                             button {
-                                width: 45%;
                                 height: 30px;
                                 font-size: 16px;
                                 border: none;
                                 border-radius: 10px;
-                                background-color: rgb(70, 117, 200);
+                                ;
                                 cursor: pointer;
                                 svg {
                                     path {
@@ -343,7 +262,7 @@
                                 }
                             }
                             button:hover {
-                                background-color: rgb(4, 87, 231);
+                                
                                 text-decoration: underline;
                                 color: #fff;
                                 transition:all 1s;
@@ -353,20 +272,7 @@
                 }
             }
         }
-        .product-info:nth-child(even){
-            .product-detail{
-                opacity: 1;
-                transform: translateY(0%);
-                animation:trans .5s alternate linear
-            }
-        }
-        .product-info:nth-child(odd){
-            .product-detail{
-                opacity: 1;
-                transform: translateY(0%);
-                animation:trans2 .5s alternate linear
-            }
-        }
+        
         @keyframes  trans{
             0%{opacity:0;transform: translateY(-50%)}
             100%{opacity:1;transform: translateY(0%)}
@@ -393,14 +299,7 @@
             }
         }
     }
-    .Access {
-        width: 100%;
-        height: auto;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-content: flex-start;
-        justify-content: space-around;
+    .h-access {
         animation:bc .5s alternate linear;
         .accDemo {
             min-width: 160px;
@@ -411,13 +310,11 @@
             padding-bottom: 2%;
             cursor: pointer;
             .accDemo_Child {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
                 background: rgba(255, 255, 255, 0.2);
                 border-radius: 16px;
                 border: 1px solid rgba(255, 255, 255, 0.3);
                 padding:0 2%;
+                animation:trans2 .5s alternate linear;
                 .image {
                     width: 100%;
                     height: 30%;
@@ -433,16 +330,10 @@
                     width: 100%;
                     height: 40px;
                     p {
-                        text-align: center;
                         margin-left: 0%;
                         font-size: 20px;
                         height: 50px;
-                        width: 100%;
                         color: #ff0505;
-                        overflow: hidden;
-                        white-space:nowrap;
-                        text-overflow: ellipsis;
-                        font-weight: 600;
                     }
                 }
                 .accessInf{
@@ -451,33 +342,19 @@
                     font-weight: 550;
                 }
                 .items-child {
-                    width: 100%;
                     height: 21%;
-                    display: flex;
-                    justify-content: space-between;
                     margin-top: 10%;
                     .price {
-                        width: 50%;
                         height: 40px;
                         color: #ff0505;
                         font-size: 20px;
-                        font-weight: 500;
-                        overflow: hidden;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
                     }
                     .button {
-                        width: 50%;
-                        display: flex;
-                        justify-content: flex-start;
-                        flex-direction: row-reverse;
                         button {
-                            width: 40%;
                             height: 30px;
                             font-size: 16px;
                             border: none;
                             border-radius: 10px;
-                            background-color: rgb(70, 117, 200);
                             margin-right: 5%;
                             cursor: pointer;
                             svg {
@@ -487,27 +364,11 @@
                             }
                         }
                         button:hover {
-                            background-color: rgb(4, 87, 231);
                             text-decoration: underline;
                             color: #fff;
                         }
                     }
                 }
-            }
-        }
-        .accDemo:nth-child(odd){
-            .accDemo_Child{
-                transform:translateX(0%);
-                animation:trans .5s alternate linear;
-                transition: all .5s linear;
-            }
-            
-        }
-        .accDemo:nth-child(even){
-            .accDemo_Child{
-                transform:translateX(0%);
-                animation:trans2 .5s alternate linear;
-                transition: all .5s linear;
             }
         }
         .accDemo:hover {
@@ -678,16 +539,11 @@
                 min-width: 200px;
                 .product-detail {
                     padding: 1% 0% 4% 0%;
-                    /* .image{} */
+
                     .items {
                         .title {
                             font-size: 18px;
                         }
-                        /* .productAccess{
-                        .information{
-                            
-                        }
-                       } */
                         .items-child {
                             .money {
                                 font-size: 18px;
@@ -710,16 +566,8 @@
             .product-info {
                 min-width: 250px;
                 .product-detail {
-                    padding: 1% 0% 4% 0%;
-                    
+                    padding: 1% 0% 4% 0%;  
                     .items {
-                        /* .title{} */
-                        /* .productAccess{
-                        .information{
-                            
-                        }
-                       } */
-
                         .items-child {
                             .money {
                                 font-size: 17px;

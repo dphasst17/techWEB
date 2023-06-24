@@ -1,10 +1,8 @@
-import classNames from "classnames/bind";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { ApiContext } from "~/ContextApi/ContextApi";
-import style from "~/components/Layout/DefaultLayout/Header/Header.scss";
+import  "~/components/Layout/DefaultLayout/Header/Header.scss";
 
-const cx = classNames.bind(style);
 
 function SearchResults() {
   const { valueSearch, DataProduct, Access } = useContext(ApiContext);
@@ -22,13 +20,13 @@ function SearchResults() {
   );
   const data = [...dataProduct, ...dataAccess];
   return (
-    <div className={cx("itemsResults")}>
+    <div className="itemsResults w-full h-auto overflow-hidden">
       {data.slice(0,8).map((items) => (
-        <div className={cx("detail")} key={items.id} onClick={() => {navigate("/detail/"+ items.id + "/" + items.title)}}>
-          <img src={items.url} alt="" />
-          <div className={cx("resultTitle")}>
-            <h3>Title: {(items.title.length >= 40) ? items.title.slice(0,40) + `...` : items.title }</h3>
-            <h3>Price: {items.price} USD</h3>
+        <div className="detail w-full h-full flex justify-between my-[6%] mx-[0%] cursor-pointer" key={items.id} onClick={() => {navigate("/detail/"+ items.id + "/" + items.title)}}>
+          <img src={items.url} alt="img-result-search" className="w-[16%] h-[40px] my-[0] mx-[auto] object-contain"/>
+          <div className="resultTitle w-[70%]">
+            <h3 className="text-[18px] font-semibold text-[#bc0c0c] mx-[auto] my-[0]">Title: {(items.title.length >= 40) ? items.title.slice(0,40) + `...` : items.title }</h3>
+            <h3 className="text-[18px] font-semibold text-[#bc0c0c] mx-[auto] my-[0]">Price: {items.price} USD</h3>
           </div>
         </div>
       ))}

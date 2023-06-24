@@ -78,7 +78,6 @@ body {
     width:100%;
     height:100%;
     position:fixed;
-    /* opacity: 0.4; */
     z-index: 1111111111111111111;
     top:0;
     left:0;
@@ -87,69 +86,61 @@ body {
     flex-wrap: wrap;
     align-content:center;
     justify-content: center;
-    .overlay{
+    .loadingOverlay{
         width:100%;
         height: 100%;
-        background-color: #6b6a6a;
+        background-color: #292828;
         opacity: 0.5;
         position: absolute;
-        z-index: -11111;
+        z-index: -1;
     }
-    .imgLoad{
-        width:200px;
-        height:80px;
-        .loadChild{
-            width:100%;
-            height:100%;
-            display:inline-flex;
-            justify-content: space-around;
-            overflow-y: hidden;
-            &::-webkit-scrollbar {
-                height: 0px;
+    .isLoading {
+        $colors: #7ef9ff, #89cff0, #4682b4, #0f52ba, #000080;
+        display: flex;
+        margin:-10% auto;
+        .dot {
+          position: relative;
+          width: 2em;
+          height: 2em;
+          margin: 0.8em;
+          border-radius: 50%;
+      
+          &::before {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: inherit;
+            animation: wave 2s ease-out infinite;
+          }
+      
+          @for $i from 1 through 5 {
+            &:nth-child(#{$i}) {
+              background: nth($colors, $i);
+      
+              &::before {
+                animation-delay: $i * 0.2s;
+              }
             }
-            
-            span{
-                min-width: 10px;
-                height: 50%;
-                background-color: #000000;
-                border-radius:10px;
-                margin:auto 0;
-                opacity: 1;
-                animation: isLoad 1s alternate linear infinite;
-                animation-delay: 0s;
-                
-            }
-            span:nth-child(2){
-                height: 60%;
-                animation-delay: 0.2s;
-            }
-            span:nth-child(3){
-                height: 70%;
-                animation-delay: 0.4s;
-            }
-            span:nth-child(4){
-                height: 70%;
-                animation-delay: 0.6s;
-            }
-            span:nth-child(5){
-                height: 60%;
-                animation-delay: 0.8s;
-            }
-            span:nth-child(6){
-                height: 50%;
-                animation-delay: 1s;
-            }
+          }
         }
-    }
-    @keyframes isLoad{
-        0%{opacity: 0;}
-        100%{opacity: 1;}
-    }
+      }
+      
+      @keyframes wave {
+        50%,
+        75% {
+          transform: scale(2.5);
+        }
+      
+        80%,
+        100% {
+          opacity: 0;
+        }
+      }
 }
 .slideshow {
     display: block;
-    /* background:url("https://i.pinimg.com/originals/e1/6d/42/e16d4219e671bac00d1c23131e6d723f.jpg") no-repeat ;
-    background-size: 100% 400px; */
     width: 100%;
     height: 500px;
     margin: 0 auto;
@@ -193,9 +184,6 @@ body {
                 align-content: center;
                 justify-content: center;
                 img {
-                    width: 100%;
-                    height: 70%;
-                    object-fit:contain;
                     transition:animation .5s;
                     animation: img 5s ease infinite;
                 }
@@ -216,17 +204,8 @@ body {
                     100%{transform:scale(1.1)}
                   }
             }
-            .content{
-                width:60%;
-                height:100%;
-                display:flex;                
+            .content{           
                 .items{
-                    height: 100%;
-                    display:flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    flex-wrap: wrap;
-                    align-content: center;
                     position: relative;
                     .title{
                         width:100%;
@@ -283,53 +262,11 @@ body {
                         }
                     }
                     button{
-                        width:45%;
+                        height:50px;
                         outline:none;
                         border:none;
-                        background:transparent;
                         margin: 4% auto;
                         cursor: pointer;
-/*                         animation:trans 3s alternate infinite; */
-                        .icon{
-                            stroke-dasharray: 1200;
-                            animation: stroke 6s alternate linear infinite;
-                            path{
-                                stroke-width: 1;
-                                stroke: rgb(244, 244, 244);
-                                fill:transparent;
-                                animation: color 3s alternate linear infinite
-                            }
-                            text{
-                                fill:#fff;
-                            }
-                            @keyframes color {
-                                0%{
-                                    fill:transparent
-                                }
-                                100%{
-                                    fill:rgb(70, 117, 200);
-                                }
-                            }
-                        }
-                        .icon:hover path{
-                            fill: aqua;
-                            transition: all 0.5s ease-out;
-                            d:path("M 50 40 L 50 50 V50 70 H-10 M -9.64 70 L -20 70 V40 H 53")
-                        }
-                        .icon:hover text{
-                            transition: all 0.5s ease-out;
-                            fill:rgb(255, 56, 56);
-                            font-weight: 500;
-                        }
-                        @keyframes stroke {
-                            0%{
-                                stroke-dashoffset: 0;
-                            }
-                            100% {
-                                
-                                stroke-dashoffset: 1200;
-                            }
-                        }
                     }
                     @keyframes trans{
                         0%{
@@ -347,12 +284,10 @@ body {
                     }
                 }
                 .items:nth-child(1){
-                    width:40%;
                     opacity: 0;
                     transform: translateY(100%);
                 }
                 .items:nth-child(2){
-                    width:60%;
                     transform: translateY(-100%);
                     animation: to-Y 2s alternate;
                 }
@@ -409,12 +344,7 @@ body {
                 .content{
                     flex-direction:column-reverse;
                     justify-content: center;
-                    .items:nth-child(1){
-                        width:100%;
-                        button{
-                            width:40%;
-                        }
-                    }
+
                     .items:nth-child(2){
                         width:100%;
                         .title{

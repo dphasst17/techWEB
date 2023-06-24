@@ -1,5 +1,5 @@
-import classNames from "classnames/bind";
-import style from "../Home.module.scss";
+import "~/tailwind.css";
+import "../Home.scss";
 import { CartContext } from "~/Contexts/Cart";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -10,7 +10,6 @@ import { FcNext, FcPrevious } from "react-icons/fc";
 import { FaEye, FaHeart } from "react-icons/fa";
 
 
-const cx = classNames.bind(style);
 
 const NewsProduct = () => {
   const navigate = useNavigate();
@@ -84,37 +83,43 @@ const NewsProduct = () => {
     };
   }, []);
   return (
-    <div className={cx("featuredProduct")}>
+    <div className="featuredProduct">
       {dataProduct.length !== 0 ? <h2>News Product</h2> : <></>}
-      {showElement && <div className={cx("itemsFeat")}>
-        <button className={cx("click")} onClick={handlePreviousNew}><FcPrevious /></button>
+      {showElement && <div className="itemsFeat w-full h-4/5 flex justify-center">
+        <button className="click" onClick={handlePreviousNew}><FcPrevious /></button>
         <LazyLoad height={"100%"} width={"80%"} offset={offSet}>
-          <div className={cx("fpDetail")} ref={containerRefNew}>
+          <div className="fpDetail w-full h-full flex" ref={containerRefNew}>
             {dataProduct.map((items, index) => (
-              <div className={cx("fpItems")} key={items.id} style={{ animationDelay: "." + index + "s" }}>
-                <div className={cx("fpImg")}>
-                  <img src={items.url} alt="img New Product" loading="lazy" />
+              <div className="fpItems" key={items.id} style={{ animationDelay: "." + index + "s" }}>
+                <div className="fpImg">
+                  <img src={items.url} alt="img New Product" loading="lazy" className="w-3/4 h-full object-contain" />
                 </div>
-                <div className={cx("fpTitle")}>
+                <div className="fpTitle">
                   {items.title.length > 20
                     ? items.title.slice(0, 20) + `...`
                     : items.title}
                 </div>
-                <div className={cx("fpPrice")}>Price:{items.price} USD</div>
-                <div className={cx("fpButton")}>
-                  <button onClick={() => { navigate("/detail/" + items.id + "/" + items.title) }}>
+                <div className="fpPrice">Price:{items.price} USD</div>
+                <div className="fpButton">
+                  <button onClick={() => { navigate("/detail/" + items.id + "/" + items.title) }} 
+                    className="button w-12 border-none rounded-xl outline-none bg-transparent flex justify-center items-center hover:bg-blue-700"
+                  >
                     <Link to={`/detail/${items.id}/${items.title}`}>
                       <FaEye />
                     </Link>
                   </button>
                   <CartContext.Consumer>
                     {({ addToCart }) => (
-                      <button onClick={() => addToCart(items)}>
+                      <button onClick={() => addToCart(items)}
+                        className="w-3/5 h-2/4 rounded-xl text-white text-base font-semibold bg-blue-800 hover:bg-blue-700"
+                      >
                         ADD TO CART
                       </button>
                     )}
                   </CartContext.Consumer>
-                  <button >
+                  <button 
+                    className="button w-12 border-none rounded-xl outline-none bg-transparent flex justify-center items-center hover:bg-blue-700"
+                  >
                     <Link to={`/detail/${items.id}/${items.title}`}>
                       <FaHeart />
                     </Link>
@@ -124,7 +129,7 @@ const NewsProduct = () => {
             ))}
           </div>
         </LazyLoad>
-        <button className={cx("click")} onClick={handleNextNew}><FcNext /></button>
+        <button className="click" onClick={handleNextNew}><FcNext /></button>
       </div>}
     </div>
   );

@@ -2,8 +2,7 @@
 /* eslint-disable no-lone-blocks */
 import React, { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import style from "./Login.module.scss";
-import classNames from "classnames/bind";
+import  "./Login.scss";
 import Cookies from "js-cookie";
 import {
   faX,
@@ -14,7 +13,6 @@ import { useGoogleLogin } from "@leecheuk/react-google-login";
 import { gapi } from "gapi-script";
 import FormLogin from "./FormLogin";
 
-const cx = classNames.bind(style);
 
 const Login = () => {
   const { isLoad, setIsLoad, HandleLogin } =
@@ -202,13 +200,13 @@ const Login = () => {
       {isLoad === true && <Loading />}
       {isFalse && (
         <div
-          className={cx("falseMess")}
+          className="falseMess"
           style={{ transform: "translateX(" + falseMess + ")" }}
         >
-          <div className={cx("falseCT")}>
+          <div className="falseCT">
             <p>{result}</p>
           </div>
-          <div className={cx("falseBTN")}>
+          <div className="falseBTN">
             <FontAwesomeIcon
               icon={faX}
               onClick={() => {

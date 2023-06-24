@@ -1,33 +1,31 @@
-import classNames from "classnames/bind";
-import style from "../Home.module.scss";
+import "../Home.scss";
 import { FaFacebook, FaGithub} from 'react-icons/fa';
 import { FcGoogle } from "react-icons/fc";
 
-const cx = classNames.bind(style);
 
 
 function Contact() {
   return (
     <>
-      <div className={cx("contact")}>
-        <div className={cx("content")}>
-          <div className={cx("items")}>
+      <div className="contact">
+        <div className="content">
+          <div className="items">
             <h2>Any question please contact</h2>
-            <div className={cx("contactIcon")}>
-              <div className={cx("contactChild")} onClick={() =>{window.location = "https://www.facebook.com/dfasst5"}}>
+            <div className="contactIcon">
+              <div className="contactChild" onClick={() =>{window.location = "https://www.facebook.com/dfasst5"}}>
                   <FaFacebook/><span>FACEBOOK</span>
               </div>
-              <div className={cx("contactChild")} onClick={() => {window.location = "https://github.com/dphasst17"}}>
+              <div className="contactChild" onClick={() => {window.location = "https://github.com/dphasst17"}}>
                   <FaGithub/><span>GITHUB</span>
               </div>
-              <div className={cx("contactChild")}>
+              <div className="contactChild">
                   <FcGoogle/><span>GOOGLE MAIL</span>
               </div>
             </div>
           </div>
-          <div className={cx("items")}>
+          <div className="items">
             <h2>You have a question</h2>
-            <div className={cx("contactIP")}>
+            <div className="contactIP">
               <label htmlFor="username3">Email</label>
               <input
                 

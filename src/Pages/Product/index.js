@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import classNames from "classnames/bind";
-import style from "./Product.module.scss";
+import "~/tailwind.css";
+import  "./Product.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCartShopping,
   faHeart,
   faTableList,
 } from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +12,6 @@ import { Link } from "react-router-dom";
 import Filter from "./Filter";
 import Pagination from "~/components/PaginationView/Pagination";
 
-const cx = classNames.bind(style);
 
 
 function Product() {
@@ -53,50 +51,54 @@ function Product() {
 
 
   return (
-    <div className={cx("product")}>
+    <div className="product">
       <Filter props={{filterBrand,valuePice,newValue,newPrice,setNewValue,setNewPrice}} />
-      <div className={cx("items_container")}>
-        <div className={cx("show")}>
+      <div className="items_container w-[90%] min-h-[500px] overflow-hidden">
+        <div className="show w-full min-h-[693px] flex flex-wrap justify-start items-start pb-[1%]">
           {(data.length > 12
             ? data.slice(Slice - 12, Slice)
             : data.slice(0)
           ).map((product) => (
-            <div className={cx("product-detail")} key={product.id}>
-              <div className={cx("detail-box")}>
-                <div className={cx("itemsImg")}><img src={product.url} alt="img Product Laptop" /></div>
-                <div className={cx("title")}>
-                  <h4>{product.title}</h4>
+            <div className="product-detail w-1/5 h-2/5 mt-[3%] ml-[4%] min-w-[150px] cursor-pointer" key={product.id}>
+              <div className="detail-box w-full flex flex-col justify-around rounded-[16px]">
+                <div className="itemsImg w-full h-4/5 flex justify-center overflow-hidden">
+                  <img src={product.url} alt="img Product Laptop" className="w-full h-[130px] object-contain"/>
                 </div>
-                <div className={cx("infProduct")}>
-                  <p>Cpu: {product.detail.cpu.type}</p>
-                  <p>
+                <div className="title w-full h-1/5">
+                  <h4 className="text-center text-[18px] text-[#bc0c0c] font-semibold overflow-hidden whitespace-nowrap text-ellipsis">{product.title}</h4>
+                </div>
+                <div className="infProduct w-full h-1/2">
+                  <p className="font-semibold text-[16px] text-[#bc0c0c] ml-[5%] overflow-hidden whitespace-nowrap text-ellipsis">Cpu: {product.detail.cpu.type}</p>
+                  <p className="font-semibold text-[16px] text-[#bc0c0c] ml-[5%] overflow-hidden whitespace-nowrap text-ellipsis">
                     Display:{" "}
                     {product.detail.display.size__inch} inch -{" "}
                     {product.detail.display.refresh_rate__hz}
                     hz
                   </p>
-                  <p>Ram: {product.detail.memory.ram__gb}GB</p>
-                  <p>
+                  <p className="font-semibold text-[16px] text-[#bc0c0c] ml-[5%] overflow-hidden whitespace-nowrap text-ellipsis">Ram: {product.detail.memory.ram__gb}GB</p>
+                  <p className="font-semibold text-[16px] text-[#bc0c0c] ml-[5%] overflow-hidden whitespace-nowrap text-ellipsis">
                     Hard drive: {product.detail.storage.type}-
                     {product.detail.storage.capacity__gb}GB
                   </p>
-                  <p>Os: {product.detail.software.os}</p>
+                  <p className="font-semibold text-[16px] text-[#bc0c0c] ml-[5%] overflow-hidden whitespace-nowrap text-ellipsis">Os: {product.detail.software.os}</p>
                 </div>
-                <p>Price: {product.price} USD</p>
-                <div className={cx("button")}>
-                  <CartContext.Consumer>
-                    {({ addToCart }) => (
-                      <button onClick={() => addToCart(product)}>
-                        <FontAwesomeIcon icon={faCartShopping} />
-                      </button>
-                    )}
-                  </CartContext.Consumer>
-                  <button onClick={() => { window.location.pathname = ("/detail/" + product.id + "/" + product.title) }}>
+                <p className="font-semibold text-[16px] text-[#bc0c0c] ml-[5%]">Price: {product.price} USD</p>
+                <div className="button w-full h-[12%] flex justify-around mb-[5%]">
+                  <button className="w-[20%] h-[30px] text-[16px] font-[550] text-white rounded-[5px] bg-blue-800 hover:bg-blue-600 cursor-pointer" onClick={() => { window.location.pathname = ("/detail/" + product.id + "/" + product.title) }}>
                     <Link to={`/detail/${product.id}/${product.title}`}>
                       <FontAwesomeIcon icon={faTableList} />
                     </Link>
                   </button>
-                  <button>
+
+                  <CartContext.Consumer>
+                    {({ addToCart }) => (
+                      <button className="w-1/2 h-[30px] px-[2%] text-[16px] font-[550] text-white rounded-[5px] bg-blue-800 hover:bg-blue-600 cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis" onClick={() => addToCart(product)}>
+                        ADD TO CART
+                      </button>
+                    )}
+                  </CartContext.Consumer>
+
+                  <button className="w-[20%] h-[30px] text-[16px] font-[550] text-white rounded-[5px] bg-blue-800 hover:bg-blue-600 cursor-pointer">
                     <FontAwesomeIcon icon={faHeart} />
                   </button>
                 </div>

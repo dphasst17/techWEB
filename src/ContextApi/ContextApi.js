@@ -12,6 +12,7 @@ export const ApiProvider = ({ children }) => {
   const [Access, setAccess] = useState([]);
   const [Users, setUsers] = useState([]);
   const [valueSearch, setValueSearch] = useState("");
+  const [dataResult,setDataResult] = useState([])
   const [showResult, setIsShowResult] = useState(false);
   const [isShowButton, setIsShowButton] = useState(false);
   const [numPage, setNumPage] = useState([]);
@@ -126,6 +127,18 @@ export const ApiProvider = ({ children }) => {
     }
   }, [cookie,accss,expirationTime]);
 
+  useEffect(() => {
+    const allData = [...DataProduct, ...Access];
+    const data = allData.filter((data) =>
+    valueSearch.length > 0
+      ? 
+      data.brand.toUpperCase().includes(valueSearch.toUpperCase()) ||
+      data.title.toUpperCase().includes(valueSearch.toUpperCase()) ||
+      data.type.toUpperCase().includes(valueSearch.toUpperCase())
+      : null
+  );
+  setDataResult(data);
+  },[DataProduct,Access,valueSearch])
   const handelValueSearch = (valueSearch) => {
     setValueSearch(valueSearch.target.value);
     if (valueSearch.target.value.length > 0) {
@@ -292,9 +305,9 @@ export const ApiProvider = ({ children }) => {
   const SortDataBasedOnPrice = (data,price) =>{
     if (price !== undefined) {
       if (price === "1") {
-        data = data.sort((items, check) => (items.price > check.price ? 1 : -1));
+        return data.sort((items, check) => (items.price > check.price ? 1 : -1));
       } else {
-        data = data.sort((items, check) => (items.price < check.price ? 1 : -1));
+        return data.sort((items, check) => (items.price < check.price ? 1 : -1));
       }
     }
     
@@ -306,6 +319,7 @@ export const ApiProvider = ({ children }) => {
         urlUsers,
         DataProduct,
         Access,
+        dataResult,
         Users,
         valueSearch,
         showResult,

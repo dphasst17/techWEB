@@ -1,5 +1,4 @@
-import classNames from "classnames/bind";
-import style from "./Home.module.scss";
+import "./Home.scss";
 import Slideshow from "./SlideShow";
 import FeaturedProduct from "./FeaturedProduct";
 import NewsProduct from "./NewsProduct";
@@ -9,7 +8,6 @@ import { ApiContext } from "~/ContextApi/ContextApi";
 import Loading from "~/components/Loading/Loading";
 
 
-const cx = classNames.bind(style);
 const Product = React.lazy(() => import('./Product-demo'));
 const AccDemo = React.lazy(() => import('./Accessory-demo'));
 const Contact = React.lazy(() => import('./Contact'));
@@ -17,7 +15,7 @@ function Home() {
   const {isLoad} = useContext(ApiContext)
   return (
     <>
-      <div className={cx("home")}>
+      <div className="home">
         
         <Slideshow />
         <FeaturedProduct />

@@ -1,12 +1,10 @@
-import classNames from "classnames/bind";
-import style from "./User.module.scss";
+import   "./User.scss";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "~/components/Loading/Loading";
 import Pagination from "~/components/PaginationView/Pagination";
 
-const cx = classNames.bind(style);
 function User() {
   const { Users, PaginationPage, isShowButton, numPage,isLoad,HandleActivePage,
     activePage,handlePost } = useContext(ApiContext);
@@ -27,23 +25,23 @@ function User() {
 
   return (
     <>
-      <div className={cx("user")}>
-        <div className={cx("info")}>
-          <div className={cx("title")}>
+      <div className="user">
+        <div className="info">
+          <div className="title">
             <h1>User Information</h1>
           </div>
-          <div className={cx("list")}>
-            <div className={cx("detail")}>
+          <div className="list">
+            <div className="detail">
               {Users.map((user) => 
                 editUser === false ? (
-                  <div className={cx("inf")} key={user.fullName}>
-                    <div className={cx("input")}>{user.fullName}</div>
-                    <div className={cx("input")}>{user.phoneNumber}</div>
-                    <div className={cx("input")}>{user.email}</div>
-                    <div className={cx("input")}>{user.address}</div>
+                  <div className="inf" key={user.fullName}>
+                    <div className="input">{user.fullName}</div>
+                    <div className="input">{user.phoneNumber}</div>
+                    <div className="input">{user.email}</div>
+                    <div className="input">{user.address}</div>
                   </div>
                 ) : (
-                  <div className={cx("inf")} key={user.fullName}>
+                  <div className="inf" key={user.fullName}>
                     <input
                       type="text"
                       placeholder={user.fullName}
@@ -82,7 +80,7 @@ function User() {
                 )
               )}
             </div>
-            <div className={cx("buttonUser")}>
+            <div className="buttonUser">
               {editUser === false ? (
                 <button
                   onClick={() => {
@@ -111,28 +109,28 @@ function User() {
             </div>
           </div>
         </div>
-        <div className={cx("purchaseOrder")}>
+        <div className="purchaseOrder">
           <h1>Purchase Order</h1>
-          <div className={cx("listPurchase")}>
-            <div className={cx("detailPurchase")}>
+          <div className="listPurchase">
+            <div className="detailPurchase">
               {purchase.length !== 0 ? (
                 purchase?.slice(Slice - 5, Slice).map((items) => (
                   <div
-                    className={cx("items")}
+                    className="items"
                     key={items.id}
                     onClick={() => {
                       navigate("/detail/" + items.id + "/" + items.title);
                     }}
                   >
-                    <div className={cx("image")}>
+                    <div className="image">
                       <img src={items.url} alt="Img Product" />
                     </div>
-                    <div className={cx("infProduct")}>
-                      <div className={cx("items-child")}>
+                    <div className="infProduct">
+                      <div className="items-child">
                         <h4>Title: {items.title}</h4>
                         <h4>Price: {items.price} USD</h4>
                       </div>
-                      <div className={cx("items-child")}>
+                      <div className="items-child">
                         <h4>Quantity: {items.quantity}</h4>
   
                         <h4>Total: {items.total} USD</h4>

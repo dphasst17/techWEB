@@ -1,26 +1,10 @@
 .detailPage{
-    width:100%;
-    min-height:370px;
-    height:auto;
     margin:2% auto;
-    display:flex;
-    flex-direction: column;
-    justify-content: space-between;
     .items{
-        width:100%;
-        min-height:350px;
-        height:auto;
-        margin-bottom:4%;
         .itemsChild{
-            width:100%;
-            height:auto;
-            display:flex;
-            flex-direction: row;
-            justify-content: center;
+
             .image{
-                width:40%;
-                display: flex;
-                justify-content: center;
+
                 img{
                     width:80%;
                     height:100%;

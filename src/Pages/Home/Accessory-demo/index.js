@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import classNames from "classnames/bind";
-import style from "../Home.module.scss";
+import "../Home.scss";
+/* import "~/tailwind.css" */
 import { CartContext } from "~/Contexts/Cart";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,7 +8,6 @@ import { faCartShopping, faTableList } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import LazyLoad from 'react-lazy-load';
 
-const cx = classNames.bind(style);
 
 const AccDemo = () => {
   const { Access } = useContext(ApiContext);
@@ -35,32 +34,32 @@ const AccDemo = () => {
   return (
     <>
       {Access.length !==0 ? <h1>OUR ACCESSORY</h1> : <></>}
-      <div className={cx("Access")}>
+      <div className="h-access w-full h-auto flex flex-row flex-wrap content-start justify-around">
         {Access.slice(0, 12).map((dataAcc) => (
-          <div className={cx("accDemo")} key={dataAcc.id}>
+          <div className="accDemo" key={dataAcc.id}>
             {showElement && <LazyLoad height={"auto"} offset={offSet}>
-              <div className={cx("accDemo_Child")}>
-                <div className={cx("image")}>
+              <div className="accDemo_Child w-full flex flex-col">
+                <div className="image">
                   <img src={dataAcc.url} alt="img Access demo" loading="lazy"/>
                 </div>
-                <div className={cx("title")}>
-                  <p>{dataAcc.title}</p>
+                <div className="title">
+                  <p className="w-full text-center font-semibold overflow-hidden whitespace-nowrap text-ellipsis">{dataAcc.title}</p>
                 </div>
-                <div className={cx("accessInf")}>
+                <div className="accessInf">
                   <p>Brand: {dataAcc.brand}</p>
                   <p>Type: {dataAcc.type.toUpperCase()}</p>
                 </div>
-                <div className={cx("items-child")}>
-                  <div className={cx("price")}>Price:{dataAcc.price} USD</div>
-                  <div className={cx("button")}>
+                <div className="items-child w-full flex lg:flex-row flex-col justify-between">
+                  <div className="price w-full lg:w-2/4 font-medium overflow-hidden whitespace-nowrap text-ellipsis">Price:{dataAcc.price} USD</div>
+                  <div className="button w-full lg:w-2/5 flex flex-row justify-between">
                     <CartContext.Consumer>
                       {({ addToCart }) => (
-                        <button onClick={() => addToCart(dataAcc)}>
+                        <button className="w-3/4 lg:w-4/6 bg-blue-800 hover:bg-blue-600" onClick={() => addToCart(dataAcc)}>
                           <FontAwesomeIcon icon={faCartShopping} />
                         </button>
                       )}
                     </CartContext.Consumer>
-                    <button onClick={() =>{window.location.pathname = ("/detail/" + dataAcc.id+"/"+ dataAcc.title)}}>
+                    <button className="w-1/5 lg:w-1/4 bg-blue-800 hover:bg-blue-600" onClick={() =>{window.location.pathname = ("/detail/" + dataAcc.id+"/"+ dataAcc.title)}}>
                       <Link to={`/detail/${dataAcc.id}/${dataAcc.title}`}>
                         <FontAwesomeIcon icon={faTableList} />
                       </Link>

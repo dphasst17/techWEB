@@ -1,0 +1,50 @@
+.resultSearch {
+    padding: 2% 0;
+    .items_container {
+        margin: 0% auto;
+        .show {
+            .product-detail {
+                transition: all .3s linear;
+                opacity: 1;
+                .detail-box {
+                    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                    border: 1px solid rgba(255, 255, 255, 0.3);
+                    .button {
+                        button {
+                            
+                            svg {
+                                path {
+                                    fill: #fff;
+                                }
+                            }
+                        }
+
+                        button:hover {
+                            transition: all 0.3s;
+                            background-color: rgb(0, 94, 255);
+                        }
+
+                        button:nth-child(3):hover svg path {
+                            fill: rgb(211, 8, 8);
+                        }
+                    }
+                    
+                }
+                .detail-box:hover {
+                    background: rgba(28, 28, 28, 0.15);
+                    border-radius: 15px;
+                    transition: all .2s linear;
+                }
+            }
+            @keyframes op {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+        }
+
+    }
+}

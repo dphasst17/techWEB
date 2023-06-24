@@ -1,6 +1,5 @@
-import classNames from "classnames/bind";
 import { CartContext } from "~/Contexts/Cart";
-import style from "./CheckOut.module.scss";
+import  "./CheckOut.scss";
 import React, { useContext, useEffect, useState } from "react";
 import { ApiContext } from "~/ContextApi/ContextApi";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +7,6 @@ import Loading from "~/components/Loading/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 
-const cx = classNames.bind(style);
 
 const CheckOut = () => {
   const { cartItems } = useContext(CartContext);
@@ -57,29 +55,29 @@ const CheckOut = () => {
   };
 
   return (
-    <div className={cx("cart_detail")}>
+    <div className="cart_detail">
       {isLoading === true ? <Loading /> : <></>}
-      <div className={cx("container")}>
+      <div className="container">
         <h1>Check Out</h1>
-        <div className={cx("box")}>
+        <div className="box">
           <CartContext.Consumer>
             {({ cartItems }) => (
               <>
-                <div className={cx("detail")}>
+                <div className="detail">
                   <h2>
                     You have {cartItems?.length > 0 ? cartItems.length : 0}{" "}
                     orders
                   </h2>
-                  <div className={cx("itemsDetail")}>
+                  <div className="itemsDetail">
                     {cartItems?.map((cartItems) => (
                       <>
-                        <div className={cx("listItems")} key={cartItems.id}>
-                          <div className={cx("item")}>
-                            <div className={cx("imgProduct")}>
+                        <div className="listItems" key={cartItems.id}>
+                          <div className="item">
+                            <div className="imgProduct">
                               <img src={cartItems.url} alt="" />
                             </div>
                             <div
-                              className={cx("product_detail")}
+                              className="product_detail"
                               onClick={() => {
                                 navigate(
                                   "/detail/" +
@@ -98,7 +96,7 @@ const CheckOut = () => {
                               <hr></hr>
                               <h4>Price product: {cartItems.price} USD</h4>
                             </div>
-                            <div className={cx("product_detail_second")}>
+                            <div className="product_detail_second">
                               <CartContext.Consumer>
                                 {({ decrementItems }) => (
                                   <button
@@ -108,7 +106,7 @@ const CheckOut = () => {
                                   </button>
                                 )}
                               </CartContext.Consumer>
-                              <div className={cx("countItems")}>
+                              <div className="countItems">
                                 {cartItems.quantity}
                               </div>
                               <CartContext.Consumer>
@@ -137,19 +135,19 @@ const CheckOut = () => {
                     ))}
                   </div>
                 </div>
-                <div className={cx("detail_second")}>
-                  <div className={cx("first")}>
+                <div className="detail_second">
+                  <div className="first">
                     {userID === true ? (
                       Users.map((us) => (
-                        <div className={cx("usDetail")} key={us.fullName}>
-                          <div className={cx("input")}>
+                        <div className="usDetail" key={us.fullName}>
+                          <div className="input">
                             Full name: {us.fullName}
                           </div>
-                          <div className={cx("input")}>
+                          <div className="input">
                             Phone number: {us.phoneNumber}
                           </div>
-                          <div className={cx("input")}>Email: {us.email}</div>
-                          <div className={cx("input")}>
+                          <div className="input">Email: {us.email}</div>
+                          <div className="input">
                             Address: {us.address}
                           </div>
                         </div>
@@ -158,8 +156,8 @@ const CheckOut = () => {
                       <></>
                     )}
                   </div>
-                  <div className={cx("second")}>
-                    <div className={cx("total")}>
+                  <div className="second">
+                    <div className="total">
                       <p>Total Payment: {sumArray(total)}USD</p>
                     </div>
                     <button>Continue shopping</button>
@@ -172,11 +170,11 @@ const CheckOut = () => {
         </div>
       </div>
       <div
-        className={cx("messFalse")}
+        className="messFalse"
         style={{ transform: "translateX(" + height + ")" }}
       >
         <p>{messResult}</p>
-        <div className={cx("iClose")}>
+        <div className="iClose">
           <FontAwesomeIcon
             icon={faX}
             onClick={() => {

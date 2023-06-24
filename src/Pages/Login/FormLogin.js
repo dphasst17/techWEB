@@ -1,27 +1,25 @@
-import classNames from "classnames/bind";
-import style from "./Login.module.scss";
+import  "./Login.scss";
 import { faEye, faEyeSlash, faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaFacebook, FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-const cx = classNames.bind(style);
 
 function FormLogin({props}) {
-    return <div className={cx("login_container")}>
-    <div className={cx("form")}>
-      <div className={cx("backHome")}>
+    return <div className="login_container">
+    <div className="form">
+      <div className="backHome">
         <a href="/">
           <FontAwesomeIcon icon={faRightToBracket} />
         </a>
       </div>
       <form>
-        <div className={cx("itemsForm")}>
+        <div className="itemsForm">
           {props.isLog === true ? (
             <>
               <h2>Log In form</h2>
-              <div className={cx("detail")}>
+              <div className="detail">
                 <div
-                  className={cx("input")}
+                  className="input"
                   style={{
                     borderColor:
                     props.username.length > 0
@@ -38,7 +36,7 @@ function FormLogin({props}) {
                   />
                 </div>
                 <div
-                  className={cx("input")}
+                  className="input"
                   style={{
                     borderColor:
                     props.pass.length > 0
@@ -54,7 +52,7 @@ function FormLogin({props}) {
                     value={props.pass}
                     required
                   />
-                  <div className={cx("eyeSlash")}>
+                  <div className="eyeSlash">
                     {props.showPass === true ? (
                       <FontAwesomeIcon
                         icon={faEyeSlash}
@@ -74,13 +72,13 @@ function FormLogin({props}) {
                     )}
                   </div>
                 </div>
-                <div className={cx("forgotPass")}>
+                <div className="forgotPass">
                   <p>Forgot Password? </p>
                 </div>
                 <button type="button" onClick={props.handleClick}>
                   Login
                 </button>
-                <div className={cx("navigation")}>
+                <div className="navigation">
                   <p onClick={() => props.setIsLog(false)}>Create account</p>
                 </div>
               </div>
@@ -88,9 +86,9 @@ function FormLogin({props}) {
           ) : (
             <>
               <h2>Create account From</h2>
-              <div className={cx("detail")}>
+              <div className="detail">
                 <div
-                  className={cx("input")}
+                  className="input"
                   style={{
                     borderColor:
                     props.username.length > 0
@@ -109,7 +107,7 @@ function FormLogin({props}) {
                 </div>
 
                 <div
-                  className={cx("input")}
+                  className="input"
                   style={{
                     borderColor:
                     props.pass.length > 0
@@ -121,14 +119,14 @@ function FormLogin({props}) {
                     type="password"
                     autoComplete="Password"
                     placeholder="Enter your password"
-                    id={cx("pass")}
+                    id="pass"
                     value={props.pass}
                     onChange={props.handlePassChange}
                     required
                   />
                 </div>
                 <div
-                  className={cx("input")}
+                  className="input"
                   style={{
                     borderColor:
                     props.confirmPass.length > 0
@@ -140,7 +138,7 @@ function FormLogin({props}) {
                     type="password"
                     autoComplete="Confirm Password"
                     placeholder="Confirm your password"
-                    id={cx("confirmPass")}
+                    id="confirmPass"
                     value={props.confirmPass}
                     onChange={props.handleConfirmChange}
                     required
@@ -149,7 +147,7 @@ function FormLogin({props}) {
                 <button type="button" onClick={props.handleClickCreate}>
                   Create account
                 </button>
-                <div className={cx("navigation")}>
+                <div className="navigation">
                   <p onClick={() => props.setIsLog(true)}>
                     You have an account ?
                   </p>
@@ -157,16 +155,16 @@ function FormLogin({props}) {
               </div>
             </>
           )}
-          <span className={cx("loginIcon")}>
-            <span className={cx("Icon")} onClick={props.HandleFacebookLogin}>
+          <span className="loginIcon">
+            <span className="Icon" onClick={props.HandleFacebookLogin}>
               <FaFacebook />
               <span>FACEBOOK</span>
             </span>
-            <span className={cx("Icon")} onClick={props.signIn}>
+            <span className="Icon" onClick={props.signIn}>
               <FcGoogle />
               <span>GOOGLE MAIL</span>
             </span>
-            <span className={cx("Icon")}>
+            <span className="Icon">
               <FaGithub />
               <span>GITHUB</span>
             </span>
