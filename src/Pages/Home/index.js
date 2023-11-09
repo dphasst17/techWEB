@@ -1,11 +1,12 @@
 import "./Home.scss";
 import Slideshow from "./SlideShow";
-import FeaturedProduct from "./FeaturedProduct";
 import NewsProduct from "./NewsProduct";
-
-import React, { Suspense, useContext } from "react";
-import { ApiContext } from "~/ContextApi/ContextApi";
+import React, { Suspense, useContext} from "react";
+import { ApiContext } from "~/contexts/apiContext";
 import Loading from "~/components/Loading/Loading";
+import Selling from "./Selling";
+import ProductView from "./ProductView";
+import GetPosts from "./Posts";
 
 
 const Product = React.lazy(() => import('./Product-demo'));
@@ -18,12 +19,12 @@ function Home() {
       <div className="home">
         
         <Slideshow />
-        <FeaturedProduct />
         <NewsProduct />
-        
+        <Selling />
+        <ProductView />
         <Suspense fallback={<div>LOADING...</div>}><Product /></Suspense>
         <Suspense fallback={<div>LOADING...</div>}><AccDemo /></Suspense>
-        
+        <Suspense fallback={<div>LOADING...</div>}><GetPosts /></Suspense>
         <Suspense fallback={<div>LOADING...</div>}><Contact /></Suspense>
       </div>
       {isLoad === true && <Loading />}

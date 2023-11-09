@@ -1,45 +1,21 @@
 import "~/tailwind.css";
 import "../Home.scss";
-import { CartContext } from "~/Contexts/Cart";
+import { CartContext } from "~/contexts/Cart";
 
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState,useRef } from "react";
-import { ApiContext } from "~/ContextApi/ContextApi";
+import React, {useEffect,useRef } from "react";
 import LazyLoad from "react-lazy-load";
 import { FcNext, FcPrevious } from "react-icons/fc";
 import { FaEye, FaHeart } from "react-icons/fa";
+import { useGetData} from "~/hooks/useFetchData";
 
 
 
 const NewsProduct = () => {
   const navigate = useNavigate();
-  const { DataProduct} = useContext(ApiContext);
-  const [showElement, setShowElement] = useState(false);
-  const [offSet, setOffSet] = useState(0);
+  const {data,err} = useGetData('product','getProductNew');
   const containerRefNew = useRef(null);
-  const dataProduct = DataProduct.filter(
-    (items) =>
-      items.detail.general.year >=
-      2020
-  );
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-  useEffect(() => {
-    window.innerWidth >= 800 ? setOffSet(10) : setOffSet(0)
-  }, [])
-  const handleScroll = () => {
-    const currentScrollPos = window.scrollY;
-    let showElement;
-    if (window.innerWidth >= 800) {
-      showElement = currentScrollPos < 200 || currentScrollPos > 1500 ? false : true;
-    } else {
-      showElement = currentScrollPos < 300 || currentScrollPos > 1500 ? false : true;
-    }
-    setShowElement(showElement);
-  };
   const handleNextNew = () => {
     if (containerRefNew.current) {
       containerRefNew.current.scroll({
@@ -84,33 +60,33 @@ const NewsProduct = () => {
   }, []);
   return (
     <div className="featuredProduct">
-      {dataProduct.length !== 0 ? <h2>News Product</h2> : <></>}
-      {showElement && <div className="itemsFeat w-full h-4/5 flex justify-center">
+      {data !== null &&  <h1 className="font-han font-[30px]">News Product</h1>}
+      { <div className="itemsFeat w-full h-4/5 flex justify-center">
         <button className="click" onClick={handlePreviousNew}><FcPrevious /></button>
-        <LazyLoad height={"100%"} width={"80%"} offset={offSet}>
+        <LazyLoad height={"100%"} width={"80%"} offset={0}>
           <div className="fpDetail w-full h-full flex" ref={containerRefNew}>
-            {dataProduct.map((items, index) => (
-              <div className="fpItems" key={items.id} style={{ animationDelay: "." + index + "s" }}>
+            {data !== null && data.map((items, index) => (
+              <div className="fpItems" key={`${items.idProduct}-new`} style={{ animationDelay: "." + index + "s" }}>
                 <div className="fpImg">
-                  <img src={items.url} alt="img New Product" loading="lazy" className="w-3/4 h-full object-contain" />
+                  <img src={items.imgProduct} alt="img New Product" loading="lazy" className="w-3/4 h-full object-contain" />
                 </div>
-                <div className="fpTitle">
-                  {items.title.length > 20
-                    ? items.title.slice(0, 20) + `...`
-                    : items.title}
+                <div className="fpTitle font-BOO">
+                  {items.nameProduct.length > 20
+                    ? items.nameProduct.slice(0, 20) + `...`
+                    : items.nameProduct}
                 </div>
                 <div className="fpPrice">Price:{items.price} USD</div>
                 <div className="fpButton">
-                  <button onClick={() => { navigate("/detail/" + items.id + "/" + items.title) }} 
+                  <button onClick={() => { navigate(`/detail/${items.idType}/${items.idProduct}/${items.nameProduct}`) }} 
                     className="button w-12 border-none rounded-xl outline-none bg-transparent flex justify-center items-center hover:bg-blue-700"
                   >
-                    <Link to={`/detail/${items.id}/${items.title}`}>
+                    <Link to={`/detail/${items.idType}/${items.idProduct}/${items.nameProduct}`}>
                       <FaEye />
                     </Link>
                   </button>
                   <CartContext.Consumer>
                     {({ addToCart }) => (
-                      <button onClick={() => addToCart(items)}
+                      <button onClick={() => addToCart(items,1)}
                         className="w-3/5 h-2/4 rounded-xl text-white text-base font-semibold bg-blue-800 hover:bg-blue-700"
                       >
                         ADD TO CART
@@ -120,7 +96,7 @@ const NewsProduct = () => {
                   <button 
                     className="button w-12 border-none rounded-xl outline-none bg-transparent flex justify-center items-center hover:bg-blue-700"
                   >
-                    <Link to={`/detail/${items.id}/${items.title}`}>
+                    <Link to={`/detail/${items.idProduct}/${items.nameProduct}`}>
                       <FaHeart />
                     </Link>
                   </button>

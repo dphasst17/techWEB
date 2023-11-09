@@ -49,9 +49,7 @@
         cursor: pointer;
         color:rgb(20, 97, 230);
         font-weight: 650;
-        font-size: 2.2em;
-        
-        border-top:solid 0.5px;
+        font-size: 50px;
         padding:0 2%;
         
     }
@@ -63,15 +61,6 @@
         flex-wrap: wrap;
         align-content: center;
         margin: auto;
-        h2 {
-            height: 15%;
-            text-align: center;
-            cursor: pointer;
-            color:rgb(20, 97, 230);
-            font-weight: 650;
-            font-size: 2.2em;
-            
-        }
         .itemsFeat{
             padding:0 1%;
             .click{
@@ -191,107 +180,41 @@
         }
         
     }
+    .h-soldProduct{
+        .sold-first .sold-detail,.sold-second .sold-detail{
+            animation:trans2 .5s alternate linear;
+        }
+    }
+    .h-viewProduct{
+        .view-first .view-detail,.view-second .view-detail{
+            animation:trans2 .5s alternate linear;
+        }
+    }
     .h-product {
         animation:bc .5s alternate linear;
         .product-info {
-            min-width: 160px;
-            width: 20%;
-            height: 350px;
-            margin: 2%;
-            transform: scale(1, 1);
-            border-radius: 10px;
-            opacity: 1;
-            cursor: pointer;
             .product-detail {
-                padding-bottom:2%;
-                background: rgba(255, 255, 255, 0.2);
-                border-radius: 16px;
-                border: 1px solid rgba(255, 255, 255, 0.3);
                 animation:trans2 .5s alternate linear;
-                .image {
-                    height: 30%;
-                    overflow: hidden;
-                    img {
-                        background-image: none !important;
-                    }
-                }
-                .items {
-                    height: 70%;
-                    .title {
-                        width: 100%;
-                        height: 10%;
-                        p {
-                            font-size: 20px;
-                            height: 50px;
-                            color: #ff0505;
-                           
-                        }
-                    }
-                    .productAccess {
-                        width: 100%;
-                        height: 36%;
-                        .information {
-                            padding-left: 3%;
-                            p {
-                                font-size: 16px;
-                                color:#000;
-                                font-weight: 550;
-                            }
-                        }
-                    }
-                    .items-child {
-                        height: 21%;
-                        .money {
-                            font-size: 20px;
-                            margin-left: 3%;
-                            color: #ff0505;
-                        }
-                        .button {
-                            margin-right:3%;
-                            button {
-                                height: 30px;
-                                font-size: 16px;
-                                border: none;
-                                border-radius: 10px;
-                                ;
-                                cursor: pointer;
-                                svg {
-                                    path {
-                                        fill: #fff;
-                                    }
-                                }
-                            }
-                            button:hover {
-                                
-                                text-decoration: underline;
-                                color: #fff;
-                                transition:all 1s;
-                            }
-                        }
-                    }
-                }
             }
         }
-        
-        @keyframes  trans{
-            0%{opacity:0;transform: translateY(-50%)}
-            100%{opacity:1;transform: translateY(0%)}
-        }
-        @keyframes  trans2{
+        @keyframes trans2{
             0%{opacity:0;transform: translateY(50%)}
             100%{opacity:1;transform: translateY(0%)}
         }
         .product-info:hover {
-            
             .product-detail{
-                box-shadow: -10px -10px 15px rgba(163, 163, 163, 0.5),10px 10px 15px rgba(70,70,70,0.12);
-                transition:box-shadow .5s linear;
                 .items{
+                    .accessInf{
+                        .items-brand,.items-type{
+                            background-color: #29295c;
+                            color:#fff;
+                            transition:all .2s linear
+                        }
+                    }
                     .productAccess{
                         .information{
                             p{
-                                color:#020a7c;
-                                
+                                color:white
                             }
                         }
                     }
@@ -302,223 +225,19 @@
     .h-access {
         animation:bc .5s alternate linear;
         .accDemo {
-            min-width: 160px;
-            width: 21%;
-            height: auto;
-            transform: scale(1, 1);
-            border-radius: 10px;
-            padding-bottom: 2%;
-            cursor: pointer;
             .accDemo_Child {
-                background: rgba(255, 255, 255, 0.2);
-                border-radius: 16px;
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                padding:0 2%;
                 animation:trans2 .5s alternate linear;
-                .image {
-                    width: 100%;
-                    height: 30%;
-                    display: flex;
-                    justify-content: center;
-                    img {
-                        width: 75%;
-                        height: 150px;
-                        object-fit: contain;
-                    }
-                }
-                .title {
-                    width: 100%;
-                    height: 40px;
-                    p {
-                        margin-left: 0%;
-                        font-size: 20px;
-                        height: 50px;
-                        color: #ff0505;
-                    }
-                }
-                .accessInf{
-                    width:100%;
-                    color:#000;
-                    font-weight: 550;
-                }
-                .items-child {
-                    height: 21%;
-                    margin-top: 10%;
-                    .price {
-                        height: 40px;
-                        color: #ff0505;
-                        font-size: 20px;
-                    }
-                    .button {
-                        button {
-                            height: 30px;
-                            font-size: 16px;
-                            border: none;
-                            border-radius: 10px;
-                            margin-right: 5%;
-                            cursor: pointer;
-                            svg {
-                                path {
-                                    fill: #fff;
-                                }
-                            }
-                        }
-                        button:hover {
-                            text-decoration: underline;
-                            color: #fff;
-                        }
-                    }
-                }
             }
         }
         .accDemo:hover {
             .accDemo_Child{
-                box-shadow: -10px -10px 15px rgba(163, 163, 163, 0.5),10px 10px 15px rgba(70,70,70,0.12);
-                transition:all 1s;
                 .accessInf{
-                    color:#020a7c;
+                   p{color:white}
                 }
             }
         }
     }
-    .contact{
-        width:100%;
-        height:250px;
-        display:flex;
-        justify-content: center;
-        opacity: 1;
-        transition: height .1s linear;
-        .content{
-            width:80%;
-            height:100%;
-            display:flex;
-            .items{
-                width:30%;
-                height:100%;
-                display:flex;
-                flex-direction: column;
-                flex-wrap: wrap;
-                align-content: center;
-                justify-content: space-around;
-                
-                h2{
-                    width:100%;
-                    text-align: center;
-                }
-                .contactIcon{
-                    width:100%;
-                    height:80%;
-                    .contactChild{
-                        width:60%;
-                        height:30px;
-                        margin:3% auto;
-                        border-radius:10px;
-                        padding-left:2%;
-                        display:flex;
-                        flex-wrap: wrap;
-                        align-content: center;
-                        animation:oP 2s alternate linear infinite;
-                        transition: all 5s linear;
-                        cursor: pointer;
-                        svg{
-                            width:10%;
-                            height:100%;
-                            margin:auto 0;
-                            
-                        }
-                        span{
-                            margin:auto 2%;
-                            color:#fff;
-                            font-weight: 550;
-                        }
-                    }
-                    .contactChild:nth-child(1){
-                        background-color: #3b5998;
-                        animation-delay: 0s;
-                        svg{
-                            path{
-                                fill:#fff
-                            }
-                        }                       
-                    }
-                    .contactChild:nth-child(2){
-                        background-color: #24292e;
-                        animation-delay: 0.4s;
-                        svg{
-                            path{
-                                fill:#fff
-                            }
-                        }
-                    }
-                    .contactChild:nth-child(3){
-                        background-image:linear-gradient(to left,#DB4437,#F4B400,#0F9D58,#4285F4);
-                        animation-delay: 0.8s;
-                    }
-                    
-                }
-                .contactIP{
-                    width:80%;
-                    height:80%;
-                    display:flex;
-                    flex-direction: column;
-                    position: relative;
-                    margin:0 auto;
-                    label {
-                        
-                        display: inline-block;
-                        font-weight: 600;
-                        cursor: pointer;
-                        position: absolute;
-                        top: 0;
-                        left: 10px;
-                        background-color: #ffffff;
-                        padding: 1px 5px;
-                        font-size: 12px;
-                        transform: translateY(-50%);
-                        color: #222037;
-                        border-radius:10px;
-                      }
-                      input {
-
-                        padding: 15px;
-                        display: block;
-                        width: 100%;
-                        font-size: 14px;
-                        border: 1px solid #6a5af9;
-                        border-radius: 4px;
-                        background-color: transparent;
-                        color: rgb(37, 33, 33);
-                        outline: none;
-                      }
-                      textarea{
-                        width:100%;
-                        outline: none;
-                        border-radius: 4px;
-                        padding-left:2.5%;
-                        margin-top:4%;
-                        border: 1px solid #6a5af9;
-                      }
-                      button{
-                        width:70%;
-                        height:30px;
-                        margin:2% auto;
-                        border-radius:10px;
-                        outline: none;
-                        border:none;
-                        background-color: rgb(70, 117, 200);
-                        color:#fff;
-                        font-size: 20px;
-                        cursor: pointer;
-                      }
-                      
-                }
-            }
-            .items:nth-child(2){
-                width:60%;
-                
-            }
-        }
-    }
+    
     @keyframes oP{
         0%{transform: scale(1);}
         50%{transform: scale(1.1);}
@@ -526,206 +245,3 @@
     }
 }
 
-@media (max-width: 1200px) and (min-width: 761px) {
-    .home {
-        .list {
-            display: none;
-        }
-        h1{
-            font-size: 2em;
-        }
-        .product {
-            .product-info {
-                min-width: 200px;
-                .product-detail {
-                    padding: 1% 0% 4% 0%;
-
-                    .items {
-                        .title {
-                            font-size: 18px;
-                        }
-                        .items-child {
-                            .money {
-                                font-size: 18px;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-@media (max-width: 760px) and (min-width: 610px) {
-    .home {
-
-        h1{
-            font-size: 3em;
-        }
-        .product {
-            justify-content: space-around;
-            .product-info {
-                min-width: 250px;
-                .product-detail {
-                    padding: 1% 0% 4% 0%;  
-                    .items {
-                        .items-child {
-                            .money {
-                                font-size: 17px;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        .contact{
-            height:450px;
-            .content{
-                flex-direction: column;
-                .items{
-                    width:100%;
-                    .contactIcon{
-                        flex-direction: column;
-                    }
-                }
-                .items:nth-child(1){
-                    display:flex;
-                    flex-direction: column;
-                }
-                .items:nth-child(2){
-                    width: 100%;
-                }
-            }
-        }
-    }
-}
-@media (max-width: 609px) {
-    .home {
-
-        h1{
-            font-size: 2em;
-        }
-        .featuredProduct{
-            .itemsFeat{
-                .fpDetail{
-                    .fpItems{
-                        box-shadow: none;
-                        border-radius:0;
-                    }
-                }
-            }
-        }
-        .product {
-            justify-content: center;
-            .product-info {
-                min-width: 147px;
-                
-                .product-detail {
-                    padding: 1% 0% 4% 0%;
-                    border-radius:0;
-                    box-shadow: none;
-                    .image {
-                        height: 24%;
-                    }
-                    .items {
-                        justify-content: space-evenly;
-                        .title {
-                            p {
-                                font-size: 16px;
-                            }
-                        }
-                        .productAccess {
-                            height: auto;
-                            .information {
-                                p {
-                                    font-size: 12px;
-                                }
-                            }
-                        }
-                        .items-child {
-                            flex-direction: column;
-                            justify-content: space-around;
-                            .money {
-                                width: 100%;
-                                font-size: 12px;
-                            }
-                            .button {
-                                width: 100%;
-                                button {
-                                    width: 48%;
-                                    height: 20px;
-                                    border-radius: 5px;
-                                    svg {
-                                        height: 12px;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            .product-info:hover{
-                transform: scale(1);
-            }
-        }
-        .Access {
-            .accDemo {
-                
-                .accDemo_Child {
-                    box-shadow: none;
-                    border-radius:0;
-                    .title {
-                        p {
-                            font-size: 15px;
-                        }
-                    }
-                    .items-child {
-                        flex-direction: column;
-                        .price {
-                            width: 100%;
-                            font-size: 15px;
-                            padding-left: 4%;
-                        }
-                        .button {
-                            width: 100%;
-                            button {
-                                width: 48%;
-                                height: 20px;
-                                border-radius: 5px;
-                                svg {
-                                    height: 12px;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            .accDemo:hover{
-                transform: scale(1);
-            }
-        }
-        .contact{
-            height:550px;
-            .content{
-                flex-direction: column-reverse;
-                .items{
-                    width:100%;
-                    
-                    .contactIcon{
-                        height:50%;
-                        display:flex;
-                        flex-direction: column;
-                        
-                    }
-                }
-                .items:nth-child(1){
-                    display:flex;
-                    flex-direction: column;
-                    justify-content: flex-start;
-                }
-                .items:nth-child(2){
-                    width: 100%;
-                }
-            }
-        }
-    }
-}

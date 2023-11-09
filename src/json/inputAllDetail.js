@@ -1,0 +1,216 @@
+export const laptop = [
+    {
+        name:'cpu',
+        keyword:'cpu'
+    },
+    {
+        name:'capacity',
+        keyword:'capacity'
+    },
+    {
+        name:'maxRam',
+        keyword:'maxram'
+    },
+    {
+        name:'storage',
+        keyword:'storage'
+    },
+    {
+        name:'resolution',
+        keyword:'resolution'
+    },
+    {
+        name:'sizeInch',
+        keyword:'sizeInch'
+    },
+    {
+        name:'battery',
+        keyword:'battery'
+    },
+    {
+        name:'material',
+        keyword:'material'
+    },
+    {
+        name:'os',
+        keyword:'os' 
+    }
+]
+
+export const keyboard = [
+    {
+        name:'layout',
+        keyword:'layout'
+    },
+    {
+        name:'connection',
+        keyword:'connection'
+    },
+    {
+        name:'switch',
+        keyword:'switch'
+    },
+    {
+        name:'keyMaterial',
+        keyword:'material'
+    },
+    {
+        name:'keyboardMaterial',
+        keyword:'keyboardmaterial'
+    },
+    {
+        name:'weight',
+        keyword:'weight'
+    }
+]
+
+export const memory = [
+    {
+        name:'capacityRam',
+        keyword:'capacity'
+    },
+    {
+        name:'busRam',
+        keyword:'busram'
+    },
+    {
+        name:'typeRam',
+        keyword:'typeram'
+    },
+    {
+        name:'speed',
+        keyword:'speed'
+    },
+    {
+        name:'latency',
+        keyword:'latency'
+    },
+    {
+        name:'voltage',
+        keyword:'voltage'
+    },
+    {
+        name:'color',
+        keyword:'color'
+    }
+]
+
+export const storage = [
+    {
+        name:'connectionProtocol',
+        keyword:'connectionprotocol'
+    },
+    {
+        name:'capacityLevels',
+        keyword:'capacitylevels'
+    },
+    {
+        name:'sizeStorage',
+        keyword:'size'
+    }
+]
+
+export const mouse = [
+    {
+        name:'dpi',
+        keyword:'dpi'
+    },
+    {
+        name:'m-connection',
+        keyword:'connection'
+    },
+    {
+        name:'m-switch',
+        keyword:'switch'
+    },
+    {
+        name:'led',
+        keyword:'ledlight'
+    },
+    {
+        name:'m-type',
+        keyword:'type'
+    },
+    {
+        name:'numberBtn',
+        keyword:'number_of_buttons'
+    },
+    {
+        name:'m-size',
+        keyword:'size'
+    },
+    {
+        name:'m-weight',
+        keyword:'weight'
+    }
+]
+
+export const monitor = [
+    {
+        name:'resolution',
+        keyword:'resolution'
+    },
+    {
+        name:'sizeInch',
+        keyword:'sizeInch'
+    },
+    {
+        name:'scan',
+        keyword:'scanfrequency'
+    },
+    {
+        name:'brightness',
+        keyword:'brightness'
+    },
+    {
+        name:'contrast',
+        keyword:'contrast'
+    },
+    {
+        name:'viewing',
+        keyword:'viewing_angle'
+    },
+    {
+        name:'response',
+        keyword:'response_time'
+    },
+    {
+        name:'connection',
+        keyword:'connector'
+    }
+]
+
+export const vga = [
+    {
+        name:'v-memory',
+        keyword:'memory'
+    },
+    {
+        name:'v-memory-speed',
+        keyword:'memoryspeed'
+    },
+    {
+        name:'heartBeat',
+        keyword:'heartbeat'
+    },
+    {
+        name:'v-size',
+        keyword:'size'
+    },
+    {
+        name:'v-resolution',
+        keyword:'resolution'
+    },
+    {
+        name:'n-o-d-p',
+        keyword:'numberOfDisplayPort'
+    },
+    {
+        name:'n-o-hdmi',
+        keyword:'numberOfHDMI'
+    },
+    {
+        name:'sup',
+        keyword:'support'
+    }
+]

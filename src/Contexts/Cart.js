@@ -1,28 +1,33 @@
 
 import React, { useState, useContext, useEffect } from "react";
-import { ApiContext } from "~/ContextApi/ContextApi";
+import { StateContext } from "./stateContext";
+import { cartDeleteOne, cartInsert, cartUpdateOne } from "~/api/cartApi";
+import HandleToken from "~/helper/handleToken";
 
 
 export const CartContext = React.createContext();
 
 export const CartProvider = (props) => {
-  const {Users,handlePost} = useContext(ApiContext)
+  const {users} = useContext(StateContext);
+  const handleCheckExp = HandleToken()
   const [cartItems, setCartItems] = useState([]);
-  useEffect(() =>{setCartItems(Users.flatMap(e => e.listCart))},[Users])
+  useEffect(() =>{users !== null && setCartItems(users.flatMap(e => e.cart))},[users])
   
   
-  const addToCart = (product) => {
-    let checkLogin = JSON.parse(localStorage.getItem("isLogin"));
-    if (checkLogin === true) {
+  const addToCart = (product,count) => {     
+    let isLogin = localStorage.getItem('isLogin') || false
+    if (isLogin === 'true') {
       if (cartItems.length !== 0) {
-        let y = cartItems.filter((items) => items.id === product.id);
-        if (y.length !== 0) {
-          updateExistingProductInCart(cartItems, product);
-        } else {
-          addNewProductToCart(cartItems, product);
+        const checkProductInCart = cartItems.filter((items) => items.idProduct === product.idProduct)
+        if (checkProductInCart.length !== 0) {
+          let postData = checkProductInCart.flatMap(e => {return {idCart: e.idCart,count:e.count + count}})[0]
+          updateCount(postData.idCart,postData.count)
+          updateExistingProductInCart(postData.idCart,postData.count)
+        }else{
+          addNewProductToCart(product,count)
         }
       } else {
-        addNewProductToCart(cartItems, product);
+        addNewProductToCart(product,count)
       }
     } else {
       sessionStorage.setItem(
@@ -32,73 +37,50 @@ export const CartProvider = (props) => {
       window.location.pathname = "/login"
     }
   };
-  
-  const updateExistingProductInCart = (listCart, product) => {
-    let checkID = listCart.map((items) => {
-      if (product.id === items.id) {
-        return {
-          ...items,
-          detail: [],
-          quantity: items.quantity + 1,
-          total: items.price * (items.quantity + 1),
-        };
-      } else {
-        return { ...items, detail: [] };
+  const updateCount = (idCart,count) => {
+    const newData = cartItems.map(e => {
+      if(e.idCart === idCart){
+      return {
+        ...e,
+        count : count
+        }
+      }else{
+        return {...e}
       }
-    });
-    setCartItems(checkID);
-    handlePost({ listCart: checkID });
+    })
+    setCartItems(newData)
+  }
+  const updateExistingProductInCart = (idCart,count) => {
+    cartUpdateOne(idCart,count)
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
   };
-  
-  const addNewProductToCart = (listCart, product) => {
-    setCartItems(cartItems.concat({ ...product,total:product.quantity * product.price, detail: [] }));
-    listCart.push({ ...product,total:product.quantity * product.price, detail: [] });
-    handlePost({ listCart: listCart });
+  const addNewProductToCart = async(product,count) => {
+    const accessToken = await handleCheckExp()
+    cartInsert(accessToken,{idProduct:product.idProduct,count:count})
+      .then(res => {
+        const objNewCart = {idProduct:product.idProduct,count:1,idCart:res.newId[0].idCart,nameProduct:product.nameProduct,imgProduct:product.imgProduct,price:product.price}
+        setCartItems([...cartItems,objNewCart])
+      })
+      .catch(err => console.log(err))
   };
 
-  const deleteItems = (product) => {
-    let currentItems = cartItems;
-    currentItems = currentItems.filter((items) => items.id !== product.id);
-    setCartItems(currentItems);
-    handlePost({listCart:currentItems});
+  const deleteItems = (idCart) => {
+    const newCart = cartItems.filter(e => e.idCart !== idCart)
+    setCartItems(newCart);
+    cartDeleteOne(idCart).then(res => console.log(res)).catch(err => console.log(err))
     
   };
 
-  const incrementItems = (product) => {
-    let increment = cartItems;
-    increment = increment.map((items) => {
-      if (items.id === product.id) {
-        return {
-          ...items,
-          quantity: items.quantity + 1,
-          total: items.price * (items.quantity + 1),
-        };
-      } else {
-        return {
-          ...items,
-        };
-      }
-    });
-    setCartItems(increment);
-    handlePost({listCart:increment});
+  const incrementItems = (idCart) => {
+      const newCount = cartItems.filter(e => e.idCart === idCart).flatMap(e => {return {idCart:e.idCart,count:e.count + 1}})[0]
+      updateCount(newCount.idCart,newCount.count)
+      updateExistingProductInCart(newCount.idCart,newCount.count)
   };
-  const decrementItems = (product) => {
-    let decrement = cartItems;
-    decrement = decrement.map((items) => {
-      if (items.id === product.id && items.quantity > 1) {
-        return {
-          ...items,
-          quantity: items.quantity - 1,
-          total: items.price * (items.quantity - 1),
-        };
-      } else {
-        return {
-          ...items,
-        };
-      }
-    });
-    setCartItems(decrement);
-    handlePost({listCart:decrement});
+  const decrementItems = (idCart) => {
+    const newCount = cartItems.filter(e => e.idCart === idCart).flatMap(e => {return {idCart:e.idCart,count: e.count > 1 ?  e.count - 1:e.count}})[0]
+      updateCount(newCount.idCart,newCount.count)
+      updateExistingProductInCart(newCount.idCart,newCount.count)
   };
   return (
     <CartContext.Provider

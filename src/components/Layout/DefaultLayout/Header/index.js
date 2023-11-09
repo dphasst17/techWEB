@@ -1,8 +1,8 @@
 import "./Header.scss";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { CartContext } from "~/Contexts/Cart";
+import { CartContext } from "~/contexts/Cart";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ApiContext } from "~/ContextApi/ContextApi";
+import { ApiContext } from "~/contexts/apiContext";
 import Cookies from "js-cookie";
 import HeaderMob from "./HeaderMob";
 import HeaderPc from "./HeaderPc";
@@ -16,8 +16,8 @@ const menuNav = [
     path: "/product",
   },
   {
-    title: "ACCESSORY",
-    path: "/accessory",
+    title: "MORE",
+    path: "/more",
   },
 ];
 
@@ -55,9 +55,10 @@ function Header() {
     );
     if (checkLogin === true) {
       localStorage.setItem("isLogin", false);
-      localStorage.removeItem("identificationID")
-      localStorage.removeItem("accessTK")
-      Cookies.remove('RFTokens')
+      localStorage.removeItem("expAccess");
+      localStorage.removeItem("expRefresh");
+      Cookies.remove('refresh')
+      Cookies.remove('access')
       navigate("/login");
     } else {
       navigate("/login");
@@ -67,11 +68,11 @@ function Header() {
   /* Button check out */
   let handleCheckout = () => {
     if (checkLogin === true) {
-      navigate("/checkout");
+      navigate("/cart");
     } else {
       sessionStorage.setItem(
         "pathName",
-        JSON.stringify('/checkout')
+        JSON.stringify('/cart')
       );
       navigate("/login");
     }
@@ -80,11 +81,11 @@ function Header() {
     setIsShow(!isShow);
   };
   let show = () => {
-    navigate("/searchResult");
+    navigate(`/search/${valueSearch}`);
   };
   let handleUser = () => {
     if(checkLogin === true){
-      window.location.pathname = "/user"
+      navigate("/user")
     }else{
       sessionStorage.setItem("pathName",JSON.stringify('/user'));
       navigate("/login");

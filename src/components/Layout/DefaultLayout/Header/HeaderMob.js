@@ -3,7 +3,7 @@ import { faBars, faCartShopping, faCircleUser, faHardDrive, faHouse, faLaptop, f
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
-import { CartContext } from "~/Contexts/Cart";
+import { CartContext } from "~/contexts/Cart";
 import "./Header.scss";
 function HeaderMob({props}) {
     return <div className="headerMob flex lg:hidden w-[90%] h-[6rem] m-auto">

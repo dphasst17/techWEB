@@ -1,120 +1,78 @@
-import React, { useContext } from "react";
-import "./ProductDetail.scss";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams} from "react-router-dom";
-import { ApiContext } from "~/ContextApi/ContextApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faHeart, faTableList } from "@fortawesome/free-solid-svg-icons";
-import { CartContext } from "~/Contexts/Cart";
-
+import { CartContext } from "~/contexts/Cart";
+import { useGetDataByKey} from "~/hooks/useFetchData";
+import * as detailInf from "~/json/inputAllDetail";
+import Comment from "./detailComment";
+import SameType from "./sameProductType";
 const ProductDetail = () => {
-  const { DataProduct, Access } = useContext(ApiContext);
-  const navigate = useNavigate();
-  const {productID} = useParams()
-  const productsData = [...DataProduct, ...Access];
-  const thisProduct = productsData.filter(
-    (items) => Math.floor(items.id) === Math.floor(productID)
-  );
-  const filteredArray = productsData.filter(item => Math.floor(item.id) !== Math.floor(productID));
-  const shuffledArray = filteredArray.sort(() => Math.random() - 0.5); 
-  /* const random = Math.floor(Math.random() * 10) + 9; */
-  const relatedProducts = shuffledArray.slice(0, 6);
+  const {addToCart} = useContext(CartContext)
+  const {idType,productID} = useParams();
+  const {data,err} = useGetDataByKey('product','getProductDetail',JSON.stringify({idType:idType,idProduct:productID}));
+  const {data:dataComment,err:errComment} = useGetDataByKey('comment','getCommentById',JSON.stringify({idProduct:productID}))
+  const [img,setImg] = useState("");
+  const [comments,setComments] = useState(null)
+  useEffect(() => {
+    data !== null && setImg(data[0].imgProduct.filter(e => e.type === "default")[0])
+    dataComment !== null && setComments(dataComment[0].detail)
+  },[data,dataComment])
+  const handleChangeDataAddToCart = (product,count) => {
+    const newData = [product].map(e => {
+      return {
+        ...e,
+        imgProduct:e.imgProduct.filter(i => i.type === "default")[0].img
+      }
+    })
+    addToCart(newData[0],count)
+  }
   return (
-    <div className="detailPage w-full h-auto min-h-[370px] flex flex-col justify-between">
-      <div className="items w-full min-h-[350px] h-auto mb-[4%]">
-        {thisProduct.map((items) => {return <div className="itemsChild w-full h-auto flex flex-row justify-center" key={items.id}>
-              <div className="image w-2/5 flex justify-center">
-                <img src={items.url} alt="img Product" className="w-4/5 h-full object-contain"/>
+    <div className="detailPage w-full h-auto min-h-[810px] flex flex-col justify-between">
+      <div className="items w-full min-h-[350px] h-auto my-[4%]">
+        {data?.map((items) => {return <div className="itemsChild w-full h-auto flex flex-row justify-center" key={items.idProduct}>
+              <div className="image w-2/5 flex flex-col items-center justify-center">
+                <img src={img.img} alt="img Product" className="w-[300px] h-[300px] object-contain"/>
+                <div className="listAllImg w-full h-auto flex flex-wrap justify-between items-center">
+                  {data !== null && items.imgProduct.map((e,i) => <img key={`${e.type}-${i}`} onClick={() => {setImg(e)}} className={`w-[150px] h-[100px] object-contain ${img.img === e.img && 'border-solid border-[2px] border-blue-500 rounded-lg'}`} src={e.img} alt="imgProduct"/>)}
+                </div>
               </div>
-              <div className="itemsContent">
-                <div className="title">
-                  <h1>{items.title}</h1>
+              <div className="itemsContent w-2/4 h-auto flex flex-col">
+                <div className="title w-full flex items-center justify-center">
+                  <h1 className="text-[30px] font-bold text-slate-600">{items.nameProduct}</h1>
                 </div>
                 <hr></hr>
-                <div className="price">
-                  <h1>Price: {items.price} USD</h1>
+                <div className="price w-full h-auto">
+                  <h1 className="text-[20px] font-semibold text-slate-500">Price: <span className="text-[25px] font-bold text-blue-500">{items.price}</span> USD</h1>
                 </div>
-                {items.type === "laptop"
-                  ? 
-                      <div className="infoProduct">
-                        <h3>
-                          Cpu:
-                          {items.detail.cpu.type
-                          }
-                        </h3>
-                        <h3>
-                          Display:
-                          {items.detail.display.size__inch}
-                          inch -
-                          {items.detail.display.refresh_rate__hz
-                          }
-                          hz
-                        </h3>
-                        <h3>
-                          Ram: {items.detail.memory.ram__gb}GB
-                        </h3>
-                        <h3>
-                          Hard drive:
-                          {items.detail.storage.type}-
-                          {items.detail.storage.capacity__gb}GB
-                        </h3>
-                        <h3>Os: {items.detail.software.os}</h3>
-                      </div>
-                    
-                  : items.detail.map((item) => (
-                      <div className="infoProduct" key={items.id}>
-                        <h3>{item.inf.map((items) => items.inf1)}</h3>
-                        <h3>{item.inf.map((items) => items.inf2)}</h3>
-                        <h3>{item.inf.map((items) => items.inf3)}</h3>
-                      </div>
-                    ))}
-                <div className="button">
-                    <CartContext.Consumer>
-                        {({ addToCart }) => (
-                          <button onClick={() => addToCart(items)}>
-                            Add to Cart
-                          </button>
-                        )}
-                    </CartContext.Consumer>
-                  <button>Add to favorites</button>
+                <div className="des w-full h-auto text-[20px] font-semibold text-slate-500 my-4">
+                  DES : <span className="font-bold text-slate-600">{items.des}</span>
+                </div>
+                <div className="detail w-full h-auto flex flex-col justify-center my-4">
+                  {detailInf[items.nameType].map((e,i) => 
+                    <span className="w-full h-auto text-slate-500 text-[18px] font-semibold" key={`${e}-${i}`}>
+                      {e.keyword.toUpperCase()}:
+                      <span className="text-[20px] font-bold text-blue-500">
+                        {items.detail.map(d => typeof(d[e.keyword]) === 'number' ? d[e.keyword].toFixed(1):d[e.keyword])}
+                      </span>
+                    </span>
+                  )}
+                </div>
+                <div className="button w-full h-auto flex items-center justify-center">
+                  <button className="w-[200px] h-[40px] rounded-lg bg-blue-800 text-white font-semibold m-2" onClick={() => handleChangeDataAddToCart(items,1)}>
+                    Add to Cart
+                  </button>
+                  <button className="w-[200px] h-[40px] rounded-lg bg-red-800 text-white font-semibold m-2">Add to favorites</button>
                 </div>
               </div>
             </div>}
             
           )}
       </div>
-      <div className="relatedProducts">
-        <h1>YOU MAY ALSO LIKE</h1>
-        <div className="relatedChild">
-        {thisProduct !== undefined ? (
-          relatedProducts.map((items) => (
-            <div className="relatedDetail" key={items.id}>
-                <div className="imgRelated">
-                    <img src={items.url} alt="img Related"/>
-                </div>
-                <div className="titleRelated">
-                    <h4>{(items.title.length > 18) ? items.title.slice(0,18)+ `...`: items.title}</h4>
-                </div>
-                <div className="priceRelated">
-                    <h4>Price: {items.price} USD</h4>
-                </div>
-                <div className="button">
-                    <CartContext.Consumer>
-                    {({ addToCart }) => (
-                      <button onClick={() => addToCart(items)}>
-                        <FontAwesomeIcon icon={faCartShopping} />
-                      </button>
-                    )}
-                  </CartContext.Consumer>
-                    <button onClick={() => {navigate("/detail/"+ items.id +"/" + items.title)}}><Link to={`/detail/${items.id}/${items.title}`}><FontAwesomeIcon icon={faTableList}/></Link ></button>
-                    <button><FontAwesomeIcon icon={faHeart}/></button>
-                </div>
-            </div>
-          ))
-        ) : (
-          <></>
-        )}
-        </div>
-      </div>
+      <h1 className="text-center text-[30px] text-slate-600 font-bold">Comment</h1>
+      <Comment data={comments} />
+      <h1 className="text-center text-[30px] text-slate-600 font-bold">The products of the same type</h1>
+      <SameType props={{idType,idProduct:productID}}/>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import Header from "~/components/Layout/DefaultLayout/Header";
 import Footer from "./Footer";
 import { useContext } from "react";
-import { ApiContext } from "~/ContextApi/ContextApi";
+import { ApiContext } from "~/contexts/apiContext";
 import ScrollToTop from "./ScrollToTop";
 import { useLocation } from "react-router-dom";
 import Login from "~/Pages/Login";

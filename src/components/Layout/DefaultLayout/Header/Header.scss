@@ -43,7 +43,6 @@
         }
     }
     .search {
-        border:solid 1px;
         .searchResult {
             box-shadow: 2px 2px 2px 2px grey;
             .title {
@@ -72,16 +71,13 @@
         }
     }
     .icon {
-        width: 10%;
         .detail {
-            height:30px;
+            position:relative;
             .cart_Shopping {
                 svg {
-                    width:50%;
-                    height: 100%;
-                    path {
-                        fill: #000;
-                    }
+                    width:40%;
+                    height:100%;
+                    
                 }
 
                 .cart_contents {
@@ -113,10 +109,9 @@
     
             .iconUser {
                 svg {
+                    width:40%;
                     height: 100%;
-                    path {
-                        fill: #000;
-                    }
+                    
                 }
             }
         }

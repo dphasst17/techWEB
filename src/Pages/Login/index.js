@@ -1,22 +1,15 @@
 /* eslint-disable no-undef */
-/* eslint-disable no-lone-blocks */
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import  "./Login.scss";
 import Cookies from "js-cookie";
-import {
-  faX,
-} from "@fortawesome/free-solid-svg-icons";
-import { ApiContext } from "~/ContextApi/ContextApi";
+import { faX } from "@fortawesome/free-solid-svg-icons";
 import Loading from "~/components/Loading/Loading";
 import { useGoogleLogin } from "@leecheuk/react-google-login";
 import { gapi } from "gapi-script";
 import FormLogin from "./FormLogin";
-
+import { login } from "~/api/authApi";
 
 const Login = () => {
-  const { isLoad, setIsLoad, HandleLogin } =
-    useContext(ApiContext);
   const [username, setUserName] = useState("");
   const [pass, setPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
@@ -26,12 +19,12 @@ const Login = () => {
   const [isFalse, setIsFalse] = useState(false);
   const [result, setResult] = useState("");
   const [isLog, setIsLog] = useState(true);
-  
+  const [isLoad,setIsLoad] = useState(false)
+
   const name = sessionStorage.getItem("pathName")
     ? JSON.parse(sessionStorage.getItem("pathName"))
     : "/";
-  const clientId =
-    "132575877421-gig4g2ahetogi4sr2071v1i3d4j1eifu.apps.googleusercontent.com";
+  const clientId = process.env.REACT_APP_URL_GOOGLE
 
   const handleUserNameChange = (username) => {
     setUserName(username.target.value);
@@ -43,21 +36,18 @@ const Login = () => {
     setConfirmPass(confirmPass.target.value);
   };
 
+  const showMessage = (message) => {
+    setResult(message);
+    setTimeout(() => {
+      setIsFalse(!isFalse);
+      setFalseMess("2%");
+    });
+    setTimeout(() => {
+      setIsFalse(!isFalse);
+      setFalseMess("-200%");
+    }, 4000);
+  };
 
-  
-    const showMessage = (message) => {
-      setResult(message);
-      setTimeout(() => {
-        setIsFalse(!isFalse);
-        setFalseMess("2%");
-      });
-      setTimeout(() => {
-        setIsFalse(!isFalse);
-        setFalseMess("-200%");
-      }, 4000);
-    };
-
-  
   useEffect(() => {
     // Khởi tạo SDK của Facebook
     window.fbAsyncInit = function () {
@@ -79,20 +69,18 @@ const Login = () => {
     })(document, "script", "facebook-jssdk");
   }, []);
 
-  
   /* LOGIN WITH FACEBOOK */
   const HandleFacebookLogin = () => {
     window.FB.login((response) => {
       if (response.authResponse) {
         window.FB.api("/me", { fields: "name,email" }, (response) => {
-          HandleLogin(response.name, response.email, name);
+          handleLogin({email:response.email, name:response.name});
         });
       } else {
         setFalseMess("2%");
       }
     });
   };
-
 
   /*LOGIN WITH GOOGLE  */
   useEffect(() => {
@@ -104,7 +92,7 @@ const Login = () => {
     console.log(error); /* message err */
   };
   const onSuccess = (response) => {
-    HandleLogin(response.profileObj.name, response.profileObj.email, name);
+    handleLogin({email:response.profileObj.email, name:response.profileObj.name});
   };
 
   const { signIn } = useGoogleLogin({
@@ -113,37 +101,41 @@ const Login = () => {
     clientId,
   });
   /* LOGIN WITH USERNAME */
+  const handleLogin = (infoLogin) => {
+    login(infoLogin)
+      .then((res) => {
+        const accessToken = res.accessToken;
+        const refreshToken = res.refreshToken;
+
+        localStorage.setItem("expAccess", res.expAccess);
+        localStorage.setItem("expRefresh", res.expRefresh);
+        Cookies.set("access", accessToken, {
+          expires: new Date(res.expAccess * 1000),
+        });
+        Cookies.set("refresh", refreshToken, {
+          expires: new Date(res.expRefresh * 1000),
+          path: "/",
+        });
+        Cookies.set("role", res.role, {
+          expires: new Date(res.expRefresh * 1000),
+          path: "/",
+        });
+        localStorage.setItem("isLogin", true);
+        setIsLoad(false);
+        if (name) {
+          window.location.pathname = name === "/login" ? "/" : name;
+        } else {
+          window.location.pathname = "/";
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   const handleClick = () => {
     if (username !== "" && pass !== "") {
-      setIsLoad(true)
-      const option = {
-        method: "POST",
-        headers: { "Content-type": "application/json; charset=UTF-8" },
-        body: JSON.stringify({
-          username: username,
-          password: pass,
-        }),
-      };
-      fetch(process.env.REACT_APP_URL_LOGIN, option)
-        .then((res) => res.json())
-        .then((res) => {
-          const accessToken = res.accessToken;
-          const refreshToken = res.refreshToken;
-          const expirationTime = res.expirationTime 
-
-          localStorage.setItem("accessTK", accessToken);
-          localStorage.setItem("expirationTime", expirationTime);
-          Cookies.set("RFTokens", refreshToken, { expires: 5, path: "/" });
-          localStorage.setItem("isLogin", true);
-          setIsLoad(false)
-          if (name){
-            window.location.pathname = name === "/login" ? "/" : name 
-            
-          }else{ 
-            window.location.pathname = "/"; 
-          }
-        })
-        .catch((e) => {console.log(e)})
+      setIsLoad(true);
+      handleLogin({ username: username, password: pass });
     } else {
       setResult("Please enter in your login information!");
       setTimeout(() => {
@@ -157,19 +149,18 @@ const Login = () => {
     }
   };
   /* CREATE ACCOUNT */
-  
 
   let handleClickCreate = () => {
     if (username === "" || pass === "" || confirmPass === "") {
       showMessage("Please enter information!");
       return;
     }
-  
+
     if (confirmPass !== pass) {
       showMessage("Password confirmation failed");
       return;
     }
-  
+
     setIsLoad(true);
     const option = {
       method: "POST",
@@ -179,24 +170,42 @@ const Login = () => {
         password: pass,
       }),
     };
-    fetch(process.env.REACT_APP_URL_REGISTER, option).then((res) => {
-      if (res.status === 201 || res.status === 400) {
-        if (res.status === 201) {
-          setIsLoad(false);
-          setIsLog(true);
-        } else {
-          setIsLoad(false);
-          showMessage("Username is already taken");
+    fetch(process.env.REACT_APP_URL_REGISTER, option)
+      .then((res) => {
+        if (res.status === 201 || res.status === 400) {
+          if (res.status === 201) {
+            setIsLoad(false);
+            setIsLog(true);
+          } else {
+            setIsLoad(false);
+            showMessage("Username is already taken");
+          }
         }
-      }
-    })
-    .catch((e) => {console.log(e)})
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
     <>
-      <FormLogin props={{HandleFacebookLogin,isLog,username,pass,confirmPass,type,showPass,setType,setShowPass,
-        setIsLog,handleClickCreate,handleClick,handleUserNameChange,handlePassChange,handleConfirmChange,signIn}}/>
+      <FormLogin
+        props={{
+          HandleFacebookLogin,
+          isLog,
+          type,
+          showPass,
+          setType,
+          setShowPass,
+          setIsLog,
+          handleClickCreate,
+          handleClick,
+          handleUserNameChange,
+          handlePassChange,
+          handleConfirmChange,
+          signIn,
+        }}
+      />
       {isLoad === true && <Loading />}
       {isFalse && (
         <div
