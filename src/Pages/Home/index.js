@@ -10,7 +10,6 @@ import GetPosts from "./Posts";
 
 
 const Product = React.lazy(() => import('./Product-demo'));
-const AccDemo = React.lazy(() => import('./Accessory-demo'));
 const Contact = React.lazy(() => import('./Contact'));
 function Home() {
   const {isLoad} = useContext(ApiContext)
@@ -23,7 +22,6 @@ function Home() {
         <Selling />
         <ProductView />
         <Suspense fallback={<div>LOADING...</div>}><Product /></Suspense>
-        <Suspense fallback={<div>LOADING...</div>}><AccDemo /></Suspense>
         <Suspense fallback={<div>LOADING...</div>}><GetPosts /></Suspense>
         <Suspense fallback={<div>LOADING...</div>}><Contact /></Suspense>
       </div>

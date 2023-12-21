@@ -16,7 +16,7 @@ const publicRoutes = [
   { path: "/", component: Home },
   { path: "/more", component: More },
   { path: "/product", component: Product },
-  { path: "/detail/:idType/:productID/:productTitle", component: ProductDetail },
+  { path: "/detail/:idType/:nameType/:productID/:productTitle", component: ProductDetail },
   { path: "/posts/detail/:idPosts/:postsTitle", component: PostsDetail },
   { path: "/cart", component: Cart },
   { path: "/search/:keyword", component: SearchResult },

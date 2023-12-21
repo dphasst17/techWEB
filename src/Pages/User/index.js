@@ -91,16 +91,16 @@ function User() {
                 )
               )}
             </div>
-            <div className="buttonUser">
+            <div className="buttonUser w-full flex items-center justify-center">
               {editUser === false ? (
                 <button
                   onClick={() => {
                     setEditUser(true);
                   }}
-                  className="font-bold flex items-center justify-center"
+                  className="w-full ssm:w-2/4 font-bold flex items-center justify-center"
                 >
-                  <FaUserEdit className="w-1/5 h-2/4"/>
-                  Edit information
+                  <FaUserEdit className="w-[10%] h-4/5"/>
+                  Edit
                 </button>
               ) : (
                 <button
@@ -131,7 +131,7 @@ function User() {
                     className="items"
                     key={`${items.idBill}-${items.idProduct}`}
                     onClick={() => {
-                      navigate("/detail/" + items.id + "/" + items.title);
+                      navigate(`/detail/${items.idType}/${items.nameType}/${items.idProduct}/${items.nameProduct}`);
                     }}
                   >
                     <div className="image">

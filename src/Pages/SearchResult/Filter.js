@@ -4,8 +4,6 @@ import HandleFilterData  from "~/helper/filterData";
 
 function Filter({ props }) {
   const [showFilBrand, setShowFilBrand] = useState(false);
-
-
   const handleChange = (event) => {
     props.setValueFil([]);
     setShowFilBrand(false);

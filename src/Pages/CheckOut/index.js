@@ -39,7 +39,7 @@ const CheckOut = () => {
         orderInsert(accessToken,stateForm)
         .then(res => {
           if(res.message === "Insert success"){
-            window.location.href = '/success'
+            navigate('/success')
           }
         })
         .catch(err => console.log(err))

@@ -26,7 +26,7 @@ const Selling = () => {
             }} ref={refs[i]} key={e.idProduct} className={`sold-detail w-full h-full ${inView ? 'flex':'hidden'} justify-center items-center`}>
               <div className="sold-detail-child w-4/5 h-4/5 flex xl:flex-col flex-row justify-center items-center">
                 <div className="sold-detail-img w-2/5 xl:w-full h-full xl:h-2/4 flex justify-center items-center"
-                  onClick={() => {navigate(`/detail/${e.idType}/${e.idProduct}/${e.nameProduct}`)}}
+                  onClick={() => {navigate(`/detail/${e.idType}/${e.nameType}/${e.idProduct}/${e.nameProduct}`)}}
                 >
                   <img
                     className="w-3/4 h-full object-contain"

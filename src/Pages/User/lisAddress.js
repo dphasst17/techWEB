@@ -37,15 +37,15 @@ const Address = ({props}) => {
         <h1 className="text-center text-[30px] font-bold text-slate-700 my-2">List address</h1>
         <div className="listAddress w-full h-auto flex flex-wrap justify-center 2xl:justify-between items-center py-2  cursor-pointer">
             {address !== null && address.map(e => <div className="addressDetail w-full h-auto flex flex-wrap justify-center items-center">
-                <div className={`showAddress lg:w-3/5 flex items-center justify-center h-auto min-h-[40px] my-2 ${e.typeAddress === "default" ? 'bg-slate-700' :'bg-slate-500'} hover:bg-slate-700 transition-al text-white font-semibold rounded-[5px] px-2`} key={e.idAddress}>
+                <div className={`showAddress w-full lg:w-3/5 flex items-center justify-center h-auto min-h-[40px] my-2 ${e.typeAddress === "default" ? 'bg-slate-700' :'bg-slate-500'} hover:bg-slate-700 transition-al text-white font-semibold rounded-[5px] px-2`} key={e.idAddress}>
                     {e.detail}
                 </div>
                 <span className={`w-[12%] min-w-[80px] h-[30px] flex items-center justify-center text-white font-bold ${e.typeAddress === "default" ?'bg-red-700':'bg-blue-600'} ml-2 px-3 py-1 rounded-[5px]`}>
                     {e.typeAddress === "default" ?'Default':'Extra'}
                 </span>
-                <div className="btnAddress w-auto min-w-[150px] h-[50px] flex justify-evenly items-center">
+                    <button onClick={() => {handleChangeType(e.idAddress,e.typeAddress)}} className="w-[150px] h-[30px] mx-2 my-2 ssm:my-0 bg-blue-500 hover:bg-blue-700 rounded-lg text-white text-[15px] font-semibold transition-all">{e.typeAddress === "default" ? 'Set to extra' :'Set to default'}</button>
+                <div className="btnAddress w-auto min-w-[60px] h-[50px] flex justify-evenly items-center">
                     <MdDeleteSweep className="w-2/4 h-3/5 text-red-600 hover:text-red-400 transition-all"/>
-                    <button onClick={() => {handleChangeType(e.idAddress,e.typeAddress)}} className="w-[150px] h-[30px] bg-blue-500 hover:bg-blue-700 rounded-lg text-white text-[15px] font-semibold transition-all">{e.typeAddress === "default" ? 'Set to extra' :'Set to default'}</button>
                 </div>
             </div>)}
         </div>

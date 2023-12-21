@@ -11,6 +11,8 @@ export const StateProvider = ({children}) => {
     const [monitor,setMonitor] = useState(null);
     const [storage,setStorage] = useState(null);
     const [vga,setVga] = useState(null);
+    const [type,setType] = useState(null);
+    const [product,setProduct] = useState(null);
     const [listCart,setListCart] = useState([]);
     const [listOrder,setListOrder] = useState([]);
     const [valueFil, setValueFil] = useState([]);
@@ -27,6 +29,8 @@ export const StateProvider = ({children}) => {
             monitor,setMonitor,
             storage,setStorage,
             vga,setVga,
+            type,setType,
+            product,setProduct,
             listCart,setListCart,
             listOrder,setListOrder,
             valueFil, setValueFil,

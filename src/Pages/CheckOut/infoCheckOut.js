@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { StateContext } from "~/contexts/stateContext";
 import {HiPencilAlt} from "react-icons/hi"
+import Payment from "./payment";
 const Info = ({props}) => {
     const {users,address} = useContext(StateContext);
     const { register, handleSubmit,formState: { errors: err } } = useForm();
@@ -44,7 +45,7 @@ const Info = ({props}) => {
                 </div>)}
                 <button className="w-[150px] h-[30px] bg-blue-500 my-2 rounded-lg text-white text-[18px] font-semibold" onClick={() => {setShowAll(false)}}>Save</button>
         </div>}
-        <div className="c-o-product w-4/5 h-[500px] flex flex-col justify-start bg-slate-100 my-6 rounded-[5px] shadow-md p-2">
+        <div className="c-o-product w-4/5 h-auto flex flex-col justify-start bg-slate-100 my-6 rounded-[5px] shadow-md p-2">
             {props.data !== null &&
                 <div className="calculationProduct w-full h-full flex flex-col">
                     <div className="w-full h-[10%] flex justify-between text-[15px] font-semibold">
@@ -60,7 +61,7 @@ const Info = ({props}) => {
                         <span>{props.data.length !== 0 ? props.data.map(e => e.count * e.price).reduce((a,b) => a + b) : '0'} USD</span>
                     </div>
                     <span className="text-[15px] font-semibold mb-2">Shipping method*</span>
-                    <div className="w-full h-[130px] flex justify-around text-[15px] font-semibold mb-2">
+                    <div className="w-full h-[130px] min-h-[100px] flex justify-around text-[15px] font-semibold mb-2">
                         <label className={`w-2/5 h-full flex flex-col justify-around pl-2 cursor-pointer ${props.costs === 1.25 && 'border-solid border-blue-500 border-[2px]'} bg-white rounded-lg`}>
                             <input className="hidden" type="checkbox" onClick={() => {props.setCosts(1.25)}}/>
                             <p style={{color:'#111827'}}>Fast Shipping</p>
@@ -75,7 +76,7 @@ const Info = ({props}) => {
                         </label>
                     </div>
                     <span className="text-[15px] font-semibold my-2">Payment method*</span>
-                    <div className="w-full h-[50px] flex justify-around text-[15px] font-semibold mb-2">
+                    <div className="w-full h-[50px] min-h-[50px] flex justify-around text-[15px] font-semibold mb-2">
                         <label className={`w-2/5 h-full flex flex-col justify-around pl-2 cursor-pointer ${props.payMethods === "Payments on delivery" && 'border-solid border-blue-500 border-[2px]'} bg-white rounded-lg`}>
                             <input className="hidden" type="checkbox" onClick={() => {props.setPayMethods("Payments on delivery")}}/>
                             <p style={{color:'#111827'}}>Payments on delivery</p>
@@ -85,6 +86,7 @@ const Info = ({props}) => {
                             <p style={{color:'#111827'}}>Payment through bank</p>
                         </label>
                     </div>
+                    {props.payMethods === "Payment through bank" && <Payment />}
                     <div className="w-full h-[10%] flex justify-between items-center text-[20px] font-semibold mt-6">
                         <span>The total amount payable:</span>
                         <span>{props.data.length !== 0 ? props.data.map(e => e.count * e.price).reduce((a,b) => a + b) + (props.costs !==0 && props.costs) :'0'} USD</span>

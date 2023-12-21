@@ -19,3 +19,6 @@ export const getProductByView = async() => {
 export const getProductSold = async() => {
     return fetch(`${process.env.REACT_APP_URL_SERVER}/api/statistical/bestselling`).then(res => {return res.json()})
 }
+export const getType = async() => {
+    return fetch(`${process.env.REACT_APP_URL_SERVER}/api/product/info/type`).then(res => {return res.json()})
+}

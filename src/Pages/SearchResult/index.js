@@ -47,14 +47,12 @@ function SearchResult() {
       ? setData(
           result.filter((product) => {
             return valueFil.every((obj) => {
-              return obj.key === "brand"
-                ? obj.values.includes(product[obj.key])
-                : obj.values.includes(product.detail[0][obj.key]);
+              return obj.values.includes(product[obj.key])
             });
           })
         )
       : setData(result);
-  }, [result, valueFil, filPrice]);
+  }, [result, valueFil]);
 
   useEffect(() => {
     result !== null &&

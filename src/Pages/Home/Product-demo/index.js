@@ -64,22 +64,22 @@ const Product = () => {
                         </div>
                         <div className="productAccess w-full h-[36%]">
                           <div className="information pl-[3%]">
-                            <p className="transition-all font-han text-[18px] text-gray-300 font-semibold overflow-hidden whitespace-nowrap text-ellipsis text-black">
+                            <p className="transition-all font-han text-[18px] font-semibold overflow-hidden whitespace-nowrap text-ellipsis text-slate-200">
                               Cpu: {product.detail.map(e => e.cpu)}
                             </p>
-                            <p className="transition-all font-han text-[18px] text-gray-300 font-semibold overflow-hidden whitespace-nowrap text-ellipsis text-black">
+                            <p className="transition-all font-han text-[18px] font-semibold overflow-hidden whitespace-nowrap text-ellipsis text-slate-200">
                               Display: {product.detail.map(e => e.sizeInch.toFixed(1))} inch
                               - {product.detail.map(e => e.resolution)}
                               hz
                             </p>
-                            <p className="transition-all font-han text-[18px] text-gray-300 font-semibold overflow-hidden whitespace-nowrap text-ellipsis text-black">
+                            <p className="transition-all font-han text-[18px]  font-semibold overflow-hidden whitespace-nowrap text-ellipsis text-slate-200">
                               Ram: {product.detail.map(e => e.capacity)}GB
                             </p>
-                            <p className="transition-all font-han text-[18px] text-gray-300 font-semibold overflow-hidden whitespace-nowrap text-ellipsis text-black">
+                            <p className="transition-all font-han text-[18px]  font-semibold overflow-hidden whitespace-nowrap text-ellipsis text-slate-200">
                               Storage:
                               {product.detail.map(e => e.storage)}
                             </p>
-                            <p className="transition-all font-han text-[18px] text-gray-300 font-semibold overflow-hidden whitespace-nowrap text-ellipsis text-black">
+                            <p className="transition-all font-han text-[18px]  font-semibold overflow-hidden whitespace-nowrap text-ellipsis text-slate-200">
                               Os: {product.detail.map(e => e.os)}
                             </p>
                           </div>
@@ -108,7 +108,7 @@ const Product = () => {
                             </CartContext.Consumer>
                             <button
                               onClick={() => {
-                                navigate(`/detail/${product.idType}/${product.idProduct}/${product.nameProduct}`)
+                                navigate(`/detail/${product.idType}/${product.nameType}/${product.idProduct}/${product.nameProduct}`)
                               }}
                               className="w-3/4 lg:w-1/4 h-[30px] flex justify-center items-center border-none rounded-[5px] md:my-0 my-[2%] cursor-pointer bg-blue-800 hover:bg-blue-600 transition-all"
                             >

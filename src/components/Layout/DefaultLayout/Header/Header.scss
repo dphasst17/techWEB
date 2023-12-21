@@ -139,30 +139,6 @@
                     }
                 }
             }
-            .navContent{
-                .navItemsMob{
-                    .iconNavMob{
-                        svg{
-                            height:50%;  
-                        }
-                    }
-
-                }
-                .navItemsMob:hover .iconNavMob svg path,.navItemsMob:hover a{
-                    fill:rgb(70, 117, 200);
-                    color:rgb(70, 117, 200);
-                }
-            }
-            .navUser{
-                .iconUser{
-                    svg{
-                        height: 70%;
-                        margin-left:0%;
-                    }
-                }
-
-            }
-
 
         }
     }

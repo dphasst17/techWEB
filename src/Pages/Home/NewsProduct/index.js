@@ -77,7 +77,7 @@ const NewsProduct = () => {
                 </div>
                 <div className="fpPrice">Price:{items.price} USD</div>
                 <div className="fpButton">
-                  <button onClick={() => { navigate(`/detail/${items.idType}/${items.idProduct}/${items.nameProduct}`) }} 
+                  <button onClick={() => { navigate(`/detail/${items.idType}/${items.nameType}/${items.idProduct}/${items.nameProduct}`) }} 
                     className="button w-12 border-none rounded-xl outline-none bg-transparent flex justify-center items-center hover:bg-blue-700"
                   >
                     <Link to={`/detail/${items.idType}/${items.idProduct}/${items.nameProduct}`}>

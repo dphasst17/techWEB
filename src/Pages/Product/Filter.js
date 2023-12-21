@@ -27,27 +27,9 @@ function Filter({ props }) {
           value={props.optionType}
           onChange={handleChange}
         >
-          <option className="bg-slate-500 py-2" value="laptop">
-            Laptop
-          </option>
-          <option className="bg-slate-500 py-2" value="keyboard">
-            Keyboard
-          </option>
-          <option className="bg-slate-500 py-2" value="memory">
-            Memory
-          </option>
-          <option className="bg-slate-500 py-2" value="monitor">
-            Monitor
-          </option>
-          <option className="bg-slate-500 py-2" value="storage">
-            Storage
-          </option>
-          <option className="bg-slate-500 py-2" value="mouse">
-            Mouse
-          </option>
-          <option className="bg-slate-500 py-2" value="vga">
-            Vga
-          </option>
+          {props.type?.map(t => <option className="bg-slate-500 py-2" value={t.type}>
+            {t.type.toUpperCase()}
+          </option>)}
         </select>
         <div className="filBrand w-[150px] h-[30px] flex flex-col justify-start items-start m-2 cursor-pointer">
           <div
@@ -102,7 +84,7 @@ function Filter({ props }) {
             bg-slate-500 rounded-[5px]`}
               >
                 {showFilValue === false ? (
-                  Object.keys(props.filDetailValue[0]).flatMap((e) => (
+                  Object.keys(props.filDetailValue).flatMap((e) => (
                     <div
                       key={e}
                       onClick={() => {
@@ -132,7 +114,7 @@ function Filter({ props }) {
                       <span className="text-[20px] font-semibold">BACK</span>
                     </div>
                     {valueFilDetail !== null &&
-                      props.filDetailValue[0][valueFilDetail]?.map((e) => (
+                      props.filDetailValue[valueFilDetail]?.map((e) => (
                         <div className="w-full h-[20px] bg-slate-500 rounded-[5px] text-white cursor-pointer" key={e}>
                           <input
                             type="checkbox"

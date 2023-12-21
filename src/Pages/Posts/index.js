@@ -8,7 +8,7 @@ const PostsDetail = () => {
     const {isDark} = useContext(StateContext)
     const{idPosts} = useParams()
     const {data,err} = useGetDataByKey('posts','getDetailPosts',idPosts)
-    return <div className="PostsDetail w-4/5 h-auto mx-auto my-20">
+    return <div className="PostsDetail w-4/5 h-auto min-h-[90vh] mx-auto my-20">
         {data !== null && data.map(e => <div className="ql-snow" key={e.idPosts}>
             <div className={`ql-editor ${isDark ? 'text-slate-100':'text-slate-700'} bg-transparent`} dangerouslySetInnerHTML={{ __html: e.valuesPosts }} />
         </div>)}

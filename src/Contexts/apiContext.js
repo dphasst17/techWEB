@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import {
   createContext,
   useCallback,
@@ -7,11 +6,12 @@ import {
   useRef,
   useState,
 } from "react";
-import {StateContext } from "./stateContext";
-import {useGetDataByKey } from "~/hooks/useFetchData";
+import { StateContext } from "./stateContext";
+import { useGetData, useGetDataByKey } from "~/hooks/useFetchData";
 import { getUserInfo } from "~/api/userApi";
 import { orderSelectByUser } from "~/api/orderApi";
 import HandleToken from "~/helper/handleToken";
+import { getProductByType } from "~/api/productApi";
 
 export const ApiContext = createContext({});
 
@@ -19,140 +19,111 @@ export const ApiProvider = ({ children }) => {
   const {
     Users,
     setUsers,
-    setLaptop,
+    /* setLaptop,
     setKeyboard,
     setMouse,
     setMemory,
     setMonitor,
     setStorage,
-    setVga,
+    setVga, */
+    setLaptop,
     setAddress,
     setListOrder,
     setIsDark,
-    isDark
+    isDark,
+    setType,
+    setProduct,
   } = useContext(StateContext);
   const [valueSearch, setValueSearch] = useState("");
   const [showResult, setIsShowResult] = useState(false);
   const [isShowButton, setIsShowButton] = useState(false);
+
   const [numPage, setNumPage] = useState([]);
   const [activePage, setActivePage] = useState(1);
   const ref = useRef();
   const isLogin = localStorage.getItem("isLogin") || false;
-  const darkMode = localStorage.getItem('dark') || false
-  const handleSetDarkMode =useCallback(() => {
-    setIsDark(JSON.parse(darkMode))
-  },[darkMode,setIsDark])
+  const darkMode = localStorage.getItem("dark") || false;
+  const handleSetDarkMode = useCallback(() => {
+    setIsDark(JSON.parse(darkMode));
+  }, [darkMode, setIsDark]);
   useEffect(() => {
-    handleSetDarkMode()
-  },[handleSetDarkMode])
+    handleSetDarkMode();
+  }, [handleSetDarkMode]);
   useEffect(() => {
-    isDark === true ? document.body.classList.add('dark') : document.body.classList.remove('dark')
-  },[isDark])
+    isDark === true
+      ? document.body.classList.add("dark")
+      : document.body.classList.remove("dark");
+  }, [isDark]);
 
   /* isLogin === true => check token => 
     if token has expired => get new token => get User with new access token and save new token in cookies
     else get user with access token and save data result user in state
   */
 
- const handleToken = HandleToken()
- //eslint-disable-next-line react-hooks/exhaustive-deps
- useEffect(() => {
-  const isUndefinedOrFalse = (value) => {
-    return value !== undefined && value !== false;
-  }
+  const handleToken = HandleToken();
+  //eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const isUndefinedOrFalse = (value) => {
+      return value !== undefined && value !== false;
+    };
 
-  const fetchUser = async () => {
-    const accessToken = await handleToken();
-    if(isUndefinedOrFalse(accessToken)){
-      try {
-        const res = await getUserInfo(accessToken);
-        if (res.status === 500) {
-          throw Error({ status: res.status, message: res.messages });
+    const fetchUser = async () => {
+      const accessToken = await handleToken();
+      if (isUndefinedOrFalse(accessToken)) {
+        try {
+          const res = await getUserInfo(accessToken);
+          if (res.status === 500) {
+            throw Error({ status: res.status, message: res.messages });
+          }
+          setUsers(res);
+          setAddress(res[0].address);
+        } catch (err) {
+          console.log(err);
         }
-        setUsers(res);
-        setAddress(res[0].address);
-      } catch (err) {
-        console.log(err);
-      }
 
-      try {
-        const res = await orderSelectByUser(accessToken);
-        if (res.status === 500) {
-          throw Error({ status: res.status, message: res.messages });
+        try {
+          const res = await orderSelectByUser(accessToken);
+          if (res.status === 500) {
+            throw Error({ status: res.status, message: res.messages });
+          }
+          setListOrder(res);
+        } catch (err) {
+          console.log(err);
         }
-        setListOrder(res);
-      } catch (err) {
-        console.log(err);
       }
-    }
-  };
+    };
 
-  isLogin === 'true' && fetchUser();
-}, [handleToken]);
+    isLogin === "true" && fetchUser();
+  }, [handleToken]);
 
-
-/*   const { data, err } = []; */
+  /*   const { data, err } = []; */
   const { data: dataLaptop, err: errLaptop } = useGetDataByKey(
     "product",
     "getProductByType",
     JSON.stringify({ type: "laptop" })
   );
-  const { data: dataKeyboard, err: errKeyboard } = useGetDataByKey(
-    "product",
-    "getProductByType",
-    JSON.stringify({ type: "keyboard" })
-  );
-  const { data: dataMemory, err: errMemory } = useGetDataByKey(
-    "product",
-    "getProductByType",
-    JSON.stringify({ type: "memory" })
-  );
-  const { data: dataMonitor, err: errMonitor } = useGetDataByKey(
-    "product",
-    "getProductByType",
-    JSON.stringify({ type: "monitor" })
-  );
-  const { data: dataStorage, err: errStorage } = useGetDataByKey(
-    "product",
-    "getProductByType",
-    JSON.stringify({ type: "storage" })
-  );
-  const { data: dataMouse, err: errMouse } = useGetDataByKey(
-    "product",
-    "getProductByType",
-    JSON.stringify({ type: "mouse" })
-  );
-  const { data: dataVga, err: errVga } = useGetDataByKey(
-    "product",
-    "getProductByType",
-    JSON.stringify({ type: "vga" })
-  );
+  const { data: dataType, err: errType } = useGetData("product", "getType");
+
+
+  useEffect(() => {
+    if (dataType !== null) {
+      setType(dataType.data);
+      let tempProduct = [];
+      Promise.all(dataType.data.map(e => getProductByType({type: e.type}).then(res => tempProduct.push({ type: e.type, data: res })))).then(() => {
+        setProduct(prevProduct => (prevProduct !== null ? [...prevProduct, ...tempProduct] : [...tempProduct]));
+      });
+    }
+  }, [dataType]);
+  
+
+  /* useEffect(() => {
+    type!== null && console.log(type)
+    product !== null && console.log(product)
+  },[type,product]) */
+
   useEffect(() => {
     dataLaptop !== null && setLaptop(dataLaptop);
-    dataKeyboard && setKeyboard(dataKeyboard);
-    dataMemory !== null && setMemory(dataMemory);
-    dataMonitor !== null && setMonitor(dataMonitor);
-    dataStorage !== null && setStorage(dataStorage);
-    dataMouse !== null && setMouse(dataMouse);
-    dataVga !== null && setVga(dataVga);
-  }, [
-    dataLaptop,
-    setLaptop,
-    dataKeyboard,
-    setKeyboard,
-    dataMemory,
-    setMemory,
-    dataMonitor,
-    setMonitor,
-    dataStorage,
-    setStorage,
-    dataMouse,
-    setMouse,
-    dataVga,
-    setVga,
-  ]);
-
-  
+  }, [dataLaptop]);
 
   const handelValueSearch = (valueSearch) => {
     setValueSearch(valueSearch.target.value);
@@ -162,7 +133,7 @@ export const ApiProvider = ({ children }) => {
       setIsShowResult(false);
     }
   };
-  
+
   const handleSetIsShowResult = () => {
     if (valueSearch.length > 0) {
       setIsShowResult(true);
@@ -222,7 +193,6 @@ export const ApiProvider = ({ children }) => {
   return (
     <ApiContext.Provider
       value={{
-        
         Users,
         valueSearch,
         showResult,
@@ -231,7 +201,7 @@ export const ApiProvider = ({ children }) => {
         activePage,
         ref,
         SortDataBasedOnPrice,
-        HandleActivePage,/* number pagination */
+        HandleActivePage /* number pagination */,
         PaginationPage /* handle division of page count */,
         handelValueSearch,
         handleSetIsShowResult,

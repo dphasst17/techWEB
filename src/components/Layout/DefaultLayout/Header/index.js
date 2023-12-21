@@ -31,7 +31,7 @@ function Header() {
     handleSetIsShowResult,
     handleSetHideResult,
   } = useContext(ApiContext);
-  const [isToggleNav, setIsToggleNav] = useState("translateX(-200%)");
+  const [isToggleNav, setIsToggleNav] = useState("translateX(-180%)");
   const [valueIP, setValueIP] = useState("Login");
   const navigate = useNavigate();
   const { pathname } = useLocation();

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { StateContext } from "~/contexts/stateContext";
 
 const SameType = ({props}) => {
@@ -10,6 +10,7 @@ const SameType = ({props}) => {
         memory,
         storage,
         mouse,
+        product
       } = useContext(StateContext);
     const type = useMemo(() => ({
         '1': laptop,
@@ -23,7 +24,7 @@ const SameType = ({props}) => {
     return <div className="product-sameType w-full h-auto flex flex-wrap justify-between items-center px-4 my-10">
         {type[props.idType] !== null && 
             type[props.idType].filter(e => e.idProduct !== Number(props.idProduct))
-            .slice(0,8).map(e => <div className="sameDetail w-[200px] h-[280px] bg-slate-300 rounded-lg">
+            .slice(0,8).map(e => <div className="sameDetail w-[45%] md:w-[200px] h-auto min-h-[150px] md:max-h-[280px] bg-slate-300 rounded-lg md:my-0 my-4">
                 <div className="w-full h-1/4 flex items-center justify-center">
                     <img className="w-3/5 h-full object-contain" src={e.imgProduct} alt="img-product-same-type"/>
                 </div>
@@ -33,9 +34,9 @@ const SameType = ({props}) => {
                         Price: 
                         <span className="text-blue-700 font-semibold">{e.price}</span> USD
                     </span>
-                    <div className="detailInfo w-full h-3/5 flex flex-wrap justify-center">
-                        <div className="w-4/5 h-[35%] flex items-center justify-center rounded-lg bg-slate-600 text-slate-100 font-semibold cursor-pointer">{e.nameType.toUpperCase()}</div>
-                        <div className="w-4/5 h-[35%] flex items-center justify-center rounded-lg bg-slate-600 text-slate-100 font-semibold cursor-pointer">{e.brand.toUpperCase()}</div>
+                    <div className="detailInfo w-full h-3/5 hidden md:flex flex-wrap justify-center">
+                        <div className="w-4/5 h-[35%] flex items-center justify-center rounded-lg bg-slate-600 text-slate-100 font-semibold  my-1 cursor-pointer">{e.nameType.toUpperCase()}</div>
+                        <div className="w-4/5 h-[35%] flex items-center justify-center rounded-lg bg-slate-600 text-slate-100 font-semibold  my-1 cursor-pointer">{e.brand.toUpperCase()}</div>
                     </div>
                 </div>
                 <div className="btnDetail w-full h-1/4 flex items-center justify-center">

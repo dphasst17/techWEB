@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "~/tailwind.css";
 import "./Product.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,8 +9,6 @@ import { Link, useNavigate } from "react-router-dom";
 import Filter from "./Filter";
 import Pagination from "~/components/PaginationView/Pagination";
 import { StateContext } from "~/contexts/stateContext";
-import * as detailData from "~/json/inputDemoDetail.js";
-import * as allDetailData from "~/json/inputAllDetail.js";
 
 function Product() {
   const navigate = useNavigate();
@@ -21,18 +19,8 @@ function Product() {
     HandleActivePage,
     SortDataBasedOnPrice,
   } = useContext(ApiContext);
-  const {
-    laptop,
-    keyboard,
-    monitor,
-    vga,
-    memory,
-    storage,
-    mouse,
-    valueFil,
-    setValueFil,
-    isDark
-  } = useContext(StateContext);
+  const { product, type, valueFil, setValueFil, isDark } =
+    useContext(StateContext);
   const { addToCart } = useContext(CartContext);
   const [filPrice, setFilPrice] = useState("0");
   const [Slice, setSlice] = useState(12);
@@ -40,69 +28,87 @@ function Product() {
   const [data, setData] = useState(null);
   const [optionType, setOptionType] = useState("laptop");
   const [filDetailValue, setFilDetailValue] = useState(null);
+  /* useEffect(() => {
+    type !== null && setActiveData(product.map())
+    filDetailValue !== null && console.log(filDetailValue)
+    product !== null && console.log(product);
+    activeData !== null && console.log(activeData)
+  },[filDetailValue,product,activeData]) */
 
-  const productState = useMemo(
-    () => ({
-      laptop: laptop,
-      keyboard: keyboard,
-      monitor: monitor,
-      vga: vga,
-      memory: memory,
-      storage: storage,
-      mouse: mouse,
-    }),
-    [laptop, keyboard, monitor, vga, memory, storage, mouse]
-  );
   useEffect(() => {
-    productState[optionType] !== null && setData(productState[optionType]);
-    productState[optionType] !== null &&
-      setFilDetailValue([
-        Object.fromEntries(
-          allDetailData[optionType].map((d) => {
-            let value = Array.from(
-              new Set(
-                productState[optionType].flatMap((e) =>
-                  e.detail.flatMap((t) => t[d.keyword])
-                )
-              )
-            );
+    product !== null &&
+      setData(
+        product.filter((f) => f.type === optionType).flatMap((e) => e.data)
+      );
+  }, [product, optionType]);
 
-            if (value.every((item) => typeof item === "number")) {
-              value = value.map((number) => Number(number.toFixed(1)));
-            }
-            return [d.keyword, value];
-          })
-        ),
-      ]);
-  }, [productState, optionType, filPrice, setData]);
+  useEffect(() => {
+    type !== null &&
+      product !== null &&
+      setFilDetailValue(
+        Object.fromEntries(
+          type
+            .filter((f) => f.type === optionType)
+            .flatMap((t) => t.detail)
+            .map((d) => {
+              //set value for filter detail product
+              let value = Array.from(
+                new Set(
+                  product
+                    ?.filter((f) => f.type === optionType)[0]
+                    .data?.flatMap((e) => e.detail.flatMap((t) => t[d.name]))
+                )
+              );
+
+              if (value.every((item) => typeof item === "number")) {
+                value = value.map((number) => Number(number.toFixed(1))).sort((a,b) => a > b ? 1 : -1);
+                
+              }
+              return [d.name, value];
+            })
+        )
+      );
+  }, [optionType, product, type, data]);
 
   useEffect(() => {
     if (!numPage.includes(Slice / 12)) {
       setSlice(12);
     }
   }, [Slice, numPage, setSlice]);
-
   useEffect(() => {
-    valueFil.length !== 0
-      ? setData(
-          productState[optionType].filter((product) => {
-            return valueFil.every((obj) => {
-              return obj.key === "brand"
-                ? obj.values.includes(product[obj.key])
-                : obj.values.includes(product.detail[0][obj.key]);
-            });
-          })
-        )
-      : setData(productState[optionType]);
-  }, [valueFil, productState, filPrice, optionType]);
-
-  useEffect(() => {
-    productState[optionType] !== null &&
-      setFilBrand(
-        Array.from(new Set(productState[optionType].map((e) => e.brand)))
+    const resultData = product?.filter((f) => f.type === optionType)[0].data;
+    if(valueFil.length !== 0){
+      setData(
+         resultData.filter((p) =>
+           valueFil.every((v) =>
+             v.key === "brand"
+               ? v.values.includes(p.brand)
+               : v.values.includes(p.detail[0][v.key])
+           )
+         )
+       )
+    }
+    if(valueFil.length === 0 && product !== null){
+      setData(
+        product.filter((f) => f.type === optionType)[0].data
       );
-  }, [productState, optionType, setFilBrand]);
 
+    }
+      
+  }, [valueFil,product,optionType]);
+
+  useEffect(() => {
+    setFilBrand(
+      Array.from(
+        new Set(
+          product
+            ?.filter((f) => f.type === optionType)[0]
+            .data.map((e) => e.brand)
+        )
+      )
+    );
+  }, [product, optionType]);
+  //
   const HandlePagination = (e) => {
     if (data.length > 12) {
       numPage.includes(Slice / 12) ? setSlice(12 * e) : setSlice(12);
@@ -120,6 +126,7 @@ function Product() {
       <Filter
         props={{
           filBrand,
+          type,
           valueFil,
           setValueFil,
           optionType,
@@ -149,18 +156,25 @@ function Product() {
                     />
                   </div>
                   <div className="title w-full h-1/5">
-                    <h4 className={`text-center text-[18px] ${isDark ? 'text-white' : 'text-[#bc0c0c]'}  font-semibold overflow-hidden whitespace-nowrap text-ellipsis`}>
+                    <h4
+                      className={`text-center text-[18px] ${
+                        isDark ? "text-white" : "text-[#bc0c0c]"
+                      }  font-semibold overflow-hidden whitespace-nowrap text-ellipsis`}
+                    >
                       {product.nameProduct}
                     </h4>
                   </div>
 
                   <div className="infProduct w-full h-1/2">
-                    {detailData[optionType].map((e) => (
-                      <p className="font-semibold text-[16px] text-[#bc0c0c] ml-[5%] overflow-hidden whitespace-nowrap text-ellipsis">
-                        {e.keyword.toUpperCase()}:{" "}
-                        {product.detail.map((d) => d[e.keyword])}
-                      </p>
-                    ))}
+                    {type
+                      ?.filter((f) => f.type === optionType)[0]
+                      .detail.filter((dFilter) => dFilter.displayorder <= 4)
+                      .map((e) => (
+                        <p className="font-semibold text-[16px] text-[#bc0c0c] ml-[5%] overflow-hidden whitespace-nowrap text-ellipsis">
+                          {e.displayname}:{" "}
+                          {product.detail.map((d) => d[e.name])}
+                        </p>
+                      ))}
                   </div>
 
                   <p className="font-semibold text-[16px] text-[#bc0c0c] ml-[5%]">
@@ -170,7 +184,9 @@ function Product() {
                     <button
                       className="w-[20%] h-[30px] text-[16px] font-[550] text-white rounded-[5px] bg-blue-800 hover:bg-blue-600 cursor-pointer"
                       onClick={() => {
-                        navigate(`/detail/${product.idType}/${product.idProduct}/${product.nameProduct}`)
+                        navigate(
+                          `/detail/${product.idType}/${product.nameType}/${product.idProduct}/${product.nameProduct}`
+                        );
                       }}
                     >
                       <Link>
