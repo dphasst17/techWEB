@@ -11,7 +11,7 @@ const ProductDetail = () => {
   const {addToCart} = useContext(CartContext);
   const {isDark} = useContext(StateContext)
   const {idType,nameType,productID} = useParams();
-  const {data,err} = useGetDataByKey('product','getProductDetail',JSON.stringify({idType:idType,idProduct:productID}));
+  const {data,err} = useGetDataByKey('product','getProductDetail',JSON.stringify({nameType:nameType,idProduct:productID}));
   const {data:dataComment,err:errComment} = useGetDataByKey('comment','getCommentById',JSON.stringify({idProduct:productID}))
   const [img,setImg] = useState("");
   const [comments,setComments] = useState(null);
