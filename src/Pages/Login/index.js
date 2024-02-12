@@ -1,8 +1,6 @@
 /* eslint-disable no-undef */
 import React, { useContext, useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Cookies from "js-cookie";
-import { faX } from "@fortawesome/free-solid-svg-icons";
 import Loading from "~/components/Loading/Loading";
 import { useGoogleLogin } from "@leecheuk/react-google-login";
 import { gapi } from "gapi-script";
@@ -169,7 +167,7 @@ const Login = () => {
         }}
       />
       {isLoad === true && <Loading />}
-      <Alert />
+      {isAlert && <Alert />}
     </>
   );
 };
