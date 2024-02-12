@@ -2,18 +2,18 @@ import "~/tailwind.css";
 import "../Home.scss";
 import { CartContext } from "~/contexts/Cart";
 
-import { Link, useNavigate } from "react-router-dom";
-import React, {useEffect,useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import React, {useContext, useEffect,useRef } from "react";
 import LazyLoad from "react-lazy-load";
 import { FcNext, FcPrevious } from "react-icons/fc";
 import { FaEye, FaHeart } from "react-icons/fa";
-import { useGetData} from "~/hooks/useFetchData";
+import { StateContext } from "~/contexts/stateContext";
 
 
 
 const NewsProduct = () => {
   const navigate = useNavigate();
-  const {data,err} = useGetData('product','getProductNew');
+  const {isDark,newData} = useContext(StateContext)
   const containerRefNew = useRef(null);
 
   const handleNextNew = () => {
@@ -60,45 +60,42 @@ const NewsProduct = () => {
   }, []);
   return (
     <div className="featuredProduct">
-      {data !== null &&  <h1 className="font-han font-[30px]">News Product</h1>}
+      {newData !== null &&  <h1 className="font-han font-[30px]">News Product</h1>}
       { <div className="itemsFeat w-full h-4/5 flex justify-center">
         <button className="click" onClick={handlePreviousNew}><FcPrevious /></button>
         <LazyLoad height={"100%"} width={"80%"} offset={0}>
           <div className="fpDetail w-full h-full flex" ref={containerRefNew}>
-            {data !== null && data.map((items, index) => (
-              <div className="fpItems" key={`${items.idProduct}-new`} style={{ animationDelay: "." + index + "s" }}>
+            {newData !== null && newData.map((items, index) => (
+              <div className={`fpItems ${isDark ? 'bg-gray-200' : 'bg-white'}`} key={`${items.idProduct}-new`} style={{ animationDelay: "." + index + "s" }}>
                 <div className="fpImg">
                   <img src={items.imgProduct} alt="img New Product" loading="lazy" className="w-3/4 h-full object-contain" />
                 </div>
-                <div className="fpTitle font-BOO">
+                <div className='fpTitle font-BOO text-slate-700'>
                   {items.nameProduct.length > 20
                     ? items.nameProduct.slice(0, 20) + `...`
                     : items.nameProduct}
                 </div>
-                <div className="fpPrice">Price:{items.price} USD</div>
+                <div className='fpPrice text-slate-700'>Price:{items.price} USD</div>
                 <div className="fpButton">
                   <button onClick={() => { navigate(`/detail/${items.idType}/${items.nameType}/${items.idProduct}/${items.nameProduct}`) }} 
-                    className="button w-12 border-none rounded-xl outline-none bg-transparent flex justify-center items-center hover:bg-blue-700"
+                    className='button w-12 border-none rounded-xl outline-none bg-transparent flex justify-center items-center text-slate-700 hover:bg-slate-700 hover:text-slate-100 transition-all'
                   >
-                    <Link to={`/detail/${items.idType}/${items.idProduct}/${items.nameProduct}`}>
                       <FaEye />
-                    </Link>
                   </button>
                   <CartContext.Consumer>
                     {({ addToCart }) => (
                       <button onClick={() => addToCart(items,1)}
-                        className="w-3/5 h-2/4 rounded-xl text-white text-base font-semibold bg-blue-800 hover:bg-blue-700"
+                        className={`w-3/5 h-2/4 rounded-xl text-white text-base font-semibold ${isDark ? 'bg-slate-600' : 'bg-gray-500'} hover:bg-slate-700 transition-all`}
                       >
                         ADD TO CART
                       </button>
                     )}
                   </CartContext.Consumer>
                   <button 
-                    className="button w-12 border-none rounded-xl outline-none bg-transparent flex justify-center items-center hover:bg-blue-700"
+                    className='button w-12 border-none rounded-xl outline-none bg-transparent flex justify-center items-center text-slate-700 hover:bg-slate-700 hover:text-slate-100 transition-all'
                   >
-                    <Link to={`/detail/${items.idProduct}/${items.nameProduct}`}>
+                    
                       <FaHeart />
-                    </Link>
                   </button>
                 </div>
               </div>

@@ -1,16 +1,33 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { StateContext } from "~/contexts/stateContext";
 
 const Payment = () => {
+    const {bank} = useContext(StateContext)
     const [name, setName] = useState('')
     const [number, setNumber] = useState('');
     const [expire, setExpire] = useState('');
     const [cvv, setCvv] = useState('');
+    const [b,setB] = useState('')
     const HandleChange = (setState, input) => {
         setState(input.target.value)
     }
+    useEffect(() => {
+        b !== '' && console.log(b)
+    },[b])
     return (
         <>
-            <div className="flex flex-wrap w-full h-[220px]">
+            <div className="flex flex-wrap w-full h-[280px]">
+                <label className="relative w-full flex flex-col">
+                    <span className="font-bold mb-3 text-slate-800">Bank</span>
+                    <select
+                        className="rounded-md peer pl-12 pr-2 py-2 border-2 border-gray-500 text-black outline-none"
+                        onChange={(e) => {HandleChange(setB,e)}}
+                    >
+                        <option className="font-bold">Select bank</option>
+                        {bank !== null && bank.map(b => <option className="font-bold">{b.shortName}</option>)}
+                    </select>
+                
+                </label>
                 <label className="relative w-full flex flex-col">
                     <span className="font-bold mb-3 text-slate-800">Name</span>
                     <input
@@ -78,7 +95,7 @@ const Payment = () => {
                         <span className="relative group">
                             <span className="hidden group-hover:flex justify-center items-center px-2 py-1 text-xs absolute -right-2 transform translate-x-full -translate-y-1/2 w-max top-1/2 bg-black text-white">
                                 {" "}
-                                Hey ceci est une infobulle !
+                                Here is the caption !
                             </span>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -119,7 +136,7 @@ const Payment = () => {
                     </svg>
                 </label>
             </div>
-            <div className="w-full h-[200px] flex flex-wrap justify-center items-center my-4">
+            <div className="w-full h-[300px] flex flex-wrap justify-center items-center my-4">
                 <div className="w-full h-full">
                     <div className="w-4/5 h-full m-auto bg-red-100 rounded-xl relative text-white shadow-2xl">
                         <img
@@ -128,7 +145,17 @@ const Payment = () => {
                             alt=""
                         />
                         <div className="w-full h-full px-8 absolute top-8">
-                            <div className="flex justify-between">
+                            <div className="w-full h-[30%] flex justify-start items-center">
+                                <div className="w-2/4 h-full flex justify-center items-center">
+                                    <p className="font-bold text-[16px] min-h-[15px] tracking-widest">{b.toUpperCase()}</p>
+                                </div>
+                                <img
+                                    className="w-2/5 h-full"
+                                    src={bank.filter(e => e.shortName === b).map(b => b.logo)}
+                                    alt=""
+                                />
+                            </div>
+                            <div className="w-full h-1/5 flex justify-between">
                                 <div className="">
                                     <p className="font-light">Name</p>
                                     <p className="font-medium min-h-[15px] tracking-widest">{name.toUpperCase()}</p>
@@ -139,13 +166,13 @@ const Payment = () => {
                                     alt=""
                                 />
                             </div>
-                            <div className="pt-1">
+                            <div className="w-full h-1/5 pt-1">
                                 <p className="font-light">Card Number</p>
                                 <p className=" min-h-[15px] font-medium tracking-more-wider">
                                     {number}
                                 </p>
                             </div>
-                            <div className="w-full h-2/4 pt-6 pr-6">
+                            <div className="w-full h-[30%] pt-6 pr-6">
                                 <div className="w-full h-3/5 flex justify-between">
                                     <div className="w-2/5 flex flex-col justify-around">
                                         <p className="font-light text-xs">Expiry</p>

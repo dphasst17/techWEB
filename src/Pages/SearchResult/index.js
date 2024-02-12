@@ -8,7 +8,6 @@ import Pagination from "~/components/PaginationView/Pagination";
 import Filter from "./Filter";
 import { useGetDataByKey } from "~/hooks/useFetchData";
 import { StateContext } from "~/contexts/stateContext";
-
 function SearchResult() {
   const { keyword } = useParams();
   const navigate = useNavigate()
@@ -23,8 +22,9 @@ function SearchResult() {
     activePage,
     HandleActivePage,
     SortDataBasedOnPrice,
+    percentDiscount
   } = useContext(ApiContext);
-  const { valueFil, setValueFil } = useContext(StateContext);
+  const { valueFil, setValueFil,isDark } = useContext(StateContext);
   const [filPrice, setFilPrice] = useState("0");
   const [Slice, setSlice] = useState(12);
   const [filBrand, setFilBrand] = useState(null);
@@ -96,38 +96,42 @@ function SearchResult() {
                 className="product-detail w-1/5 h-2/5 mt-[3%] ml-[4%] min-w-[150px] cursor-pointer"
                 key={product.id}
               >
-                <div className="detail-box w-full flex flex-col justify-around rounded-[16px]">
-                  <div className="itemsImg w-full h-4/5 flex justify-center overflow-hidden">
+                <div className={`detail-box w-full ${isDark ? 'bg-gray-200 hover:bg-zinc-300' : 'bg-white hover:bg-zinc-200'} flex flex-col justify-around rounded-[16px]`}>
+                  <div className="itemsImg relative w-full h-4/5 flex justify-start p-2 overflow-hidden">
+                  {product.discount !== 0 && <div className="absolute w-[50px] h-[30px] flex items-center justify-center text-white rounded-md bg-red-500">Sale</div>}
                     <img
                       src={product.imgProduct}
                       alt="img Product Laptop"
                       className="w-full h-[130px] object-contain"
                     />
+                    {product.discount !== 0 && <div className="absolute w-[50px] h-[30px] top-20 flex items-center justify-center text-white rounded-md bg-red-500">{product.discount}%</div>}
                   </div>
                   <div className="title w-full h-1/5">
-                    <h4 className="text-center text-[18px] text-[#bc0c0c] font-semibold overflow-hidden whitespace-nowrap text-ellipsis">
+                    <h4 className={`text-center text-[18px] ${
+                        isDark ? "text-slate-700" : "text-[#bc0c0c]"
+                      } font-semibold overflow-hidden whitespace-nowrap text-ellipsis`}>
                       {product.nameProduct}
                     </h4>
                   </div>
 
-                  <div className="infProduct w-full h-1/2">
-                    <p className="font-semibold text-[16px] text-[#bc0c0c] ml-[5%] overflow-hidden whitespace-nowrap text-ellipsis">
+                  <div className="infProduct w-full h-1/2 flex flex-col">
+                    <span className="font-bold text-[16px] text-zinc-700 ml-[5%] overflow-hidden whitespace-nowrap text-ellipsis">
                       {product.detail1}
-                    </p>
-                    <p className="font-semibold text-[16px] text-[#bc0c0c] ml-[5%] overflow-hidden whitespace-nowrap text-ellipsis">
+                    </span>
+                    <span className="font-bold text-[16px] text-zinc-700 ml-[5%] overflow-hidden whitespace-nowrap text-ellipsis">
                       {product.detail2}
-                    </p>
-                    <p className="font-semibold text-[16px] text-[#bc0c0c] ml-[5%] overflow-hidden whitespace-nowrap text-ellipsis">
+                    </span>
+                    <span className="font-bold text-[16px] text-zinc-700 ml-[5%] overflow-hidden whitespace-nowrap text-ellipsis">
                       {product.detail3}
-                    </p>
-                    <p className="font-semibold text-[16px] text-[#bc0c0c] ml-[5%] overflow-hidden whitespace-nowrap text-ellipsis">
+                    </span>
+                    <span className="font-bold text-[16px] text-zinc-700 ml-[5%] overflow-hidden whitespace-nowrap text-ellipsis">
                       {product.detail4}
-                    </p>
+                    </span>
                   </div>
 
-                  <p className="font-semibold text-[16px] text-[#bc0c0c] ml-[5%]">
-                    Price: {product.price} USD
-                  </p>
+                  <span className="font-semibold text-[16px] text-slate-700 ml-[5%]">
+                  Price: {product.discount !== 0 ? (<><span className="text-red-600 font-medium line-through">{product.price}</span> {percentDiscount(product.discount,product.price)}</>) : product.price} USD
+                  </span>
                   <div className="button w-full h-[12%] flex justify-around mb-[5%]">
                     <button
                       className="w-[20%] h-[30px] text-[16px] font-[550] text-white rounded-[5px] bg-blue-800 hover:bg-blue-600 cursor-pointer"

@@ -28,3 +28,26 @@ export const getNewToken = async(token) => {
     })
     .then(res => {return res.json()})
 }
+//{username:username,email:email}
+export const forgotPass = async(data) => {
+    return fetch(`${process.env.REACT_APP_URL_SERVER}/auth/forgot`,{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify(data)
+    })
+    .then(res => {return res.json()})
+}
+/* {currentPass:current,newPass:new} */
+export const updatePassword = async(token,data) => {
+    return fetch(`${process.env.REACT_APP_URL_SERVER}/auth/update/password`,{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${token}`
+        },
+        body:JSON.stringify(data)
+    })
+    .then(res => {return res.json()})
+}

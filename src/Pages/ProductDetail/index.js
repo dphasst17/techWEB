@@ -1,85 +1,139 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { CartContext } from "~/contexts/Cart";
-import { useGetDataByKey} from "~/hooks/useFetchData";
+import { useGetDataByKey } from "~/hooks/useFetchData";
 import * as detailInf from "~/json/inputAllDetail";
 import Comment from "./detailComment";
 import SameType from "./sameProductType";
 import { StateContext } from "~/contexts/stateContext";
 import PostComment from "./postComment";
+import HandleToken from "~/helper/handleToken";
+import { postComment } from "~/api/commentApi";
 const ProductDetail = () => {
-  const {addToCart} = useContext(CartContext);
-  const {isDark} = useContext(StateContext)
-  const {idType,nameType,productID} = useParams();
-  const {data,err} = useGetDataByKey('product','getProductDetail',JSON.stringify({nameType:nameType,idProduct:productID}));
-  const {data:dataComment,err:errComment} = useGetDataByKey('comment','getCommentById',JSON.stringify({idProduct:productID}))
-  const [img,setImg] = useState("");
-  const [comments,setComments] = useState(null);
-  const isLogin = JSON.parse(localStorage.getItem('isLogin') || false)
-  useEffect(() => {
-    console.log(isLogin === true)
-  },[isLogin])
+  const { addToCart } = useContext(CartContext);
+  const { isDark,users } = useContext(StateContext)
+  const { idType, nameType, productID } = useParams();
+  const { data, err } = useGetDataByKey('product', 'getProductDetail', JSON.stringify({ nameType: nameType, idProduct: productID }));
+  const { data: dataComment, err: errComment } = useGetDataByKey('comment', 'getCommentById', JSON.stringify({ idProduct: productID }))
+  const [img, setImg] = useState("");
+  const [comments, setComments] = useState(null);
+  const isLogin = JSON.parse(localStorage.getItem('isLogin') || false);
+  const handleToken = HandleToken();
+
   useEffect(() => {
     data !== null && setImg(data[0].imgProduct.filter(e => e.type === "default")[0])
     dataComment !== null && setComments(dataComment[0].detail)
-  },[data,dataComment])
-  const handleChangeDataAddToCart = (product,count) => {
+  }, [data, dataComment])
+  const handleChangeDataAddToCart = (product, count) => {
     const newData = [product].map(e => {
       return {
         ...e,
-        imgProduct:e.imgProduct.filter(i => i.type === "default")[0].img
+        imgProduct: e.imgProduct.filter(i => i.type === "default")[0].img
       }
     })
-    addToCart(newData[0],count)
+    addToCart(newData[0], count)
+  }
+  const PostDataComment = async(value) => {
+    const token =  await handleToken()
+    const currentDate = new Date().toISOString().split('T')[0]
+    const objNewComment = {commentValue:value,dateComment:`${currentDate}`,idUser:`newComment-${idType}`,img: "",nameUser: users[0]?.nameUser}
+    const data = {idProduct:productID,detail:{value:value,date:currentDate}}
+    
+    postComment(token,data).then(res => {
+      if(res.status === 201){
+        setComments([objNewComment,...comments])
+      }else{
+        alert(res.message)
+      }
+    })
   }
   return (
-    <div className="detailPage w-full h-auto min-h-[810px] flex flex-col justify-between">
-      <div className="items w-full min-h-[350px] h-auto my-[4%]">
-        {data?.map((items) => {return <div className="itemsChild w-full h-auto flex flex-wrap flex-row justify-center" key={items.idProduct}>
-              <div className="image w-full md:w-2/5 flex flex-col items-center justify-center">
-                <img src={img.img} alt="img Product" className="w-[300px] h-[300px] object-contain"/>
-                <div className="listAllImg w-full h-auto flex flex-wrap justify-evenly md:justify-between items-center">
-                  {data !== null && items.imgProduct.map((e,i) => <img key={`${e.type}-${i}`} onClick={() => {setImg(e)}} className={`w-1/5 md:w-[150px] h-[50px] md:h-[100px] object-contain ${img.img === e.img && 'border-solid border-[2px] border-blue-500 rounded-lg'}`} src={e.img} alt="imgProduct"/>)}
+    <>
+      <section className="w-full h-auto min-h-[80vh] py-12 sm:py-16">
+        <div className="container w-full mx-auto px-4">
+          {data?.map(e => <div className="lg:col-gap-12 xl:col-gap-16 mt-8 grid grid-cols-1 gap-12 lg:mt-12 lg:grid-cols-5 lg:gap-16" key={e.idProduct}>
+            <div className="lg:col-span-3 lg:row-end-1">
+              <div className="flex flex-col lg:flex-row items-center">
+                <div className="w-4/5 flex justify-center items-center lg:order-2 lg:ml-5">
+                  {/* img default */}
+                  <div className="max-w-xl w-full flex justify-center items-center overflow-hidden rounded-lg">
+                    <img className="h-[300px] w-full object-contain md:object-cover" src={img.img} alt="" />
+                  </div>
+                </div>
+                {/* all Img */}
+                <div className="mt-2 w-full lg:order-1 lg:w-1/5 lg:flex-shrink-0">
+                  <div className="h-full flex flex-wrap flex-row md:justify-start justify-around md:items-start lg:flex-col">
+                    {data !== null && e.imgProduct.map((e, i) => <button type="button" className="flex-0 aspect-square mb-3 h-28 mx-2 overflow-hidden rounded-lg border-2 border-gray-900 text-center" key={`${e.type}-${i}`} onClick={() => { setImg(e) }}>
+                      <img className="h-full w-full object-contain" src={e.img} alt="" />
+                    </button>)}
+
+
+                  </div>
                 </div>
               </div>
-              <div className="itemsContent w-full md:w-2/4 h-auto flex flex-col">
-                <div className="title w-full flex items-center justify-center">
-                  <h1 className="text-[30px] font-bold text-slate-600">{items.nameProduct}</h1>
-                </div>
-                <hr></hr>
-                <div className="price w-full h-auto">
-                  <h1 className="text-[20px] font-semibold text-slate-500">Price: <span className="text-[25px] font-bold text-blue-500">{items.price}</span> USD</h1>
-                </div>
-                <div className={`des w-full h-auto text-[20px] font-semibold ${isDark ? 'text-slate-300': 'text-slate-500'} my-4`}>
-                  DESCRIPTION : <span className={`font-bold ${isDark ? 'text-slate-300': 'text-slate-600'} `}>{items.des}</span>
-                </div>
-                <div className="detail w-full h-auto flex flex-col justify-center my-4">
-                  {detailInf[items.nameType].map((e,i) => 
-                    <span className={`w-full h-auto ${isDark ? 'text-slate-300': 'text-slate-500'} text-[18px] font-semibold`} key={`${e}-${i}`}>
-                      {e.keyword.toUpperCase()}:
-                      <span className="text-[20px] font-bold text-blue-500">
-                        {items.detail.map(d => typeof(d[e.keyword]) === 'number' ? d[e.keyword].toFixed(1):d[e.keyword])}
-                      </span>
-                    </span>
-                  )}
-                </div>
-                <div className="button w-full h-auto flex items-center justify-center">
-                  <button className="w-[200px] h-[40px] rounded-lg bg-blue-800 text-white font-semibold m-2" onClick={() => handleChangeDataAddToCart(items,1)}>
-                    Add to Cart
-                  </button>
-                  <button className="w-[200px] h-[40px] rounded-lg bg-red-800 text-white font-semibold m-2">Add to favorites</button>
-                </div>
+            </div>
+
+            <div className="lg:col-span-2 lg:row-span-2 lg:row-end-2">
+              {/* Title */}
+              <h1 className="text-center text-[25px] font-bold text-gray-900 cursor-pointer">{e.nameProduct}</h1>
+
+
+              <h2 className="mt-8 text-[18px] font-bold text-gray-900">{e.des}</h2>
+              <hr className="w-full h-[1px] bg-black mt-2 mb-8 mx-auto" />
+              <div className="mt-3 flex select-none flex-wrap items-center gap-1">
+                {detailInf[e.nameType].map((df, i) =>
+                  <span className={` ${isDark ? 'border-white text-slate-200' : 'border-black text-slate-800'} rounded-lg border  px-6 py-2 font-bold`} key={`${df}-${i}`}>
+                    {df.keyword.toUpperCase()}: {e.detail.map(d => typeof (d[df.keyword]) === 'number' ? d[df.keyword].toFixed(1) : d[df.keyword])}
+
+                  </span>
+                )}
+
               </div>
-            </div>}
-            
-          )}
-      </div>
-      {isLogin === true && <PostComment />}
-      <h1 className="text-center text-[30px] text-slate-600 font-bold">Comment</h1>
-      <Comment data={comments} />
-      <h1 className="text-center text-[30px] text-slate-600 font-bold">The products of the same type</h1>
-      <SameType props={{idType,idProduct:productID}}/>
-    </div>
+
+              <div className={`mt-10 flex flex-col items-center justify-between space-y-4 border-t border-b border-solid ${isDark ? 'border-white':'border-black'} py-4 sm:flex-row sm:space-y-0`}>
+                <div className="flex flex-col items-start">
+                  <h1 className="text-3xl font-bold">Discount : {e.discount}%</h1>
+                  <h1 className="text-3xl font-bold">Price: {e.price} USD</h1>
+                </div>
+
+                <button 
+                  onClick={() => handleChangeDataAddToCart(e, 1)}
+                  className="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-12 py-3 text-center text-base font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="shrink-0 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
+                  Add to cart
+                </button>
+              </div>
+
+              <ul className="mt-8 space-y-2">
+                <li className={`flex items-center text-left text-sm font-medium ${isDark ? 'text-gray-200' :'text-gray-600'} `}>
+                  <svg className={`mr-2 block h-5 w-5 align-middle ${isDark ? 'text-gray-100' :'text-gray-500'} `} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" className=""></path>
+                  </svg>
+                  Free shipping worldwide
+                </li>
+
+                <li className={`flex items-center text-left text-sm font-medium ${isDark ? 'text-gray-200' :'text-gray-600'} `}>
+                  <svg className={`mr-2 block h-5 w-5 align-middle ${isDark ? 'text-gray-100' :'text-gray-500'} `} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" className=""></path>
+                  </svg>
+                  Cancel Anytime
+                </li>
+              </ul>
+            </div>
+          </div>)}
+
+        </div>
+        {isLogin === true && <PostComment props={{PostDataComment}} />}
+        <hr className="w-[90%] h-[1px] bg-black mt-2 mb-8 mx-auto"></hr>
+        <Comment data={comments} />
+      </section>
+      {/* <div className="detailPage w-full h-auto min-h-[810px] flex flex-col justify-between">
+        <h1 className="text-center text-[30px] text-slate-600 font-bold">The products of the same type</h1>
+        <SameType props={{ idType, idProduct: productID }} />
+      </div> */}
+    </>
   );
 }
 

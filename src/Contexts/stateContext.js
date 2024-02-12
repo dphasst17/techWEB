@@ -13,11 +13,21 @@ export const StateProvider = ({children}) => {
     const [vga,setVga] = useState(null);
     const [type,setType] = useState(null);
     const [product,setProduct] = useState(null);
+    const [newData,setNewData] = useState(null);
+    const [selling,setSelling] = useState(null);
+    const [saleData,setSaleData] = useState(null);
+    const [post,setPost] = useState(null);
+    const [viewData,setViewData] = useState(null);
+    const [bank,setBank] = useState(null);
     const [listCart,setListCart] = useState([]);
     const [listOrder,setListOrder] = useState([]);
     const [valueFil, setValueFil] = useState([]);
     const [paymentList,setPaymentList] = useState(null);
-    const [isDark,setIsDark] = useState(false)
+    const [isDark,setIsDark] = useState(false);
+    const [isAlert,setIsAlert] = useState(false);
+    const [dataAlert,setDataAlert] = useState({});
+    const [fetchOrder,setFetchOrder] = useState(true)
+    const [fetchUser,setFetchUser] = useState(true)
     return (
         <StateContext.Provider value={{
             users,setUsers,
@@ -30,12 +40,22 @@ export const StateProvider = ({children}) => {
             storage,setStorage,
             vga,setVga,
             type,setType,
+            bank,setBank,
             product,setProduct,
+            newData,setNewData,
+            selling,setSelling,
+            saleData,setSaleData,
+            post,setPost,
+            viewData,setViewData,
             listCart,setListCart,
             listOrder,setListOrder,
             valueFil, setValueFil,
             paymentList,setPaymentList,
-            isDark,setIsDark
+            isDark,setIsDark,
+            isAlert,setIsAlert,
+            dataAlert,setDataAlert,
+            fetchOrder,setFetchOrder,
+            fetchUser,setFetchUser
         }}>
             {children}
         </StateContext.Provider>

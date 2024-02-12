@@ -3,7 +3,7 @@ import "./Product.scss";
 import { useState } from "react";
 import HandleFilterData  from "~/helper/filterData";
 import backIcon1 from "~/images/icon/backIcon3.png";
-
+import { FcViewDetails,FcClearFilters,FcShop } from "react-icons/fc";
 function Filter({ props }) {
   const [showFilBrand, setShowFilBrand] = useState(false);
   const [filDetail, setFilDetail] = useState(false);
@@ -38,6 +38,7 @@ function Filter({ props }) {
             }}
             className="filDetail w-[150px] h-[30px] rounded-[5px] bg-blue-500 text-white font-semibold flex justify-center items-center"
           >
+            <FcShop className="mx-2"/>
             Brand
           </div>
           {showFilBrand === true && (
@@ -71,6 +72,7 @@ function Filter({ props }) {
             }}
             className="filDetail w-[150px] h-[30px] rounded-[5px] bg-blue-500 text-white font-semibold flex justify-center items-center"
           >
+            <FcViewDetails className="mx-2"/>
             Detail
           </div>
           {filDetail === true && (
@@ -141,6 +143,7 @@ function Filter({ props }) {
             </div>
           )}
         </div>
+        
         <select 
           className="w-[150px] m-2 h-[30px] bg-blue-500 outline-none rounded-[5px] text-center text-white font-semibold cursor-pointer"
           onChange={(e) => {props.setFilPrice(e.target.value)}}
@@ -160,7 +163,8 @@ function Filter({ props }) {
             props.setValueFil([]);
           }}
         >
-          Clear All filter
+          < FcClearFilters className="mx-2"/>
+          Clear All
         </div>
       </div>
   );

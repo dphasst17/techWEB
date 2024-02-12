@@ -3,6 +3,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaFacebook, FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import Forgot from "./forgotPass";
 
 function FormLogin({ props }) {
   return (
@@ -45,19 +46,19 @@ function FormLogin({ props }) {
             Or
           </p>
         </div>
-        {props.isLog === true ? (
-          <div className="loginForm w-full">
+        {props.formForgot === false ? (props.isLog === true ? (
+          <form className="loginForm w-full">
             <input
-              className="text-sm w-full px-4 py-2 border border-solid border-gray-300 outline-none rounded"
+              className={`text-sm w-full px-4 py-2 border-[1px] border-solid ${props.errLogin.loginUsername ? 'border-red-500' : 'border-gray-300'} outline-none rounded`}
               type="text"
+              {...props.registerLogin("loginUsername", { required: true })}
               placeholder="Enter your username"
-              onChange={props.handleUserNameChange}
             />
-            <div className="text-sm w-full flex flex-row justify-around bg-white p-2 border border-solid border-gray-300 rounded mt-4">
+            <div className={`text-sm w-full flex flex-row justify-around bg-white p-2 border border-solid ${props.errLogin.loginPassword ? 'border-red-500' : 'border-gray-300'} rounded mt-4`}>
               <input
                 className="text-sm w-[90%] border-none rounded outline-none"
                 type={props.type}
-                onChange={props.handlePassChange}
+                {...props.registerLogin("loginPassword", { required: true })}
                 placeholder="Enter your password"
               />
               <div className="eyeSlash w-[5%] h-full cursor-pointer">
@@ -76,24 +77,32 @@ function FormLogin({ props }) {
                 />
               </div>
             </div>
-          </div>
+          </form>
         ) : (
-          <div className="registerForm w-full">
+          <form className="registerForm w-full">
             <input
-              className="outline-none text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded"
+              className={`outline-none text-sm w-full px-4 py-2 border-[1px] border-solid ${props.errCreate.regisUsername ? 'border-red-500' : 'border-gray-300'} rounded`}
               type="text"
+              {...props.registerCreate("regisUsername", { required: true })}
               placeholder="Username"
-              
+            />
+            <input
+              className={`outline-none text-sm w-full px-4 py-2 border-[1px] border-solid ${props.errCreate.regisEmail ? 'border-red-500' : 'border-gray-300'} rounded mt-4`}
+              type="email"
+              {...props.registerCreate("regisEmail", { required: true })}
+              placeholder="Email"
             />
             <div className="passRegis w-full flex flex-col">
               <input
-                className="w-full outline-none text-sm px-4 py-2 border border-solid border-gray-300 rounded mt-4"
+                className={`w-full outline-none text-sm px-4 py-2 border-[1px] border-solid ${props.errCreate.regisPassword ? 'border-red-500' : 'border-gray-300'} rounded mt-4`}
                 type={props.type}
+                {...props.registerCreate("regisPassword", { required: true })}
                 placeholder="Password"
               />
               <input
-                className="w-full outline-none text-sm  px-4 py-2 border border-solid border-gray-300 rounded mt-4"
+                className={`w-full outline-none text-sm  px-4 py-2 border-[1px] border-solid ${props.errCreate.regisConfirm ? 'border-red-500' : 'border-gray-300'} rounded mt-4`}
                 type={props.type}
+                {...props.registerCreate("regisConfirm", { required: true })}
                 placeholder="Confirm password"
               />
               <div
@@ -115,27 +124,26 @@ function FormLogin({ props }) {
                 {props.showPass === true ? "Show password" : "Hide password"}
               </div>
             </div>
-          </div>
-        )}
-        {props.isLog === true && (
+            
+          </form>
+        )): <Forgot state={props.setFormForgot} handle={props.handleForgotPass} />}
+        {props.formForgot === false && props.isLog === true && (
           <div className="w-full mt-4 flex justify-between font-semibold text-sm cursor-pointer">
             <label className="flex text-slate-500 hover:text-slate-600 cursor-pointer ">
               <input className="mr-2" type="checkbox" />
               <span>Remember Me</span>
             </label>
-            <p className="text-blue-600 hover:text-blue-700 hover:underline hover:underline-offset-4 cursor-pointer">
+            <p onClick={() => {props.setFormForgot(true)}} className="text-blue-600 hover:text-blue-700 hover:underline hover:underline-offset-4 cursor-pointer">
               Forgot Password?
             </p>
           </div>
         )}
         <div className="text-center md:text-left">
-          {props.isLog === true ? (
+          {props.isLog === true ? (props.formForgot === false &&
             <button
               className="my-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 text-white uppercase rounded text-xs tracking-wider"
               type="button"
-              onClick={() => {
-                props.handleClick();
-              }}
+              onClick={(e) => { e.preventDefault(); props.submitLogin(props.onSubmitLogin)();}}
             >
               Login
             </button>
@@ -143,17 +151,17 @@ function FormLogin({ props }) {
             <button
               className="my-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 text-white uppercase rounded text-xs tracking-wider"
               type="button"
-              onClick={props.handleClickCreate}
+              onClick={(e) => { e.preventDefault(); props.submitCreate(props.onSubmitCreate)();}}
             >
               Register
             </button>
           )}
         </div>
-        {props.isLog === true ? (
+        {props.isLog === true ? ( props.formForgot === false &&
           <div className="w-full flex flex-start mt-4 font-semibold text-sm text-slate-500 text-center md:text-left cursor-pointer">
             Don't have an account?{" "}
             <p
-              onClick={() => props.setIsLog(false)}
+              onClick={() => {props.setIsLog(false)}}
               className="text-red-600 hover:underline hover:underline-offset-4 cursor-pointer"
             >
               Register
@@ -162,7 +170,7 @@ function FormLogin({ props }) {
         ) : (
           <p
             className=" font-semibold text-red-600 hover:underline hover:underline-offset-4 cursor-pointer"
-            onClick={() => props.setIsLog(true)}
+            onClick={() => {props.setIsLog(true)}}
           >
             You have an account?
           </p>

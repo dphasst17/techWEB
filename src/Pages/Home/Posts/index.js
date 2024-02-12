@@ -1,13 +1,14 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useGetData } from "~/hooks/useFetchData";
+import { StateContext } from "~/contexts/stateContext";
 
 const GetPosts = () => {
-    const{data,err} =useGetData('posts','getPosts');
+    const {post} = useContext(StateContext)
     const navigate = useNavigate()
     return <>
         <h1 className="w-full text-center font-han font-[30px]">POSTS</h1>
         <div className="showPosts w-full h-auto flex flex-wrap justify-evenly px-4 my-2">
-            {data!== null && data.slice(0,4).map(e => <div 
+            {post!== null && post.slice(0,4).map(e => <div 
                 onClick={() => {window.scrollTo({
                     top: 0,
                     behavior: "smooth"

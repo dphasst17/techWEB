@@ -6,10 +6,10 @@ import Login from "~/Pages/Login";
 import CheckOut from "~/Pages/CheckOut";
 import SearchResult from "~/Pages/SearchResult";
 import ProductDetail from "~/Pages/ProductDetail/index";
-import Success from "~/Pages/Success";
 import Cart from "~/Pages/Cart";
 import PageErr from "~/Pages/Error";
-import PostsDetail from "~/Pages/Posts";
+import PostsDetail from "~/Pages/Posts/detail";
+import Post from "~/Pages/Posts";
 
 //PublicRoutes
 const publicRoutes = [
@@ -18,15 +18,15 @@ const publicRoutes = [
   { path: "/product", component: Product },
   { path: "/detail/:idType/:nameType/:productID/:productTitle", component: ProductDetail },
   { path: "/posts/detail/:idPosts/:postsTitle", component: PostsDetail },
-  { path: "/cart", component: Cart },
   { path: "/search/:keyword", component: SearchResult },
   { path: "/login", component: Login },
+  { path: "/post", component: Post },
   { path: "/*", component: PageErr } 
 ];
 
 const privateRoutes = [
+  { path: "/cart", component: Cart },
   { path: "/user", component: User },
   { path: "/checkout", component: CheckOut },
-  { path: "/success", component: Success },
 ];
 export { publicRoutes, privateRoutes};

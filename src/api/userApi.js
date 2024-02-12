@@ -40,11 +40,21 @@ export const addressChangeType = async(token,data) => {
         body:JSON.stringify(data)
     }).then(res => {return res.json()})
 }
-export const getApiProvinceAddress = async() => {
-    return fetch(`https://provinces.open-api.vn/api/?depth=2`)
+export const deleteAddress = async(listId) => {
+    return fetch('http://localhost:1705/user/address',{
+        method:'DELETE',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({list:listId})
+    })
     .then(res => res.json())
 }
-export const getApiAddressDetail = async(type,code) => {
-    return fetch(`https://provinces.open-api.vn/api/${type}/${code}/?depth=2`)
+export const getApiProvince = async() => {
+    return fetch(`https://vapi.vnappmob.com/api/province`)
+    .then(res => res.json())
+}
+export const getProvincesDetail = async(type,id) => {
+    return fetch(`https://vapi.vnappmob.com/api/province/${type}/${id}`)
     .then(res => res.json())
 }

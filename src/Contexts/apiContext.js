@@ -19,13 +19,6 @@ export const ApiProvider = ({ children }) => {
   const {
     Users,
     setUsers,
-    /* setLaptop,
-    setKeyboard,
-    setMouse,
-    setMemory,
-    setMonitor,
-    setStorage,
-    setVga, */
     setLaptop,
     setAddress,
     setListOrder,
@@ -33,9 +26,14 @@ export const ApiProvider = ({ children }) => {
     isDark,
     setType,
     setProduct,
+    setBank,
+    setNewData,
+    setSelling,
+    setSaleData,
+    setPost,setViewData,
+    fetchOrder,setFetchOrder,
+    fetchUser,setFetchUser
   } = useContext(StateContext);
-  const [valueSearch, setValueSearch] = useState("");
-  const [showResult, setIsShowResult] = useState(false);
   const [isShowButton, setIsShowButton] = useState(false);
 
   const [numPage, setNumPage] = useState([]);
@@ -54,6 +52,12 @@ export const ApiProvider = ({ children }) => {
       ? document.body.classList.add("dark")
       : document.body.classList.remove("dark");
   }, [isDark]);
+  useEffect(() => {
+    fetch('https://api.vietqr.io/v2/banks')
+    .then(res => res.json())
+    .then(res => setBank(res.data))
+    
+  },[setBank])
 
   /* isLogin === true => check token => 
     if token has expired => get new token => get User with new access token and save new token in cookies
@@ -62,12 +66,11 @@ export const ApiProvider = ({ children }) => {
 
   const handleToken = HandleToken();
   //eslint-disable-next-line react-hooks/exhaustive-deps
+  const isUndefinedOrFalse = (value) => {
+    return value !== undefined && value !== false;
+  };
   useEffect(() => {
-    const isUndefinedOrFalse = (value) => {
-      return value !== undefined && value !== false;
-    };
-
-    const fetchUser = async () => {
+    const fetchDataUser = async () => {
       const accessToken = await handleToken();
       if (isUndefinedOrFalse(accessToken)) {
         try {
@@ -77,26 +80,40 @@ export const ApiProvider = ({ children }) => {
           }
           setUsers(res);
           setAddress(res[0].address);
-        } catch (err) {
-          console.log(err);
-        }
-
-        try {
-          const res = await orderSelectByUser(accessToken);
-          if (res.status === 500) {
-            throw Error({ status: res.status, message: res.messages });
-          }
-          setListOrder(res);
+          setFetchUser(!fetchUser)
         } catch (err) {
           console.log(err);
         }
       }
     };
 
-    isLogin === "true" && fetchUser();
-  }, [handleToken]);
+    isLogin === "true" && fetchUser && fetchDataUser();
+  }, [isLogin]);
+  useEffect(() => {
+    const fetchDataOrder = async () => {
+      const accessToken = await handleToken();
+      if (isUndefinedOrFalse(accessToken)) {
+        try {
+          const res = await orderSelectByUser(accessToken);
+          if (res.status === 500) {
+            throw Error({ status: res.status, message: res.messages });
+          }
+          setListOrder(res);
+          setFetchOrder(!fetchOrder)
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    };
+    isLogin === "true" && fetchOrder && fetchDataOrder()
+    
+  },[isLogin,fetchOrder])
 
-  /*   const { data, err } = []; */
+  const{data:dataPost,err:errPost} = useGetData('posts','getPosts');
+  const{data:dataSale,err:errSale} = useGetData('product','getProductOnSale');
+  const {data:dataNew,err:errNew} = useGetData('product','getProductNew');
+  const { data:dataSold, err:errSold } = useGetData("product", "getProductSold");
+  const { data:dataView, err:errView } = useGetData("product", "getProductByView");
   const { data: dataLaptop, err: errLaptop } = useGetDataByKey(
     "product",
     "getProductByType",
@@ -116,38 +133,17 @@ export const ApiProvider = ({ children }) => {
   }, [dataType]);
   
 
-  /* useEffect(() => {
-    type!== null && console.log(type)
-    product !== null && console.log(product)
-  },[type,product]) */
-
   useEffect(() => {
     dataLaptop !== null && setLaptop(dataLaptop);
   }, [dataLaptop]);
-
-  const handelValueSearch = (valueSearch) => {
-    setValueSearch(valueSearch.target.value);
-    if (valueSearch.target.value.length > 0) {
-      setIsShowResult(true);
-    } else {
-      setIsShowResult(false);
-    }
-  };
-
-  const handleSetIsShowResult = () => {
-    if (valueSearch.length > 0) {
-      setIsShowResult(true);
-    } else {
-      setIsShowResult(false);
-    }
-  };
-
-  const handleSetHideResult = () => {
-    if (showResult === true) {
-      setIsShowResult(false);
-    }
-  };
-
+  
+  useEffect(() => {
+    dataPost !== null && setPost(dataPost);
+    dataSale !== null && setSaleData(dataSale.data);
+    dataNew !== null && setNewData(dataNew);
+    dataSold !== null && setSelling(dataSold);
+    dataView !== null && setViewData(dataView)
+  },[dataPost,dataSale,dataNew,dataSold,dataView])
   //------------- Pagination ----------------
   const PaginationPage = (e, z) => {
     useEffect(() => {
@@ -189,23 +185,21 @@ export const ApiProvider = ({ children }) => {
       }
     }, [data, price, setData]);
   };
-
+  const percentDiscount = (discount,price) => {
+    return price - ((price * discount) / 100)
+  }
   return (
     <ApiContext.Provider
       value={{
         Users,
-        valueSearch,
-        showResult,
         isShowButton /* set show button number pagination */,
         numPage,
         activePage,
         ref,
+        percentDiscount,
         SortDataBasedOnPrice,
         HandleActivePage /* number pagination */,
         PaginationPage /* handle division of page count */,
-        handelValueSearch,
-        handleSetIsShowResult,
-        handleSetHideResult,
       }}
     >
       {children}

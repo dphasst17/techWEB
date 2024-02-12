@@ -1,7 +1,7 @@
 import "~/tailwind.css";
 import { useState } from "react";
 import HandleFilterData  from "~/helper/filterData";
-
+import { FcViewDetails,FcClearFilters,FcShop } from "react-icons/fc";
 function Filter({ props }) {
   const [showFilBrand, setShowFilBrand] = useState(false);
   const handleChange = (event) => {
@@ -33,6 +33,7 @@ function Filter({ props }) {
               }}
               className="filDetail w-[150px] h-[30px] rounded-[5px] bg-blue-500 text-white font-semibold flex justify-center items-center"
             >
+              <FcShop className="mx-2"/>
               Brand
             </div>
             {showFilBrand === true && (
@@ -77,6 +78,7 @@ function Filter({ props }) {
             props.setValueFil([]);
           }}
         >
+          <FcClearFilters className="mx-2"/>
           Clear All filter
         </div>
       </div>

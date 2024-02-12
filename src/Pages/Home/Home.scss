@@ -32,26 +32,45 @@
         background-image: linear-gradient(to right, #aaaaaa, #999999, #888888, #777777);
     }
 }
-@keyframes bc{
-    0%{
+@keyframes bc {
+    0% {
         background-size: 0;
     }
-    100%{
+    100% {
         background-size: cover;
     }
+}
+@keyframes textClip {
+    to {
+        background-position: 200% center;
+    }
+}
+.animate{
+    animation: trans2 0.2s alternate linear;
+}
+.textEffect {
+    font-size: 70px !important;
+    background: linear-gradient(to right, #de3a2b 10%, #f05b05 30%,#dfbf0e 50%, #d52d2d 70%);
+    background-size: auto auto;
+    background-clip: border-box;
+    background-size: 200% auto;
+    color: #fff;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textClip 5s linear infinite;
 }
 .home {
     width: 100%;
     height: 100%;
-    h1{
-        width:100%;
+    h1 {
+        width: 100%;
         text-align: center;
         cursor: pointer;
-        color:rgb(20, 97, 230);
+        color: rgb(20, 97, 230);
         font-weight: 650;
         font-size: 50px;
-        padding:0 2%;
-        
+        padding: 0 2%;
     }
     .featuredProduct {
         width: 100%;
@@ -61,41 +80,41 @@
         flex-wrap: wrap;
         align-content: center;
         margin: auto;
-        .itemsFeat{
-            padding:0 1%;
-            .click{
-                width:10%;
-                height:15%;
-                margin:auto;
+        .itemsFeat {
+            padding: 0 1%;
+            .click {
+                width: 10%;
+                height: 15%;
+                margin: auto;
                 background-color: transparent;
-                border:none;
+                border: none;
                 cursor: pointer;
-                border-radius:40%;
-                svg{
-                    width:80%;
-                    height:80%;
-                    margin:auto;
-                    polygon{
-                        fill:#00e1fa;
+                border-radius: 40%;
+                svg {
+                    width: 80%;
+                    height: 80%;
+                    margin: auto;
+                    polygon {
+                        fill: #00e1fa;
                     }
                 }
-                &:hover{
-                    svg{
-                        polygon{
-                            fill:#0008fa;
-                            transition: all .3s linear;
-                        } 
+                &:hover {
+                    svg {
+                        polygon {
+                            fill: #0008fa;
+                            transition: all 0.3s linear;
+                        }
                     }
                 }
             }
-            .fpDetail{
+            .fpDetail {
                 overflow-x: scroll;
                 padding: 1% 0% 4% 4%;
                 cursor: pointer;
                 &::-webkit-scrollbar {
                     height: 5px;
                 }
-                .fpItems{
+                .fpItems {
                     scroll-snap-align: start;
                     min-width: 200px;
                     height: 100%;
@@ -104,12 +123,10 @@
                     flex-direction: column;
                     margin-right: 4%;
                     transform: scale(1);
-                    opacity:1;
-                    animation:op .5s alternate linear;
-                    background: rgba(255, 255, 255, 0.2);
+                    opacity: 1;
+                    animation: op 0.5s alternate linear;
                     border-radius: 8px;
-                    transition:all .5s linear; 
-                    border: 1px solid rgba(255, 255, 255, 0.3);
+                    transition: all 0.5s linear;
                     .fpImg {
                         width: 100%;
                         height: 50%;
@@ -120,7 +137,6 @@
                         width: 100%;
                         height: 10%;
                         text-align: center;
-                        color: #940606;
                         font-size: 20px;
                         font-weight: 550;
                         overflow: hidden;
@@ -130,7 +146,6 @@
                     .fpPrice {
                         width: 100%;
                         height: 10%;
-                        color: #940606;
                         font-size: 18px;
                     }
                     .fpButton {
@@ -140,81 +155,69 @@
                         flex-wrap: wrap;
                         align-content: center;
                         justify-content: space-around;
-                        .button{
+                        .button {
                             cursor: pointer;
                             svg {
                                 height: 15px;
-                                path {
-                                    fill: #000000;
-                                }
-                            }
-                        }
-                        
-                        button:hover {
-                            svg {
-                                path {
-                                    fill: rgb(255, 255, 255);
-                                }
-                            }
-                        }
-                        button:nth-child(3):hover {
-                            svg {
-                                path {
-                                    fill: rgb(212, 0, 0);
-                                }
                             }
                         }
                     }
                 }
-                .fpItems:hover{
-                    box-shadow: -5px -5px 10px rgba(163, 163, 163, 0.5),10px 10px 15px rgba(70,70,70,0.12);
-                }
-                @keyframes op{
-                    0%{
-                        
-                        opacity:0
+                @keyframes op {
+                    0% {
+                        opacity: 0;
                     }
-                    100%{opacity:1}
+                    100% {
+                        opacity: 1;
+                    }
                 }
             }
         }
-        
     }
-    .h-soldProduct{
-        .sold-first .sold-detail,.sold-second .sold-detail{
-            animation:trans2 .5s alternate linear;
+    .h-soldProduct {
+        .sold-first .sold-detail,
+        .sold-second .sold-detail {
+            animation: trans2 0.5s alternate linear;
         }
     }
-    .h-viewProduct{
-        .view-first .view-detail,.view-second .view-detail{
-            animation:trans2 .5s alternate linear;
+    .h-viewProduct {
+        .view-first .view-detail,
+        .view-second .view-detail {
+            animation: trans2 0.5s alternate linear;
         }
     }
     .h-product {
-        animation:bc .5s alternate linear;
+        animation: bc 0.5s alternate linear;
         .product-info {
             .product-detail {
-                animation:trans2 .5s alternate linear;
+                animation: trans2 0.5s alternate linear;
             }
         }
-        @keyframes trans2{
-            0%{opacity:0;transform: translateY(50%)}
-            100%{opacity:1;transform: translateY(0%)}
+        @keyframes trans2 {
+            0% {
+                opacity: 0;
+                transform: translateY(50%);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0%);
+            }
         }
         .product-info:hover {
-            .product-detail{
-                .items{
-                    .accessInf{
-                        .items-brand,.items-type{
+            .product-detail {
+                .items {
+                    .accessInf {
+                        .items-brand,
+                        .items-type {
                             background-color: #29295c;
-                            color:#fff;
-                            transition:all .2s linear
+                            color: #fff;
+                            transition: all 0.2s linear;
                         }
                     }
-                    .productAccess{
-                        .information{
-                            p{
-                                color:white
+                    .productAccess {
+                        .information {
+                            p {
+                                color: white;
                             }
                         }
                     }
@@ -223,25 +226,32 @@
         }
     }
     .h-access {
-        animation:bc .5s alternate linear;
+        animation: bc 0.5s alternate linear;
         .accDemo {
             .accDemo_Child {
-                animation:trans2 .5s alternate linear;
+                animation: trans2 0.5s alternate linear;
             }
         }
         .accDemo:hover {
-            .accDemo_Child{
-                .accessInf{
-                   p{color:white}
+            .accDemo_Child {
+                .accessInf {
+                    p {
+                        color: white;
+                    }
                 }
             }
         }
     }
-    
-    @keyframes oP{
-        0%{transform: scale(1);}
-        50%{transform: scale(1.1);}
-        100%{transform: scale(1);}
+
+    @keyframes oP {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
     }
 }
-

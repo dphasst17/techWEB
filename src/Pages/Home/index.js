@@ -7,6 +7,7 @@ import Loading from "~/components/Loading/Loading";
 import Selling from "./Selling";
 import ProductView from "./ProductView";
 import GetPosts from "./Posts";
+import Sale from "./Sale";
 
 
 const Product = React.lazy(() => import('./Product-demo'));
@@ -18,6 +19,7 @@ function Home() {
       <div className="home">
         
         <Slideshow />
+        <Sale />
         <NewsProduct />
         <Selling />
         <ProductView />

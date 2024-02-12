@@ -9,10 +9,12 @@ import { Link, useNavigate } from "react-router-dom";
 import LazyLoad from "react-lazy-load";
 import { AnimateScroll } from "~/helper/animateScroll";
 import { StateContext } from "~/contexts/stateContext";
+import { ApiContext } from "~/contexts/apiContext";
 
 const Product = () => {
   const navigate = useNavigate()
   const {laptop} = useContext(StateContext)
+  const {percentDiscount} = useContext(ApiContext)
   const [data,setData] = useState(null);
   const [inView, setInView] = useState(false);
   useEffect(() => {
@@ -84,20 +86,20 @@ const Product = () => {
                             </p>
                           </div>
                         </div>
-                        <div className="items-child w-full h-[21%] flex lg:flex-row flex-col justify-between  ">
-                          <div className="money w-full lg:w-3/5 text-[17px] font-semibold ml-[3%] text-gray-300">
+                        <div className="items-child w-full h-[21%] flex  flex-col justify-between  ">
+                          <div className="money w-full  text-[17px] font-semibold ml-[3%] text-gray-300">
                             Price:{" "}
-                            <span className="font-han text-[25px] text-zinc-200">
-                              {product.price}
+                            <span className="font-han text-[25px]">
+                              {product.discount !== 0 ? (<><span className="text-red-600 font-medium line-through">{product.price}</span> {percentDiscount(product.discount,product.price)}</>) : product.price}
                             </span>{" "}
                             USD
                           </div>
-                          <div className="button w-full lg:w-2/5 flex flex-col md:flex-row items-center justify-between md:mr-[3%]">
+                          <div className="button w-full  flex flex-col md:flex-row items-center justify-around">
                             <CartContext.Consumer>
                               {({ addToCart }) => (
                                 <button
                                   onClick={() => addToCart(product,1)}
-                                  className="w-3/4 lg:w-4/6 h-[30px] border-none rounded-[5px] md:my-0 my-[2%] bg-[url(https://dlcdnwebimgs.asus.com/files/media/0EE47A6A-E964-48A7-9332-8C5FD982A196/v1/images/large/1x/09__bgFrame.webp)] bg-cover cursor-pointer hover:bg-blue-600 transition-all"
+                                  className="w-3/4 lg:w-2/4 h-[30px] border-none rounded-[5px] md:my-0 my-[2%] cursor-pointer bg-slate-900 hover:bg-slate-700 transition-all"
                                 >
                                   <FontAwesomeIcon
                                     className="text-white"
@@ -110,7 +112,7 @@ const Product = () => {
                               onClick={() => {
                                 navigate(`/detail/${product.idType}/${product.nameType}/${product.idProduct}/${product.nameProduct}`)
                               }}
-                              className="w-3/4 lg:w-1/4 h-[30px] flex justify-center items-center border-none rounded-[5px] md:my-0 my-[2%] cursor-pointer bg-blue-800 hover:bg-blue-600 transition-all"
+                              className="w-3/4 lg:w-1/4 h-[30px] flex justify-center items-center border-none rounded-[5px] md:my-0 my-[2%] cursor-pointer bg-slate-900 hover:bg-slate-700 transition-all"
                             >
                               <Link>
                                 <FaEye className="text-white m-auto" />

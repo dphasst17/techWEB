@@ -19,3 +19,14 @@ export const orderSelectByUser = async(token) => {
     })
     .then(res => {return res.json()})
 }
+/* {idTrans:id,idTransDetail:[1,2,3,4]} */
+export const orderDeleteProduct = async(data) => {
+    return fetch(`${process.env.REACT_APP_URL_SERVER}/api/transports/delete/detail`,{
+        method:'DELETE',
+        headers:{
+            'Content-Type':'application/json',
+        },
+        body:JSON.stringify(data)
+    })
+    .then(res => {return res.json()})  
+}

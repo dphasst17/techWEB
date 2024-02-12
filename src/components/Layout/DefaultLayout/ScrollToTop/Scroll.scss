@@ -4,14 +4,14 @@
     height: 40px;
     min-height: 20px;
     position: fixed;
-    bottom: 5%;
+    bottom: 10%;
     right: 2%;
     display: flex;
     justify-content: center;
     align-content: center;
-    animation:key .5s alternate linear;
+    animation:key .2s alternate linear;
     transform: rotate(0deg);
-    border-radius:50%;
+    border-radius:10px;
     background-color:  rgb(70, 117, 200);
     .icon{
         width:100%;
@@ -20,11 +20,9 @@
         justify-content: center;
         flex-wrap: wrap;
         align-content: center;
-        
-        cursor: pointer;
         border-radius:50%;
-        animation:key .5s alternate linear;
         transform: rotate(0deg);
+        cursor: pointer;
         svg{
             width:100%;
             height:50%;
@@ -33,16 +31,15 @@
             }
         }
         @keyframes key{
-            0%{transform: rotate(180deg);}
-            100%{transform: rotate(0deg)}
+            0%{transform: translateX(50%);}
+            100%{transform: translateX(0)}
         }
     }
 }
 
 @media (max-width:1200px){
     .scroll-to-top{
-/*         width:10px;
-        height: 10px; */
+        bottom: 15%;
         right:0%;
         
         .icon{

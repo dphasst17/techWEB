@@ -59,7 +59,7 @@ export const CartProvider = (props) => {
     const accessToken = await handleCheckExp()
     cartInsert(accessToken,{idProduct:product.idProduct,count:count})
       .then(res => {
-        const objNewCart = {idProduct:product.idProduct,count:1,idCart:res.newId[0].idCart,nameProduct:product.nameProduct,imgProduct:product.imgProduct,price:product.price}
+        const objNewCart = {idProduct:product.idProduct,count:1,idCart:res.newId[0].idCart,nameProduct:product.nameProduct,imgProduct:product.imgProduct,price:product.price,discount:product.discount}
         setCartItems([...cartItems,objNewCart])
       })
       .catch(err => console.log(err))
@@ -89,7 +89,8 @@ export const CartProvider = (props) => {
         addToCart: addToCart,
         deleteItems: deleteItems,
         incrementItems: incrementItems,
-        decrementItems: decrementItems
+        decrementItems: decrementItems,
+        setCartItems:setCartItems
       }}
     >
       {props.children}

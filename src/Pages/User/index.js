@@ -1,4 +1,5 @@
 import   "./User.scss";
+import { RiLockPasswordLine } from "react-icons/ri";
 import { ApiContext } from "~/contexts/apiContext";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,13 +12,15 @@ import {FaUserEdit} from "react-icons/fa"
 import Order from "./listOrder";
 import { changeInfo } from "~/api/userApi";
 import FormAddress from "./formAddress";
+import FormPass from "./formPassword";
 function User() {
   const { PaginationPage, isShowButton, numPage,HandleActivePage,
     activePage} = useContext(ApiContext);
-  const {users,isDark} = useContext(StateContext)
+  const {users,setUsers,isDark} = useContext(StateContext)
   const navigate = useNavigate();
   const [order,setOrder] = useState(null)
   const [editUser, setEditUser] = useState(false);
+  const [formPassword,setFormPassword] = useState(false)
   const [FullName, setFullName] = useState("");
   const [Email, setEmail] = useState("");
   const [Phone, setPhone] = useState("");
@@ -28,6 +31,7 @@ function User() {
   useEffect(() => {
     users !== null && setOrder(users.flatMap((items) => items.order))
   },[users])
+
   PaginationPage(order, 5);
   const HandlePagination = (e) => {
     setSlice(5 * e);
@@ -39,7 +43,15 @@ function User() {
       changeInfo(token,data)
       .then(res => {
         if(res.status === 5000){throw res.message}
-        res.status === 200 && window.location.reload()
+        res.status === 200 && setUsers(users.map(e => {
+          setEditUser(false)
+          return {
+            ...e,
+            nameUser:data.name,
+            phone:data.phone,
+            email:data.email
+          }
+        }))
       })
       .catch(err => console.log(err))
     }
@@ -91,20 +103,28 @@ function User() {
                 )
               )}
             </div>
-            <div className="buttonUser w-full flex items-center justify-center">
+            <div className="buttonUser w-full flex flex-col items-center justify-center">
               {editUser === false ? (
-                <button
-                  onClick={() => {
-                    setEditUser(true);
-                  }}
-                  className="w-full ssm:w-2/4 font-bold flex items-center justify-center"
-                >
-                  <FaUserEdit className="w-[10%] h-4/5"/>
-                  Edit
-                </button>
+                <>
+                  <button
+                    onClick={() => {
+                      setEditUser(true);
+                    }}
+                    className="w-full ssm:w-2/4 font-bold flex items-center justify-center my-2"
+                  >
+                    <FaUserEdit className="w-[10%] h-4/5"/>
+                    Edit
+                  </button>
+                  <button onClick={() => {setFormPassword(!formPassword)}} className="w-full ssm:w-2/4 font-bold flex items-center justify-center my-2">
+                    <RiLockPasswordLine className="w-[10%] h-4/5"/>Update Password</button>
+                </>
               ) : (
                 <button
                   onClick={() => {
+                    if(FullName === "" && Phone === "" && Email ===""){
+                      setEditUser(false)
+                      return
+                    } 
                     handlePost(
                       {
                         "name":(FullName ==="") ? users.flatMap(us => us.nameUser).toString() : FullName,
@@ -113,6 +133,7 @@ function User() {
                       }
                     );
                   }}
+                  className="w-full ssm:w-2/4 font-bold flex items-center justify-center"
                 >
                   Success
                 </button>
@@ -163,6 +184,7 @@ function User() {
       <Order />
       {formAdd === true && <FormAddress props={{setFormAdd}}/>}
       {isLoading === true && <Loading />}
+      {formPassword === true && <FormPass props={{setFormPassword}} />}
     </>
   );
 }

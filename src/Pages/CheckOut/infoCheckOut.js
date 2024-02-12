@@ -39,7 +39,7 @@ const Info = ({props}) => {
         {showAll === true && <div className="w-4/5 h-auto flex flex-wrap items-center justify-center bg-slate-100 my-6 rounded-[5px] shadow-md">
             {address.map(e => <div className="w-[90%] h-[40px] my-2 rounded-lg cursor-pointer">
                     <input className="hidden" type="checkbox" id={`address-${e.idAddress}`}/>
-                    <label htmlFor={`address-${e.idAddress}`} className={`w-full h-full font-semibold flex items-center ${e.detail === props.defaultAddress[0].detail ? 'bg-slate-700' :'bg-slate-400' } hover:bg-slate-700 px-2 rounded-lg cursor-pointer transition-all`} 
+                    <label htmlFor={`address-${e.idAddress}`} className={`w-full h-full  font-semibold flex items-center hover:text-white ${e.detail === props.defaultAddress[0].detail ? 'bg-slate-700 text-white' :'bg-slate-400' } hover:bg-slate-700 px-2 rounded-lg cursor-pointer transition-all`} 
                         onClick={(e) => {props.setDAddress([{idAddress:e.idAddress,detail:e.target.innerText}])}}>{e.detail}</label>
                     
                 </div>)}
@@ -89,7 +89,7 @@ const Info = ({props}) => {
                     {props.payMethods === "Payment through bank" && <Payment />}
                     <div className="w-full h-[10%] flex justify-between items-center text-[20px] font-semibold mt-6">
                         <span>The total amount payable:</span>
-                        <span>{props.data.length !== 0 ? props.data.map(e => e.count * e.price).reduce((a,b) => a + b) + (props.costs !==0 && props.costs) :'0'} USD</span>
+                        <span>{props.data.length !== 0 ? props.data.map(e => e.count * e.price - ((e.price * e.discount)/100)).reduce((a,b) => a + b) + (props.costs !==0 && props.costs) :'0'} USD</span>
                     </div>
                 </div>
             }
