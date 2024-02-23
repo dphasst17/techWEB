@@ -8,7 +8,7 @@ const GetPosts = () => {
     return <>
         <h1 className="w-full text-center font-han font-[30px]">POSTS</h1>
         <div className="showPosts w-full h-auto flex flex-wrap justify-evenly px-4 my-2">
-            {post!== null && post.slice(0,4).map(e => <div 
+            {post !== null && post?.slice(0,4).map(e => <div 
                 onClick={() => {window.scrollTo({
                     top: 0,
                     behavior: "smooth"

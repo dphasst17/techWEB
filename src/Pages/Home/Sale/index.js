@@ -12,13 +12,13 @@ const Sale = () => {
     const { percentDiscount } = useContext(ApiContext);
     const navigate = useNavigate();
     return <div className="h-sale w-full h-auto flex flex-wrap justify-center items-center">
-        {saleData !== null && saleData.length !== 0 && saleData.map(s =>
+        {saleData !== null && saleData?.length !== 0 && saleData?.map(s =>
             <>
                 <h1 className="font-pr textEffect animate">{s.title}</h1>
                 <span className="font-medium text-[40px] font-honk animate">{s.startDate} - {s.endDate}</span>
-                <div className="saleDetail w-[90%] h-auto flex flex-wrap justify-start items-center px-8">
+                <div className="saleDetail w-full lg:w-[90%] h-auto flex flex-wrap justify-around 2xl:justify-start items-center px-8">
                     {
-                        s.detail.map(d => <div className={`items relative w-[18%] h-[280px] border border-solid ${isDark ? 'border-white' : 'border-slate-700'} animate mx-7 my-4 p-2 rounded-lg cursor-pointer`} key={d.id}>
+                        s.detail.map(d => <div className={`items relative w-[200px] lg:w-[17%] 3xl:w-[18%] min-w-[200px] h-[280px] border border-solid ${isDark ? 'border-white' : 'border-slate-700'} animate mx-7 my-4 p-2 rounded-lg cursor-pointer`} key={d.id}>
                             <div 
                                 className="absolute w-[30px] h-[30px] text-[10px] flex items-center justify-center text-white rounded-md bg-red-500">
                                 -{d.discount}%
@@ -44,10 +44,10 @@ const Sale = () => {
                                 <span className={`w-full flex items-center justify-center text-[20px] ${isDark ? 'text-slate-200' : 'text-slate-700'} font-BOO font-semibold `}>
                                     <span className="overflow-hidden whitespace-nowrap text-ellipsis">{d.nameProduct}</span>
                                 </span>
-                                <span onClick={() => {window.location.pathname = `/search/${d.brand}`}} className="w-2/5 h-[30px] flex items-center justify-center rounded-[5px] bg-gray-700 font-han text-[20px] text-gray-200 font-semibold overflow-hidden whitespace-nowrap text-ellipsis">
+                                <span onClick={() => {navigate(`/search/${d.brand}`)}} className="w-2/5 h-[30px] flex items-center justify-center rounded-[5px] bg-gray-700 font-han text-[20px] text-gray-200 font-semibold overflow-hidden whitespace-nowrap text-ellipsis">
                                     {d.brand.toUpperCase()}
                                 </span>
-                                <span onClick={() => {window.location.pathname = `/search/${d.type}`}} className="w-2/5 h-[30px] flex items-center justify-center rounded-[5px] bg-gray-700 font-han text-[20px] text-gray-200 font-semibold overflow-hidden whitespace-nowrap text-ellipsis">
+                                <span onClick={() => {navigate(`/search/${d.type}`)}} className="w-2/5 h-[30px] flex items-center justify-center rounded-[5px] bg-gray-700 font-han text-[20px] text-gray-200 font-semibold overflow-hidden whitespace-nowrap text-ellipsis">
                                     {d.type.toUpperCase()}
                                 </span>
                                 <span className={`w-full font-bold text-[20px] ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>

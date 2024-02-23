@@ -9,7 +9,7 @@ const Post = () => {
         setIsAlert(!isAlert)
     }
     return <section className="flex items-center w-full h-auto min-h-[80vh]">
-        <Alert props={{isAlert:isAlert,type:'success',message:'test message success'}}/>
+        {isAlert && <Alert props={{isAlert:isAlert,type:'success',message:'test message success'}}/>}
         <div className="p-4 mx-auto w-[90%] h-auto">
             <div className="grid grid-cols-1 gap-4 lg:gap-8 sm:gap-4 sm:grid-cols-2 lg:grid-cols-2">
                 {post !== null && post.map(e => <div 
