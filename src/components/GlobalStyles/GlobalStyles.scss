@@ -83,34 +83,6 @@ body {
     width:100%;
     height:100%;
 }
-@keyframes lights {
-    0% {
-        background-color:transparent;
-        color: hsl(230, 40%, 80%);
-
-    }
-    
-    30% { 
-        background-color:transparent;
-        color: hsl(230, 38%, 75%);
-    }
-    
-    40% { 
-        background-color:transparent;
-        color: hsl(228, 53%, 73%);
-    }
-    
-    70% {
-        background-color:transparent;
-        color: hsl(230, 49%, 66%);
-    }
-    
-    100% {
-        background-color:transparent;
-        color: hsl(231, 44%, 58%);
-    }
-    
-  }
 @keyframes scaleImg{
     0%{
         opacity: 0;
@@ -147,6 +119,44 @@ body {
         transform: translate(-250px,-150px);
     }
 }
+@keyframes translateToY{
+    0%{
+        transform: translateY(-100%);
+    }
+    100%{
+        transform: translateY(0%);
+    }
+}
+@keyframes stroke {
+    0% {
+      fill: transparent;
+      stroke-dashoffset: 1800;
+    }
+    50%{
+        fill: transparent;
+    }
+    100% {
+      fill: #00e1ff;
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes strokeReverse {
+    0% {
+      fill: #00e1ff;
+      stroke-dashoffset: 0;
+    }
+    20%{
+        fill: transparent;
+    }
+    90%{
+        stroke: #00e1ff;
+    }
+    100% {
+      fill: transparent;
+      stroke: transparent;
+      stroke-dashoffset: 1800;
+    }
+  }
 .loading{
     width:100%;
     height:100dvh;
@@ -215,9 +225,12 @@ body {
 .slideshow {
     display: block;
     width: 100%;
-    height: 500px;
+    height: auto;
     margin: 0 auto;
     overflow: hidden;
+    .tabTitle{
+        animation: translateToY .3s alternate;
+    }
     .slideshowSlider {
         display: block;
         width: 100%;
@@ -225,66 +238,47 @@ body {
         transition:transform linear 000ms;
         margin-right: 2%;
         .slide {
-/*             display:inline-flex; */
             justify-content: space-evenly;
-/*             flex-wrap: wrap; */
             align-items: center;
             height: 400px;
             width: 100%;
             border-radius: 40px;
             .image{
-/*                 width:35%;
-                height:100%; */
                 display:flex;
                 flex-wrap: wrap;
                 transform: translateY(-200%);
                 align-content: center;
                 justify-content: center;   
+                .svgAnimate path{
+                    fill: #00e1ff;
+                    stroke: #00e1ff;
+                    stroke-width: 2;
+                    stroke-dasharray: 1800;
+                    stroke-dashoffset: 0;
+                }
             }
-            .content{ 
-                .border{
-                    position: absolute;
-                    width:50px;
-                    height:50px;
-                    border-top:solid 2px rgb(30, 30, 72);
-                    border-left:solid 2px  rgb(30, 30, 72);
-                    border-bottom:none;
-                    border-right:none;
-                    transform: translate(0) skew(-40deg);
-                  }
-                  .border2{
-                    position: absolute;
-                    width:50px;
-                    height:50px;
-                    border-bottom:solid 2px  rgb(30, 30, 72);
-                    border-right:solid 2px  rgb(30, 30, 72);
-                    border-top: none;
-                    border-left:none;
-                    transform: translate(0);
-                  }          
+            .content{    
+                .backgroundInf{
+                    animation: scaleImg .3s alternate;
+                }      
                 .items{
                     position: relative;
                     .title{
                         width:100%;
                         height:auto;
-                        margin:2% auto;
-                        overflow: hidden;
                         font-size: 35px;
                         font-weight: 600;
                         text-align: center;
                         background-color: transparent;
-                        /* color:rgb(48, 65, 133); */
                         color: hsl(230, 40%, 80%);
                         cursor: pointer;
                     }
                     .inf{
                         width:100%;
-                        height:60%;
-                        color: rgb(77, 133, 231);
-                        font-size:25px;
-                        font-weight: 550;
+                        height:50%;
                         display:flex;
                         justify-content: center;
+                        align-items: flex-start;
                         p{
                             width:100%;
                             margin-top:4%;
@@ -315,40 +309,29 @@ body {
             }
         }
         .slide.active{
+            
             .image{
                 transform: translateY(0%);
+                .svgAnimate path{
+                    fill: #00e1ff;
+                    transition: all 1s alternate;
+                    animation: stroke 1s alternate forwards;
+                    stroke: #00e1ff;
+                    stroke-width: 2;
+                    stroke-dasharray: 1800;
+                    stroke-dashoffset: 0;
+                }
                 .imgProduct{
                     opacity: 1;
                     transform: scale(1);
                     animation:scaleImg .5s linear;
                 }
-                .bgImage{
-                    img{
-                        transform: rotate(360deg);
-                        animation:rotate2 .8s linear;
-                    }
-                    @keyframes rotate2{
-                        0%{transform: rotate(-90deg);}
-                        100%{transform: rotate(360deg);}
-                    }
-                }
             }
             .content{
-                .border{
-                    transform: translate(-250px,-150px);
-                    animation: translateReverse .4s linear;
-                }
-                .border2{
-                    transform: translate(250px,150px);
-                    animation: translate .4s linear;
-                }
                 .items{
                     opacity: 1;
                     transform: translateY(0%);
-                    animation: scaleImg 1s alternate;
-                    .title{
-                        animation: lights 5s 750ms linear infinite;
-                    }
+                    animation: scaleImg .5s alternate;
                 }
                 
             }
@@ -361,26 +344,25 @@ body {
                     transition:all .5s linear;
                     animation: scaleImgReverse .5s linear;
                 }
-                .bgImage{
-                    img{
-                        transform: rotate(-90deg);
-                        animation:rotate .5s linear;
-                    }
-                    @keyframes rotate{
-                        0%{transform: rotate(0deg);}
-                        100%{transform: rotate(-90deg);}
-                    }
-                }
+                    .svgAnimate path{
+                        fill: transparent;
+                        transition: all .5s alternate;
+                        animation: strokeReverse .5s alternate;
+                        stroke: transparent;
+                        stroke-width: 2;
+                        stroke-dasharray: 1800;
+                        stroke-dashoffset: 0;
+                      } 
             }
             .content{
-                .border,.border2{
-                    transform: translate(0);
-                    transition:all .5s linear;
-                }
                 .items{
                     transform: scale(0);
                     opacity: 0;
-                    animation: scaleImgReverse .3s alternate; 
+                    animation: hideImg .3s alternate forwards; 
+                    @keyframes hideImg{
+                        0%{transform: scale(1);opacity: 1;}
+                        100%{transform: scale(0);opacity: 0;}
+                    }
                 }
             }
         }
@@ -430,7 +412,6 @@ body {
                         width:100%;
                         .title{
                             text-align: center;
-                            font-size:1em
                         }
                         .inf{
                             font-size:1em

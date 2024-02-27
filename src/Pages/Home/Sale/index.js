@@ -18,7 +18,7 @@ const Sale = () => {
                 <span className="font-medium text-[40px] font-honk animate">{s.startDate} - {s.endDate}</span>
                 <div className="saleDetail w-full lg:w-[90%] h-auto flex flex-wrap justify-around 2xl:justify-start items-center px-8">
                     {
-                        s.detail.map(d => <div className={`items relative w-[200px] lg:w-[17%] 3xl:w-[18%] min-w-[200px] h-[280px] border border-solid ${isDark ? 'border-white' : 'border-slate-700'} animate mx-7 my-4 p-2 rounded-lg cursor-pointer`} key={d.id}>
+                        s.detail.map(d => <div className={`items relative w-[200px] lg:w-[17%] 2xl:w-[18%] 3xl:w-[20%] min-w-[200px] h-[280px] border border-solid ${isDark ? 'border-white' : 'border-slate-700'} animate mx-7 my-4 p-2 rounded-lg cursor-pointer`} key={d.id}>
                             <div 
                                 className="absolute w-[30px] h-[30px] text-[10px] flex items-center justify-center text-white rounded-md bg-red-500">
                                 -{d.discount}%

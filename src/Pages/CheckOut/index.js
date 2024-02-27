@@ -60,7 +60,6 @@ const CheckOut = () => {
   return (
     <div className="checkOut w-full h-auto mb-20 min-h-[765px]">
       {isLoading === true && <Loading />}
-      {/* <button onClick={() => {showAlert('err','Test message')}}>Alert</button> */}
       <div className="c-o-container w-full h-auto flex flex-wrap justify-center ">
         <div className="cartCheckOut w-full lg:w-3/5 h-auto flex flex-col justify-start items-center">
           <h1 className="text-[30px] text-slate-600 font-semibold font-BOO">Check Out</h1>
