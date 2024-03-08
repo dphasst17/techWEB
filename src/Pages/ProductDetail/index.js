@@ -17,6 +17,7 @@ const ProductDetail = () => {
   const { data: dataComment, err: errComment } = useGetDataByKey('comment', 'getCommentById', JSON.stringify({ idProduct: productID }))
   const [img, setImg] = useState("");
   const [comments, setComments] = useState(null);
+  const [option,setOPtion] = useState()
   const isLogin = JSON.parse(localStorage.getItem('isLogin') || false);
   const handleToken = HandleToken();
 
@@ -56,20 +57,27 @@ const ProductDetail = () => {
               <div className="flex flex-col lg:flex-row items-center">
                 <div className="w-4/5 flex justify-center items-center lg:order-2 lg:ml-5">
                   {/* img default */}
-                  <div className="max-w-xl w-full flex justify-center items-center overflow-hidden rounded-lg">
-                    <img className="h-[300px] w-full object-contain md:object-cover" src={img.img} alt="" />
+                  <div className="w-full flex justify-center items-center overflow-hidden rounded-lg">
+                    <img className="h-[300px] w-full object-contain" src={img.img} alt="" />
                   </div>
                 </div>
                 {/* all Img */}
                 <div className="mt-2 w-full lg:order-1 lg:w-1/5 lg:flex-shrink-0">
-                  <div className="h-full flex flex-wrap flex-row md:justify-start justify-around md:items-start lg:flex-col">
+                  <div className="h-full flex flex-wrap flex-row  justify-around">
                     {data !== null && e.imgProduct.map((e, i) => <button type="button" className="flex-0 aspect-square mb-3 h-28 mx-2 overflow-hidden rounded-lg border-2 border-gray-900 text-center" key={`${e.type}-${i}`} onClick={() => { setImg(e) }}>
                       <img className="h-full w-full object-contain" src={e.img} alt="" />
                     </button>)}
 
 
                   </div>
+                
                 </div>
+              </div>
+              <div className="w-full flex flex-col justify-center items-center">
+              <hr className="w-full h-[1px] bg-black mt-4 mx-auto" />
+                <h1 className="mt-8 text-[18px] font-bold text-gray-900">Description</h1>
+                <h2 className="mt-8 text-[18px] font-bold text-gray-900">{e.des}</h2>
+
               </div>
             </div>
 
@@ -78,13 +86,15 @@ const ProductDetail = () => {
               <h1 className="text-center text-[25px] font-bold text-gray-900 cursor-pointer">{e.nameProduct}</h1>
 
 
-              <h2 className="mt-8 text-[18px] font-bold text-gray-900">{e.des}</h2>
+              
               <hr className="w-full h-[1px] bg-black mt-2 mb-8 mx-auto" />
               <div className="mt-3 flex select-none flex-wrap items-center gap-1">
                 {detailInf[e.nameType].map((df, i) =>
-                  <span className={` ${isDark ? 'border-white text-slate-200' : 'border-black text-slate-800'} rounded-lg border  px-6 py-2 font-bold`} key={`${df}-${i}`}>
-                    {df.keyword.toUpperCase()}: {e.detail.map(d => typeof (d[df.keyword]) === 'number' ? d[df.keyword].toFixed(1) : d[df.keyword])}
-
+                  <span className={`w-full ${isDark ? ' text-slate-200' : 'text-slate-800'} flex flex-wrap items-center rounded-lg  px-6 py-2 font-bold`} key={`${df}-${i}`}>
+                    {df.keyword.toUpperCase()}: {e.detail.map(d => d[df.keyword].map(c => 
+                      <span className={` ${isDark ? 'border-white text-slate-200' : 'border-black text-slate-800'} mx-2 rounded-lg border hover:bg-zinc-900 hover:text-white transition-all  px-6 py-2 font-bold`}>
+                        {typeof c === "number" ? c.toFixed(1): c}
+                      </span>))}
                   </span>
                 )}
 
@@ -129,10 +139,10 @@ const ProductDetail = () => {
         <hr className="w-[90%] h-[1px] bg-black mt-2 mb-8 mx-auto"></hr>
         <Comment data={comments} />
       </section>
-      {/* <div className="detailPage w-full h-auto min-h-[810px] flex flex-col justify-between">
+      <div className="detailPage w-full h-auto min-h-[100px] flex flex-col justify-between">
         <h1 className="text-center text-[30px] text-slate-600 font-bold">The products of the same type</h1>
-        <SameType props={{ idType, idProduct: productID }} />
-      </div> */}
+        <SameType props={{ idType, idProduct: productID,nameType }} />
+      </div>
     </>
   );
 }

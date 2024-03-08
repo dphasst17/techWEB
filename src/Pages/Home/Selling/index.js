@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ViewMultiButton } from "~/components/Product/viewMultiBtn";
 import { StateContext } from "~/contexts/stateContext";
 import { AnimateScroll } from "~/helper/animateScroll";
-import bgProduct from "~/images/bg-product-6.png";
 const Selling = () => {
-  const {selling} = useContext(StateContext)
+  const {selling,isDark} = useContext(StateContext)
   const navigate = useNavigate()
   const [inView, setInView] = useState(false);
   const refs = selling?.map(() => React.createRef());
@@ -18,12 +18,8 @@ const Selling = () => {
       >
         {selling !== null &&
           selling.slice(0, 1).map((e,i) => (
-            <div style={{
-              backgroundImage: `url(${bgProduct})`,
-              backgroundRepeat: "repeat-y",
-              backgroundSize: "110% 110%",
-              backgroundPosition: "center",
-            }} ref={refs[i]} key={e.idProduct} className={`sold-detail w-full h-full ${inView ? 'flex':'hidden'} justify-center items-center`}>
+            <div ref={refs[i]} key={e.idProduct} className={`sold-detail w-full h-full border border-solid ${isDark ? 'border-slate-200': 'border-slate-500'} rounded-md
+            ${inView ? 'flex':'hidden'} justify-center items-center`}>
               <div className="sold-detail-child w-4/5 h-4/5 flex xl:flex-col flex-row justify-center items-center">
                 <div className="sold-detail-img w-2/5 xl:w-full h-full xl:h-2/4 flex justify-center items-center"
                   onClick={() => {navigate(`/detail/${e.idType}/${e.nameType}/${e.nameType}/${e.idProduct}/${e.nameProduct}`)}}
@@ -35,23 +31,19 @@ const Selling = () => {
                   />
                 </div>
                 <div className="sold-detail-info w-3/5 xl:w-full h-full xl:h-2/4 flex flex-wrap justify-between cursor-pointer" 
-                  onClick={() => {navigate(`/detail/${e.idType}/${e.nameType}/${e.idProduct}/${e.nameProduct}`)}}
                 >
-                  <span className="w-full h-[40px] flex justify-center items-center bg-slate-500 rounded-[5px] text-white text-[15px] font-bold">
+                  <span
+                  onClick={() => {navigate(`/detail/${e.idType}/${e.nameType}/${e.idProduct}/${e.nameProduct}`)}} 
+                  className="w-full h-[40px] flex justify-center items-center bg-slate-500 rounded-[5px] text-white text-[15px] font-bold">
                     {e.nameProduct}
                   </span>
-                  <span className="w-[48%] h-[40px] flex justify-center items-center bg-slate-500 rounded-[5px] text-white text-[15px] font-semibold cursor-pointer">
-                    {e.price} USD
-                  </span>
-                  <span onClick={() => {window.location.pathname = `search/${e.brand}`}} className="w-[48%] h-[40px] flex justify-center items-center bg-slate-500 rounded-[5px] text-white text-[15px] font-semibold cursor-pointer">
-                    {e.brand.toUpperCase()}
-                  </span>
-                  <span onClick={() => {window.location.pathname = `search/${e.nameType}`}} className="w-[48%] h-[40px] flex justify-center items-center bg-slate-500 rounded-[5px] text-white text-[15px] font-semibold cursor-pointer">
-                    <span className="overflow-hidden whitespace-nowrap text-ellipsis">{e.nameType.toUpperCase()}</span>
-                  </span>
-                  <span className="w-[48%] h-[40px] flex justify-center items-center bg-slate-500 rounded-[5px] text-white text-[15px] font-semibold cursor-pointer">
-                    Sold: {e.sold}
-                  </span>
+                  <ViewMultiButton props={{class:'justify-around lg:justify-between',arr:
+                  [
+                    {content:`${e.brand.toUpperCase()}`,isClick:true,handleName:() => {navigate(`/search/${e.brand}`)}},
+                    {content:`${e.nameType.toUpperCase()}`,isClick:true,handleName:() => {navigate(`/search/${e.nameType}`)}},
+                    {content:`${e.price} USD`,isClick:false,handleName:''},
+                    {content:`Sold: ${e.sold}`,isClick:false,handleName:''}
+                  ]}}/>
                 </div>
               </div>
             </div>
@@ -61,15 +53,10 @@ const Selling = () => {
         {selling !== null &&
           selling.slice(1, 7).map((e,i) => (
             <div
-              style={{
-                backgroundImage: `url(${bgProduct})`,
-                backgroundRepeat: "repeat-y",
-                backgroundSize: "110% 110%",
-                backgroundPosition: "center",
-              }}
               ref={refs[i]}
               key={e.idProduct}
-              className={`sold-detail w-[28%] min-w-[220px] h-[180px] ${inView ? 'flex':'hidden'} items-center justify-center mb-10 xl:mb-0`}
+              className={`sold-detail w-4/5 ssm:w-[22%] smd:w-[28%] min-w-[200px] h-[180px] border border-solid ${isDark ? 'border-slate-200': 'border-slate-500'} rounded-md
+              ${inView ? 'flex':'hidden'} items-center justify-center mb-10 xl:mb-0`}
             >
               <div className="sold-detail-child w-4/5 h-4/5 flex">
                 <div className="sold-detail-img w-2/5 h-full flex justify-center items-center"
@@ -87,18 +74,13 @@ const Selling = () => {
                   <span className="w-full h-[40px] flex justify-center items-center bg-slate-500 rounded-[5px] text-white text-[15px] font-bold">
                     <span className="overflow-hidden whitespace-nowrap text-ellipsis">{e.nameProduct}</span>
                   </span>
-                  <span className="w-[48%] h-[40px] flex justify-center items-center bg-slate-500 rounded-[5px] text-white text-center text-[15px] font-semibold cursor-pointer">
-                    {e.price} USD
-                  </span>
-                  <span onClick={() => {window.location.pathname = `search/${e.brand}`}} className="w-[48%] h-[40px] flex justify-center items-center bg-slate-500 rounded-[5px] text-white text-center text-[15px] font-semibold cursor-pointer">
-                    {e.brand.toUpperCase()}
-                  </span>
-                  <span onClick={() => {window.location.pathname = `search/${e.nameType}`}} className="w-[48%] h-[40px] flex justify-center items-center bg-slate-500 rounded-[5px] text-white text-center text-[15px] font-semibold cursor-pointer">
-                    <span className="overflow-hidden whitespace-nowrap text-ellipsis">{e.nameType.toUpperCase()}</span>
-                  </span>
-                  <span className="w-[48%] h-[40px] flex justify-center items-center bg-slate-500 rounded-[5px] text-white text-center text-[15px] font-semibold cursor-pointer">
-                    Sold: {e.sold}
-                  </span>
+                  <ViewMultiButton props={{class:'justify-around lg:justify-between',arr:
+                  [
+                    {content:`${e.brand.toUpperCase()}`,isClick:true,handleName:() => {navigate(`/search/${e.brand}`)}},
+                    {content:`${e.nameType.toUpperCase()}`,isClick:true,handleName:() => {navigate(`/search/${e.nameType}`)}},
+                    {content:`${e.price} USD`,isClick:false,handleName:''},
+                    {content:`Sold: ${e.sold}`,isClick:false,handleName:''}
+                  ]}}/>
                 </div>
               </div>
             </div>

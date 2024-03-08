@@ -12,8 +12,8 @@ const Cart = ({props}) => {
                 <span className="overflow-hidden whitespace-nowrap text-ellipsis">{c.nameProduct}</span>
                 <span>
                     Price: 
-                    <span className="text-slate-400 mx-2 line-through">{c.price}</span>
-                    <span className="text-red-600 mx-2 font-ps2">{percentDiscount(c.discount, c.price)}</span>USD
+                    <span className={`text-slate-400 mx-2 ${c.discount !== 0 ? 'line-through' : ''}`}>{c.price}</span>
+                    {c.discount !== 0 && <span className="text-red-600 mx-2 font-ps2">{percentDiscount(c.discount, c.price)}</span>}USD
                 </span>
             </div>
             <div className="count w-1/5 h-full flex items-center text-[20px]">

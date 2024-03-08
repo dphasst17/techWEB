@@ -3,17 +3,20 @@ import "../Home.scss";
 import { CartContext } from "~/contexts/Cart";
 
 import { useNavigate } from "react-router-dom";
-import React, {useContext, useEffect,useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import LazyLoad from "react-lazy-load";
 import { FcNext, FcPrevious } from "react-icons/fc";
-import { FaEye, FaHeart } from "react-icons/fa";
 import { StateContext } from "~/contexts/stateContext";
+import { ButtonIconAddCart } from "~/components/Button/addCart";
+import ButtonViewDetail from "~/components/Button/viewDetail";
+import { ViewBrandAndType } from "~/components/Product/viewMultiBtn";
 
 
 
 const NewsProduct = () => {
   const navigate = useNavigate();
-  const {isDark,newData} = useContext(StateContext)
+  const { addToCart } = useContext(CartContext)
+  const { isDark, newData } = useContext(StateContext)
   const containerRefNew = useRef(null);
 
   const handleNextNew = () => {
@@ -24,7 +27,7 @@ const NewsProduct = () => {
       });
     }
   };
-  
+
   const handlePreviousNew = () => {
     if (containerRefNew.current) {
       containerRefNew.current.scroll({
@@ -53,21 +56,21 @@ const NewsProduct = () => {
           });
         }
       }
-    }, 7000);  
+    }, 7000);
     return () => {
       clearInterval(intervalId);
     };
   }, []);
   return (
     <div className="featuredProduct">
-      {newData !== null &&  <h1 className="font-han font-[30px]">News Product</h1>}
-      { <div className="itemsFeat w-full h-4/5 flex justify-center">
+      {newData !== null && <h1 className="font-han font-[30px]">News Product</h1>}
+      {<div className="itemsFeat w-full h-4/5 flex justify-center">
         <button className="click" onClick={handlePreviousNew}><FcPrevious /></button>
         <LazyLoad height={"100%"} width={"80%"} offset={0}>
           <div className="fpDetail w-full h-full flex" ref={containerRefNew}>
             {newData !== null && newData.map((items, index) => (
               <div className={`fpItems ${isDark ? 'bg-gray-200' : 'bg-white'}`} key={`${items.idProduct}-new`} style={{ animationDelay: "." + index + "s" }}>
-                <div className="fpImg">
+                <div className="fpImg h-[35%] lg:h-[40%]">
                   <img src={items.imgProduct} alt="img New Product" loading="lazy" className="w-3/4 h-full object-contain" />
                 </div>
                 <div className='fpTitle font-BOO text-slate-700'>
@@ -75,28 +78,15 @@ const NewsProduct = () => {
                     ? items.nameProduct.slice(0, 20) + `...`
                     : items.nameProduct}
                 </div>
-                <div className='fpPrice text-slate-700'>Price:{items.price} USD</div>
+                <ViewBrandAndType props={{brand:items.brand,type:items.nameType,height:'[15%]',navigate}}/>
+                <div className='fpPrice h-[15%] lg:h-[10%] flex items-center justify-center text-slate-700 font-bold my-1'>{items.price} USD</div>
                 <div className="fpButton">
-                  <button onClick={() => { navigate(`/detail/${items.idType}/${items.nameType}/${items.idProduct}/${items.nameProduct}`) }} 
-                    className='button w-12 border-none rounded-xl outline-none bg-transparent flex justify-center items-center text-slate-700 hover:bg-slate-700 hover:text-slate-100 transition-all'
-                  >
-                      <FaEye />
-                  </button>
-                  <CartContext.Consumer>
-                    {({ addToCart }) => (
-                      <button onClick={() => addToCart(items,1)}
-                        className={`w-3/5 h-2/4 rounded-xl text-white text-base font-semibold ${isDark ? 'bg-slate-600' : 'bg-gray-500'} hover:bg-slate-700 transition-all`}
-                      >
-                        ADD TO CART
-                      </button>
-                    )}
-                  </CartContext.Consumer>
-                  <button 
-                    className='button w-12 border-none rounded-xl outline-none bg-transparent flex justify-center items-center text-slate-700 hover:bg-slate-700 hover:text-slate-100 transition-all'
-                  >
-                    
-                      <FaHeart />
-                  </button>
+                  <ButtonIconAddCart props={{ addToCart, items, width: 'w-3/4 lg:w-2/4' }} />
+                  <ButtonViewDetail props={{
+                    url: `/detail/${items.idType}/${items.nameType}/${items.idProduct}/${items.nameProduct}`,
+                    width: 'w-3/4 lg:w-[30%]'
+                  }} />
+
                 </div>
               </div>
             ))}

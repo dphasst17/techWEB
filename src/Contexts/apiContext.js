@@ -72,7 +72,7 @@ export const ApiProvider = ({ children }) => {
   useEffect(() => {
     const fetchDataUser = async () => {
       const accessToken = await handleToken();
-      if (isUndefinedOrFalse(accessToken)) {
+      if (accessToken) {
         try {
           const res = await getUserInfo(accessToken);
           if (res.status === 500) {
@@ -87,8 +87,8 @@ export const ApiProvider = ({ children }) => {
       }
     };
 
-    isLogin === "true" && fetchUser && fetchDataUser();
-  }, [isLogin]);
+    (isLogin === "true" || isLogin) && fetchDataUser();
+  }, []);
   useEffect(() => {
     const fetchDataOrder = async () => {
       const accessToken = await handleToken();

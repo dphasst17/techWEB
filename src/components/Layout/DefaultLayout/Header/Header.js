@@ -56,7 +56,7 @@ const Header = () => {
     const classNav = (url,currentPath) => {
         return `w-1/5 h-4/5 hidden lg:flex items-center justify-center text-[18px] cursor-pointer rounded-lg ${currentPath === url ? 'bg-slate-300 text-slate-700':'bg-transparent text-white'} hover:text-slate-700 hover:bg-slate-300 transition-all font-bold`
     }
-    const classNavMobile = `w-4/5 h-[10%] ${navMob ? 'flex':'hidden'} items-center justify-start text-[18px] text-slate-800 bg-slate-300 font-semibold rounded-lg px-2 transition-all`
+    const classNavMobile = `w-2/5 h-[15%] ${navMob ? 'flex':'hidden'} items-center justify-start text-[18px] text-slate-800 bg-slate-300 font-semibold rounded-lg px-2 transition-all`
     const classMore = `w-2/5 h-4/5 flex items-center justify-center rounded-lg hover:bg-slate-300 text-white hover:text-slate-700 cursor-pointer transition-all`
     const handleLogin = () => {
         if(!isLogin || isLogin === false){
@@ -66,12 +66,12 @@ const Header = () => {
             navigate('/login')
         }
     }
-    return <header className="w-full h-[70px] flex justify-center items-center fixed bottom-5 z-50">
+    return <header className="w-full h-[70px] flex justify-center items-center fixed bottom-5 !z-[100]">
         <nav className="w-[50px] sm:w-[70px] lg:w-1/4 lg:min-w-[300px] h-full flex flex-wrap justify-around items-center bg-slate-700 rounded-lg">
             <button onClick={() => {setNavMob(!navMob)}} className="w-2/5 lg:w-0  h-2/5 lg:h-0 text-slate-300">
                 <FaBars className="w-full h-full"/>
             </button>
-            <div className={`navMob ${navMob ? 'w-[60vw] sm:w-[40vw] h-[40vh]' : 'w-0 h-0'} fixed bottom-40 left-6 sm:left-10 lg:hidden flex flex-col justify-evenly items-center py-2 rounded-lg bg-slate-700 overflow-hidden transition-all`}>
+            <div className={`navMob ${navMob ? 'w-[60vw] sm:w-[40vw] h-[30vh]' : 'w-0 h-0'} fixed bottom-40 left-6 sm:left-10 lg:hidden flex flex-wrap justify-evenly content-evenly py-2 rounded-lg bg-slate-700 overflow-hidden transition-all`}>
                 {arrNav.map(e => <div onClick={() => {navigate(`${e.url}`)}} className={`${classNavMobile}`} key={e.title}>
                     {e.title}
                 </div>)}
@@ -108,7 +108,7 @@ const Header = () => {
             </div>
         </div>
         {/* More */}
-        <div className="more w-[200px] h-full hidden md:flex justify-around items-center bg-slate-700 rounded-lg">
+        <div className="more w-[200px] h-full hidden lg:flex justify-around items-center bg-slate-700 rounded-lg">
             {/* Cart */}
             <div className={`${classMore}`} onClick={() => {setIsCart(!isCart); isUser === true && setIsUser(false)}}>
                 <RiShoppingCartFill className="text-[25px]" />

@@ -99,24 +99,10 @@ const Cart = () => {
             ))}
         </div>
         <div className="xl:w-1/3 flex flex-col">
-          <div className="w-full h-[80px] bg-white my-2 shadow-md rounded-lg flex items-center px-2">
+          <div className="w-full h-[80px]  my-2 rounded-lg flex items-center px-2">
             {paymentList !== null && paymentList.length !== 0 && <button onClick={() => { setPaymentList([]) }} className="w-1/5 h-[40px] rounded-lg bg-red-500 text-white font-semibold">Delete it</button>}
           </div>
-          <div className="xl:w-full mt-6 h-[200px] rounded-lg border bg-white p-6 shadow-md md:mt-0">
-            <div className="mb-2 flex justify-between">
-              <p style={{ color: '#111827' }} className="text-gray-700">Subtotal</p>
-              <span className="text-black font-bold">{paymentList !== null && paymentList.length !== 0
-                ? cartItems.length !== 0 && cartItems
-                  .filter(e => paymentList.includes(e.idCart))
-                  .map(e => { return e.count * e.price })
-                  .reduce((a, b) => { return a + b })
-                : '0'} USD</span>
-            </div>
-            <div className="flex justify-between">
-              <p style={{ color: '#111827' }} className="text-gray-700">Shipping fee (estimated)</p>
-              <p style={{ color: '#111827' }} className="text-gray-700">1 USD</p>
-            </div>
-            <hr className="my-4" />
+          <div className="xl:w-full mt-6 h-[100px] rounded-lg border bg-white p-6 shadow-md md:mt-0">
             <div className="flex justify-between">
               <p style={{ color: '#111827' }} className="text-lg font-bold">Total</p>
               <div className="null">
@@ -124,8 +110,8 @@ const Cart = () => {
                   {paymentList !== null && paymentList.length !== 0
                     ? cartItems
                       ?.filter(e => paymentList.includes(e.idCart))
-                      ?.map(e => { return e.count * e.price })
-                      ?.reduce((a, b) => { return a + b }) + 1
+                      ?.map(e => { return e.count * e.price - ((e.price * e.discount)/100) })
+                      ?.reduce((a, b) => { return a + b })
                     : '0'
                   } USD
                 </p>

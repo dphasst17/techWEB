@@ -1,22 +1,28 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { StateContext } from "~/contexts/stateContext";
 import {HiPencilAlt} from "react-icons/hi"
 import Payment from "./payment";
+import cardCreditIcon from "./paymentIcon/card.png"
+import deliveryIcon from "./paymentIcon/delivery.png"
 const Info = ({props}) => {
     const {users,address} = useContext(StateContext);
     const { register, handleSubmit,formState: { errors: err } } = useForm();
     const [showAll,setShowAll] = useState(false)
-    const handleSubmitData =  (e) => {
-        e.preventDefault();
+    const [isPending,setIsPending] = useState(false)
+    const handleSubmitData =  () => {
+        setIsPending(true)
         handleSubmit(onSubmit)()
     }
     const onSubmit = (data) => {
-       props.costs !== 0 && props.payMethods !== '' && props.setStateForm({...props.stateForm,info:{...data,'costs':props.costs,'method':props.payMethods}});
-       props.costs === 0 && alert('Select shipping methods');
-       props.payMethods === '' && alert('Select payment methods');
+        console.log(Object.keys(data))
+       if(props.costs !== 0 && props.payMethods !== ''){
+           props.setStateForm(prevState => ({...prevState,info:{...data,'costs':props.costs,'method':props.payMethods}}))
+           setIsPending(false)
+       }
+       props.costs === 0 && alert('Select shipping methods')
+       props.payMethods === '' && alert('Select payment methods')
     }
-    
     return <div className="c-o-info w-full md:w-4/5 lg:w-2/5 h-auto min-h-[70vh] flex flex-col justify-start items-center ">
         <h1 className="text-[30px] text-slate-600 font-semibold font-BOO">Shipping Information</h1>
         <div className="c-o-info-user w-4/5 h-[250px] bg-slate-100 my-6 rounded-[5px] shadow-md">
@@ -77,28 +83,36 @@ const Info = ({props}) => {
                     </div>
                     <span className="text-[15px] font-semibold my-2">Payment method*</span>
                     <div className="w-full h-[50px] min-h-[50px] flex justify-around text-[15px] font-semibold mb-2">
-                        <label className={`w-2/5 h-full flex flex-col justify-around pl-2 cursor-pointer ${props.payMethods === "Payments on delivery" && 'border-solid border-blue-500 border-[2px]'} bg-white rounded-lg`}>
+                        <label className={`w-2/5 h-full flex justify-around items-center pl-2 cursor-pointer ${props.payMethods === "Payments on delivery" && 'border-solid border-blue-500 border-[2px]'} bg-white rounded-lg`}>
                             <input className="hidden" type="checkbox" onClick={() => {props.setPayMethods("Payments on delivery")}}/>
+                            <img src={deliveryIcon} className="w-[20px] h-[20px]" alt=""/>
                             <p style={{color:'#111827'}}>Payments on delivery</p>
                         </label>
-                        <label className={`w-2/5 h-full flex flex-col justify-around pl-2 cursor-pointer ${props.payMethods === "Payment through bank" && 'border-solid border-blue-500 border-[2px]'} bg-white rounded-lg`}>
-                            <input className="hidden" type="checkbox" onClick={() => {props.setPayMethods("Payment through bank")}}/>
+                        <label className={`w-2/5 h-full flex justify-around items-center pl-2 cursor-pointer ${props.payMethods === "Payment through bank" && 'border-solid border-blue-500 border-[2px]'} bg-white rounded-lg`}>
+                            <input className="hidden" type="checkbox" onClick={() => {props.setPayMethods("Payment through bank");handleSubmitData()}}/>
+                            <img src={cardCreditIcon} className="w-[20px] h-[20px]" alt=""/>
                             <p style={{color:'#111827'}}>Payment through bank</p>
                         </label>
                     </div>
-                    {props.payMethods === "Payment through bank" && <Payment />}
+
+                    
                     <div className="w-full h-[10%] flex justify-between items-center text-[20px] font-semibold mt-6">
                         <span>The total amount payable:</span>
-                        <span>{props.data.length !== 0 ? props.data.map(e => e.count * e.price - ((e.price * e.discount)/100)).reduce((a,b) => a + b) + (props.costs !==0 && props.costs) :'0'} USD</span>
+                        <span>{props.data.length !== 0 ? (props.data.map(e => e.count * e.price - ((e.price * e.discount)/100)).reduce((a,b) => a + b) + (props.costs !==0 && props.costs)).toFixed(2) :'0'} USD</span>
                     </div>
+                    {props.payMethods === "Payment through bank" && isPending && <button className="w-[100px] h-[30px] bg-blue-500 rounded-lg mx-auto text-white font-semibold" onClick={() => {handleSubmitData()}}>Check form</button>}
+                    {props.payMethods === "Payment through bank" 
+                        ? !isPending && <Payment props={{handleSubmitData,isPending,costs:props.costs,stateForm:props.stateForm,setStateForm:props.setStateForm,setIsFetch:props.setIsFetchData}} /> 
+                        : <button 
+                            onClick={(e) => {handleSubmitData(e)}}
+                            className="w-[250px] h-[40px] rounded-[5px] mx-auto my-4 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-[20px] transition-all">
+                            Payments
+                        </button>
+                    }
+                    
                 </div>
             }
         </div>
-        <button 
-            onClick={(e) => {handleSubmitData(e)}}
-            className="w-[250px] h-[40px] rounded-[5px] bg-blue-600 hover:bg-blue-500 text-white font-semibold text-[20px] transition-all">
-            Payments
-        </button>
     </div>
 }
 export default Info;

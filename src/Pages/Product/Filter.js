@@ -21,7 +21,7 @@ function Filter({ props }) {
 
 
   return (
-    <div className="p-filter w-screen md:w-full h-auto flex flex-wrap justify-around md:justify-start pl-2 md:ml-[8%]">
+    <div className="p-filter w-screen md:w-full h-auto flex flex-wrap justify-around md:justify-start pl-2 md:ml-[8%] z-10">
         <select
           className="w-[150px] m-2 h-[30px] bg-blue-500 outline-none rounded-[5px] text-center text-white font-semibold cursor-pointer"
           value={props.optionType}

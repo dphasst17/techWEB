@@ -2,21 +2,21 @@ import React, { useContext, useEffect, useState } from "react";
 import "~/tailwind.css";
 import "../Home.scss";
 import { CartContext } from "~/contexts/Cart";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
-import { FaEye } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
 import LazyLoad from "react-lazy-load";
 import { AnimateScroll } from "~/helper/animateScroll";
 import { StateContext } from "~/contexts/stateContext";
 import { ApiContext } from "~/contexts/apiContext";
-
+import ButtonViewDetail from "~/components/Button/viewDetail";
+import { ButtonIconAddCart } from "~/components/Button/addCart";
+import { ViewBrandAndType } from "~/components/Product/viewMultiBtn";
+import {useNavigate} from "react-router-dom"
 const Product = () => {
-  const navigate = useNavigate()
+  const {addToCart} = useContext(CartContext)
   const {laptop} = useContext(StateContext)
   const {percentDiscount} = useContext(ApiContext)
   const [data,setData] = useState(null);
   const [inView, setInView] = useState(false);
+  const navigate = useNavigate()
   useEffect(() => {
     laptop !== null && setData(laptop.filter(e => e.id % 2 !== 0))
   },[laptop,setData])
@@ -60,10 +60,7 @@ const Product = () => {
                             {product.nameProduct}
                           </p>
                         </div>
-                        <div className="accessInf w-full h-[10%] flex justify-around">
-                          <div onClick={() => {window.location.pathname = `/search/${product.brand}`}} className="items-brand w-2/5 h-[30px] flex items-center justify-center rounded-[5px] bg-gray-700 font-han text-[20px] text-gray-300 font-semibold overflow-hidden whitespace-nowrap text-ellipsis">{product.brand}</div>
-                          <div onClick={() => {window.location.pathname = `/search/${product.nameType}`}} className="items-type w-2/5 h-[30px] flex items-center justify-center rounded-[5px] bg-gray-700 font-han text-[20px] text-gray-300 font-semibold overflow-hidden whitespace-nowrap text-ellipsis">{product.nameType.toUpperCase()}</div>
-                        </div>
+                        <ViewBrandAndType props={{brand:product.brand,type:product.nameType,height:'2/4',navigate}}/>
                         <div className="productAccess w-full h-[36%]">
                           <div className="information pl-[3%]">
                             <p className="transition-all font-han text-[18px] font-semibold overflow-hidden whitespace-nowrap text-ellipsis text-slate-200">
@@ -95,29 +92,11 @@ const Product = () => {
                             USD
                           </div>
                           <div className="button w-full  flex flex-col md:flex-row items-center justify-around">
-                            <CartContext.Consumer>
-                              {({ addToCart }) => (
-                                <button
-                                  onClick={() => addToCart(product,1)}
-                                  className="w-3/4 lg:w-2/4 h-[30px] border-none rounded-[5px] md:my-0 my-[2%] cursor-pointer bg-slate-900 hover:bg-slate-700 transition-all"
-                                >
-                                  <FontAwesomeIcon
-                                    className="text-white"
-                                    icon={faCartShopping}
-                                  />
-                                </button>
-                              )}
-                            </CartContext.Consumer>
-                            <button
-                              onClick={() => {
-                                navigate(`/detail/${product.idType}/${product.nameType}/${product.idProduct}/${product.nameProduct}`)
-                              }}
-                              className="w-3/4 lg:w-1/4 h-[30px] flex justify-center items-center border-none rounded-[5px] md:my-0 my-[2%] cursor-pointer bg-slate-900 hover:bg-slate-700 transition-all"
-                            >
-                              <Link>
-                                <FaEye className="text-white m-auto" />
-                              </Link>
-                            </button>
+                            <ButtonIconAddCart props={{addToCart,product,width:'w-3/4 lg:w-2/4'}} />
+                            <ButtonViewDetail props={{
+                              url:`/detail/${product.idType}/${product.nameType}/${product.idProduct}/${product.nameProduct}`,
+                              width:'w-3/4 lg:w-[30%]'
+                            }}/>
                           </div>
                         </div>
                       </div>

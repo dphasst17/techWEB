@@ -1,8 +1,6 @@
 import { CartContext } from "~/contexts/Cart";
 import React, { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
-import Loading from "~/components/Loading/Loading";
-
 import Info from "./infoCheckOut";
 import { StateContext } from "~/contexts/stateContext";
 import { orderInsert } from "~/api/orderApi";
@@ -16,11 +14,12 @@ const CheckOut = () => {
   const {percentDiscount} = useContext(ApiContext)
   const [costs,setCosts] = useState(0);
   const [payMethods,setPayMethods] = useState("")
-  const [isLoading, setIsLoading] = useState(false);
   const [defaultAddress,setDAddress] = useState(null);
+  const [isFetchData,setIsFetchData] = useState(false)
   const [stateForm,setStateForm] = useState({
     listIdCart:paymentList !== null && paymentList.length !== 0 ? paymentList :[],
-    info:{}
+    info:{},
+    isPayment:false
   })
   const handleCheckExp = HandleToken()
   const navigate = useNavigate();
@@ -30,12 +29,13 @@ const CheckOut = () => {
   },[paymentList,cartItems])
   useEffect(() =>{
     paymentList === null && navigate('/cart')
-  },[])
+  })
   useEffect(() => {
     address !== null && setDAddress(address.filter(e => e.typeAddress === "default"))
   },[address])
   useEffect(() => {
     const FetchData = async() => {
+      console.log(stateForm)
       const accessToken = await handleCheckExp();
       if(stateForm.listIdCart.length !== 0 && Object.keys(stateForm.info).length !== 0){
         orderInsert(accessToken,stateForm)
@@ -44,6 +44,7 @@ const CheckOut = () => {
             setCartItems(cartItems.filter(f => !paymentList.includes(f.idCart)))
             setPaymentList([])
             setFetchOrder(true)
+            setIsFetchData(false)
             showAlert('success',res.message)
           }else{
             showAlert('err',res.message)
@@ -51,15 +52,15 @@ const CheckOut = () => {
         })
       }
     }
-    FetchData()
-  },[stateForm,handleCheckExp])
+    isFetchData === true && FetchData()
+  },[isFetchData])
+  useEffect(() => {console.log(isFetchData)},[isFetchData])
   const showAlert = (type,message) => {
     setIsAlert(true)
     setDataAlert({type:type,message:message})
   }
   return (
     <div className="checkOut w-full h-auto mb-20 min-h-[765px]">
-      {isLoading === true && <Loading />}
       <div className="c-o-container w-full h-auto flex flex-wrap justify-center ">
         <div className="cartCheckOut w-full lg:w-3/5 h-auto flex flex-col justify-start items-center">
           <h1 className="text-[30px] text-slate-600 font-semibold font-BOO">Check Out</h1>
@@ -91,7 +92,7 @@ const CheckOut = () => {
             </div>)}
           </div>
         </div>
-        <Info props={{data,setDAddress,defaultAddress,costs,setCosts,payMethods,setPayMethods,stateForm,setStateForm}}/>
+        <Info props={{data,setDAddress,defaultAddress,costs,setCosts,payMethods,setPayMethods,stateForm,setStateForm,setIsFetchData}}/>
       </div>
       {isAlert && <Alert />}
     </div>

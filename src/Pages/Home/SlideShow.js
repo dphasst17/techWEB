@@ -109,8 +109,8 @@ function Slideshow() {
               } inline-flex flex-col md:flex-row`}
               key={items.idProduct}
             >
-              <div className="image w-full md:w-[35%] h-[30%] md:h-full">
-                <div className="bgImage absolute flex justify-center items-center z-[-10] w-full min-w-[300px] h-[90%] min-h-[200px]">
+              <div className="image w-full relative md:w-[35%] h-[30%] md:h-full">
+                <div className="bgImage absolute flex justify-center items-center z-[-10] w-full min-w-[300px] h-full md:h-[90%] md:min-h-[200px]">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="1080"
@@ -271,21 +271,21 @@ function Slideshow() {
                   </div>
                   <div className="inf">
                     <div className="infDetail">
-                      <p className="text-[17px] font-semibold text-black cursor-pointer scale-100 hover:scale-105 transition-all">
+                      <p className="text-[17px] font-semibold !text-black cursor-pointer scale-100 hover:scale-105 transition-all">
                         Cpu: {items.detail.map((e) => e.cpu)}
                       </p>
-                      <p className="text-[17px] font-semibold text-black cursor-pointer scale-100 hover:scale-105 transition-all">
+                      <p className="text-[17px] font-semibold !text-black cursor-pointer scale-100 hover:scale-105 transition-all">
                         Display: {items.detail.map((e) => e.sizeInch.toFixed())}{" "}
                         inch - {items.detail.map((e) => e.resolution)}
                       </p>
-                      <p className="text-[17px] font-semibold text-black cursor-pointer scale-100 hover:scale-105 transition-all">
+                      <p className="text-[17px] font-semibold !text-black cursor-pointer scale-100 hover:scale-105 transition-all">
                         Ram: {items.detail.map((e) => e.capacity)}
                       </p>
-                      <p className="text-[17px] font-semibold text-black cursor-pointer scale-100 hover:scale-105 transition-all">
+                      <p className="text-[17px] font-semibold !text-black cursor-pointer scale-100 hover:scale-105 transition-all">
                         Hard drive:
                         {items.detail.map((e) => e.storage)}
                       </p>
-                      <p className="text-[17px] font-semibold text-black cursor-pointer scale-100 hover:scale-105 transition-all">
+                      <p className="text-[17px] font-semibold !text-black cursor-pointer scale-100 hover:scale-105 transition-all">
                         Os: {items.detail.map((e) => e.os)}
                       </p>
                     </div>

@@ -8,12 +8,15 @@ import Selling from "./Selling";
 import ProductView from "./ProductView";
 import GetPosts from "./Posts";
 import Sale from "./Sale";
+import Alert from "../Alert";
+import { StateContext } from "~/contexts/stateContext";
 
 
 const Product = React.lazy(() => import('./Product-demo'));
 const Contact = React.lazy(() => import('./Contact'));
 function Home() {
   const {isLoad} = useContext(ApiContext)
+  const {isAlert} = useContext(StateContext)
   return (
     <>
       <div className="home">
@@ -28,6 +31,7 @@ function Home() {
         <Suspense fallback={<div>LOADING...</div>}><Contact /></Suspense>
       </div>
       {isLoad === true && <Loading />}
+      {isAlert && <Alert />}
     </>
   );
 }
